@@ -190,12 +190,25 @@ try {
 
 // Register Handlebars helpers
 Handlebars.registerHelper('slice', function(arr, start, end) {
+  if (!arr || !Array.isArray(arr)) return [];
   return arr.slice(start, end);
+});
+
+// Helper to check if text ends with a specific character
+Handlebars.registerHelper('endsWith', function(text, char) {
+  if (!text) return false;
+  return text.endsWith(char);
 });
 
 // Helper to break summary into multiple lines (max 90 chars)
 Handlebars.registerHelper('breaklines', function(text) {
   if (!text) return '';
+  
+  // Split the text into two sentences if possible
+  const sentences = text.split(/(?<=\.|\?|\!) /);
+  if (sentences.length >= 2) {
+    return new Handlebars.SafeString(sentences[0] + '<br>' + sentences.slice(1).join(' '));
+  }
   
   // If text is less than 90 chars, return as is
   if (text.length <= 90) return text;
