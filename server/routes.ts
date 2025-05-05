@@ -282,11 +282,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         filenameSuffix = "pdf";
       }
       
-      // Generate filename in required format: "Role (Country) – C-XXXX.extension"
-      const filename = `${role} (${country}) – C-${idSuffix}.${filenameSuffix}`;
+      // Use a simple ASCII filename to avoid encoding issues
+      const simpleFilename = `resume-${idSuffix}.${filenameSuffix}`;
       
-      // Set headers for download
-      res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+      // Set headers for download with a simple filename
+      res.setHeader("Content-Disposition", `attachment; filename=${simpleFilename}`);
       res.setHeader("Content-Type", contentType);
       
       // Stream the file
