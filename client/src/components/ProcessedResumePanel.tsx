@@ -45,7 +45,7 @@ export default function ProcessedResumePanel({
           </Button>
         </CardHeader>
         
-        <CardContent className="flex-1 p-4 overflow-auto min-h-96 max-h-128 bg-white">
+        <CardContent className="flex-1 p-4 overflow-auto min-h-[36rem] bg-white">
           {isLoading ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-6">
               <div className="mb-4">
@@ -63,11 +63,12 @@ export default function ProcessedResumePanel({
               <p className="text-near-gray-400 text-sm">Upload and convert a resume to see results</p>
             </div>
           ) : (
-            <div className="w-full h-full min-h-96">
+            <div className="w-full h-full min-h-[36rem]">
               <iframe 
                 src={`${pdfUrl}#toolbar=0`} 
-                className="w-full h-full border-0"
+                className="w-full h-full min-h-[36rem] border-0"
                 onLoad={() => setIsPdfLoaded(true)}
+                style={{ height: 'calc(100vh - 250px)' }}
               />
               {!isPdfLoaded && (
                 <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80">
