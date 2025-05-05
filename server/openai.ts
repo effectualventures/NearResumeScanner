@@ -105,8 +105,8 @@ Your response must be a valid JSON object representing the processed resume with
 }`;
 
     try {
-      // User prompt is simply the resume text
-      const userPrompt = resumeText;
+      // User prompt is simply the resume text - ensure it's a string
+      const userPrompt = String(resumeText);
       
       // Call OpenAI API
       const response = await openai.chat.completions.create({
@@ -118,8 +118,9 @@ Your response must be a valid JSON object representing the processed resume with
         response_format: { type: "json_object" }
       });
       
-      // Parse the response JSON
-      const resumeData: Resume = JSON.parse(response.choices[0].message.content);
+      // Parse the response JSON, ensuring we have a string
+      const responseContent = response.choices[0].message.content || '';
+      const resumeData: Resume = JSON.parse(responseContent);
       
       return {
         success: true,
@@ -273,7 +274,6 @@ Your response must be a valid JSON object representing the processed resume with
   }
 }
 
-// Process chat messages to update the resume
 // Process feedback directly from ChatGPT
 export async function processDirectFeedback(
   feedback: string,
@@ -343,7 +343,8 @@ Example response format:
     });
     
     // Parse the response JSON
-    const result = JSON.parse(response.choices[0].message.content);
+    const responseContent = response.choices[0].message.content || '';
+    const result = JSON.parse(responseContent);
     
     return {
       success: true,
@@ -378,6 +379,7 @@ Example response format:
   }
 }
 
+// Process chat messages to update the resume
 export async function processChat(
   sessionId: string,
   message: string,
@@ -438,8 +440,8 @@ Example response format:
   ]
 }`;
 
-    // User prompt is their chat message
-    const userPrompt = message;
+    // User prompt is their chat message - ensure it's a string
+    const userPrompt = String(message);
     
     // Call OpenAI API
     const response = await openai.chat.completions.create({
@@ -451,8 +453,9 @@ Example response format:
       response_format: { type: "json_object" }
     });
     
-    // Parse the response JSON
-    const result = JSON.parse(response.choices[0].message.content);
+    // Parse the response JSON, ensuring we have a string
+    const responseContent = response.choices[0].message.content || '';
+    const result = JSON.parse(responseContent);
     
     return {
       success: true,
