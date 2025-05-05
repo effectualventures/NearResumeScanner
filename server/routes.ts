@@ -8,6 +8,7 @@ import { generatePDF } from "./pdf-generator";
 import { ApiResponse, ProcessingResult, ChatResult } from "./types";
 import { Resume } from "@shared/schema";
 import { implementFeedback } from "./feedback-handler";
+import { CHATGPT_FEEDBACK_PROMPT } from "./feedback-prompt";
 import path from "path";
 import fs from "fs";
 import crypto from "crypto";
@@ -381,7 +382,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // ChatGPT Prompt - serve the feedback prompt for the UI tool
   app.get('/api/chatgpt-prompt', (req: Request, res: Response) => {
     try {
-      const { CHATGPT_FEEDBACK_PROMPT } = require('./feedback-prompt');
       res.setHeader('Content-Type', 'text/plain');
       res.status(200).send(CHATGPT_FEEDBACK_PROMPT);
     } catch (error) {
