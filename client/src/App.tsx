@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import FeedbackAutomation from "@/pages/FeedbackAutomation";
+import AutomatedFeedback from "@/pages/AutomatedFeedback";
 
 // Simple navigation bar
 function Navbar() {
@@ -16,6 +17,7 @@ function Navbar() {
         <div className="space-x-6">
           <Link href="/" className="hover:underline">Home</Link>
           <Link href="/feedback" className="hover:underline">Feedback Tool</Link>
+          <Link href="/auto-feedback" className="hover:underline">Auto Feedback</Link>
         </div>
       </div>
     </nav>
@@ -30,6 +32,7 @@ function Router() {
         <Switch>
           <Route path="/" component={Home}/>
           <Route path="/feedback" component={FeedbackAutomation}/>
+          <Route path="/auto-feedback" component={AutomatedFeedback}/>
           <Route component={NotFound} />
         </Switch>
       </div>

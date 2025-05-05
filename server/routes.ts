@@ -7,8 +7,10 @@ import { transformResume, processChat } from "./openai";
 import { generatePDF } from "./pdf-generator";
 import { ApiResponse, ProcessingResult, ChatResult } from "./types";
 import { Resume } from "@shared/schema";
+import { implementFeedback } from "./feedback-handler";
 import path from "path";
 import fs from "fs";
+import crypto from "crypto";
 
 // Configure multer for in-memory file storage
 const upload = multer({
@@ -389,6 +391,134 @@ export async function registerRoutes(app: Express): Promise<Server> {
         error: {
           code: "INTERNAL_ERROR",
           message: "Failed to retrieve ChatGPT prompt",
+        },
+      });
+    }
+  });
+  
+  // Implement feedback
+  app.post('/api/implement-feedback', async (req: Request, res: Response) => {
+    try {
+      const { sessionId, feedback, implementationPlan } = req.body;
+      
+      if (!sessionId || !feedback) {
+        return res.status(400).json({
+          success: false,
+          error: {
+            code: "MISSING_PARAMS",
+            message: "Session ID and feedback are required",
+          },
+        });
+      }
+      
+      // Implement the feedback
+      const result = await implementFeedback({
+        sessionId,
+        feedback,
+        implementationPlan
+      });
+      
+      if (!result.success) {
+        return res.status(400).json({
+          success: false,
+          error: {
+            code: "IMPLEMENTATION_FAILED",
+            message: result.error || "Failed to implement feedback",
+          },
+        });
+      }
+      
+      // Return success
+      return res.json({
+        success: true,
+        data: {
+          sessionId: result.newSessionId,
+          pdfUrl: result.pdfUrl,
+        },
+      });
+      
+    } catch (error) {
+      console.error('Error implementing feedback:', error);
+      return res.status(500).json({
+        success: false,
+        error: {
+          code: "INTERNAL_ERROR",
+          message: error instanceof Error ? error.message : "An error occurred",
+        },
+      });
+    }
+  });
+  
+  // Automatically process Luis's resume
+  app.post('/api/process-luis-resume', async (req: Request, res: Response) => {
+    try {
+      const luisResumePath = path.join(process.cwd(), 'Luis Chavez - Sr BDR - Player Coach (Near).pdf');
+      
+      // Check if the file exists
+      if (!fs.existsSync(luisResumePath)) {
+        return res.status(404).json({
+          success: false,
+          error: {
+            code: "FILE_NOT_FOUND",
+            message: "Luis's resume file not found",
+          },
+        });
+      }
+      
+      // Read the file
+      const fileBuffer = fs.readFileSync(luisResumePath);
+      const fileName = path.basename(luisResumePath);
+      
+      // Extract text from the resume
+      const extractedText = await parseResumeFile(fileBuffer, fileName);
+      
+      // Transform the resume to the Near format
+      const transformResult = await transformResume(extractedText, fileName);
+      
+      if (!transformResult.success) {
+        return res.status(400).json({
+          success: false,
+          error: {
+            code: "TRANSFORMATION_FAILED",
+            message: transformResult.error || "Failed to transform resume",
+          },
+        });
+      }
+      
+      // Generate PDF/HTML from the transformed resume
+      const sessionId = crypto.randomUUID();
+      const pdfPath = await generatePDF(transformResult.resume, sessionId);
+      
+      // Save session data
+      await storage.createSession({
+        id: sessionId,
+        originalFilename: fileName,
+        originalFilePath: luisResumePath,
+        originalText: extractedText,
+        processedText: JSON.stringify(transformResult.resume),
+        processedJson: JSON.stringify(transformResult.resume),
+        processedPdfPath: pdfPath,
+        createdAt: new Date(),
+        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24h expiry
+      });
+      
+      // Return success
+      return res.json({
+        success: true,
+        data: {
+          sessionId,
+          pdfUrl: pdfPath.startsWith('/') ? pdfPath : `/${pdfPath}`,
+          originalFilename: fileName,
+        } as ProcessingResult,
+      });
+      
+    } catch (error) {
+      console.error('Error processing Luis resume:', error);
+      return res.status(500).json({
+        success: false,
+        error: {
+          code: "PROCESSING_ERROR",
+          message: error instanceof Error ? error.message : "An error occurred",
         },
       });
     }
