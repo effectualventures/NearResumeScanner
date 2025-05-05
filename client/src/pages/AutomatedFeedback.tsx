@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Loader2, Send, Download, RotateCcw } from "lucide-react";
+import { Loader2, Send, Download, RotateCcw, Pencil as PencilIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -80,13 +80,14 @@ export default function AutomatedFeedback() {
         previewElement.scrollTop = 0;
       }
       
-      // Clear feedback to indicate a fresh state
-      setFeedback("Feedback has been successfully implemented! The resume has been updated with your suggestions.\n\nYou can now see the changes in the preview panel.");
+      // Set a success message
+      setFeedback("✅ Feedback successfully implemented!\n\nThe resume has been updated with your suggestions. You can now see the changes in the preview panel on the left.\n\nIf you want to make additional edits, click the Reset button and start again.");
       
       toast({
-        title: "Success!",
-        description: "Your feedback has been implemented and the resume has been updated.",
-        duration: 5000,
+        title: "Changes Applied Successfully! 🎉",
+        description: "Your feedback has been implemented and the resume has been updated. Check the preview to see the improvements.",
+        duration: 8000,
+        variant: "default",
       });
     } catch (error) {
       console.error("Error implementing feedback:", error);
@@ -190,44 +191,69 @@ export default function AutomatedFeedback() {
               <CardContent className="h-[calc(100%-5rem)]">
                 <ScrollArea className="h-full pr-4">
                   {!feedback ? (
-                    <div className="flex items-center justify-center h-full">
-                      <Loader2 className="h-8 w-8 animate-spin" />
+                    <div className="flex flex-col items-center justify-center h-full">
+                      <Loader2 className="h-12 w-12 text-blue-600 animate-spin mb-4" />
+                      <p className="text-blue-700 font-medium text-center">
+                        Generating AI feedback for your resume...<br />
+                        <span className="text-sm text-blue-500">This usually takes 15-20 seconds</span>
+                      </p>
                     </div>
                   ) : (
-                    <textarea
-                      className="w-full h-full min-h-[600px] p-4 border rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      value={feedback}
-                      onChange={(e) => setFeedback(e.target.value)}
-                      placeholder="AI-generated feedback will appear here. You can edit it before implementing."
-                    />
+                    <div className="space-y-3">
+                      <div className="bg-yellow-50 p-3 rounded-md border border-yellow-200">
+                        <p className="text-sm font-medium text-yellow-800 flex items-center">
+                          <PencilIcon className="h-4 w-4 mr-2" />
+                          You can edit this feedback before implementing it
+                        </p>
+                      </div>
+                      <textarea
+                        className="w-full h-full min-h-[550px] p-4 border border-blue-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium"
+                        value={feedback}
+                        onChange={(e) => setFeedback(e.target.value)}
+                        placeholder="AI-generated feedback will appear here. You can edit it before implementing."
+                      />
+                    </div>
                   )}
                 </ScrollArea>
               </CardContent>
             </Card>
             <div className="mt-4">
               <Button
-                className="w-full"
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
                 size="lg"
                 onClick={handleImplementFeedback}
                 disabled={!feedback || isImplementing}
               >
                 {isImplementing ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Implementing Feedback...
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    <span className="text-lg">Implementing Feedback...</span>
                   </>
                 ) : (
                   <>
-                    <Send className="mr-2 h-4 w-4" />
-                    Implement Feedback
+                    <Send className="mr-2 h-5 w-5" />
+                    <span className="text-lg">Implement Feedback</span>
                   </>
                 )}
               </Button>
               
-              <Alert className="mt-4">
-                <AlertDescription>
-                  Click "Implement Feedback" to apply the AI suggestions automatically.
-                  The feedback will be processed using OpenAI and the resume will be updated.
+              <Alert className={`mt-4 ${isImplementing ? 'bg-blue-50 border-blue-200' : ''}`}>
+                <AlertDescription className="flex items-center">
+                  {isImplementing ? (
+                    <>
+                      <div className="mr-2 bg-blue-100 p-1 rounded-full">
+                        <Loader2 className="h-4 w-4 text-blue-600 animate-spin" />
+                      </div>
+                      <span className="text-blue-700 font-medium">
+                        Processing your feedback and updating the resume. This may take a moment...
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      Click "Implement Feedback" to apply the AI suggestions automatically.
+                      The feedback will be processed using OpenAI and the resume will be updated.
+                    </>
+                  )}
                 </AlertDescription>
               </Alert>
             </div>
