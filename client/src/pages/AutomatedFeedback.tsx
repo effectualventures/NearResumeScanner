@@ -69,12 +69,24 @@ export default function AutomatedFeedback() {
     setIsImplementing(true);
     try {
       const result = await implementFeedback(sessionId, feedback);
+      
+      // Update the UI with the new session and PDF
       setSessionId(result.newSessionId);
       setPdfUrl(result.pdfUrl);
+      
+      // Scroll to the top of the resume preview to show changes
+      const previewElement = document.querySelector('.resume-preview');
+      if (previewElement) {
+        previewElement.scrollTop = 0;
+      }
+      
+      // Clear feedback to indicate a fresh state
+      setFeedback("Feedback has been successfully implemented! The resume has been updated with your suggestions.\n\nYou can now see the changes in the preview panel.");
+      
       toast({
-        title: "Feedback implemented",
-        description: "The feedback has been successfully implemented.",
-        duration: 3000,
+        title: "Success!",
+        description: "Your feedback has been implemented and the resume has been updated.",
+        duration: 5000,
       });
     } catch (error) {
       console.error("Error implementing feedback:", error);
@@ -131,7 +143,7 @@ export default function AutomatedFeedback() {
                 {pdfUrl ? (
                   <iframe
                     src={pdfUrl}
-                    className="w-full h-full border-0"
+                    className="w-full h-full border-0 resume-preview"
                     title="Processed Resume"
                   />
                 ) : (
@@ -182,7 +194,12 @@ export default function AutomatedFeedback() {
                       <Loader2 className="h-8 w-8 animate-spin" />
                     </div>
                   ) : (
-                    <div className="whitespace-pre-line">{feedback}</div>
+                    <textarea
+                      className="w-full h-full min-h-[600px] p-4 border rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      value={feedback}
+                      onChange={(e) => setFeedback(e.target.value)}
+                      placeholder="AI-generated feedback will appear here. You can edit it before implementing."
+                    />
                   )}
                 </ScrollArea>
               </CardContent>

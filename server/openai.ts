@@ -4,6 +4,8 @@ import {
   ResumeTransformationResponse, 
   ChatProcessingResponse 
 } from "./types";
+import * as fs from 'fs';
+import * as path from 'path';
 
 // Initialize OpenAI with API key from environment variables
 const openai = new OpenAI({ 
@@ -284,9 +286,6 @@ export async function generateFeedback(
     // Read the project MD files for context
     let projectContext = '';
     try {
-      const fs = require('fs');
-      const path = require('path');
-      
       const mdFiles = [
         path.join(process.cwd(), 'attached_assets', 'near-resume-processor-prd-clean.md'),
         path.join(process.cwd(), 'attached_assets', 'resume-processor-principles.md'),
