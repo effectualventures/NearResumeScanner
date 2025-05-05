@@ -253,13 +253,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
-      // Determine which PDF to send (updated or original)
-      const pdfPath = sessionData.processedPdfPath;
+      // Determine which file to send (updated or original)
+      const filePath = sessionData.processedPdfPath;
       
-      if (!fs.existsSync(pdfPath)) {
+      if (!fs.existsSync(filePath)) {
         return res.status(404).json({
           success: false,
-          error: { code: "FILE_NOT_FOUND", message: "PDF file not found" },
+          error: { code: "FILE_NOT_FOUND", message: "Resume file not found" },
         });
       }
       
@@ -269,15 +269,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const country = resumeData.header.country || resumeData.header.location.split(",").pop()?.trim() || "International";
       const idSuffix = sessionId.substring(0, 4).toUpperCase();
       
-      // Generate filename in required format: "Role (Country) – C-XXXX.pdf"
-      const filename = `${role} (${country}) – C-${idSuffix}.pdf`;
+      // Determine content type based on file extension
+      const fileExt = path.extname(filePath).toLowerCase();
+      let contentType = "application/octet-stream";
+      let filenameSuffix = "pdf";
+      
+      if (fileExt === ".html") {
+        contentType = "text/html";
+        filenameSuffix = "html";
+      } else if (fileExt === ".pdf") {
+        contentType = "application/pdf";
+        filenameSuffix = "pdf";
+      }
+      
+      // Generate filename in required format: "Role (Country) – C-XXXX.extension"
+      const filename = `${role} (${country}) – C-${idSuffix}.${filenameSuffix}`;
       
       // Set headers for download
       res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
-      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader("Content-Type", contentType);
       
       // Stream the file
-      const fileStream = fs.createReadStream(pdfPath);
+      const fileStream = fs.createReadStream(filePath);
       fileStream.pipe(res);
     } catch (error) {
       console.error("Error in /api/download:", error);

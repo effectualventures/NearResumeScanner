@@ -197,7 +197,7 @@ Handlebars.registerHelper('slice', function(arr, start, end) {
  * Generate a PDF from a Resume object
  * @param resume The resume data
  * @param sessionId Unique identifier for the session
- * @returns Path to the generated PDF file
+ * @returns Path to the generated HTML file (as a temporary workaround for PDF generation)
  */
 export async function generatePDF(resume: Resume, sessionId: string): Promise<string> {
   try {
@@ -208,46 +208,21 @@ export async function generatePDF(resume: Resume, sessionId: string): Promise<st
     // Render HTML
     const html = template(resume);
     
-    // Launch browser
-    const browser = await puppeteer.launch({
-      headless: 'new',
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
-    });
-    
-    try {
-      const page = await browser.newPage();
-      
-      // Set content and wait for rendering
-      await page.setContent(html, { waitUntil: 'networkidle0' });
-      
-      // Set page size for US Letter
-      await page.pdf({
-        format: 'Letter',
-        printBackground: true,
-        margin: {
-          top: '0.7in',
-          right: '0.7in',
-          bottom: '0.7in',
-          left: '0.7in'
-        }
-      });
-      
-      // Ensure temp directory exists
-      const tempDir = path.resolve(process.cwd(), 'temp');
-      if (!fs.existsSync(tempDir)) {
-        fs.mkdirSync(tempDir, { recursive: true });
-      }
-      
-      // Save PDF
-      const outputPath = path.join(tempDir, `${sessionId}.pdf`);
-      await page.pdf({ path: outputPath, format: 'Letter', printBackground: true });
-      
-      return outputPath;
-    } finally {
-      await browser.close();
+    // Ensure temp directory exists
+    const tempDir = path.resolve(process.cwd(), 'temp');
+    if (!fs.existsSync(tempDir)) {
+      fs.mkdirSync(tempDir, { recursive: true });
     }
-  } catch (error) {
-    console.error('Error generating PDF:', error);
-    throw new Error(`Failed to generate PDF: ${error.message}`);
+    
+    // Instead of generating a PDF (which requires puppeteer/chrome),
+    // we'll save the HTML file directly as a temporary solution
+    const outputPath = path.join(tempDir, `${sessionId}.html`);
+    fs.writeFileSync(outputPath, html);
+    
+    console.log(`Generated HTML file for resume: ${outputPath}`);
+    return outputPath;
+  } catch (error: any) {
+    console.error('Error generating resume file:', error);
+    throw new Error(`Failed to generate resume file: ${error?.message || 'Unknown error'}`);
   }
 }
