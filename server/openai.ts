@@ -274,6 +274,110 @@ Your response must be a valid JSON object representing the processed resume with
 }
 
 // Process chat messages to update the resume
+// Process feedback directly from ChatGPT
+export async function processDirectFeedback(
+  feedback: string,
+  implementationPlan: string,
+  currentResume: Resume
+): Promise<ChatProcessingResponse> {
+  try {
+    // Create system prompt for implementing feedback
+    const systemPrompt = `
+You are an expert resume editor helping transform resumes into the "Near format" following very specific stakeholder requirements.
+You've been given feedback from a human reviewer to improve a resume. Your job is to implement this feedback.
+
+Your task is to:
+1. Understand what changes are being suggested in the feedback
+2. Apply those changes to the resume while maintaining all formatting requirements
+3. ALWAYS verify that ALL mandatory sections are included (Summary, Skills, Experience, Education)
+4. Make precise, targeted modifications to the resume JSON
+5. Return the updated resume JSON along with a summary of changes made
+
+CRITICAL RESUME REQUIREMENTS (apply ALL these even if not explicitly requested):
+- EVERY resume MUST include all these sections in this order: Summary, Skills & Tools, Professional Experience, Education
+- First name only (anonymized) - remove last name if present
+- Tagline must be role-specific, metric-anchored (e.g., "Senior Sales Development Leader – SaaS & Retail Tech")
+- Summary must be split into two concise sentences (<90 chars each)
+- Skills must have bold category labels (CRM: Salesforce | Sequencing: Outreach | Languages: English C2)
+- Every company header MUST follow exact format "Company — City, Country" (with em dash) - location must be included for ALL companies
+- Every role must display at least 3 bullet points with at least one quantified metric result ($ or % win)
+- Dates must follow consistent format "Mon YYYY — Mon YYYY" (with "Present" for current role)
+- All bullets must end with periods
+- Education format must precisely show full degree with field of study (e.g., "Bachelor's Degree in International Business", NOT just "Bachelor's Degree")
+- Company and product names must have correct capitalization (AltiSales, not AltISales)
+- Currency should be formatted as "($1.2M USD)" when showing monetary values
+- ALWAYS use past tense for bullets in previous roles and present tense ONLY for current roles
+- Include industry context in the role description (SaaS, FinTech, B2B, etc.)
+
+The current resume is in this state (in JSON format):
+${JSON.stringify(currentResume, null, 2)}
+
+The feedback from the reviewer is:
+${feedback}
+
+${implementationPlan ? `Additional implementation instructions: ${implementationPlan}` : ''}
+
+Your response must be a valid JSON with two main keys:
+1. "updatedResume": The full updated resume JSON object
+2. "changes": An array of changes you made, each with "type" and "description"
+
+Example response format:
+{
+  "updatedResume": { ... full resume JSON ... },
+  "changes": [
+    {
+      "type": "edit_summary",
+      "description": "Updated summary to emphasize leadership experience"
+    }
+  ]
+}`;
+
+    // Call OpenAI API
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: "Please implement the feedback provided above." }
+      ],
+      response_format: { type: "json_object" }
+    });
+    
+    // Parse the response JSON
+    const result = JSON.parse(response.choices[0].message.content);
+    
+    return {
+      success: true,
+      updatedResume: result.updatedResume,
+      changes: result.changes
+    };
+  } catch (error: any) {
+    console.error('Error processing feedback:', error);
+    
+    // If we hit rate limits, return the current resume with a simple change
+    if (error?.status === 429 || error?.code === 'insufficient_quota') {
+      console.log('OpenAI rate limit reached. Returning simple response for feedback.');
+      
+      return {
+        success: true,
+        updatedResume: currentResume,
+        changes: [
+          {
+            type: "note",
+            description: "Note: Unable to process specific changes due to API limitations."
+          }
+        ]
+      };
+    }
+    
+    return {
+      success: false,
+      updatedResume: currentResume,
+      changes: [],
+      error: error?.message || 'Failed to process feedback'
+    };
+  }
+}
+
 export async function processChat(
   sessionId: string,
   message: string,

@@ -1,7 +1,8 @@
 import { Resume } from '@shared/schema';
-import { transformResume, processChat } from './openai';
+import { transformResume, processChat, processDirectFeedback } from './openai';
 import { storage } from './storage';
 import { generatePDF } from './pdf-generator';
+import crypto from 'crypto';
 
 interface FeedbackImplementationRequest {
   sessionId: string;
@@ -37,7 +38,7 @@ export async function implementFeedback(
     const currentResume: Resume = JSON.parse(session.processedJson);
     
     // Process the feedback and update the resume
-    const chatResult = await processChat(
+    const chatResult = await processDirectFeedback(
       data.feedback, 
       data.implementationPlan || '',
       currentResume
