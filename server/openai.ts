@@ -36,7 +36,7 @@ CRITICAL CONTENT SECTIONS (MUST INCLUDE ALL):
 - SUMMARY: Create a compelling two-sentence professional summary (each <90 chars) that mentions specific industries (SaaS, FinTech, etc.) and quantified achievements. This MUST be included.
 - SKILLS & TOOLS: Format as a compact, categorized list with specific tools in each category (not just generic terms). This MUST be included.
 - PROFESSIONAL EXPERIENCE: Reverse chronological order with metrics. This MUST be included.
-- EDUCATION: Must include degree with specific field of study, institution, location, and graduation year. This MUST be included.
+- EDUCATION: Must include full degree with specific field of study (e.g., "Bachelor's Degree in International Business", NOT just "Bachelor's Degree"), institution, location, and graduation year. This MUST be included.
 - ADDITIONAL EXPERIENCE (if relevant): Optional, but if included, follow same formatting rules.
 
 BULLET & FORMATTING RULES:
@@ -302,7 +302,7 @@ CRITICAL RESUME REQUIREMENTS (apply ALL these even if not explicitly requested):
 - Every role must display at least 3 bullet points with at least one quantified metric result ($ or % win)
 - Dates must follow consistent format "Mon YYYY — Mon YYYY" (with "Present" for current role)
 - All bullets must end with periods
-- Education format must precisely show degree with field of study, institution, location, and graduation year
+- Education format must precisely show full degree with field of study (e.g., "Bachelor's Degree in International Business", NOT just "Bachelor's Degree")
 - Company and product names must have correct capitalization (AltiSales, not AltISales)
 - Currency should be formatted as "($1.2M USD)" when showing monetary values
 - ALWAYS use past tense for bullets in previous roles and present tense ONLY for current roles
