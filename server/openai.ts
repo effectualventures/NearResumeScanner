@@ -275,6 +275,90 @@ Your response must be a valid JSON object representing the processed resume with
 }
 
 // Process feedback directly from ChatGPT
+// Generate automated feedback for a processed resume
+export async function generateFeedback(
+  currentResume: Resume,
+  pdfUrl: string
+): Promise<string> {
+  try {
+    // Read the project MD files for context
+    let projectContext = '';
+    try {
+      const fs = require('fs');
+      const path = require('path');
+      
+      const mdFiles = [
+        path.join(process.cwd(), 'attached_assets', 'near-resume-processor-prd-clean.md'),
+        path.join(process.cwd(), 'attached_assets', 'resume-processor-principles.md'),
+        path.join(process.cwd(), 'attached_assets', 'near-resume-implementation-guide.md')
+      ];
+      
+      for (const filePath of mdFiles) {
+        if (fs.existsSync(filePath)) {
+          const content = fs.readFileSync(filePath, 'utf8');
+          projectContext += content + '\n\n';
+        }
+      }
+    } catch (err) {
+      console.log('Could not load project context files:', err);
+      // Continue without context if files can't be read
+    }
+    
+    // Create system prompt for generating feedback
+    const systemPrompt = `
+You are an expert resume reviewer with the following responsibilities:
+1. Evaluate the resume for adherence to Near's resume standards
+2. Provide specific, actionable feedback to improve the resume
+3. Focus on the most impactful improvements first
+4. Consider feedback from multiple perspectives
+
+You will critique this resume as if you were these 4 different stakeholders:
+1. CEO Perspective: Strategic positioning, executive presence, and overall impression
+2. Design Perspective: Visual consistency, spacing, formatting, and readability
+3. Sales Perspective: Impact metrics, achievements, and persuasiveness
+4. Customer Perspective: Clarity, credibility, and alignment with US hiring expectations
+
+${projectContext ? 'USE THIS PROJECT CONTEXT TO GUIDE YOUR FEEDBACK:\n' + projectContext : ''}
+
+KEY EVALUATION CRITERIA:
+- Does the resume follow Near's formatting standards?
+- Is the summary compelling and specific to the industry?
+- Are the skills properly categorized and comprehensive?
+- Do all experience bullets include quantifiable metrics?
+- Is everything properly formatted (dates, bullets, spacing)?
+- Are there any inconsistencies in tense, format, or punctuation?
+- Is the education section properly formatted with full degree and field?
+- Does the entire resume fit on one page with proper white space?
+
+Format your response as a structured review with:
+1. Overall Rating (1-10) and summary assessment
+2. Top 3-5 strengths of the resume
+3. Top 3-5 areas for improvement with specific suggestions
+4. Feedback from the 4 stakeholder perspectives
+5. Conclusion with 1-2 sentence recommendation for implementation
+
+Be specific, actionable, and professional. Your feedback will be directly used to improve this resume.`;
+
+    // User prompt is simply the resume JSON
+    const userPrompt = `Please review this resume JSON and provide comprehensive feedback:\n\n${JSON.stringify(currentResume, null, 2)}\n\nThe visual PDF version is available at: ${pdfUrl}`;
+    
+    // Call OpenAI API
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt }
+      ]
+    });
+    
+    // Return the feedback
+    return response.choices[0].message.content || 'Failed to generate feedback.';
+  } catch (error: any) {
+    console.error('Error generating feedback:', error);
+    return `Failed to generate automatic feedback: ${error.message || 'Unknown error'}. Please try again later or provide your own feedback.`;
+  }
+}
+
 export async function processDirectFeedback(
   feedback: string,
   implementationPlan: string,
