@@ -229,7 +229,7 @@ Handlebars.registerHelper('breaklines', function(text) {
  * Generate a PDF from a Resume object
  * @param resume The resume data
  * @param sessionId Unique identifier for the session
- * @returns Path to the generated HTML file (as a temporary workaround for PDF generation)
+ * @returns Path to the generated HTML file or PDF file
  */
 export async function generatePDF(resume: Resume, sessionId: string): Promise<string> {
   try {
@@ -246,13 +246,42 @@ export async function generatePDF(resume: Resume, sessionId: string): Promise<st
       fs.mkdirSync(tempDir, { recursive: true });
     }
     
-    // Instead of generating a PDF (which requires puppeteer/chrome),
-    // we'll save the HTML file directly as a temporary solution
-    const outputPath = path.join(tempDir, `${sessionId}.html`);
-    fs.writeFileSync(outputPath, html);
+    // Save HTML file first (needed for PDF generation and as a fallback)
+    const htmlOutputPath = path.join(tempDir, `${sessionId}.html`);
+    fs.writeFileSync(htmlOutputPath, html);
     
-    console.log(`Generated HTML file for resume: ${outputPath}`);
-    return outputPath;
+    // Attempt to generate PDF with Puppeteer
+    try {
+      const browser = await puppeteer.launch({
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        headless: 'new'
+      });
+      
+      const page = await browser.newPage();
+      await page.setContent(html, { waitUntil: 'networkidle0' });
+      
+      // Format for US Letter size (8.5" x 11")
+      const pdfOutputPath = path.join(tempDir, `${sessionId}.pdf`);
+      await page.pdf({
+        path: pdfOutputPath,
+        format: 'Letter',
+        printBackground: true,
+        margin: {
+          top: '0.4in',
+          right: '0.4in',
+          bottom: '0.4in',
+          left: '0.4in'
+        }
+      });
+      
+      await browser.close();
+      console.log(`Generated PDF file for resume: ${pdfOutputPath}`);
+      return pdfOutputPath;
+    } catch (pdfError) {
+      console.error('Error generating PDF, falling back to HTML:', pdfError);
+      console.log(`Generated HTML file for resume as fallback: ${htmlOutputPath}`);
+      return htmlOutputPath;
+    }
   } catch (error: any) {
     console.error('Error generating resume file:', error);
     throw new Error(`Failed to generate resume file: ${error?.message || 'Unknown error'}`);

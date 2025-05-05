@@ -156,6 +156,9 @@ export default function AutomatedFeedback() {
                 src={processingResult.pdfUrl}
                 className="w-full h-full min-h-[24rem] border-0"
                 style={{ height: 'calc(100vh - 350px)' }}
+                onError={(e) => {
+                  console.error("Failed to load iframe content", e);
+                }}
               />
             ) : (
               <div className="h-full flex flex-col items-center justify-center text-center p-6">
