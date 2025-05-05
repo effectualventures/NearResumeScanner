@@ -23,6 +23,11 @@
 --destructive-foreground: 60 9.1% 97.8%;
 --ring: 20 14.3% 4.1%;
 --radius: 0.5rem;
+
+/* Near custom colors */
+--near-navy: 223 58% 25%;
+--near-blue: 211 100% 50%;
+--near-error: 0 84% 60%;
   }
   .dark {
       --background: 240 10% 3.9%;
@@ -55,5 +60,26 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
   }
+}
+
+/* Override button styles for better visibility */
+.bg-near-blue {
+  background-color: #0070f3 !important;
+  color: white !important;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.bg-near-navy {
+  background-color: #192b54 !important;
+  color: white !important;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Contrast for disabled buttons */
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background-color: #cbd5e1 !important;
+  color: #475569 !important;
 }
 
