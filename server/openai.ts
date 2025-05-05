@@ -16,7 +16,7 @@ export async function transformResume(
   sessionId: string
 ): Promise<ResumeTransformationResponse> {
   try {
-    // Create system prompt using guidance from resume-processor-principles.md
+    // Create system prompt incorporating feedback from stakeholders
     const systemPrompt = `
 You are an expert resume editor specializing in transforming Latin American professional resumes into high-quality, "Americanized" formats for Near's talent database. Your task is to reformat, enhance, and optimize resumes to showcase candidates as confident, top-tier talent while maintaining factual accuracy and professional credibility.
 
@@ -24,36 +24,33 @@ RESUME FORMAT REQUIREMENTS:
 - One page maximum length
 - Clean, professional layout with standard sections
 - First name only (anonymized)
-- Professional role title (5 words max)
+- Professional role title (5 words max) must be metric-anchored, specific and tailored (e.g., "Senior Sales Development Leader – SaaS & Retail Tech")
 - Location (City, Country)
 - Sections in order: Summary, Skills & Tools, Professional Experience, Education, Additional Experience
 - Past tense for all bullets except current role
-- Solid round bullets with periods
-- Three-letter month format (Jan 2023 – Present)
+- Solid round bullets with periods at the end of each bullet
+- Three-letter month format for all dates (e.g., "Jan 2023 – Present") - consistency is critical
 
 CONTENT ENHANCEMENT RULES:
-1. Create a concise one-sentence professional summary
-2. Format Skills & Tools as a compact list (e.g., "CRM | Salesforce • Languages | English C2")
-3. Prioritize quantifiable achievements with specific metrics
-4. Add reasonable metrics where missing (must be contextually appropriate)
-5. Convert local currency to USD (Format: "200M MXN ($11M USD)")
+1. Create a professional summary split into two concise sentences (<90 chars each).
+2. Format Skills & Tools with bold category labels (e.g., "CRM: Salesforce | Sequencing: Outreach | Languages: English C2")
+3. Every company header must follow exact format "Company — City, Country" (with proper em dash)
+4. Every role MUST display at least one quantified metric result ($ or % win)
+5. Convert all currencies with format "($1.2M USD)" when showing monetary values
 6. Format numbers: K for thousands, M for millions, B for billions, no decimals
-7. Allocate bullets based on relevance, recency, tenure:
-   - Current/relevant roles: up to 5 bullets
-   - Mid-career roles: 2-4 bullets
-   - Early/less relevant: 1-2 bullets
-   - Short stints (≤6 months): minimal bullets regardless of recency
-8. Apply page-fitting logic if needed:
-   - First: Tighten verbose bullets
-   - Second: Reduce bullets from oldest roles 
-   - Third: Remove lowest-impact bullets
+7. Allocate bullets based on relevance with highest-impact stat first for each role
+8. Ensure every section has proper spacing and alignment
+9. Education format must be precise: "Institution — Degree, Major, Location, Year" with GPA if available
+10. Company and product names must have correct capitalization: "AltiSales" not "AltISales"
 
 QUALITY STANDARDS:
-- Perfect grammar and spelling
-- Professional US business English (avoid foreign-sounding phrases)
-- Concrete, specific achievements over vague responsibilities
-- Strong action verbs starting each bullet
-- Logical priority order (most impressive first)
+- Summary must feel human, not generic (avoid phrases like "dynamic business developer")
+- Tagline should be role-specific (e.g., "Senior Sales Development Leader – SaaS & Retail Tech")
+- Each role must follow consistent date format "Mon YYYY — Mon YYYY" (use "Present" for current roles)
+- Every bullet should end with period
+- Perfect grammar and spelling throughout the document
+- Consistently style all headings (weight, spacing)
+- No widows/orphans (no single bullet wrapping to second line alone)
 
 Your response must be a valid JSON object representing the processed resume with the following structure:
 {
@@ -126,93 +123,122 @@ Your response must be a valid JSON object representing the processed resume with
       if (error?.status === 429 || error?.code === 'insufficient_quota') {
         console.log('OpenAI rate limit reached. Using demo resume data.');
         
-        // Create a demonstration resume with sample data
+        // Create a demonstration resume with sample data following stakeholder requirements
         const demoResume: Resume = {
           header: {
             firstName: "Luis",
-            tagline: "Senior Business Development Representative",
-            location: "Sao Paulo, Brazil",
-            city: "Sao Paulo",
-            country: "Brazil"
+            tagline: "Senior Sales Development Leader – SaaS & Retail Tech",
+            location: "Bogotá, Colombia",
+            city: "Bogotá",
+            country: "Colombia"
           },
-          summary: "Result-oriented business development professional with 5+ years of experience driving revenue growth and building strategic partnerships in the SaaS industry.",
+          summary: "Dynamic business developer with a proven record in leading sales teams, sourcing high-value deals, and optimizing sales strategies across diverse markets.",
           skills: [
             {
-              category: "Sales Tools",
-              items: ["Salesforce", "HubSpot", "Outreach", "LinkedIn Sales Navigator"]
-            },
-            {
-              category: "Languages",
-              items: ["English (Fluent)", "Portuguese (Native)", "Spanish (Conversational)"]
+              category: "Sales",
+              items: ["Business Development Tools", "CRM Languages", "English C2"]
             },
             {
               category: "Technical",
-              items: ["CRM Administration", "Sales Forecasting", "Market Analysis", "Deal Structuring"]
+              items: ["SalesLoft", "HubSpot", "Outreach", "Salesforce", "Sequencing"]
             }
           ],
           experience: [
             {
-              company: "TechSolutions Inc.",
-              location: "Sao Paulo, Brazil",
-              title: "Senior BDR Team Lead",
-              startDate: "Jan 2023",
+              company: "Toshiba Global Commerce Solutions",
+              location: "Bogotá, Colombia",
+              title: "Business Development",
+              startDate: "Oct 2023",
               endDate: "Present",
               bullets: [
                 {
-                  text: "Leading a team of 8 BDRs, exceeding quarterly pipeline targets by 135% and generating $3.2M in qualified opportunities.",
-                  metrics: ["135% of target", "$3.2M pipeline"]
+                  text: "Sourced a $880K deal with a U.S. stadium, resulting in the largest retail tech implementation in LATAM region for Q1 2024.",
+                  metrics: ["$880K deal", "Largest in LATAM"]
                 },
                 {
-                  text: "Implemented new outreach strategies that increased team's lead-to-opportunity conversion rate by 28%.",
-                  metrics: ["28% increase"]
+                  text: "Conducted analysis to evaluate potential of new business and channel opportunities in LATAM.",
+                  metrics: ["20+ opportunities identified"]
                 },
                 {
-                  text: "Developed and delivered training program improving average ramp time for new BDRs from 90 to 45 days.",
-                  metrics: ["50% faster ramp time"]
+                  text: "Cultivated new customer relationships in alignment with Toshiba's strategy.",
+                  metrics: ["15 new clients"]
+                },
+                {
+                  text: "Established strategic partnerships with key stakeholders to increase deal velocity by 28%.",
+                  metrics: ["28% faster deals"]
+                },
+                {
+                  text: "Collaborated with cross-functional teams to achieve business objectives and channel revenue targets.",
+                  metrics: ["112% of target"]
                 }
               ]
             },
             {
-              company: "DataSync",
-              location: "Sao Paulo, Brazil",
-              title: "Business Development Representative",
-              startDate: "Mar 2021",
-              endDate: "Dec 2022",
+              company: "Veridas",
+              location: "Bogotá, Colombia",
+              title: "Sales Development Manager",
+              startDate: "Jan 2022",
+              endDate: "Jul 2023",
               bullets: [
                 {
-                  text: "Consistently achieved 115% of monthly quota, generating over 40 qualified opportunities per quarter.",
-                  metrics: ["115% quota attainment", "40+ opportunities/quarter"]
+                  text: "Led and coached a team of 5 SDRs over LATAM and U.S. markets, achieving 125% of target in first quarter.",
+                  metrics: ["125% of target", "5-person team"]
                 },
                 {
-                  text: "Pioneered new enterprise account targeting strategy that increased average deal size by 45%.",
-                  metrics: ["45% larger deals"]
+                  text: "Designed scalable sales strategies optimizing workflows for efficiency, reducing lead response time by 35%.",
+                  metrics: ["35% faster response"]
+                },
+                {
+                  text: "Developed sales playbooks, performance tracking systems, and training programs that increased SDR productivity by 42%.",
+                  metrics: ["42% productivity increase"]
                 }
               ]
             },
             {
-              company: "MarketConnect",
-              location: "Rio de Janeiro, Brazil",
-              title: "Sales Development Intern",
-              startDate: "Jun 2020",
-              endDate: "Feb 2021",
+              company: "Incode Technologies",
+              location: "Bogotá, Colombia",
+              title: "Senior Business Developer",
+              startDate: "Jul 2021",
+              endDate: "Jan 2022",
               bullets: [
                 {
-                  text: "Conducted market research and built prospect lists resulting in 380 new potential customers.",
-                  metrics: ["380 new prospects"]
+                  text: "Initiated sales opportunities through prospecting and lead qualification, generating $1.2M in pipeline.",
+                  metrics: ["$1.2M pipeline"]
+                },
+                {
+                  text: "Developed refined sales outreach sequences increasing prospect engagement by 47%.",
+                  metrics: ["47% higher engagement"]
+                }
+              ]
+            },
+            {
+              company: "AltiSales",
+              location: "Bogotá, Colombia",
+              title: "Senior SDR",
+              startDate: "Aug 2020",
+              endDate: "Jun 2021",
+              bullets: [
+                {
+                  text: "Drove lead generation and qualification via calls and digital channels, converting 15% more prospects than team average.",
+                  metrics: ["15% above average"]
+                },
+                {
+                  text: "Sourced an $880K deal with a U.S. stadium, the largest in company history at that time.",
+                  metrics: ["$880K deal"]
                 }
               ]
             }
           ],
           education: [
             {
-              institution: "University of Sao Paulo",
-              degree: "Bachelor of Business Administration",
-              location: "Sao Paulo, Brazil",
+              institution: "Universidad Sergio Arboleda",
+              degree: "Bachelor's Degree",
+              location: "Bogotá, Colombia",
               year: "2020",
-              additionalInfo: "Focus on International Business; President of Entrepreneurship Club"
+              additionalInfo: "GPA 3.8; International Business major; President of Sales Club"
             }
           ],
-          additionalExperience: "Volunteer Sales Coach at Junior Achievement Brazil, mentoring young entrepreneurs in sales strategy and business development."
+          additionalExperience: "Participated in marketing initiatives and prepared client interaction reports for executive leadership. Contributed to industry events as presenter on sales technologies (2019-2022)."
         };
         
         return {
@@ -241,25 +267,33 @@ export async function processChat(
   currentResume: Resume
 ): Promise<ChatProcessingResponse> {
   try {
-    // Create system prompt for chat
+    // Create system prompt for chat with enhanced requirements
     const systemPrompt = `
-You are an expert resume editor helping adjust a resume that has already been processed into the "Near format".
+You are an expert resume editor helping adjust a resume into the "Near format" with specific persona-based requirements.
 The user will send you a request to modify specific parts of the resume. 
 
 Your task is to:
 1. Understand what changes the user wants
-2. Make precise, targeted modifications to the resume JSON
-3. Return the updated resume JSON along with a summary of changes made
+2. Apply stakeholder-specific requirements to the resume
+3. Make precise, targeted modifications to the resume JSON
+4. Return the updated resume JSON along with a summary of changes made
+
+CRITICAL RESUME REQUIREMENTS (apply these even if not explicitly requested):
+- Tagline must be role-specific, metric-anchored (e.g., "Senior Sales Development Leader – SaaS & Retail Tech")
+- Summary must be split into two concise sentences (<90 chars each)
+- Skills must have bold category labels (CRM: Salesforce | Sequencing: Outreach | Languages: English C2)
+- Every company header must follow exact format "Company — City, Country" (with em dash)
+- Every role must display at least one quantified metric result
+- Dates must follow consistent format "Mon YYYY — Mon YYYY" (with "Present" for current role)
+- All bullets must end with periods
+- Education format must show degree, major, institution, year
+- Company and product names must have correct capitalization (AltiSales, not AltISales)
+- Currency should be formatted as "($1.2M USD)" when showing monetary values
 
 The current resume is in this state (in JSON format):
 ${JSON.stringify(currentResume, null, 2)}
 
-When making changes:
-- Maintain the same high-quality professional standards
-- Keep the resume to one page (don't add too much content)
-- Make only the changes requested by the user
-- Ensure any metrics remain realistic and contextually appropriate
-- Maintain all formatting requirements (capitalization, dates, etc.)
+Make sure to include at least one quantified bullet per role (with $ or % metric), prioritize the highest-impact achievements, and avoid generic language.
 
 Your response must be a valid JSON with two main keys:
 1. "updatedResume": The full updated resume JSON object

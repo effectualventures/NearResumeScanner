@@ -193,6 +193,25 @@ Handlebars.registerHelper('slice', function(arr, start, end) {
   return arr.slice(start, end);
 });
 
+// Helper to break summary into multiple lines (max 90 chars)
+Handlebars.registerHelper('breaklines', function(text) {
+  if (!text) return '';
+  
+  // If text is less than 90 chars, return as is
+  if (text.length <= 90) return text;
+  
+  // Find a good break point around 90 chars
+  const breakPoint = text.lastIndexOf(' ', 90);
+  if (breakPoint === -1) return text; // No space found, return as is
+  
+  // Split text into two parts
+  const firstLine = text.substring(0, breakPoint);
+  const secondLine = text.substring(breakPoint + 1);
+  
+  // Return with HTML line break
+  return new Handlebars.SafeString(`${firstLine}<br>${secondLine}`);
+});
+
 /**
  * Generate a PDF from a Resume object
  * @param resume The resume data
