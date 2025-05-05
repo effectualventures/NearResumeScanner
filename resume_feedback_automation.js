@@ -14,10 +14,17 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import fetch from 'node-fetch';
 import FormData from 'form-data';
+import OpenAI from 'openai';
+import puppeteer from 'puppeteer';
 
 // ES modules fix for __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Initialize OpenAI client
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 // Configuration
 const SERVER_URL = 'http://localhost:5000';
@@ -106,6 +113,109 @@ async function downloadProcessedResume(sessionId) {
 }
 
 /**
+ * Capture a screenshot of the resume HTML
+ * @param {string} htmlPath Path to the HTML file
+ * @returns {Promise<string>} Path to the screenshot
+ */
+async function captureResumeScreenshot(htmlPath) {
+  console.log('Capturing resume screenshot...');
+
+  try {
+    const htmlContent = fs.readFileSync(htmlPath, 'utf-8');
+    const screenshotPath = path.join(__dirname, 'resume_screenshot.png');
+    
+    // Launch a headless browser
+    const browser = await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
+    const page = await browser.newPage();
+    
+    // Set the viewport to a size that can fit the entire resume
+    await page.setViewport({ width: 1200, height: 1553 });
+    
+    // Navigate to HTML file (convert file path to URL)
+    const fileUrl = `file://${path.resolve(htmlPath)}`;
+    await page.goto(fileUrl, { waitUntil: 'networkidle0' });
+    
+    // Wait for fonts to load and content to render properly
+    await page.waitForTimeout(1000);
+    
+    // Take a screenshot of the entire page
+    await page.screenshot({ 
+      path: screenshotPath,
+      fullPage: true,
+      quality: 100
+    });
+    
+    await browser.close();
+    console.log(`Screenshot saved to: ${screenshotPath}`);
+    return screenshotPath;
+  } catch (error) {
+    console.error('Error capturing screenshot:', error);
+    throw error;
+  }
+}
+
+/**
+ * Get feedback on the resume from ChatGPT
+ * @param {string} resumePath Path to the resume file
+ * @returns {Promise<string>} The feedback from ChatGPT
+ */
+async function getResumeFeedback(resumePath) {
+  console.log('Getting feedback from ChatGPT...');
+  
+  try {
+    // First, capture a screenshot of the resume
+    const screenshotPath = await captureResumeScreenshot(resumePath);
+    
+    // Read the screenshot file as base64
+    const imageBuffer = fs.readFileSync(screenshotPath);
+    const base64Image = imageBuffer.toString('base64');
+    
+    // Call ChatGPT with the screenshot for feedback
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o", // Use the latest model, released May 13, 2024
+      messages: [
+        {
+          role: "system", 
+          content: "You are a helpful resume review assistant that provides detailed feedback on resume quality, design, and content."
+        },
+        {
+          role: "user",
+          content: [
+            {
+              type: "text", 
+              text: CHATGPT_PROMPT
+            },
+            {
+              type: "image_url",
+              image_url: {
+                url: `data:image/png;base64,${base64Image}`
+              }
+            }
+          ]
+        }
+      ],
+      max_tokens: 2500
+    });
+    
+    const feedback = response.choices[0].message.content;
+    console.log('\n=== ChatGPT Feedback ===\n');
+    console.log(feedback);
+    
+    // Save feedback to a file
+    const feedbackPath = path.join(__dirname, 'resume_feedback.txt');
+    fs.writeFileSync(feedbackPath, feedback);
+    console.log(`\nFeedback saved to: ${feedbackPath}`);
+    
+    return feedback;
+  } catch (error) {
+    console.error('Error getting feedback from ChatGPT:', error);
+    throw error;
+  }
+}
+
+/**
  * Run the automation
  */
 async function run() {
@@ -113,15 +223,35 @@ async function run() {
     // Step 1: Upload and process the resume
     const { sessionId, pdfUrl } = await uploadAndProcessResume();
     
-    // Step 2: Download the processed resume
-    const downloadedFilePath = await downloadProcessedResume(sessionId);
+    // Step 2: Get the actual full path to the HTML resume
+    const htmlResumeUrl = `${SERVER_URL}${pdfUrl}`;
+    const htmlResumeLocalPath = path.join(__dirname, 'temp_resume.html');
     
-    // Step 3: Print instructions for ChatGPT feedback
-    console.log('\n=== NEXT STEPS ===');
-    console.log('1. Take the processed resume and upload it to ChatGPT');
-    console.log('2. Use the following prompt:');
-    console.log(CHATGPT_PROMPT);
-    console.log('3. Review the feedback and implement changes');
+    // Download the HTML resume file locally
+    const response = await fetch(htmlResumeUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch HTML resume: ${response.status}`);
+    }
+    const htmlContent = await response.text();
+    fs.writeFileSync(htmlResumeLocalPath, htmlContent);
+    console.log(`HTML resume saved to: ${htmlResumeLocalPath}`);
+    
+    // Check if we have an OpenAI API key
+    if (process.env.OPENAI_API_KEY) {
+      // Step 3: Get feedback from ChatGPT using the HTML file
+      const feedback = await getResumeFeedback(htmlResumeLocalPath);
+      
+      console.log('\n=== NEXT STEPS ===');
+      console.log('Review the feedback above and implement suggested changes');
+    } else {
+      // Step 3: Print instructions for manual ChatGPT feedback
+      console.log('\n=== NEXT STEPS ===');
+      console.log('OpenAI API key not found. Please take these manual steps:');
+      console.log('1. Take the processed resume and upload it to ChatGPT');
+      console.log('2. Use the following prompt:');
+      console.log(CHATGPT_PROMPT);
+      console.log('3. Review the feedback and implement changes');
+    }
     
   } catch (error) {
     console.error('Automation failed:', error);
