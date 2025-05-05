@@ -1,294 +1,222 @@
-import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Textarea } from '@/components/ui/textarea';
-import { AlertCircle, CheckCircle2, FileText, RefreshCw } from 'lucide-react';
-import { uploadResume } from '@/lib/api';
-
-// Luis's resume file path
-const LUIS_RESUME_PATH = 'Luis Chavez - Sr BDR - Player Coach (Near).pdf';
+import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Loader2, Send, Download, RotateCcw } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Separator } from "@/components/ui/separator";
+import { processLuisResume, getAutoFeedback, implementFeedback } from "@/lib/api";
+import { useToast } from "@/hooks/use-toast";
 
 export default function AutomatedFeedback() {
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [processingResult, setProcessingResult] = useState<{
-    sessionId: string;
-    pdfUrl: string;
-    chatGptPrompt: string;
-  } | null>(null);
-  
-  const [feedback, setFeedback] = useState<string>('');
-  const [implementationPlan, setImplementationPlan] = useState<string>('');
+  const { toast } = useToast();
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [isImplementing, setIsImplementing] = useState(false);
-  const [isComplete, setIsComplete] = useState(false);
+  const [feedback, setFeedback] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Automatically process Luis's resume when the component loads
-  useEffect(() => {
-    processResume();
-  }, []);
-
-  // Function to process the resume automatically
+  // Process Luis's resume automatically
   const processResume = async () => {
+    setIsLoading(true);
     try {
-      setIsProcessing(true);
-      setError(null);
-      setIsComplete(false);
-
-      // First, fetch the file content using the server
-      const formData = new FormData();
-      
-      // Use a special endpoint to process Luis's resume directly
-      const response = await fetch('/api/process-luis-resume', {
-        method: 'POST',
+      const result = await processLuisResume();
+      setSessionId(result.sessionId);
+      setPdfUrl(result.pdfUrl);
+      toast({
+        title: "Resume processed",
+        description: "The resume has been processed successfully.",
+        duration: 3000,
       });
-      
-      if (!response.ok) {
-        throw new Error('Failed to process resume');
-      }
-      
-      const result = await response.json();
-      
-      if (!result.success) {
-        throw new Error(result.error?.message || 'Processing failed');
-      }
-      
-      // Get the ChatGPT prompt
-      const promptResponse = await fetch('/api/chatgpt-prompt');
-      if (!promptResponse.ok) {
-        throw new Error('Failed to get ChatGPT prompt');
-      }
-      const chatGptPrompt = await promptResponse.text();
-      
-      setProcessingResult({
-        sessionId: result.data.sessionId,
-        pdfUrl: result.data.pdfUrl,
-        chatGptPrompt
+    } catch (error) {
+      console.error("Error processing resume:", error);
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to process resume",
+        variant: "destructive",
+        duration: 5000,
       });
-      
-    } catch (err) {
-      console.error('Processing failed:', err);
-      setError(err instanceof Error ? err.message : 'Failed to process resume');
     } finally {
-      setIsProcessing(false);
+      setIsLoading(false);
     }
   };
 
-  const handleImplementFeedback = async () => {
-    if (!feedback) {
-      setError('Please paste the feedback from ChatGPT before implementing changes');
-      return;
-    }
-    
-    if (!processingResult?.sessionId) {
-      setError('No resume is currently being processed');
-      return;
-    }
+  // Fetch auto feedback when sessionId is available
+  const fetchFeedback = async () => {
+    if (!sessionId) return null;
     
     try {
-      setIsImplementing(true);
-      setError(null);
-      
-      const response = await fetch('/api/implement-feedback', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          sessionId: processingResult.sessionId,
-          feedback,
-          implementationPlan: implementationPlan || undefined,
-        }),
+      const result = await getAutoFeedback(sessionId);
+      setFeedback(result);
+      return result;
+    } catch (error) {
+      console.error("Error fetching feedback:", error);
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to get automated feedback",
+        variant: "destructive",
+        duration: 5000,
       });
-      
-      const result = await response.json();
-      
-      if (!result.success) {
-        throw new Error(result.error?.message || 'Failed to implement feedback');
-      }
-      
-      // Update with the new result
-      setProcessingResult(prev => ({
-        ...prev!,
-        sessionId: result.data.newSessionId,
-        pdfUrl: result.data.pdfUrl,
-      }));
-      
-      // Show success message
-      setIsComplete(true);
-      
-      // Clear the feedback
-      setFeedback('');
-      setImplementationPlan('');
-      
-    } catch (err) {
-      console.error('Implementation failed:', err);
-      setError(err instanceof Error ? err.message : 'Failed to implement feedback');
+      return null;
+    }
+  };
+
+  // Implement the feedback
+  const handleImplementFeedback = async () => {
+    if (!sessionId || !feedback) return;
+    
+    setIsImplementing(true);
+    try {
+      const result = await implementFeedback(sessionId, feedback);
+      setSessionId(result.newSessionId);
+      setPdfUrl(result.pdfUrl);
+      toast({
+        title: "Feedback implemented",
+        description: "The feedback has been successfully implemented.",
+        duration: 3000,
+      });
+    } catch (error) {
+      console.error("Error implementing feedback:", error);
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to implement feedback",
+        variant: "destructive",
+        duration: 5000,
+      });
     } finally {
       setIsImplementing(false);
     }
   };
 
+  // Auto-fetch feedback when sessionId changes
+  useEffect(() => {
+    if (sessionId) {
+      fetchFeedback();
+    }
+  }, [sessionId]);
+
   return (
-    <div className="container mx-auto py-8 max-w-5xl">
-      <h1 className="text-3xl font-bold mb-6 text-near-navy text-center">Automated Resume Feedback</h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        {/* Resume Preview Card */}
-        <Card className="flex flex-col">
-          <CardHeader>
-            <CardTitle>Processed Resume</CardTitle>
-            <CardDescription>
-              {isProcessing ? 'Processing Luis Chavez resume...' : 'Luis Chavez resume in Near format'}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex-grow p-0 min-h-[24rem]">
-            {isProcessing ? (
-              <div className="h-full flex flex-col items-center justify-center text-center p-6">
-                <div className="mb-4">
-                  <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-near-blue"></div>
-                </div>
-                <h3 className="text-near-gray-600 font-medium mb-1">Processing resume</h3>
-                <p className="text-near-gray-400 text-sm">Enhancing content and formatting...</p>
-              </div>
-            ) : processingResult ? (
-              <iframe 
-                src={processingResult.pdfUrl}
-                className="w-full h-full min-h-[24rem] border-0"
-                style={{ height: 'calc(100vh - 350px)' }}
-                onError={(e) => {
-                  console.error("Failed to load iframe content", e);
-                }}
-              />
+    <div className="container mx-auto p-4 max-w-7xl">
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold mb-2">Automated Resume Feedback</h1>
+        <p className="text-muted-foreground mb-4">
+          This page demonstrates automated resume processing and feedback generation.
+        </p>
+        
+        {!sessionId && (
+          <Button onClick={processResume} disabled={isLoading}>
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Processing...
+              </>
             ) : (
-              <div className="h-full flex flex-col items-center justify-center text-center p-6">
-                <div className="bg-near-gray-100 rounded-full p-3 mb-4">
-                  <FileText className="text-near-gray-400 text-xl" />
-                </div>
-                <h3 className="text-near-gray-600 font-medium mb-1">No processed resume yet</h3>
-                <p className="text-near-gray-400 text-sm">Click process to convert the resume</p>
-              </div>
+              "Process Resume"
             )}
-          </CardContent>
-          <CardFooter className="border-t p-3 flex justify-between items-center">
-            <Button
-              onClick={processResume}
-              disabled={isProcessing}
-              variant="outline"
-              size="sm"
-              className="flex items-center"
-            >
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Refresh
-            </Button>
-            {processingResult && (
-              <a
-                href={processingResult.pdfUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:underline text-sm flex items-center"
-              >
-                <FileText className="h-4 w-4 mr-1" />
-                Open in new tab
-              </a>
-            )}
-          </CardFooter>
-        </Card>
-
-        {/* Feedback and Implementation Card */}
-        <Card className="flex flex-col">
-          <CardHeader>
-            <CardTitle>Feedback Implementation</CardTitle>
-            <CardDescription>
-              Enter feedback from ChatGPT and implement changes
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex-grow">
-            {error && (
-              <Alert variant="destructive" className="mb-4">
-                <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Error</AlertTitle>
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
-
-            {isComplete && (
-              <Alert className="mb-4 bg-green-50 border-green-200">
-                <CheckCircle2 className="h-4 w-4 text-green-600" />
-                <AlertTitle className="text-green-600">Success</AlertTitle>
-                <AlertDescription>Changes have been implemented successfully!</AlertDescription>
-              </Alert>
-            )}
-
-            <div className="mb-4">
-              <h3 className="text-sm font-medium mb-2">1. Get feedback using ChatGPT</h3>
-              <p className="text-xs text-gray-500 mb-2">
-                Upload a screenshot of the resume to ChatGPT with this prompt:
-              </p>
-              <div className="bg-gray-50 p-3 rounded-md text-xs max-h-32 overflow-y-auto mb-2 border">
-                {processingResult?.chatGptPrompt || 'Loading prompt...'}
-              </div>
-            </div>
-
-            <div className="mb-4">
-              <h3 className="text-sm font-medium mb-2">2. Paste feedback from ChatGPT</h3>
-              <Textarea
-                placeholder="Paste the feedback from ChatGPT here..."
-                className="min-h-[150px]"
-                value={feedback}
-                onChange={(e) => setFeedback(e.target.value)}
-              />
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium mb-2">3. Implementation plan (optional)</h3>
-              <Textarea
-                placeholder="Add any specific implementation instructions or changes you'd like to make..."
-                className="min-h-[80px]"
-                value={implementationPlan}
-                onChange={(e) => setImplementationPlan(e.target.value)}
-              />
-            </div>
-          </CardContent>
-          <CardFooter className="border-t p-4">
-            <Button
-              onClick={handleImplementFeedback}
-              disabled={isProcessing || isImplementing || !feedback}
-              className="w-full bg-near-navy text-white"
-            >
-              {isImplementing ? (
-                <>
-                  <span className="mr-2">Implementing Changes...</span>
-                  <span className="animate-spin h-4 w-4 border-2 border-white rounded-full border-t-transparent"></span>
-                </>
-              ) : (
-                'Implement Feedback'
-              )}
-            </Button>
-          </CardFooter>
-        </Card>
+          </Button>
+        )}
       </div>
 
-      {/* Steps and Instructions */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Automated Feedback Process</CardTitle>
-          <CardDescription>
-            This tool automates the feedback loop for resume processing
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ol className="list-decimal list-inside space-y-2">
-            <li className="text-sm">Luis Chavez's resume is <span className="font-medium">automatically processed</span> through the Near format</li>
-            <li className="text-sm">Take a <span className="font-medium">screenshot</span> of the processed resume</li>
-            <li className="text-sm">Upload to ChatGPT with the provided <span className="font-medium">specialized prompt</span></li>
-            <li className="text-sm">Paste the feedback into the textarea and add any specific implementation instructions</li>
-            <li className="text-sm">Click <span className="font-medium">"Implement Feedback"</span> to apply the changes</li>
-            <li className="text-sm">The resume will automatically refresh to show the new version with improvements</li>
-            <li className="text-sm">Repeat the process until you're satisfied with the results</li>
-          </ol>
-        </CardContent>
-      </Card>
+      {sessionId && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Resume Preview */}
+          <div className="h-[800px] flex flex-col">
+            <Card className="flex-1 overflow-hidden">
+              <CardHeader>
+                <CardTitle>Processed Resume</CardTitle>
+                <CardDescription>Near format resume</CardDescription>
+              </CardHeader>
+              <CardContent className="p-0 h-full">
+                {pdfUrl ? (
+                  <iframe
+                    src={pdfUrl}
+                    className="w-full h-full border-0"
+                    title="Processed Resume"
+                  />
+                ) : (
+                  <div className="flex items-center justify-center h-full">
+                    <Loader2 className="h-8 w-8 animate-spin" />
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+            <div className="flex justify-between mt-4 gap-2">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setSessionId(null);
+                  setPdfUrl(null);
+                  setFeedback(null);
+                }}
+              >
+                <RotateCcw className="mr-2 h-4 w-4" />
+                Reset
+              </Button>
+              
+              {pdfUrl && (
+                <Button
+                  variant="outline"
+                  onClick={() => window.open(pdfUrl, "_blank")}
+                >
+                  <Download className="mr-2 h-4 w-4" />
+                  Download
+                </Button>
+              )}
+            </div>
+          </div>
+
+          {/* Feedback Panel */}
+          <div className="h-[800px] flex flex-col">
+            <Card className="flex-1">
+              <CardHeader>
+                <CardTitle>AI-Generated Feedback</CardTitle>
+                <CardDescription>
+                  Automated analysis of the resume based on Near standards
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="h-[calc(100%-5rem)]">
+                <ScrollArea className="h-full pr-4">
+                  {!feedback ? (
+                    <div className="flex items-center justify-center h-full">
+                      <Loader2 className="h-8 w-8 animate-spin" />
+                    </div>
+                  ) : (
+                    <div className="whitespace-pre-line">{feedback}</div>
+                  )}
+                </ScrollArea>
+              </CardContent>
+            </Card>
+            <div className="mt-4">
+              <Button
+                className="w-full"
+                size="lg"
+                onClick={handleImplementFeedback}
+                disabled={!feedback || isImplementing}
+              >
+                {isImplementing ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Implementing Feedback...
+                  </>
+                ) : (
+                  <>
+                    <Send className="mr-2 h-4 w-4" />
+                    Implement Feedback
+                  </>
+                )}
+              </Button>
+              
+              <Alert className="mt-4">
+                <AlertDescription>
+                  Click "Implement Feedback" to apply the AI suggestions automatically.
+                  The feedback will be processed using OpenAI and the resume will be updated.
+                </AlertDescription>
+              </Alert>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

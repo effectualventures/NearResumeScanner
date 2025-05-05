@@ -3,7 +3,7 @@ import multer from "multer";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { parseResumeFile } from "./parser";
-import { transformResume, processChat } from "./openai";
+import { transformResume, processChat, generateFeedback } from "./openai";
 import { generatePDF } from "./pdf-generator";
 import { ApiResponse, ProcessingResult, ChatResult } from "./types";
 import { Resume } from "@shared/schema";
@@ -392,6 +392,75 @@ export async function registerRoutes(app: Express): Promise<Server> {
           code: "INTERNAL_ERROR",
           message: "Failed to retrieve ChatGPT prompt",
         },
+      });
+    }
+  });
+  
+  // Auto-generate feedback for a resume
+  app.get('/api/auto-feedback/:sessionId', async (req: Request, res: Response) => {
+    try {
+      const { sessionId } = req.params;
+      
+      // Retrieve session data
+      const sessionData = await storage.getSession(sessionId);
+      if (!sessionData) {
+        return res.status(404).json({
+          success: false,
+          error: { code: 'SESSION_NOT_FOUND', message: 'Session not found' }
+        });
+      }
+      
+      // Parse the resume JSON
+      const resumeData: Resume = JSON.parse(sessionData.processedJson);
+      
+      // Get the PDF URL
+      const pdfUrl = `/temp/${path.basename(sessionData.processedPdfPath)}`;
+      
+      // Check if we have a cached feedback
+      const feedbackCachePath = path.join(process.cwd(), 'temp', `feedback_${sessionId}.txt`);
+      
+      let feedback;
+      
+      // Check for cached feedback
+      if (fs.existsSync(feedbackCachePath)) {
+        try {
+          console.log(`Using cached feedback: ${feedbackCachePath}`);
+          feedback = fs.readFileSync(feedbackCachePath, 'utf8');
+        } catch (cacheError) {
+          console.error("Error reading cached feedback:", cacheError);
+          // If cache read fails, proceed with API call
+          feedback = null;
+        }
+      }
+      
+      // If no cache was found, generate with OpenAI
+      if (!feedback) {
+        feedback = await generateFeedback(resumeData, pdfUrl);
+        
+        // Cache the feedback
+        try {
+          fs.writeFileSync(feedbackCachePath, feedback);
+          console.log(`Cached feedback saved: ${feedbackCachePath}`);
+        } catch (cacheError) {
+          console.error("Error caching feedback:", cacheError);
+          // Continue even if caching fails
+        }
+      }
+      
+      return res.json({
+        success: true,
+        data: {
+          feedback
+        }
+      });
+    } catch (error) {
+      console.error('Error in /api/auto-feedback:', error);
+      return res.status(500).json({
+        success: false,
+        error: {
+          code: 'INTERNAL_ERROR',
+          message: error.message || 'An internal error occurred'
+        }
       });
     }
   });
