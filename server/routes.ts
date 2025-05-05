@@ -452,6 +452,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Automatically process Luis's resume
   app.post('/api/process-luis-resume', async (req: Request, res: Response) => {
     try {
+      const sessionId = crypto.randomUUID();
       const luisResumePath = path.join(process.cwd(), 'Luis Chavez - Sr BDR - Player Coach (Near).pdf');
       
       // Check if the file exists
@@ -473,7 +474,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const extractedText = await parseResumeFile(fileBuffer, fileName);
       
       // Transform the resume to the Near format
-      const transformResult = await transformResume(extractedText, fileName);
+      const textToTransform = extractedText || '';
+      const transformResult = await transformResume(textToTransform, sessionId);
       
       if (!transformResult.success) {
         return res.status(400).json({
@@ -486,7 +488,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       // Generate PDF/HTML from the transformed resume
-      const sessionId = crypto.randomUUID();
       const pdfPath = await generatePDF(transformResult.resume, sessionId);
       
       // Save session data

@@ -35,7 +35,8 @@ export async function implementFeedback(
     }
     
     // Get the current resume data
-    const currentResume: Resume = JSON.parse(session.processedJson);
+    const processedJson = session.processedJson || '{}';
+    const currentResume: Resume = JSON.parse(processedJson);
     
     // Process the feedback and update the resume
     const chatResult = await processDirectFeedback(
