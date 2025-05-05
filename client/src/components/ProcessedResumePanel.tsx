@@ -28,7 +28,7 @@ export default function ProcessedResumePanel({
   const [isPdfLoaded, setIsPdfLoaded] = useState(false);
 
   return (
-    <div className="w-full lg:w-5/12 flex flex-col gap-6">
+    <div className="w-full lg:w-8/12 flex flex-col gap-6">
       {/* Processed Resume View */}
       <Card className="flex-1 flex flex-col">
         <CardHeader className="flex items-center justify-between p-4 border-b">

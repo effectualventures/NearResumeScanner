@@ -54,34 +54,71 @@ export async function registerRoutes(app: Express): Promise<Server> {
           req.file.originalname
         );
         
-        // Transform resume using OpenAI
-        const transformResult = await transformResume(
-          parsedFile.extractedText,
-          parsedFile.id
-        );
+        // Create a hash of the extracted text to use as a cache key
+        const textHash = Buffer.from(parsedFile.extractedText).toString('base64').slice(0, 10);
+        const cachedFilePath = path.join(process.cwd(), 'temp', `cached_${textHash}.json`);
         
-        if (!transformResult.success) {
-          return res.status(500).json({
-            success: false,
-            error: {
-              code: "PROCESSING_ERROR",
-              message: transformResult.error || "Failed to process resume",
-            },
-          });
+        let resumeData;
+        let pdfPath;
+
+        // Check if we have a cached version of this resume
+        if (fs.existsSync(cachedFilePath)) {
+          try {
+            console.log(`Using cached resume data: ${cachedFilePath}`);
+            const cachedData = fs.readFileSync(cachedFilePath, 'utf8');
+            resumeData = JSON.parse(cachedData);
+            
+            // Generate PDF from the cached resume data
+            pdfPath = await generatePDF(resumeData, parsedFile.id);
+          } catch (cacheError) {
+            console.error("Error reading cached resume:", cacheError);
+            // If cache read fails, continue with normal processing
+            resumeData = null;
+          }
         }
-        
-        // Generate PDF from the processed resume
-        const pdfPath = await generatePDF(transformResult.resume, parsedFile.id);
+
+        // If no cache was found or cache read failed, process with OpenAI
+        if (!resumeData) {
+          // Transform resume using OpenAI
+          const transformResult = await transformResume(
+            parsedFile.extractedText,
+            parsedFile.id
+          );
+          
+          if (!transformResult.success) {
+            return res.status(500).json({
+              success: false,
+              error: {
+                code: "PROCESSING_ERROR",
+                message: transformResult.error || "Failed to process resume",
+              },
+            });
+          }
+          
+          resumeData = transformResult.resume;
+          
+          // Cache the processed resume data
+          try {
+            fs.writeFileSync(cachedFilePath, JSON.stringify(resumeData));
+            console.log(`Cached resume data saved: ${cachedFilePath}`);
+          } catch (cacheError) {
+            console.error("Error caching resume data:", cacheError);
+            // Continue even if caching fails
+          }
+          
+          // Generate PDF from the processed resume
+          pdfPath = await generatePDF(resumeData, parsedFile.id);
+        }
         
         // Store in the session
         await storage.createSession({
           id: parsedFile.id,
           originalFilename: parsedFile.originalFilename,
           originalText: parsedFile.extractedText,
-          processedText: JSON.stringify(transformResult.resume),
-          processedJson: JSON.stringify(transformResult.resume),
+          processedText: JSON.stringify(resumeData),
+          processedJson: JSON.stringify(resumeData),
           originalFilePath: parsedFile.originalFilePath,
-          processedPdfPath: pdfPath,
+          processedPdfPath: pdfPath as string,
           expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24h expiry
         });
         
@@ -97,19 +134,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
           success: true,
           data: {
             sessionId: parsedFile.id,
-            pdfUrl: `/temp/${path.basename(pdfPath)}`,
+            pdfUrl: `/temp/${path.basename(pdfPath as string)}`,
             originalFilename: parsedFile.originalFilename,
           },
         };
         
         return res.json(response);
-      } catch (error) {
+      } catch (error: any) {
         console.error("Error in /api/convert:", error);
         return res.status(500).json({
           success: false,
           error: {
             code: "INTERNAL_ERROR",
-            message: error.message || "An internal error occurred",
+            message: error?.message || "An internal error occurred",
           },
         });
       }
@@ -149,7 +186,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Process the chat message with OpenAI
       const currentResume: Resume = JSON.parse(sessionData.processedJson);
-      const chatResult = await processChat(sessionId, message, currentResume);
+      
+      // Create a hash for chat request caching
+      const chatKey = `${sessionId}_${Buffer.from(message).toString('base64').slice(0, 10)}`;
+      const chatCachePath = path.join(process.cwd(), 'temp', `chat_${chatKey}.json`);
+      
+      let chatResult;
+      
+      // Check for cached chat result
+      if (fs.existsSync(chatCachePath)) {
+        try {
+          console.log(`Using cached chat result: ${chatCachePath}`);
+          const cachedData = fs.readFileSync(chatCachePath, 'utf8');
+          chatResult = JSON.parse(cachedData);
+        } catch (cacheError) {
+          console.error("Error reading cached chat result:", cacheError);
+          // If cache read fails, proceed with API call
+          chatResult = null;
+        }
+      }
+      
+      // If no cache was found, process with OpenAI
+      if (!chatResult) {
+        chatResult = await processChat(sessionId, message, currentResume);
+        
+        // Cache the result
+        try {
+          fs.writeFileSync(chatCachePath, JSON.stringify(chatResult));
+          console.log(`Cached chat result saved: ${chatCachePath}`);
+        } catch (cacheError) {
+          console.error("Error caching chat result:", cacheError);
+          // Continue even if caching fails
+        }
+      }
       
       if (!chatResult.success) {
         return res.status(500).json({

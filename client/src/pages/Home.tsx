@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import AppHeader from '@/components/AppHeader';
 import UploadPanel from '@/components/UploadPanel';
-import OriginalResumeViewer from '@/components/OriginalResumeViewer';
 import ProcessedResumePanel from '@/components/ProcessedResumePanel';
 import ErrorModal from '@/components/ui/ErrorModal';
 import { useToast } from '@/hooks/use-toast';
@@ -210,12 +209,6 @@ export default function Home() {
             progress={processProgress}
             selectedFile={selectedFile}
             onRemoveFile={handleRemoveFile}
-          />
-          
-          <OriginalResumeViewer
-            fileUrl={fileUrl}
-            extractedText={extractedText}
-            isLoading={isUploading}
           />
           
           <ProcessedResumePanel
