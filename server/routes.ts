@@ -376,6 +376,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // ChatGPT Prompt - serve the feedback prompt for the UI tool
+  app.get('/api/chatgpt-prompt', (req: Request, res: Response) => {
+    try {
+      const { CHATGPT_FEEDBACK_PROMPT } = require('./feedback-prompt');
+      res.setHeader('Content-Type', 'text/plain');
+      res.status(200).send(CHATGPT_FEEDBACK_PROMPT);
+    } catch (error) {
+      console.error('Error serving ChatGPT prompt:', error);
+      res.status(500).json({
+        success: false,
+        error: {
+          code: "INTERNAL_ERROR",
+          message: "Failed to retrieve ChatGPT prompt",
+        },
+      });
+    }
+  });
+
   // Create HTTP server
   const httpServer = createServer(app);
   
