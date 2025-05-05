@@ -33,23 +33,24 @@ RESUME FORMAT REQUIREMENTS (MANDATORY):
 - Near logo in bottom right (handled by template)
 
 CRITICAL CONTENT SECTIONS (MUST INCLUDE ALL):
-- SUMMARY: Create a compelling two-sentence professional summary (each <90 chars). This MUST be included.
-- SKILLS & TOOLS: Format as a compact, categorized list. This MUST be included.
+- SUMMARY: Create a compelling two-sentence professional summary (each <90 chars) that mentions specific industries (SaaS, FinTech, etc.) and quantified achievements. This MUST be included.
+- SKILLS & TOOLS: Format as a compact, categorized list with specific tools in each category (not just generic terms). This MUST be included.
 - PROFESSIONAL EXPERIENCE: Reverse chronological order with metrics. This MUST be included.
-- EDUCATION: Must include degree, field of study, institution, location, and graduation year. This MUST be included.
+- EDUCATION: Must include degree with specific field of study, institution, location, and graduation year. This MUST be included.
 - ADDITIONAL EXPERIENCE (if relevant): Optional, but if included, follow same formatting rules.
 
 BULLET & FORMATTING RULES:
-1. Every bullet MUST end with a period.
+1. Every bullet MUST end with a period and have a strong action verb.
 2. Format Skills & Tools with bold category labels (e.g., "CRM: Salesforce | Sequencing: Outreach | Languages: English C2")
-3. Every company header must follow exact format "Company — City, Country" (with proper em dash)
-4. Every role MUST display at least one quantified metric result ($ or % win)
+3. Every company header MUST follow exact format "Company — City, Country" (with proper em dash) - location is required for ALL companies
+4. Every role MUST display at least 3 bullet points with at least one quantified metric result ($ or % win)
 5. Convert all currencies with format "($1.2M USD)" when showing monetary values
 6. Format numbers: K for thousands, M for millions, B for billions, no decimals
 7. Allocate bullets based on relevance with highest-impact stat first for each role
-8. Education format must be precise: "Institution — Degree, Major, Location, Year" with GPA if available
+8. Education format must be precise: "Institution — Degree in Field, Location, Year" with GPA if available
 9. Company and product names must have correct capitalization: "AltiSales" not "AltISales"
 10. ALWAYS use past tense for bullets in previous roles (ended jobs) and present tense ONLY for current roles
+11. Include industry context (SaaS, B2B, etc.) in company descriptions or role bullets
 
 QUALITY STANDARDS:
 - Summary must feel human and impressive, not generic (avoid phrases like "dynamic business developer")
@@ -140,15 +141,19 @@ Your response must be a valid JSON object representing the processed resume with
             city: "Bogotá",
             country: "Colombia"
           },
-          summary: "Dynamic business developer with a proven record in leading sales teams, sourcing high-value deals. Expertise in optimizing sales strategies across diverse markets resulting in 35% revenue growth.",
+          summary: "Strategic B2B SaaS sales leader with proven expertise in driving $1M+ deals and leading high-performance teams. Specialized in optimizing LATAM market sales strategies, resulting in 35% revenue growth in retail tech sector.",
           skills: [
             {
               category: "Sales",
-              items: ["Business Development Tools", "CRM Languages", "English C2"]
+              items: ["B2B Sales Strategy", "Enterprise Deal Negotiation", "Channel Management", "SaaS Sales Methodology", "English C2"]
             },
             {
               category: "Technical",
-              items: ["SalesLoft", "HubSpot", "Outreach", "Salesforce", "Sequencing"]
+              items: ["Salesforce Enterprise", "HubSpot Sales Hub", "Outreach.io", "SalesLoft", "ZoomInfo"]
+            },
+            {
+              category: "Analytics",
+              items: ["Sales Pipeline Forecasting", "Market Segmentation", "Opportunity Scoring", "Revenue Attribution"]
             }
           ],
           experience: [
@@ -240,13 +245,13 @@ Your response must be a valid JSON object representing the processed resume with
           education: [
             {
               institution: "Universidad Sergio Arboleda",
-              degree: "Bachelor's Degree",
+              degree: "Bachelor's Degree in International Business",
               location: "Bogotá, Colombia",
               year: "2020",
-              additionalInfo: "GPA 3.8; International Business major; President of Sales Club"
+              additionalInfo: "GPA 3.8; President of Sales Club; Graduated with honors"
             }
           ],
-          additionalExperience: "Participated in marketing initiatives and prepared client interaction reports for executive leadership. Contributed to industry events as presenter on sales technologies (2019-2022)."
+          additionalExperience: "Led quarterly go-to-market strategy sessions for LATAM B2B SaaS market entry. Delivered presentations at SaaS Connect 2022 conference on 'Enterprise Sales Enablement in Emerging Markets' and contributed to SalesHacker blog series on optimizing sales technology stacks."
         };
         
         return {
@@ -293,14 +298,15 @@ CRITICAL RESUME REQUIREMENTS (apply ALL these even if not explicitly requested):
 - Tagline must be role-specific, metric-anchored (e.g., "Senior Sales Development Leader – SaaS & Retail Tech")
 - Summary must be split into two concise sentences (<90 chars each)
 - Skills must have bold category labels (CRM: Salesforce | Sequencing: Outreach | Languages: English C2)
-- Every company header must follow exact format "Company — City, Country" (with em dash)
-- Every role must display at least one quantified metric result ($ or % win)
+- Every company header MUST follow exact format "Company — City, Country" (with em dash) - location must be included for ALL companies
+- Every role must display at least 3 bullet points with at least one quantified metric result ($ or % win)
 - Dates must follow consistent format "Mon YYYY — Mon YYYY" (with "Present" for current role)
 - All bullets must end with periods
-- Education format must precisely show degree, field of study, institution, location, and graduation year
+- Education format must precisely show degree with field of study, institution, location, and graduation year
 - Company and product names must have correct capitalization (AltiSales, not AltISales)
 - Currency should be formatted as "($1.2M USD)" when showing monetary values
 - ALWAYS use past tense for bullets in previous roles and present tense ONLY for current roles
+- Include industry context in the role description (SaaS, FinTech, B2B, etc.)
 
 The current resume is in this state (in JSON format):
 ${JSON.stringify(currentResume, null, 2)}
