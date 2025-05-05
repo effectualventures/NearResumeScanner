@@ -110,7 +110,7 @@ export default function AutomatedFeedback() {
       // Update with the new result
       setProcessingResult(prev => ({
         ...prev!,
-        sessionId: result.data.sessionId,
+        sessionId: result.data.newSessionId,
         pdfUrl: result.data.pdfUrl,
       }));
       
