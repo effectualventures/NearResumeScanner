@@ -470,11 +470,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const fileBuffer = fs.readFileSync(luisResumePath);
       const fileName = path.basename(luisResumePath);
       
-      // Extract text from the resume
-      const extractedText = await parseResumeFile(fileBuffer, fileName);
+      // Parse the resume file to extract text
+      const parsedFile = await parseResumeFile(fileBuffer, fileName);
       
       // Transform the resume to the Near format
-      const textToTransform = extractedText || '';
+      const textToTransform = parsedFile.extractedText || '';
       const transformResult = await transformResume(textToTransform, sessionId);
       
       if (!transformResult.success) {
@@ -495,7 +495,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         id: sessionId,
         originalFilename: fileName,
         originalFilePath: luisResumePath,
-        originalText: extractedText,
+        originalText: parsedFile.extractedText,
         processedText: JSON.stringify(transformResult.resume),
         processedJson: JSON.stringify(transformResult.resume),
         processedPdfPath: pdfPath,
@@ -508,7 +508,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         success: true,
         data: {
           sessionId,
-          pdfUrl: pdfPath.startsWith('/') ? pdfPath : `/${pdfPath}`,
+          pdfUrl: `/temp/${path.basename(pdfPath)}`,
           originalFilename: fileName,
         } as ProcessingResult,
       });

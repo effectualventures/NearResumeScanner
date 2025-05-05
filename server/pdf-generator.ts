@@ -254,7 +254,7 @@ export async function generatePDF(resume: Resume, sessionId: string): Promise<st
     try {
       const browser = await puppeteer.launch({
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
-        headless: 'new'
+        headless: true
       });
       
       const page = await browser.newPage();
