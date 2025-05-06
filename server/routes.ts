@@ -101,10 +101,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
           
           resumeData = transformResult.resume;
           
-          // Cache the processed resume data
+          // TEMPORARILY DISABLED CACHING FOR TESTING TEMPLATE IMPROVEMENTS
           try {
-            fs.writeFileSync(cachedFilePath, JSON.stringify(resumeData));
-            console.log(`Cached resume data saved: ${cachedFilePath}`);
+            // Disabled writing to cache to ensure fresh results
+            // fs.writeFileSync(cachedFilePath, JSON.stringify(resumeData));
+            console.log(`Caching disabled for processing improvements`);
           } catch (cacheError) {
             console.error("Error caching resume data:", cacheError);
             // Continue even if caching fails
@@ -215,10 +216,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!chatResult) {
         chatResult = await processChat(sessionId, message, currentResume);
         
-        // Cache the result
+        // TEMPORARILY DISABLED CHAT CACHING FOR TESTING TEMPLATE IMPROVEMENTS
         try {
-          fs.writeFileSync(chatCachePath, JSON.stringify(chatResult));
-          console.log(`Cached chat result saved: ${chatCachePath}`);
+          // Disabled writing to cache to ensure fresh results
+          // fs.writeFileSync(chatCachePath, JSON.stringify(chatResult));
+          console.log(`Chat caching disabled for processing improvements`);
         } catch (cacheError) {
           console.error("Error caching chat result:", cacheError);
           // Continue even if caching fails
@@ -440,10 +442,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!feedback) {
         feedback = await generateFeedback(resumeData, pdfUrl);
         
-        // Cache the feedback
+        // TEMPORARILY DISABLED FEEDBACK CACHING FOR TESTING TEMPLATE IMPROVEMENTS
         try {
-          fs.writeFileSync(feedbackCachePath, feedback);
-          console.log(`Cached feedback saved: ${feedbackCachePath}`);
+          // Disabled writing to cache to ensure fresh results
+          // fs.writeFileSync(feedbackCachePath, feedback);
+          console.log(`Feedback caching disabled for processing improvements`);
         } catch (cacheError) {
           console.error("Error caching feedback:", cacheError);
           // Continue even if caching fails

@@ -143,12 +143,14 @@ try {
   <div class="divider"></div>
   
   <div class="summary">
-    {{summary}}
+    {{breaklines summary}}
   </div>
   
   <div class="section-title">SKILLS AND INTERESTS</div>
   <div class="skills">
-    {{#each skills}}{{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}{{#unless @last}}{{#if this.items.length}}; {{/if}}{{/unless}}{{/each}}
+    {{#each skills}}
+      <span style="font-weight: 500;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}{{#unless @last}}{{#if this.items.length}} | {{/if}}{{/unless}}
+    {{/each}}
   </div>
   
   <div class="section-title">PROFESSIONAL EXPERIENCE</div>
@@ -161,7 +163,7 @@ try {
       <div class="title">{{title}}</div>
       <ul>
         {{#each bullets}}
-          <li>{{text}} {{#if metrics.length}}<span style="color: #333; font-weight: 500;">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>{{/if}}</li>
+          <li>{{text}}{{#if metrics.length}}{{#unless (endsWith text ".")}}. {{/unless}} <span style="color: #333; font-weight: 500; font-style: normal;">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>{{/if}}</li>
         {{/each}}
       </ul>
     </div>
