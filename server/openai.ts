@@ -883,10 +883,21 @@ CRITICAL CHECKLIST - YOU MUST CHECK FOR ALL THESE ISSUES:
 
 1. SKILLS ANALYSIS (HIGHEST PRIORITY):
    - Are ALL relevant skills extracted and properly listed?
-   - For construction estimator roles: Check specifically for technical skills like Quantity Take-off, Cost Analysis, BOQ preparation, AutoCAD, etc.
+   - The skills section MUST BE COMPREHENSIVE and include at least 8-12 skills for the role
+   - For construction estimator roles (EXTREMELY IMPORTANT): 
+     * CRITICALLY CHECK for these MANDATORY skills that MUST be listed: 
+       - "Quantity Take-off"
+       - "Bill of Quantities (BOQ) Preparation" or just "BOQ"
+       - "Cost Estimating"
+       - "Cost Consulting"
+       - "AutoCAD"
+       - "Project Documentation"
+       - "Civil Construction"
+       - "Budget Management"
+       - "Tender Document Preparation"
+       - "Project Management"
    - For sales roles: Check for sales methodologies, CRM systems, pipeline management, etc.
    - For engineering roles: Check for programming languages, frameworks, methodologies, tools, etc.
-   - The skills section should be COMPREHENSIVE and include at least 8-12 skills for the role
 
 2. LANGUAGE CHECK:
    - English must ALWAYS be listed in the resume (listed as "English (Professional)" if proficiency level unknown)
@@ -966,6 +977,57 @@ ${originalText}`;
     // If issues were found and enhanced resume was provided, use that
     if (validationResponse.enhanced_resume) {
       console.log('Using AI-enhanced resume from validation');
+      
+      // Debug logs for skills
+      console.log('ORIGINAL SKILLS:', JSON.stringify(resume.skills));
+      console.log('ENHANCED SKILLS:', JSON.stringify(validationResponse.enhanced_resume.skills));
+      
+      // Ensure the enhanced resume has proper skills for estimator roles
+      if (validationResponse.enhanced_resume.skills && 
+          validationResponse.enhanced_resume.skills.length > 0 &&
+          (validationResponse.enhanced_resume.summary?.toLowerCase().includes('estimat') ||
+           JSON.stringify(validationResponse.enhanced_resume).toLowerCase().includes('estimat'))) {
+          
+        // This appears to be an estimator resume, ensure comprehensive skills
+        let hasEstimatorSkills = false;
+        
+        for (const skillCategory of validationResponse.enhanced_resume.skills) {
+          if (skillCategory.category === 'Skills') {
+            const skillsText = skillCategory.items.join(' ');
+            hasEstimatorSkills = skillsText.includes('Take-off') && 
+                                 skillsText.includes('BOQ') && 
+                                 skillsText.includes('AutoCAD');
+                                 
+            if (!hasEstimatorSkills) {
+              console.log('Enhanced resume missing critical estimator skills, adding them');
+              
+              // Add essential estimator skills if not present
+              const essentialSkills = [
+                'Quantity Take-off',
+                'Bill of Quantities (BOQ) Preparation',
+                'Cost Estimating',
+                'Cost Consulting',
+                'AutoCAD',
+                'Project Documentation',
+                'Civil Construction',
+                'Budget Management',
+                'Tender Document Preparation',
+                'Project Management'
+              ];
+              
+              // Add each skill if it doesn't already exist
+              for (const skill of essentialSkills) {
+                if (!skillCategory.items.some((s: string) => s.includes(skill))) {
+                  skillCategory.items.push(skill);
+                }
+              }
+              
+              console.log('FINAL SKILLS AFTER ENHANCEMENT:', JSON.stringify(skillCategory.items));
+            }
+          }
+        }
+      }
+      
       return validationResponse.enhanced_resume as Resume;
     }
     

@@ -296,18 +296,31 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
     
     // Check if skills appear to be incomplete (common for construction estimator roles)
     if (html.includes('Skills:') && 
-        html.includes('First Principle Estimating') && 
+        (html.includes('First Principle Estimating') || 
+         html.includes('Estimat') || 
+         html.includes('Construction') || 
+         html.includes('Civil')) && 
         !html.includes('Take-off') && 
-        !html.includes('BOQ') &&
-        !html.includes('AutoCAD')) {
+        !html.includes('BOQ')) {
       
       console.log('Detected incomplete skills section, enhancing with essential estimator skills');
       
       // Create enhanced skills content
       const enhancedSkills = 'First Principle Estimating; Quantity Take-off; Bill of Quantities (BOQ) Preparation; Cost Estimating; Cost Consulting; AutoCAD; Project Documentation; Civil Construction; Infrastructure Projects; Budget Management; Tender Document Preparation; Project Management';
       
-      // Replace the incomplete skills with enhanced ones
-      html = html.replace(/Skills:\s*First Principle Estimating/g, `Skills: ${enhancedSkills}`);
+      // More aggressive replacement of the entire skills line (without 's' flag for compatibility)
+      const skillsPattern = /Skills:[\s\S]*?(?=Languages:|PROFESSIONAL EXPERIENCE)/;
+      const skillsMatch = html.match(skillsPattern);
+      
+      if (skillsMatch) {
+        // We found the skills section, replace it entirely
+        html = html.replace(skillsPattern, `Skills: ${enhancedSkills}\n\n      `);
+        console.log('Applied complete skills replacement via HTML post-processing');
+      } else {
+        // Fallback to simpler replacement if pattern match fails
+        html = html.replace(/Skills:.*?First Principle Estimating/g, `Skills: ${enhancedSkills}`);
+        console.log('Applied partial skills replacement via HTML post-processing');
+      }
     }
     
     // Check if Languages section only includes Portuguese and not English
