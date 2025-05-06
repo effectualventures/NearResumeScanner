@@ -64,8 +64,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         let resumeData;
         let pdfPath;
 
+        // TEMPORARILY DISABLED CACHING FOR TESTING NEW ROLE-AWARE INTELLIGENCE
         // Check if we have a cached version of this resume
-        if (fs.existsSync(cachedFilePath)) {
+        if (false && fs.existsSync(cachedFilePath)) {
           try {
             console.log(`Using cached resume data: ${cachedFilePath}`);
             const cachedData = fs.readFileSync(cachedFilePath, 'utf8');
@@ -196,8 +197,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       let chatResult;
       
+      // TEMPORARILY DISABLED CHAT CACHING FOR TESTING NEW ROLE-AWARE INTELLIGENCE
       // Check for cached chat result
-      if (fs.existsSync(chatCachePath)) {
+      if (false && fs.existsSync(chatCachePath)) {
         try {
           console.log(`Using cached chat result: ${chatCachePath}`);
           const cachedData = fs.readFileSync(chatCachePath, 'utf8');
@@ -421,8 +423,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       let feedback;
       
+      // TEMPORARILY DISABLED FEEDBACK CACHING FOR TESTING NEW ROLE-AWARE INTELLIGENCE  
       // Check for cached feedback
-      if (fs.existsSync(feedbackCachePath)) {
+      if (false && fs.existsSync(feedbackCachePath)) {
         try {
           console.log(`Using cached feedback: ${feedbackCachePath}`);
           feedback = fs.readFileSync(feedbackCachePath, 'utf8');
