@@ -30,10 +30,10 @@ try {
     
     body {
       font-family: 'Times New Roman', Times, serif;
-      font-size: 11pt;
+      font-size: {{#if detailedFormat}}10.5pt{{else}}11pt{{/if}};
       margin: 0.6in 0.5in;
       color: #000;
-      line-height: 1.2;
+      line-height: {{#if detailedFormat}}1.15{{else}}1.2{{/if}};
     }
     
     .header {
@@ -167,9 +167,15 @@ try {
       </div>
       <div class="title">{{title}}</div>
       <ul>
-        {{#each bullets}}
-          <li>{{text}}{{#if metrics.length}}{{#unless (endsWith text ".")}}. {{/unless}} <span style="color: #333; font-weight: 500; font-style: normal;">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>{{/if}}</li>
-        {{/each}}
+        {{#if detailedFormat}}
+          {{#each bullets}}
+            <li>{{text}}{{#if metrics.length}}{{#unless (endsWith text ".")}}. {{/unless}} <span style="color: #333; font-weight: 500; font-style: normal;">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>{{/if}}</li>
+          {{/each}}
+        {{else}}
+          {{#each (slice bullets 0 5)}}
+            <li>{{text}}{{#if metrics.length}}{{#unless (endsWith text ".")}}. {{/unless}} <span style="color: #333; font-weight: 500; font-style: normal;">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>{{/if}}</li>
+          {{/each}}
+        {{/if}}
       </ul>
     </div>
   {{/each}}
@@ -215,6 +221,11 @@ Handlebars.registerHelper('endsWith', function(text, char) {
   return text.endsWith(char);
 });
 
+// Helper to check equality
+Handlebars.registerHelper('eq', function(a, b) {
+  return a === b;
+});
+
 // Helper to break summary into multiple lines (max 90 chars)
 Handlebars.registerHelper('breaklines', function(text) {
   if (!text) return '';
@@ -244,16 +255,20 @@ Handlebars.registerHelper('breaklines', function(text) {
  * Generate a PDF from a Resume object
  * @param resume The resume data
  * @param sessionId Unique identifier for the session
+ * @param detailedFormat Whether to generate a detailed 2-page format
  * @returns Path to the generated HTML file or PDF file
  */
-export async function generatePDF(resume: Resume, sessionId: string): Promise<string> {
+export async function generatePDF(resume: Resume, sessionId: string, detailedFormat: boolean = false): Promise<string> {
   try {
     // Read template
     const templateSource = fs.readFileSync(templatePath, 'utf8');
     const template = Handlebars.compile(templateSource);
     
-    // Render HTML
-    const html = template(resume);
+    // Pass the detailed format flag to the template
+    const html = template({
+      ...resume,
+      detailedFormat: detailedFormat
+    });
     
     // Ensure temp directory exists
     const tempDir = path.resolve(process.cwd(), 'temp');
@@ -277,9 +292,10 @@ export async function generatePDF(resume: Resume, sessionId: string): Promise<st
       
       // Format for US Letter size (8.5" x 11")
       const pdfOutputPath = path.join(tempDir, `${sessionId}.pdf`);
-      await page.pdf({
+      // Configure PDF generation options
+      const pdfOptions: puppeteer.PDFOptions = {
         path: pdfOutputPath,
-        format: 'Letter',
+        format: 'letter' as puppeteer.PaperFormat,
         printBackground: true,
         margin: {
           top: '0.6in',
@@ -287,7 +303,18 @@ export async function generatePDF(resume: Resume, sessionId: string): Promise<st
           bottom: '0.6in',
           left: '0.5in'
         }
-      });
+      };
+      
+      // For detailed format, allow multiple pages
+      if (detailedFormat) {
+        await page.pdf(pdfOptions);
+      } else {
+        // For standard format, try to fit on one page
+        await page.pdf({
+          ...pdfOptions,
+          scale: 0.98 // Slightly scale down to fit on one page
+        });
+      }
       
       await browser.close();
       console.log(`Generated PDF file for resume: ${pdfOutputPath}`);

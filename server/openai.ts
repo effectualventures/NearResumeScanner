@@ -75,8 +75,8 @@ For each bullet point that lacks metrics or impact:
 4. Ensure all metrics align with industry benchmarks and role expectations
 
 RESUME FORMAT REQUIREMENTS (MANDATORY):
-- One page maximum length
 - Clean, professional layout with standard sections
+- One or two page length depending on experience level (generally use one page for less than 10 years experience)
 - First name only (anonymized) - CRITICAL
 - Professional role title (5 words max) must be metric-anchored, specific and tailored (e.g., "Senior Sales Development Leader – SaaS & Retail Tech")
 - Location (City, Country)

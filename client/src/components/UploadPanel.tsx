@@ -31,6 +31,7 @@ export default function UploadPanel({
   const [anonymizeLastName, setAnonymizeLastName] = useState(true);
   const [convertCurrencies, setConvertCurrencies] = useState(true);
   const [addLogo, setAddLogo] = useState(true);
+  const [detailedFormat, setDetailedFormat] = useState(false);
   
   const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
