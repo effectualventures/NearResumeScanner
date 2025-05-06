@@ -15,6 +15,7 @@ export default function Home() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fileUrl, setFileUrl] = useState<string | null>(null);
   const [extractedText, setExtractedText] = useState<string | null>(null);
+  const [detailedFormat, setDetailedFormat] = useState<boolean>(false);
   
   // Processing state
   const [isUploading, setIsUploading] = useState(false);

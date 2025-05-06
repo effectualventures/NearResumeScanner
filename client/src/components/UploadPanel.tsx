@@ -13,6 +13,8 @@ interface UploadPanelProps {
   progress: number;
   selectedFile: File | null;
   onRemoveFile: () => void;
+  detailedFormat?: boolean;
+  onDetailedFormatChange?: (useDetailed: boolean) => void;
 }
 
 export default function UploadPanel({
@@ -21,7 +23,9 @@ export default function UploadPanel({
   isProcessing,
   progress,
   selectedFile,
-  onRemoveFile
+  onRemoveFile,
+  detailedFormat: propDetailedFormat,
+  onDetailedFormatChange
 }: UploadPanelProps) {
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -31,7 +35,21 @@ export default function UploadPanel({
   const [anonymizeLastName, setAnonymizeLastName] = useState(true);
   const [convertCurrencies, setConvertCurrencies] = useState(true);
   const [addLogo, setAddLogo] = useState(true);
-  const [detailedFormat, setDetailedFormat] = useState(false);
+  const [detailedFormat, setDetailedFormat] = useState(propDetailedFormat || false);
+  
+  // Sync the detailed format state with parent component
+  useEffect(() => {
+    if (propDetailedFormat !== undefined && propDetailedFormat !== detailedFormat) {
+      setDetailedFormat(propDetailedFormat);
+    }
+  }, [propDetailedFormat]);
+  
+  // Notify parent when detailed format changes
+  useEffect(() => {
+    if (onDetailedFormatChange) {
+      onDetailedFormatChange(detailedFormat);
+    }
+  }, [detailedFormat, onDetailedFormatChange]);
   
   const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -181,6 +199,17 @@ export default function UploadPanel({
             />
             <label htmlFor="logo" className="text-sm text-near-gray-600 cursor-pointer">
               Add Near logo to footer
+            </label>
+          </div>
+          
+          <div className="flex items-center space-x-2">
+            <Checkbox 
+              id="detailed" 
+              checked={detailedFormat} 
+              onCheckedChange={() => setDetailedFormat(!detailedFormat)} 
+            />
+            <label htmlFor="detailed" className="text-sm text-near-gray-600 cursor-pointer">
+              Detailed format (for 10+ years experience)
             </label>
           </div>
         </div>
