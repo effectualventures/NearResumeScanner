@@ -165,15 +165,15 @@ try {
     {{#if detailedFormat}}
       {{#each skills}}
         <div style="margin-bottom: 4px;">
-          <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}
+          <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}
         </div>
       {{/each}}
     {{else}}
       {{#each skills}}
         {{#if (eq category "Languages")}}
-          <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}
+          <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}
         {{else}}
-          <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}{{#if @last}}{{else}} | {{/if}}
+          <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}{{#if @last}}{{else}} | {{/if}}
         {{/if}}
       {{/each}}
     {{/if}}
