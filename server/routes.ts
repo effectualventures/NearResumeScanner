@@ -89,7 +89,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           // Transform resume using OpenAI
           const transformResult = await transformResume(
             parsedFile.extractedText,
-            parsedFile.id
+            parsedFile.id,
+            useDetailedFormat // Pass the detailed format flag
           );
           
           if (!transformResult.success) {

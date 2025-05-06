@@ -15,12 +15,23 @@ const openai = new OpenAI({
 // Main function to transform resume
 export async function transformResume(
   resumeText: string,
-  sessionId: string
+  sessionId: string,
+  detailedFormat: boolean = false
 ): Promise<ResumeTransformationResponse> {
   try {
     // Create system prompt with comprehensive stakeholder feedback and role-aware logic
+    // Check if detailed format is requested
+    const formatType = detailedFormat ? "DETAILED TWO-PAGE FORMAT" : "STANDARD ONE-PAGE FORMAT";
+    
     const systemPrompt = `
 You are an expert resume editor specializing in transforming Latin American professional resumes into high-quality, "Americanized" formats for Near's talent database. Your task is to reformat, enhance, and optimize resumes to showcase candidates as confident, top-tier talent while maintaining factual accuracy and professional credibility.
+
+FORMAT TYPE: ${formatType}
+${detailedFormat ? 
+  `This resume is for an experienced professional with 10+ years of experience. Create a comprehensive two-page resume that includes more detailed work history, preserves more bullet points per role, and provides a fuller picture of their career progression and accomplishments. Don't discard valuable experience details.` 
+  : 
+  `This resume should be optimized for a one-page format that highlights the most impactful and relevant experiences, prioritizing quality over quantity.`
+}
 
 ROLE-AWARE OPTIMIZATION (HIRING MANAGER MINDSET):
 You must actively "think like" a U.S. hiring manager for the specific role the candidate is targeting. Analyze the resume to determine the role type (Sales, Technical, Support, etc.) and then enhance each section with relevant KPIs and business impacts that U.S. hiring managers would expect.
