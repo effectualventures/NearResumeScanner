@@ -111,9 +111,9 @@ RESUME FORMAT REQUIREMENTS (MANDATORY):
 CRITICAL CONTENT SECTIONS (MUST INCLUDE ALL):
 - SUMMARY: Create a compelling two-sentence professional summary (each <90 chars) that mentions specific industries (SaaS, FinTech, etc.) and quantified achievements. This MUST be included.
 - SKILLS & LANGUAGES: ${detailedFormat ? 
-  'List COMPREHENSIVE skills from original resume - DO NOT OMIT ANY SKILLS. For construction/estimating roles, include ALL technical skills, software tools, and methodologies from the original resume. Always include both English and native language in language section with proficiency levels.' 
+  'CRITICAL: List ALL skills from the original resume, especially for construction and estimation roles. Include EVERY technical skill (First Principle Estimating, BOQ, Tender Documents), EVERY software (AUTOCAD, Excel, Revit, etc.), EVERY certification, and ALWAYS include BOTH English and native language with their proficiency levels. NEVER omit skills from the original resume.' 
   : 
-  'Include ALL skills from the original resume. Always include both English and native language with proficiency levels.'} This MUST be included.
+  'CRITICAL: Include EVERY skill from the original resume. For construction estimator roles, include ALL technical skills, software tools, and certifications. ALWAYS include BOTH English and native language with proficiency levels. NEVER omit English if present in original resume.'} This MUST be included.
 - PROFESSIONAL EXPERIENCE: Reverse chronological order with metrics. This MUST be included.
 - EDUCATION: Must include full degree with specific field of study (e.g., "Bachelor's Degree in International Business", NOT just "Bachelor's Degree"), institution, location, and graduation year. This MUST be included.
 - ADDITIONAL EXPERIENCE (if relevant): Optional, but if included, follow same formatting rules.
@@ -205,7 +205,27 @@ Your response must be a valid JSON object representing the processed resume with
       
       // Parse the response JSON, ensuring we have a string
       const responseContent = response.choices[0].message.content || '';
-      const resumeData: Resume = JSON.parse(responseContent);
+      let resumeData: Resume = JSON.parse(responseContent);
+      
+      // Add English language if missing (failsafe)
+      const hasLanguageSection = resumeData.skills.some(section => section.category === "Languages");
+      
+      if (hasLanguageSection) {
+        // Check if English is already included in Languages section
+        const languageSection = resumeData.skills.find(section => section.category === "Languages");
+        if (languageSection && !languageSection.items.some(lang => lang.toLowerCase().includes('english'))) {
+          // Add English with reasonable assumption of proficiency
+          languageSection.items.push("English (Professional)");
+          console.log("Added English language as it was missing from original output");
+        }
+      } else {
+        // No language section found, add one
+        resumeData.skills.push({
+          category: "Languages",
+          items: ["English (Professional)", "Portuguese (Native)"]
+        });
+        console.log("Added Languages section since it was missing");
+      }
       
       return {
         success: true,

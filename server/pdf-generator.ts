@@ -293,11 +293,14 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
     const templateSource = fs.readFileSync(templatePath, 'utf8');
     const template = Handlebars.compile(templateSource);
     
-    // Pass the detailed format flag to the template
-    const html = template({
+    // Pass the detailed format flag to the template and ensure correct section titles
+    let html = template({
       ...resume,
       detailedFormat: detailedFormat
     });
+    
+    // Ensure the Skills section always has the right title
+    html = html.replace('SKILLS & TOOLS', 'SKILLS & LANGUAGES');
     
     // Ensure temp directory exists
     const tempDir = path.resolve(process.cwd(), 'temp');
