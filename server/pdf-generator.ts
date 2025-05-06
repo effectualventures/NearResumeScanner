@@ -31,7 +31,7 @@ try {
     body {
       font-family: 'Calibri', 'Arial', sans-serif;
       font-size: 10pt;
-      margin: 0.5in;
+      margin: 0.7in 0.75in;
       color: #333;
       line-height: 1.2;
     }
@@ -119,8 +119,8 @@ try {
     
     .footer {
       position: absolute;
-      bottom: 0.3in;
-      right: 0.5in;
+      bottom: 0.7in;
+      right: 0.75in;
       text-align: right;
     }
     
@@ -267,10 +267,10 @@ export async function generatePDF(resume: Resume, sessionId: string): Promise<st
         format: 'Letter',
         printBackground: true,
         margin: {
-          top: '0.35in',
-          right: '0.35in',
-          bottom: '0.35in',
-          left: '0.35in'
+          top: '0.7in',
+          right: '0.75in',
+          bottom: '0.7in',
+          left: '0.75in'
         }
       });
       
