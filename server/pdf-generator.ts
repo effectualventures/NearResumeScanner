@@ -161,7 +161,7 @@ try {
       <div class="title">{{title}}</div>
       <ul>
         {{#each bullets}}
-          <li>{{text}}</li>
+          <li>{{text}} {{#if metrics.length}}<span style="color: #333; font-weight: 500;">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>{{/if}}</li>
         {{/each}}
       </ul>
     </div>
