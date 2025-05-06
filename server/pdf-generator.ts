@@ -30,60 +30,61 @@ try {
     
     body {
       font-family: 'Calibri', 'Arial', sans-serif;
-      font-size: 11pt;
-      margin: 0.7in;
+      font-size: 10pt;
+      margin: 0.5in;
       color: #333;
-      line-height: 1.3;
+      line-height: 1.2;
     }
     
     .header {
       text-align: center;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
     
     .header h1 {
-      font-size: 18pt;
+      font-size: 16pt;
       font-weight: bold;
-      margin: 0 0 5px 0;
+      margin: 0 0 3px 0;
     }
     
     .header p {
-      margin: 2px 0;
+      margin: 1px 0;
       color: #666;
     }
     
     .divider {
       border-top: 1px solid #000;
-      margin: 10px 0 15px 0;
+      margin: 5px 0 10px 0;
     }
     
     .summary {
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       font-weight: 400;
+      font-size: 9.5pt;
     }
     
     .section-title {
       text-transform: uppercase;
       font-weight: bold;
       font-size: 10pt;
-      margin-top: 15px;
-      margin-bottom: 5px;
+      margin-top: 10px;
+      margin-bottom: 4px;
       color: #000;
     }
     
     .skills {
-      margin-bottom: 15px;
-      font-size: 10pt;
+      margin-bottom: 10px;
+      font-size: 9.5pt;
     }
     
     .experience {
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
     
     .experience-header {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 2px;
+      margin-bottom: 1px;
     }
     
     .company {
@@ -92,38 +93,39 @@ try {
     
     .dates {
       color: #666;
-      font-size: 10pt;
+      font-size: 9.5pt;
     }
     
     .title {
       font-style: italic;
       color: #666;
-      margin-bottom: 5px;
+      margin-bottom: 2px;
     }
     
     ul {
-      margin: 5px 0;
-      padding-left: 20px;
+      margin: 3px 0;
+      padding-left: 18px;
     }
     
     li {
-      margin-bottom: 3px;
-      font-size: 10pt;
+      margin-bottom: 2px;
+      font-size: 9.5pt;
     }
     
     .education {
-      margin-bottom: 15px;
+      margin-bottom: 10px;
+      font-size: 9.5pt;
     }
     
     .footer {
       position: absolute;
-      bottom: 0.4in;
-      right: 0.7in;
+      bottom: 0.3in;
+      right: 0.5in;
       text-align: right;
     }
     
     .footer img {
-      height: 24px;
+      height: 20px;
     }
   </style>
 </head>
@@ -267,10 +269,10 @@ export async function generatePDF(resume: Resume, sessionId: string): Promise<st
         format: 'Letter',
         printBackground: true,
         margin: {
-          top: '0.4in',
-          right: '0.4in',
-          bottom: '0.4in',
-          left: '0.4in'
+          top: '0.35in',
+          right: '0.35in',
+          bottom: '0.35in',
+          left: '0.35in'
         }
       });
       
