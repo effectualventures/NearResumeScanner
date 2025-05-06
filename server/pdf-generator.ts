@@ -31,7 +31,7 @@ try {
     body {
       font-family: 'Times New Roman', Times, serif;
       font-size: {{#if detailedFormat}}10.5pt{{else}}11pt{{/if}};
-      margin: 0.6in 0.5in;
+      margin: {{#if detailedFormat}}0.5in 0.5in{{else}}0.6in 0.5in{{/if}};
       color: #000;
       line-height: {{#if detailedFormat}}1.15{{else}}1.2{{/if}};
     }
@@ -123,7 +123,7 @@ try {
     
     .footer {
       position: absolute;
-      bottom: 0.6in;
+      bottom: {{#if detailedFormat}}0.5in{{else}}0.6in{{/if}};
       right: 0.5in;
       text-align: right;
     }
@@ -297,17 +297,31 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
         path: pdfOutputPath,
         format: 'letter' as puppeteer.PaperFormat,
         printBackground: true,
-        margin: {
-          top: '0.6in',
-          right: '0.5in',
-          bottom: '0.6in',
-          left: '0.5in'
-        }
+        margin: detailedFormat 
+          ? {
+            // Narrower margins for detailed format to fit more content
+            top: '0.5in',
+            right: '0.5in',
+            bottom: '0.5in',
+            left: '0.5in'
+          } 
+          : {
+            // Standard margins for one-page format
+            top: '0.6in',
+            right: '0.5in',
+            bottom: '0.6in',
+            left: '0.5in'
+          }
       };
       
       // For detailed format, allow multiple pages
       if (detailedFormat) {
-        await page.pdf(pdfOptions);
+        await page.pdf({
+          ...pdfOptions,
+          displayHeaderFooter: false, 
+          scale: 1.0, // Full scale for more detailed content
+          preferCSSPageSize: false // Allow content to flow to multiple pages as needed
+        });
       } else {
         // For standard format, try to fit on one page
         await page.pdf({

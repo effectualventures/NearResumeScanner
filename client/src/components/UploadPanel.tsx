@@ -202,15 +202,21 @@ export default function UploadPanel({
             </label>
           </div>
           
-          <div className="flex items-center space-x-2">
+          <div className="flex items-start space-x-2">
             <Checkbox 
               id="detailed" 
               checked={detailedFormat} 
               onCheckedChange={() => setDetailedFormat(!detailedFormat)} 
+              className="mt-0.5"
             />
-            <label htmlFor="detailed" className="text-sm text-near-gray-600 cursor-pointer">
-              Detailed format (for 10+ years experience)
-            </label>
+            <div>
+              <label htmlFor="detailed" className="text-sm text-near-gray-600 cursor-pointer">
+                Detailed format (for 10+ years experience)
+              </label>
+              <p className="text-xs text-near-gray-500 mt-0.5">
+                Produces a two-page resume with more comprehensive job descriptions
+              </p>
+            </div>
           </div>
         </div>
       </div>
