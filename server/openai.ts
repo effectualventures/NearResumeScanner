@@ -38,7 +38,8 @@ ${detailedFormat ?
   7. For recent roles (within 5 years), include AT LEAST 10-12 bullet points with multiple metrics per bullet
   8. Provide EXTREMELY detailed descriptions of projects, responsibilities, and achievements for each role
   9. Use the FULL width of the page - make bullet points span at least 80% of the available width
-  10. THIS IS CRITICAL: The final output MUST fill TWO COMPLETE PAGES with no empty space` 
+  10. SKILLS SECTION: Include AT LEAST 12-15 skills under multiple categories (Skills, Tools, Certifications, Technical Skills, etc.) - be comprehensive and detailed with specific tools, methodologies, and technical expertise
+  11. THIS IS CRITICAL: The final output MUST fill TWO COMPLETE PAGES with no empty space` 
   : 
   `This resume should be optimized for a one-page format that highlights the most impactful and relevant experiences, prioritizing quality over quantity. Limit bullet points to 3-5 per role, focusing only on highest-impact achievements.`
 }
@@ -109,14 +110,20 @@ RESUME FORMAT REQUIREMENTS (MANDATORY):
 
 CRITICAL CONTENT SECTIONS (MUST INCLUDE ALL):
 - SUMMARY: Create a compelling two-sentence professional summary (each <90 chars) that mentions specific industries (SaaS, FinTech, etc.) and quantified achievements. This MUST be included.
-- SKILLS & TOOLS: Format as a simple list with only two categories: "Skills" and "Languages". Do not use additional subcategories. This MUST be included.
+- SKILLS & TOOLS: ${detailedFormat ? 
+  'For detailed format, use MULTIPLE categories (minimum 4): "Skills", "Tools", "Technical Skills", "Certifications", "Languages", etc. Be comprehensive and detailed.' 
+  : 
+  'Format as a simple list with only two categories: "Skills" and "Languages". Do not use additional subcategories.'} This MUST be included.
 - PROFESSIONAL EXPERIENCE: Reverse chronological order with metrics. This MUST be included.
 - EDUCATION: Must include full degree with specific field of study (e.g., "Bachelor's Degree in International Business", NOT just "Bachelor's Degree"), institution, location, and graduation year. This MUST be included.
 - ADDITIONAL EXPERIENCE (if relevant): Optional, but if included, follow same formatting rules.
 
 BULLET & FORMATTING RULES:
 1. Every bullet MUST end with a period and have a strong action verb.
-2. Format Skills & Tools with ONLY two categories: "Skills" and "Languages". For Languages, include proficiency level (e.g., "Skills: Project Management, Leadership, CRM | Languages: English (C2), Spanish (Native)")
+2. ${detailedFormat ? 
+  'Format Skills & Tools with MULTIPLE categories (minimum 4): "Skills", "Tools", "Technical Skills", "Certifications", "Languages", etc. For Languages, include proficiency level (e.g., "English (C2)")' 
+  : 
+  'Format Skills & Tools with ONLY two categories: "Skills" and "Languages". For Languages, include proficiency level (e.g., "Skills: Project Management, Leadership, CRM | Languages: English (C2), Spanish (Native)")'}
 3. Every company header MUST follow exact format "Company — City, Country" (with proper em dash) - location is required for ALL companies
 4. Every role MUST display at least 3 bullet points with at least one quantified metric result ($ or % win)
 5. Convert all currencies with format "($1.2M USD)" when showing monetary values
