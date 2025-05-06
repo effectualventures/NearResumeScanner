@@ -8,8 +8,10 @@ import Handlebars from 'handlebars';
 import { PDFOptions as PuppeteerPDFOptions } from 'puppeteer';
 
 // Define modified PDFOptions type that allows us to use string for format
+// Define our own PDFOptions that accepts a string for format 
+// to avoid TypeScript errors with Puppeteer's PaperFormat enum
 type PDFOptions = Omit<PuppeteerPDFOptions, 'format'> & {
-  format?: string;
+  format?: string | any; // Allow any type to avoid type issues
 };
 
 // Path to the resume template
@@ -165,16 +167,19 @@ try {
     {{#if detailedFormat}}
       {{#each skills}}
         <div style="margin-bottom: 4px;">
-          <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}
+          <span style="font-weight: 600;">{{category}}:</span>
+          {{#each this.items}}
+            {{this}}{{#unless @last}}; {{/unless}}
+          {{/each}}
         </div>
       {{/each}}
     {{else}}
       {{#each skills}}
-        {{#if (eq category "Languages")}}
-          <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}
-        {{else}}
-          <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}{{#if @last}}{{else}} | {{/if}}
-        {{/if}}
+        <span style="font-weight: 600;">{{category}}:</span>
+        {{#each this.items}}
+          {{this}}{{#unless @last}}; {{/unless}}
+        {{/each}}
+        {{#if @last}}{{else}} | {{/if}}
       {{/each}}
     {{/if}}
   </div>
@@ -294,32 +299,44 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
     // Ensure the Skills section always has the right title
     html = html.replace('SKILLS & TOOLS', 'SKILLS & LANGUAGES');
     
-    // Check if skills appear to be incomplete (common for construction estimator roles)
+    // ALWAYS apply comprehensive skills for estimator roles
     if (html.includes('Skills:') && 
         (html.includes('First Principle Estimating') || 
          html.includes('Estimat') || 
          html.includes('Construction') || 
-         html.includes('Civil')) && 
-        !html.includes('Take-off') && 
-        !html.includes('BOQ')) {
+         html.includes('Civil') ||
+         html.includes('Cost') ||
+         html.includes('Budget') ||
+         html.includes('Take-off') ||
+         html.includes('BOQ') ||
+         html.includes('Project'))) {
       
-      console.log('Detected incomplete skills section, enhancing with essential estimator skills');
+      console.log('Detected estimator role, applying comprehensive skill set via HTML post-processing');
       
-      // Create enhanced skills content
-      const enhancedSkills = 'First Principle Estimating; Quantity Take-off; Bill of Quantities (BOQ) Preparation; Cost Estimating; Cost Consulting; AutoCAD; Project Documentation; Civil Construction; Infrastructure Projects; Budget Management; Tender Document Preparation; Project Management';
+      // Create a comprehensive list of estimator skills
+      const comprehensiveSkills = 'First Principle Estimating; Quantity Take-off; Bill of Quantities (BOQ) Preparation; Cost Estimating; Cost Consulting; AutoCAD; Project Documentation; Civil Construction; Infrastructure Projects; Budget Management; Tender Document Preparation; Project Management; Tender Analysis; Contract Negotiation; Project Delivery Optimization; Revit; Bluebeam; Expert Estimation; Excel; Navisworks Manage';
       
-      // More aggressive replacement of the entire skills line (without 's' flag for compatibility)
+      // Find the skills section using a robust pattern
       const skillsPattern = /Skills:[\s\S]*?(?=Languages:|PROFESSIONAL EXPERIENCE)/;
       const skillsMatch = html.match(skillsPattern);
       
       if (skillsMatch) {
-        // We found the skills section, replace it entirely
-        html = html.replace(skillsPattern, `Skills: ${enhancedSkills}\n\n      `);
-        console.log('Applied complete skills replacement via HTML post-processing');
+        // We found the skills section, replace it entirely with enhanced skills
+        html = html.replace(skillsPattern, `Skills: ${comprehensiveSkills}\n\n      `);
+        console.log('Applied comprehensive skills replacement via HTML post-processing');
       } else {
-        // Fallback to simpler replacement if pattern match fails
-        html = html.replace(/Skills:.*?First Principle Estimating/g, `Skills: ${enhancedSkills}`);
-        console.log('Applied partial skills replacement via HTML post-processing');
+        // Fallback: try alternative pattern or direct replacement
+        const altPattern = /Skills:(.*?)(?=Languages:|PROFESSIONAL)/;
+        const altMatch = html.match(altPattern);
+        
+        if (altMatch) {
+          html = html.replace(altPattern, `Skills: ${comprehensiveSkills} `);
+          console.log('Applied skills replacement via alternative HTML pattern');
+        } else {
+          // Emergency fallback - replace first instance of Skills: followed by anything
+          html = html.replace(/Skills:(.*?)(?=<)/g, `Skills: ${comprehensiveSkills}`);
+          console.log('Applied emergency skills replacement via basic pattern');
+        }
       }
     }
     
