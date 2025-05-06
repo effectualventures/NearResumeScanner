@@ -143,10 +143,11 @@ try {
     }
     
     .footer {
-      position: absolute;
-      bottom: {{#if detailedFormat}}0.5in{{else}}0.6in{{/if}};
+      position: fixed;
+      bottom: {{#if detailedFormat}}0.3in{{else}}0.4in{{/if}};
       right: 0.5in;
       text-align: right;
+      width: 100%;
     }
     
     .footer img {
@@ -171,10 +172,16 @@ try {
   <div class="skills">
     {{#each skills}}
       {{#if (eq category "Skills")}}
-        <span style="font-weight: 500;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}{{#if @last}}{{else}} | {{/if}}
+        <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}{{#if @last}}{{else}} | {{/if}}
+      {{/if}}
+      {{#if (eq category "Tools")}}
+        <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}{{#if @last}}{{else}} | {{/if}}
+      {{/if}}
+      {{#if (eq category "Certifications")}}
+        <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}{{#if @last}}{{else}} | {{/if}}
       {{/if}}
       {{#if (eq category "Languages")}}
-        <span style="font-weight: 500;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}
+        <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}
       {{/if}}
     {{/each}}
   </div>
@@ -184,7 +191,7 @@ try {
     <div class="experience">
       <div class="experience-header">
         <div class="company">{{company}}, {{location}}</div>
-        <div class="dates">{{startDate}} — {{endDate}}</div>
+        <div class="dates">{{startDate}} &ndash; {{endDate}}</div>
       </div>
       <div class="title">{{title}}</div>
       <ul>
