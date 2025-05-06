@@ -29,62 +29,65 @@ try {
     @import url('https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap');
     
     body {
-      font-family: 'Calibri', 'Arial', sans-serif;
-      font-size: 10pt;
-      margin: 0.7in 0.75in;
-      color: #333;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 11pt;
+      margin: 0.6in 0.65in;
+      color: #000;
       line-height: 1.2;
     }
     
     .header {
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     
     .header h1 {
       font-size: 16pt;
       font-weight: bold;
       margin: 0 0 3px 0;
+      text-transform: uppercase;
     }
     
     .header p {
       margin: 1px 0;
-      color: #666;
+      font-size: 10pt;
     }
     
     .divider {
-      border-top: 1px solid #000;
-      margin: 5px 0 10px 0;
+      border-top: 1.5px solid #000;
+      margin: 3px 0 5px 0;
     }
     
     .summary {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       font-weight: 400;
-      font-size: 9.5pt;
+      font-size: 10pt;
     }
     
     .section-title {
       text-transform: uppercase;
       font-weight: bold;
-      font-size: 10pt;
+      font-size: 11pt;
       margin-top: 10px;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
       color: #000;
+      border-bottom: 1px solid #000;
+      padding-bottom: 1px;
     }
     
     .skills {
-      margin-bottom: 10px;
-      font-size: 9.5pt;
+      margin-bottom: 8px;
+      font-size: 10pt;
     }
     
     .experience {
-      margin-bottom: 8px;
+      margin-bottom: 7px;
     }
     
     .experience-header {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 1px;
+      margin-bottom: 0px;
     }
     
     .company {
@@ -92,48 +95,49 @@ try {
     }
     
     .dates {
-      color: #666;
-      font-size: 9.5pt;
+      text-align: right;
+      font-size: 10pt;
     }
     
     .title {
       font-style: italic;
-      color: #666;
-      margin-bottom: 2px;
+      margin-bottom: 1px;
+      font-size: 10pt;
     }
     
     ul {
-      margin: 3px 0;
-      padding-left: 18px;
+      margin: 2px 0;
+      padding-left: 16px;
     }
     
     li {
-      margin-bottom: 2px;
-      font-size: 9.5pt;
+      margin-bottom: 1px;
+      font-size: 10pt;
+      padding-left: 2px;
     }
     
     .education {
-      margin-bottom: 10px;
-      font-size: 9.5pt;
+      margin-bottom: 8px;
+      font-size: 10pt;
     }
     
     .footer {
       position: absolute;
-      bottom: 0.7in;
-      right: 0.75in;
+      bottom: 0.6in;
+      right: 0.65in;
       text-align: right;
     }
     
     .footer img {
-      height: 20px;
+      height: 18px;
+      opacity: 0.85;
     }
   </style>
 </head>
 <body>
   <div class="header">
     <h1>{{header.firstName}}</h1>
-    <p>{{header.tagline}}</p>
-    <p>{{header.location}}</p>
+    <p>{{header.tagline}} — {{header.location}}</p>
   </div>
   
   <div class="divider"></div>
@@ -142,17 +146,17 @@ try {
     {{summary}}
   </div>
   
-  <div class="section-title">SKILLS</div>
+  <div class="section-title">SKILLS AND INTERESTS</div>
   <div class="skills">
-    Skills: {{#each skills}}{{#each this.items}}{{#if @first}}{{this}}{{else}}, {{this}}{{/if}}{{/each}}{{#unless @last}}{{#if this.items.length}}, {{/if}}{{/unless}}{{/each}}
+    {{#each skills}}{{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}{{#unless @last}}{{#if this.items.length}}; {{/if}}{{/unless}}{{/each}}
   </div>
   
   <div class="section-title">PROFESSIONAL EXPERIENCE</div>
   {{#each experience}}
     <div class="experience">
       <div class="experience-header">
-        <div class="company">{{company}} — {{location}}</div>
-        <div class="dates">{{startDate}} – {{endDate}}</div>
+        <div class="company">{{company}}, {{location}}</div>
+        <div class="dates">{{startDate}} — {{endDate}}</div>
       </div>
       <div class="title">{{title}}</div>
       <ul>
@@ -166,8 +170,12 @@ try {
   <div class="section-title">EDUCATION</div>
   <div class="education">
     {{#each education}}
-      <div>{{institution}} — {{degree}}, {{location}}, {{year}}</div>
-      {{#if additionalInfo}}<div>{{additionalInfo}}</div>{{/if}}
+      <div class="experience-header">
+        <div class="company">{{institution}}, {{location}}</div>
+        <div class="dates">{{year}}</div>
+      </div>
+      <div class="title">{{degree}}</div>
+      {{#if additionalInfo}}<div style="margin-top: 2px; margin-bottom: 3px;">{{additionalInfo}}</div>{{/if}}
     {{/each}}
   </div>
   
@@ -267,10 +275,10 @@ export async function generatePDF(resume: Resume, sessionId: string): Promise<st
         format: 'Letter',
         printBackground: true,
         margin: {
-          top: '0.7in',
-          right: '0.75in',
-          bottom: '0.7in',
-          left: '0.75in'
+          top: '0.6in',
+          right: '0.65in',
+          bottom: '0.6in',
+          left: '0.65in'
         }
       });
       
