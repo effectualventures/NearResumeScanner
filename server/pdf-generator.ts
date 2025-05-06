@@ -4,6 +4,22 @@ import path from 'path';
 import { Resume } from '@shared/schema';
 import Handlebars from 'handlebars';
 
+// Define types locally to avoid errors
+type PDFOptions = {
+  path: string;
+  format: string;
+  printBackground: boolean;
+  margin?: {
+    top: string;
+    right: string;
+    bottom: string;
+    left: string;
+  };
+  displayHeaderFooter?: boolean;
+  scale?: number;
+  preferCSSPageSize?: boolean;
+};
+
 // Path to the resume template
 const templatePath = path.resolve(process.cwd(), 'server', 'templates', 'resume.html');
 
@@ -305,9 +321,9 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       // Format for US Letter size (8.5" x 11")
       const pdfOutputPath = path.join(tempDir, `${sessionId}.pdf`);
       // Configure PDF generation options
-      const pdfOptions: puppeteer.PDFOptions = {
+      const pdfOptions: PDFOptions = {
         path: pdfOutputPath,
-        format: 'letter' as puppeteer.PaperFormat,
+        format: 'letter',
         printBackground: true,
         margin: detailedFormat 
           ? {
