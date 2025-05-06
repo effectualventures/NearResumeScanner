@@ -31,7 +31,7 @@ try {
     body {
       font-family: 'Times New Roman', Times, serif;
       font-size: 11pt;
-      margin: 0.6in 0.65in;
+      margin: 0.6in 0.5in;
       color: #000;
       line-height: 1.2;
     }
@@ -124,7 +124,7 @@ try {
     .footer {
       position: absolute;
       bottom: 0.6in;
-      right: 0.65in;
+      right: 0.5in;
       text-align: right;
     }
     
@@ -149,7 +149,12 @@ try {
   <div class="section-title">SKILLS AND INTERESTS</div>
   <div class="skills">
     {{#each skills}}
-      <span style="font-weight: 500;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}{{#unless @last}}{{#if this.items.length}} | {{/if}}{{/unless}}
+      {{#if (eq category "Skills")}}
+        <span style="font-weight: 500;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}{{#if @last}}{{else}} | {{/if}}
+      {{/if}}
+      {{#if (eq category "Languages")}}
+        <span style="font-weight: 500;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}
+      {{/if}}
     {{/each}}
   </div>
   
@@ -278,9 +283,9 @@ export async function generatePDF(resume: Resume, sessionId: string): Promise<st
         printBackground: true,
         margin: {
           top: '0.6in',
-          right: '0.65in',
+          right: '0.5in',
           bottom: '0.6in',
-          left: '0.65in'
+          left: '0.5in'
         }
       });
       
