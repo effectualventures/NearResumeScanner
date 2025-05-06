@@ -104,11 +104,17 @@ try {
     
     .company {
       font-weight: bold;
+      flex: 1;
+      padding-right: 10px; /* Add some space between company and dates */
+      max-width: 70%; /* Limit company width to ensure space for dates */
+      overflow-wrap: break-word; /* Allow words to break if necessary */
     }
     
     .dates {
       text-align: right;
       font-size: 10pt;
+      white-space: nowrap; /* Keep dates on one line */
+      min-width: 120px; /* Ensure enough space for the date range */
     }
     
     .title {
