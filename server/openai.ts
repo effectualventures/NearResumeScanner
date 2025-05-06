@@ -982,10 +982,10 @@ ${originalText}`;
         
         if (skillsFix.includes(';')) {
           // If skills are provided in semicolon-separated format, split and add them
-          const skillsList = skillsFix.split(';').map(s => s.trim()).filter(s => s);
+          const skillsList = skillsFix.split(';').map((s: string) => s.trim()).filter((s: string) => s);
           
           // Find or create the Skills category
-          let skillsCategory = enhancedResume.skills.find(s => s.category === 'Skills');
+          let skillsCategory = enhancedResume.skills.find((s: any) => s.category === 'Skills');
           if (!skillsCategory) {
             skillsCategory = { category: 'Skills', items: [] };
             enhancedResume.skills.push(skillsCategory);
@@ -1004,14 +1004,14 @@ ${originalText}`;
         // Handle language issues
         if (issue.issue.includes('English') || issue.fix.includes('English')) {
           // Add English if it's missing
-          let languageCategory = enhancedResume.skills.find(s => s.category === 'Languages');
+          let languageCategory = enhancedResume.skills.find((s: any) => s.category === 'Languages');
           if (!languageCategory) {
             languageCategory = { category: 'Languages', items: [] };
             enhancedResume.skills.push(languageCategory);
           }
           
           // Add English if not already there
-          if (!languageCategory.items.some(l => l.includes('English'))) {
+          if (!languageCategory.items.some((l: string) => l.includes('English'))) {
             languageCategory.items.push('English (Professional)');
           }
         }

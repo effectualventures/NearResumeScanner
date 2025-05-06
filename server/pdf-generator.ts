@@ -4,20 +4,12 @@ import path from 'path';
 import { Resume } from '@shared/schema';
 import Handlebars from 'handlebars';
 
-// Define types locally to avoid errors
-type PDFOptions = {
-  path: string;
-  format: string;
-  printBackground: boolean;
-  margin?: {
-    top: string;
-    right: string;
-    bottom: string;
-    left: string;
-  };
-  displayHeaderFooter?: boolean;
-  scale?: number;
-  preferCSSPageSize?: boolean;
+// Import types from puppeteer
+import { PDFOptions as PuppeteerPDFOptions } from 'puppeteer';
+
+// Define modified PDFOptions type that allows us to use string for format
+type PDFOptions = Omit<PuppeteerPDFOptions, 'format'> & {
+  format?: string;
 };
 
 // Path to the resume template
