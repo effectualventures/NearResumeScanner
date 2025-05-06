@@ -335,10 +335,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  // Download route that sets proper headers
+  // Download route that sets proper headers and ensures PDF output
   app.get("/api/download/:sessionId", async (req: Request, res: Response) => {
     try {
       const { sessionId } = req.params;
+      const detailedFormat = req.query.detailed === 'true';
       
       // Retrieve session data
       const sessionData = await storage.getSession(sessionId);
@@ -349,48 +350,98 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
-      // Determine which file to send (updated or original)
-      const filePath = sessionData.processedPdfPath;
-      
-      if (!fs.existsSync(filePath)) {
-        return res.status(404).json({
-          success: false,
-          error: { code: "FILE_NOT_FOUND", message: "Resume file not found" },
-        });
-      }
-      
-      // Parse the resume JSON to extract role and country
+      // Get the processed JSON data
       const resumeData: Resume = JSON.parse(sessionData.processedJson);
+      
+      // Parse metadata for detailed format preference if not provided in query
+      if (!req.query.detailed && sessionData.metadata) {
+        try {
+          const metadata = JSON.parse(sessionData.metadata);
+          if (metadata.detailedFormat === 'true') {
+            console.log("Using detailed format from metadata");
+          }
+        } catch (e) {
+          console.error("Error parsing metadata:", e);
+        }
+      }
+
+      // Get role and country for filename
       const role = resumeData.header.tagline || "Resume";
       const country = resumeData.header.country || resumeData.header.location.split(",").pop()?.trim() || "International";
       const idSuffix = sessionId.substring(0, 4).toUpperCase();
       
-      // Determine content type based on file extension
-      const fileExt = path.extname(filePath).toLowerCase();
-      let contentType = "application/octet-stream";
-      let filenameSuffix = "pdf";
-      
-      if (fileExt === ".html") {
-        contentType = "text/html";
-        filenameSuffix = "html";
-      } else if (fileExt === ".pdf") {
-        contentType = "application/pdf";
-        filenameSuffix = "pdf";
-      }
-      
-      // Format filename according to the pattern "Role (Country) - C-XXXX.pdf"
-      // Extract role title (tag line) and format it to be part of file name
+      // Extract role title for filename
       const roleTitle = resumeData.header.tagline.split('–')[0].trim();
-      // Format the filename according to specifications
-      const formattedFilename = `${roleTitle} (${country}) - C-${idSuffix}.${filenameSuffix}`;
+      const formattedFilename = `${roleTitle} (${country}) - C-${idSuffix}.pdf`;
       
-      // Set headers for download with the formatted filename
+      // Always set content type as PDF
       res.setHeader("Content-Disposition", `attachment; filename="${formattedFilename}"`);
-      res.setHeader("Content-Type", contentType);
-      
-      // Stream the file
-      const fileStream = fs.createReadStream(filePath);
-      fileStream.pipe(res);
+      res.setHeader("Content-Type", "application/pdf");
+
+      // Regenerate PDF to ensure we have the latest version
+      try {
+        // Use puppeteer directly for improved PDF generation
+        const puppeteer = require('puppeteer');
+        
+        // Generate the HTML content
+        const freshPdfPath = await generatePDF(resumeData, sessionId, detailedFormat);
+        
+        // Check if the generated file is HTML (puppeteer failed)
+        if (freshPdfPath.endsWith('.html')) {
+          console.log("Converting HTML to PDF for download...");
+          
+          // Read the HTML content
+          const htmlContent = fs.readFileSync(freshPdfPath, 'utf8');
+          
+          // Launch browser with robust error handling
+          const browser = await puppeteer.launch({
+            args: [
+              '--no-sandbox',
+              '--disable-setuid-sandbox',
+              '--disable-gpu'
+            ],
+            headless: true
+          });
+          
+          // Create a new page and set the HTML content
+          const page = await browser.newPage();
+          await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
+          
+          // Configure PDF options for optimal formatting
+          const pdfBuffer = await page.pdf({
+            format: 'letter',
+            printBackground: true,
+            margin: detailedFormat 
+              ? { top: '0.45in', right: '0.45in', bottom: '0.45in', left: '0.45in' }
+              : { top: '0.6in', right: '0.5in', bottom: '0.6in', left: '0.5in' }
+          });
+          
+          await browser.close();
+          
+          // Send the PDF buffer directly
+          return res.send(pdfBuffer);
+        } else {
+          // If we already have a PDF, just send it
+          const fileStream = fs.createReadStream(freshPdfPath);
+          return fileStream.pipe(res);
+        }
+      } catch (pdfError) {
+        console.error("PDF generation failed, sending HTML as fallback:", pdfError);
+        
+        // If all PDF methods fail, fall back to HTML
+        const filePath = sessionData.processedPdfPath;
+        
+        if (!fs.existsSync(filePath)) {
+          return res.status(404).json({
+            success: false,
+            error: { code: "FILE_NOT_FOUND", message: "Resume file not found" },
+          });
+        }
+        
+        // Stream the file with PDF headers anyway
+        const fileStream = fs.createReadStream(filePath);
+        return fileStream.pipe(res);
+      }
     } catch (error) {
       console.error("Error in /api/download:", error);
       return res.status(500).json({

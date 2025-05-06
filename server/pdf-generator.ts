@@ -55,7 +55,7 @@ try {
     body {
       font-family: 'Times New Roman', Times, serif;
       font-size: {{#if detailedFormat}}9.5pt{{else}}11pt{{/if}};
-      margin: {{#if detailedFormat}}0.45in 0.45in{{else}}0.6in 0.5in{{/if}};
+      margin: {{#if detailedFormat}}0.45in 0.45in{{else}}0.5in 0.5in{{/if}};
       color: #000;
       line-height: {{#if detailedFormat}}1.05{{else}}1.2{{/if}};
       width: 8.5in;
@@ -158,15 +158,16 @@ try {
     
     .footer {
       position: fixed;
-      bottom: {{#if detailedFormat}}0.3in{{else}}0.4in{{/if}};
+      bottom: {{#if detailedFormat}}0.25in{{else}}0.3in{{/if}};
       right: 0.5in;
       text-align: right;
       width: 100%;
     }
     
-    .footer img {
-      height: 18px;
-      opacity: 0.85;
+    .footer img, .footer svg {
+      height: 16px;
+      width: auto;
+      opacity: 0.9;
     }
   </style>
 </head>
@@ -248,7 +249,7 @@ try {
   {{/if}}
   
   <div class="footer">
-    <img src="${NEAR_LOGO_BASE64}" alt="Near Logo">
+    ${NEAR_LOGO_SVG}
   </div>
 </body>
 </html>`;
@@ -405,24 +406,24 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       
       // Format for US Letter size (8.5" x 11")
       const pdfOutputPath = path.join(tempDir, `${sessionId}.pdf`);
-      // Configure PDF generation options
+      // Configure PDF generation options to match reference file "Resume - HC - 5.8.2"
       const pdfOptions: PDFOptions = {
         path: pdfOutputPath,
         format: 'letter',
         printBackground: true,
         margin: detailedFormat 
           ? {
-            // Extremely narrow margins for detailed format to maximize content
+            // Narrower margins for detailed format to maximize content
             top: '0.45in',
             right: '0.45in',
             bottom: '0.45in',
             left: '0.45in'
           } 
           : {
-            // Standard margins for one-page format
-            top: '0.6in',
+            // Adjusted margins to match the reference file
+            top: '0.5in',
             right: '0.5in',
-            bottom: '0.6in',
+            bottom: '0.5in',
             left: '0.5in'
           }
       };
