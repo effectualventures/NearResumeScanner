@@ -118,7 +118,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           pdfPath = await generatePDF(resumeData, parsedFile.id, useDetailedFormat);
         }
         
-        // Store in the session
+        // Store in the session with metadata for format preference
         await storage.createSession({
           id: parsedFile.id,
           originalFilename: parsedFile.originalFilename,
@@ -127,6 +127,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           processedJson: JSON.stringify(resumeData),
           originalFilePath: parsedFile.originalFilePath,
           processedPdfPath: pdfPath as string,
+          metadata: JSON.stringify({ detailedFormat: useDetailedFormat ? 'true' : 'false' }),
           expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24h expiry
         });
         
@@ -242,7 +243,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Retrieve session data to check for detailed format preference
       const sessionInfo = await storage.getSession(sessionId);
-      const useDetailedFormat = sessionInfo?.metadata?.detailedFormat === 'true';
+      let useDetailedFormat = false;
+      
+      // Parse the metadata if it exists
+      if (sessionInfo?.metadata) {
+        try {
+          const metadata = JSON.parse(sessionInfo.metadata);
+          useDetailedFormat = metadata.detailedFormat === 'true';
+        } catch (e) {
+          console.error("Error parsing session metadata:", e);
+        }
+      }
       
       // Generate updated PDF (preserving detailed format if it was used)
       const pdfPath = await generatePDF(

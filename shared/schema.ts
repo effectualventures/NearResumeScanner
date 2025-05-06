@@ -11,6 +11,7 @@ export const resumeSessions = pgTable("resume_sessions", {
   processedJson: text("processed_json"), // Resume as JSON structure
   originalFilePath: text("original_file_path"), // Path to original file
   processedPdfPath: text("processed_pdf_path"), // Path to generated PDF
+  metadata: text("metadata"), // Additional metadata like detailed format preference
   createdAt: timestamp("created_at").defaultNow().notNull(),
   expiresAt: timestamp("expires_at").notNull(), // For cleanup after 24h
 });
