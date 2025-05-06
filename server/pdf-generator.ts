@@ -30,10 +30,12 @@ try {
     
     body {
       font-family: 'Times New Roman', Times, serif;
-      font-size: {{#if detailedFormat}}10pt{{else}}11pt{{/if}};
-      margin: {{#if detailedFormat}}0.5in 0.5in{{else}}0.6in 0.5in{{/if}};
+      font-size: {{#if detailedFormat}}9.5pt{{else}}11pt{{/if}};
+      margin: {{#if detailedFormat}}0.45in 0.45in{{else}}0.6in 0.5in{{/if}};
       color: #000;
-      line-height: {{#if detailedFormat}}1.1{{else}}1.2{{/if}};
+      line-height: {{#if detailedFormat}}1.05{{else}}1.2{{/if}};
+      width: 8.5in;
+      max-width: 100%;
     }
     
     .header {
@@ -67,12 +69,12 @@ try {
     .section-title {
       text-transform: uppercase;
       font-weight: bold;
-      font-size: 11pt;
-      margin-top: {{#if detailedFormat}}8px{{else}}10px{{/if}};
-      margin-bottom: 3px;
+      font-size: {{#if detailedFormat}}10.5pt{{else}}11pt{{/if}};
+      margin-top: {{#if detailedFormat}}6px{{else}}10px{{/if}};
+      margin-bottom: {{#if detailedFormat}}2px{{else}}3px{{/if}};
       color: #000;
       border-bottom: 1px solid #000;
-      padding-bottom: 1px;
+      padding-bottom: {{#if detailedFormat}}0px{{else}}1px{{/if}};
     }
     
     .skills {
@@ -81,7 +83,7 @@ try {
     }
     
     .experience {
-      margin-bottom: 7px;
+      margin-bottom: {{#if detailedFormat}}5px{{else}}7px{{/if}};
     }
     
     .experience-header {
@@ -107,19 +109,21 @@ try {
     
     ul {
       margin: {{#if detailedFormat}}1px{{else}}2px{{/if}} 0;
-      padding-left: 16px;
+      padding-left: {{#if detailedFormat}}14px{{else}}16px{{/if}};
     }
     
     li {
       margin-bottom: {{#if detailedFormat}}0px{{else}}1px{{/if}};
-      font-size: 10pt;
+      font-size: {{#if detailedFormat}}9.5pt{{else}}10pt{{/if}};
       padding-left: 2px;
-      line-height: {{#if detailedFormat}}1.1{{else}}1.2{{/if}};
+      line-height: {{#if detailedFormat}}1.05{{else}}1.2{{/if}};
+      text-align: justify;
+      max-width: 7.5in;
     }
     
     .education {
-      margin-bottom: 8px;
-      font-size: 10pt;
+      margin-bottom: {{#if detailedFormat}}6px{{else}}8px{{/if}};
+      font-size: {{#if detailedFormat}}9.5pt{{else}}10pt{{/if}};
     }
     
     .footer {
@@ -307,11 +311,11 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
         printBackground: true,
         margin: detailedFormat 
           ? {
-            // Narrower margins for detailed format to fit more content
-            top: '0.5in',
-            right: '0.5in',
-            bottom: '0.5in',
-            left: '0.5in'
+            // Extremely narrow margins for detailed format to maximize content
+            top: '0.45in',
+            right: '0.45in',
+            bottom: '0.45in',
+            left: '0.45in'
           } 
           : {
             // Standard margins for one-page format

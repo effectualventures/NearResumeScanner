@@ -28,15 +28,17 @@ You are an expert resume editor specializing in transforming Latin American prof
 
 FORMAT TYPE: ${formatType}
 ${detailedFormat ? 
-  `CRITICAL - THIS RESUME MUST BE DESIGNED FOR TWO FULL PAGES:
+  `⚠️ THIS RESUME ABSOLUTELY MUST FILL TWO FULL PAGES - NON-NEGOTIABLE ⚠️:
   1. This resume is for an experienced professional with 10+ years of experience
-  2. Include AT LEAST 5-7 bullet points for each role, especially recent ones
-  3. Provide extremely detailed descriptions with comprehensive metrics
-  4. Expand each bullet point with specific implementations, methodologies, and detailed quantifiable results
-  5. Include ALL past roles from the original resume - do not omit or condense employment history
-  6. Provide more context about each company, industry challenges, and the candidate's specific impact
-  7. For recent roles (within 5 years), include MORE metrics and details than you normally would
-  8. REMEMBER: The final output MUST require TWO FULL PAGES - be thorough and comprehensive` 
+  2. MANDATORY: Include MINIMUM 8-10 bullet points for each role (NOT 5-7) - ESPECIALLY for recent positions
+  3. Make each bullet point LONGER and MORE DETAILED than standard format - write a complete picture
+  4. Expand EVERY bullet point with specific implementations, methodologies, challenges overcome, and quantifiable results
+  5. Include ALL past roles from the original resume with EXTENSIVE details - do not omit or condense employment history
+  6. For EACH company, add 1-2 sentences about the business, market position, and industry context
+  7. For recent roles (within 5 years), include AT LEAST 10-12 bullet points with multiple metrics per bullet
+  8. Provide EXTREMELY detailed descriptions of projects, responsibilities, and achievements for each role
+  9. Use the FULL width of the page - make bullet points span at least 80% of the available width
+  10. THIS IS CRITICAL: The final output MUST fill TWO COMPLETE PAGES with no empty space` 
   : 
   `This resume should be optimized for a one-page format that highlights the most impactful and relevant experiences, prioritizing quality over quantity. Limit bullet points to 3-5 per role, focusing only on highest-impact achievements.`
 }
