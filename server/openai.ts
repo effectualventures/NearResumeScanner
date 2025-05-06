@@ -120,10 +120,7 @@ CRITICAL CONTENT SECTIONS (MUST INCLUDE ALL):
 
 BULLET & FORMATTING RULES:
 1. Every bullet MUST end with a period and have a strong action verb.
-2. ${detailedFormat ? 
-  'Format Skills & Languages with MULTIPLE categories (minimum 4): "Core Competencies", "Technical Skills", "Software & Tools", "Certifications", "Languages", etc. For Languages, include proficiency level (e.g., "English (C2)")' 
-  : 
-  'Format Skills & Languages with ONLY two categories: "Skills" and "Languages". For Languages, include proficiency level (e.g., "Skills: Project Management, Leadership, CRM | Languages: English (C2), Spanish (Native)")'}
+2. Format Skills & Languages with ONLY two categories: "Skills" and "Languages". For Languages, include proficiency level (e.g., "Skills: Project Management, Leadership, CRM | Languages: English (C2), Spanish (Native)")
 3. Every company header MUST follow exact format "Company — City, Country" (with proper em dash) - location is required for ALL companies
 4. Every role MUST display at least 3 bullet points with at least one quantified metric result ($ or % win)
 5. Convert all currencies with format "($1.2M USD)" when showing monetary values
@@ -207,25 +204,42 @@ Your response must be a valid JSON object representing the processed resume with
       const responseContent = response.choices[0].message.content || '';
       let resumeData: Resume = JSON.parse(responseContent);
       
-      // Add English language if missing (failsafe)
-      const hasLanguageSection = resumeData.skills.some(section => section.category === "Languages");
+      // Consolidate skills into just Skills and Languages per user requirement
+      const languageItems: string[] = [];
+      const skillItems: string[] = [];
       
-      if (hasLanguageSection) {
-        // Check if English is already included in Languages section
-        const languageSection = resumeData.skills.find(section => section.category === "Languages");
-        if (languageSection && !languageSection.items.some(lang => lang.toLowerCase().includes('english'))) {
-          // Add English with reasonable assumption of proficiency
-          languageSection.items.push("English (Professional)");
-          console.log("Added English language as it was missing from original output");
+      // First gather all skills and languages from various categories
+      resumeData.skills.forEach(skillCategory => {
+        if (skillCategory.category.toLowerCase() === "languages") {
+          languageItems.push(...skillCategory.items);
+        } else {
+          skillItems.push(...skillCategory.items);
         }
-      } else {
-        // No language section found, add one
-        resumeData.skills.push({
-          category: "Languages",
-          items: ["English (Professional)", "Portuguese (Native)"]
-        });
-        console.log("Added Languages section since it was missing");
+      });
+      
+      // If no languages found, add English with reasonable assumption
+      if (languageItems.length === 0) {
+        languageItems.push("English (Professional)", "Portuguese (Native)");
+        console.log("Added default languages since none were found");
+      } else if (!languageItems.some(lang => lang.toLowerCase().includes('english'))) {
+        // Make sure English is included
+        languageItems.push("English (Professional)");
+        console.log("Added English language as it was missing from original output");
       }
+      
+      // Create the consolidated skills array with just Skills and Languages
+      resumeData.skills = [
+        {
+          category: "Skills",
+          items: [...new Set(skillItems)] // Remove any duplicates
+        },
+        {
+          category: "Languages",
+          items: [...new Set(languageItems)] // Remove any duplicates
+        }
+      ];
+      
+      console.log("Consolidated skills categories to just Skills and Languages");
       
       return {
         success: true,
@@ -250,16 +264,8 @@ Your response must be a valid JSON object representing the processed resume with
           summary: "Strategic B2B SaaS sales leader with proven expertise in driving $1M+ deals and leading high-performance teams. Specialized in optimizing LATAM market sales strategies, resulting in 35% revenue growth in retail tech sector.",
           skills: [
             {
-              category: "Core Competencies",
-              items: ["B2B Sales Strategy", "Enterprise Deal Negotiation", "Channel Management", "SaaS Sales Methodology", "Sales Pipeline Forecasting", "Market Segmentation"]
-            },
-            {
-              category: "Technical Skills",
-              items: ["Sales Pipeline Analysis", "Opportunity Scoring", "Lead Qualification", "Sales Territory Management"]
-            },
-            {
-              category: "Software & Tools",
-              items: ["Salesforce Enterprise", "HubSpot Sales Hub", "Outreach.io", "SalesLoft", "ZoomInfo", "LinkedIn Sales Navigator"]
+              category: "Skills",
+              items: ["B2B Sales Strategy", "Enterprise Deal Negotiation", "Channel Management", "SaaS Sales Methodology", "Sales Pipeline Forecasting", "Market Segmentation", "Sales Pipeline Analysis", "Opportunity Scoring", "Lead Qualification", "Sales Territory Management", "Salesforce Enterprise", "HubSpot Sales Hub", "Outreach.io", "SalesLoft", "ZoomInfo", "LinkedIn Sales Navigator"]
             },
             {
               category: "Languages",
