@@ -168,22 +168,23 @@ try {
     {{breaklines summary}}
   </div>
   
-  <div class="section-title">SKILLS AND INTERESTS</div>
+  <div class="section-title">SKILLS & LANGUAGES</div>
   <div class="skills">
-    {{#each skills}}
-      {{#if (eq category "Skills")}}
-        <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}{{#if @last}}{{else}} | {{/if}}
-      {{/if}}
-      {{#if (eq category "Tools")}}
-        <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}{{#if @last}}{{else}} | {{/if}}
-      {{/if}}
-      {{#if (eq category "Certifications")}}
-        <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}{{#if @last}}{{else}} | {{/if}}
-      {{/if}}
-      {{#if (eq category "Languages")}}
-        <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}
-      {{/if}}
-    {{/each}}
+    {{#if detailedFormat}}
+      {{#each skills}}
+        <div style="margin-bottom: 4px;">
+          <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}
+        </div>
+      {{/each}}
+    {{else}}
+      {{#each skills}}
+        {{#if (eq category "Languages")}}
+          <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}
+        {{else}}
+          <span style="font-weight: 600;">{{category}}:</span> {{#each this.items}}{{#if @first}}{{this}}{{else}}; {{this}}{{/if}}{{/each}}{{#if @last}}{{else}} | {{/if}}
+        {{/if}}
+      {{/each}}
+    {{/if}}
   </div>
   
   <div class="section-title">PROFESSIONAL EXPERIENCE</div>

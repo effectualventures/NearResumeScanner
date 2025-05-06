@@ -110,10 +110,10 @@ RESUME FORMAT REQUIREMENTS (MANDATORY):
 
 CRITICAL CONTENT SECTIONS (MUST INCLUDE ALL):
 - SUMMARY: Create a compelling two-sentence professional summary (each <90 chars) that mentions specific industries (SaaS, FinTech, etc.) and quantified achievements. This MUST be included.
-- SKILLS & TOOLS: ${detailedFormat ? 
-  'For detailed format, use MULTIPLE categories (minimum 4): "Skills", "Tools", "Technical Skills", "Certifications", "Languages", etc. Be comprehensive and detailed.' 
+- SKILLS & LANGUAGES: ${detailedFormat ? 
+  'List COMPREHENSIVE skills from original resume - DO NOT OMIT ANY SKILLS. For construction/estimating roles, include ALL technical skills, software tools, and methodologies from the original resume. Always include both English and native language in language section with proficiency levels.' 
   : 
-  'Format as a simple list with only two categories: "Skills" and "Languages". Do not use additional subcategories.'} This MUST be included.
+  'Include ALL skills from the original resume. Always include both English and native language with proficiency levels.'} This MUST be included.
 - PROFESSIONAL EXPERIENCE: Reverse chronological order with metrics. This MUST be included.
 - EDUCATION: Must include full degree with specific field of study (e.g., "Bachelor's Degree in International Business", NOT just "Bachelor's Degree"), institution, location, and graduation year. This MUST be included.
 - ADDITIONAL EXPERIENCE (if relevant): Optional, but if included, follow same formatting rules.
@@ -121,9 +121,9 @@ CRITICAL CONTENT SECTIONS (MUST INCLUDE ALL):
 BULLET & FORMATTING RULES:
 1. Every bullet MUST end with a period and have a strong action verb.
 2. ${detailedFormat ? 
-  'Format Skills & Tools with MULTIPLE categories (minimum 4): "Skills", "Tools", "Technical Skills", "Certifications", "Languages", etc. For Languages, include proficiency level (e.g., "English (C2)")' 
+  'Format Skills & Languages with MULTIPLE categories (minimum 4): "Core Competencies", "Technical Skills", "Software & Tools", "Certifications", "Languages", etc. For Languages, include proficiency level (e.g., "English (C2)")' 
   : 
-  'Format Skills & Tools with ONLY two categories: "Skills" and "Languages". For Languages, include proficiency level (e.g., "Skills: Project Management, Leadership, CRM | Languages: English (C2), Spanish (Native)")'}
+  'Format Skills & Languages with ONLY two categories: "Skills" and "Languages". For Languages, include proficiency level (e.g., "Skills: Project Management, Leadership, CRM | Languages: English (C2), Spanish (Native)")'}
 3. Every company header MUST follow exact format "Company — City, Country" (with proper em dash) - location is required for ALL companies
 4. Every role MUST display at least 3 bullet points with at least one quantified metric result ($ or % win)
 5. Convert all currencies with format "($1.2M USD)" when showing monetary values
@@ -230,8 +230,16 @@ Your response must be a valid JSON object representing the processed resume with
           summary: "Strategic B2B SaaS sales leader with proven expertise in driving $1M+ deals and leading high-performance teams. Specialized in optimizing LATAM market sales strategies, resulting in 35% revenue growth in retail tech sector.",
           skills: [
             {
-              category: "Skills",
-              items: ["B2B Sales Strategy", "Enterprise Deal Negotiation", "Channel Management", "SaaS Sales Methodology", "Salesforce Enterprise", "HubSpot Sales Hub", "Outreach.io", "SalesLoft", "ZoomInfo", "Sales Pipeline Forecasting", "Market Segmentation", "Opportunity Scoring"]
+              category: "Core Competencies",
+              items: ["B2B Sales Strategy", "Enterprise Deal Negotiation", "Channel Management", "SaaS Sales Methodology", "Sales Pipeline Forecasting", "Market Segmentation"]
+            },
+            {
+              category: "Technical Skills",
+              items: ["Sales Pipeline Analysis", "Opportunity Scoring", "Lead Qualification", "Sales Territory Management"]
+            },
+            {
+              category: "Software & Tools",
+              items: ["Salesforce Enterprise", "HubSpot Sales Hub", "Outreach.io", "SalesLoft", "ZoomInfo", "LinkedIn Sales Navigator"]
             },
             {
               category: "Languages",
