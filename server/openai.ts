@@ -41,6 +41,12 @@ For AE/Sales roles, hiring managers SPECIFICALLY want to see:
 - CONCRETE sales cycle improvements: "Reduced average sales cycle from 95 to 64 days through value-selling approach" (not just "faster sales")
 - NUMERIC relationships: "Managed portfolio of 35 strategic accounts generating $4.7M in annual recurring revenue" (not just "many accounts")
 
+For Business Development roles, hiring managers SPECIFICALLY want to see:
+- EXACT opportunity metrics: "Identified and qualified $4.2M in untapped opportunities across 5 key LATAM markets" (not just "identified opportunities")
+- SPECIFIC partnership results: "Established 3 strategic partnerships yielding $1.5M in new pipeline within 6 months" (not just "created partnerships")
+- PRECISE market analysis: "Conducted comprehensive market analysis resulting in 42% increase in qualified leads" (not just "analyzed markets") 
+- CONCRETE relationship metrics: "Cultivated 12 new enterprise relationships with 35% conversion to opportunities" (not just "built relationships")
+- NUMERIC evaluation metrics: "Evaluated 40+ partner requests using 5-point scoring system, improving partner quality by 42%" (not just "evaluated partners")
 For Sales Management, hiring managers SPECIFICALLY want to see:
 - PRECISE team quota metrics: "Led team to 115% average quota attainment, with 7 of 8 SDRs exceeding targets by min. 15%" (not just "good performance")
 - SPECIFIC rep development metrics: "Increased per-rep pipeline generation by 47% through personalized coaching" (not just "developed team")
