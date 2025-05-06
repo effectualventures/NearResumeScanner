@@ -28,10 +28,13 @@ export interface ChatResult {
 
 /**
  * Upload and process a resume file
+ * @param file The resume file to upload
+ * @param detailedFormat Whether to use the detailed (two-page) format for 10+ years experience
  */
-export async function uploadResume(file: File): Promise<ProcessingResult> {
+export async function uploadResume(file: File, detailedFormat: boolean = false): Promise<ProcessingResult> {
   const formData = new FormData();
   formData.append("file", file);
+  formData.append("detailedFormat", detailedFormat.toString());
   
   const response = await fetch("/api/convert", {
     method: "POST",

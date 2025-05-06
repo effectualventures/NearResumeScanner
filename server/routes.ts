@@ -51,6 +51,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
         }
         
+        // Check if detailed format option is provided
+        const useDetailedFormat = req.body.detailedFormat === 'true';
+        
         // Parse the uploaded file
         const parsedFile = await parseResumeFile(
           req.file.buffer,
@@ -111,8 +114,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
             // Continue even if caching fails
           }
           
-          // Generate PDF from the processed resume
-          pdfPath = await generatePDF(resumeData, parsedFile.id);
+          // Generate PDF from the processed resume (with detailed format if requested)
+          pdfPath = await generatePDF(resumeData, parsedFile.id, useDetailedFormat);
         }
         
         // Store in the session
@@ -237,10 +240,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
-      // Generate updated PDF
+      // Retrieve session data to check for detailed format preference
+      const sessionInfo = await storage.getSession(sessionId);
+      const useDetailedFormat = sessionInfo?.metadata?.detailedFormat === 'true';
+      
+      // Generate updated PDF (preserving detailed format if it was used)
       const pdfPath = await generatePDF(
         chatResult.updatedResume,
-        `${sessionId}-updated`
+        `${sessionId}-updated`,
+        useDetailedFormat
       );
       
       // Store AI response

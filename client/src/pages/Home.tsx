@@ -90,6 +90,11 @@ export default function Home() {
     setExtractedText(null);
   };
   
+  // Handle detailed format change
+  const handleDetailedFormatChange = (useDetailed: boolean) => {
+    setDetailedFormat(useDetailed);
+  };
+  
   // Handle process button click
   const handleProcessClick = async () => {
     if (!selectedFile) return;
@@ -98,8 +103,8 @@ export default function Home() {
     setIsProcessing(true);
     
     try {
-      // Upload and process the file
-      const result = await uploadResume(selectedFile);
+      // Upload and process the file with detailed format preference
+      const result = await uploadResume(selectedFile, detailedFormat);
       
       // Set session data
       setSessionId(result.sessionId);
@@ -210,6 +215,8 @@ export default function Home() {
             progress={processProgress}
             selectedFile={selectedFile}
             onRemoveFile={handleRemoveFile}
+            detailedFormat={detailedFormat}
+            onDetailedFormatChange={handleDetailedFormatChange}
           />
           
           <ProcessedResumePanel
