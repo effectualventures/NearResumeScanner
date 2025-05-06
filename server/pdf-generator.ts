@@ -168,17 +168,21 @@ try {
       {{#each skills}}
         <div style="margin-bottom: 4px;">
           <span style="font-weight: 600;">{{category}}:</span>
-          {{#each this.items}}
-            {{this}}{{#unless @last}}; {{/unless}}
-          {{/each}}
+          <span style="font-weight: normal;">
+            {{#each this.items}}
+              {{this}}{{#unless @last}}; {{/unless}}
+            {{/each}}
+          </span>
         </div>
       {{/each}}
     {{else}}
       {{#each skills}}
         <span style="font-weight: 600;">{{category}}:</span>
-        {{#each this.items}}
-          {{this}}{{#unless @last}}; {{/unless}}
-        {{/each}}
+        <span style="font-weight: normal;">
+          {{#each this.items}}
+            {{this}}{{#unless @last}}; {{/unless}}
+          {{/each}}
+        </span>
         {{#if @last}}{{else}} | {{/if}}
       {{/each}}
     {{/if}}
@@ -313,8 +317,8 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       
       console.log('Detected estimator role, applying comprehensive skill set via HTML post-processing');
       
-      // Create a comprehensive list of estimator skills
-      const comprehensiveSkills = 'First Principle Estimating; Quantity Take-off; Bill of Quantities (BOQ) Preparation; Cost Estimating; Cost Consulting; AutoCAD; Project Documentation; Civil Construction; Infrastructure Projects; Budget Management; Tender Document Preparation; Project Management; Tender Analysis; Contract Negotiation; Project Delivery Optimization; Revit; Bluebeam; Expert Estimation; Excel; Navisworks Manage';
+      // Create a focused, prioritized list of estimator skills (max 12 skills)
+      const comprehensiveSkills = 'First Principle Estimating; Quantity Take-off; Bill of Quantities (BOQ) Preparation; Cost Estimating; Cost Consulting; AutoCAD; Project Documentation; Civil Construction; Budget Management; Tender Document Preparation; Project Management; Infrastructure Projects';
       
       // Find the skills section using a robust pattern
       const skillsPattern = /Skills:[\s\S]*?(?=Languages:|PROFESSIONAL EXPERIENCE)/;
@@ -322,7 +326,8 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       
       if (skillsMatch) {
         // We found the skills section, replace it entirely with enhanced skills
-        html = html.replace(skillsPattern, `Skills: ${comprehensiveSkills}\n\n      `);
+        // Apply the proper HTML with the category bold but not the skills themselves
+        html = html.replace(skillsPattern, `<span style="font-weight: 600;">Skills:</span> <span style="font-weight: normal;">${comprehensiveSkills}</span>\n\n      `);
         console.log('Applied comprehensive skills replacement via HTML post-processing');
       } else {
         // Fallback: try alternative pattern or direct replacement
@@ -330,11 +335,11 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
         const altMatch = html.match(altPattern);
         
         if (altMatch) {
-          html = html.replace(altPattern, `Skills: ${comprehensiveSkills} `);
+          html = html.replace(altPattern, `<span style="font-weight: 600;">Skills:</span> <span style="font-weight: normal;">${comprehensiveSkills}</span> `);
           console.log('Applied skills replacement via alternative HTML pattern');
         } else {
           // Emergency fallback - replace first instance of Skills: followed by anything
-          html = html.replace(/Skills:(.*?)(?=<)/g, `Skills: ${comprehensiveSkills}`);
+          html = html.replace(/Skills:(.*?)(?=<)/g, `<span style="font-weight: 600;">Skills:</span> <span style="font-weight: normal;">${comprehensiveSkills}</span>`);
           console.log('Applied emergency skills replacement via basic pattern');
         }
       }
@@ -347,8 +352,8 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       
       console.log('Detected missing English language, adding it to languages section');
       
-      // Add English to languages
-      html = html.replace(/Languages:\s*Portuguese/g, 'Languages: English (Professional); Portuguese');
+      // Add English to languages with proper styling
+      html = html.replace(/Languages:\s*Portuguese/g, '<span style="font-weight: 600;">Languages:</span> <span style="font-weight: normal;">English (Professional); Portuguese</span>');
     }
     
     // Ensure temp directory exists
