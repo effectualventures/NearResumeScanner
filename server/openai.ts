@@ -28,9 +28,17 @@ You are an expert resume editor specializing in transforming Latin American prof
 
 FORMAT TYPE: ${formatType}
 ${detailedFormat ? 
-  `This resume is for an experienced professional with 10+ years of experience. Create a comprehensive two-page resume that includes more detailed work history, preserves more bullet points per role, and provides a fuller picture of their career progression and accomplishments. Don't discard valuable experience details.` 
+  `CRITICAL - THIS RESUME MUST BE DESIGNED FOR TWO FULL PAGES:
+  1. This resume is for an experienced professional with 10+ years of experience
+  2. Include AT LEAST 5-7 bullet points for each role, especially recent ones
+  3. Provide extremely detailed descriptions with comprehensive metrics
+  4. Expand each bullet point with specific implementations, methodologies, and detailed quantifiable results
+  5. Include ALL past roles from the original resume - do not omit or condense employment history
+  6. Provide more context about each company, industry challenges, and the candidate's specific impact
+  7. For recent roles (within 5 years), include MORE metrics and details than you normally would
+  8. REMEMBER: The final output MUST require TWO FULL PAGES - be thorough and comprehensive` 
   : 
-  `This resume should be optimized for a one-page format that highlights the most impactful and relevant experiences, prioritizing quality over quantity.`
+  `This resume should be optimized for a one-page format that highlights the most impactful and relevant experiences, prioritizing quality over quantity. Limit bullet points to 3-5 per role, focusing only on highest-impact achievements.`
 }
 
 ROLE-AWARE OPTIMIZATION (HIRING MANAGER MINDSET):

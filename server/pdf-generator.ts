@@ -30,10 +30,10 @@ try {
     
     body {
       font-family: 'Times New Roman', Times, serif;
-      font-size: {{#if detailedFormat}}10.5pt{{else}}11pt{{/if}};
+      font-size: {{#if detailedFormat}}10pt{{else}}11pt{{/if}};
       margin: {{#if detailedFormat}}0.5in 0.5in{{else}}0.6in 0.5in{{/if}};
       color: #000;
-      line-height: {{#if detailedFormat}}1.15{{else}}1.2{{/if}};
+      line-height: {{#if detailedFormat}}1.1{{else}}1.2{{/if}};
     }
     
     .header {
@@ -68,7 +68,7 @@ try {
       text-transform: uppercase;
       font-weight: bold;
       font-size: 11pt;
-      margin-top: 10px;
+      margin-top: {{#if detailedFormat}}8px{{else}}10px{{/if}};
       margin-bottom: 3px;
       color: #000;
       border-bottom: 1px solid #000;
@@ -106,14 +106,15 @@ try {
     }
     
     ul {
-      margin: 2px 0;
+      margin: {{#if detailedFormat}}1px{{else}}2px{{/if}} 0;
       padding-left: 16px;
     }
     
     li {
-      margin-bottom: 1px;
+      margin-bottom: {{#if detailedFormat}}0px{{else}}1px{{/if}};
       font-size: 10pt;
       padding-left: 2px;
+      line-height: {{#if detailedFormat}}1.1{{else}}1.2{{/if}};
     }
     
     .education {
@@ -282,8 +283,15 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
     
     // Attempt to generate PDF with Puppeteer
     try {
+      // Try to launch browser with more robust error handling
       const browser = await puppeteer.launch({
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+          '--disable-accelerated-2d-canvas',
+          '--disable-gpu'
+        ],
         headless: true
       });
       

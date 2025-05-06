@@ -210,11 +210,12 @@ export default function UploadPanel({
               className="mt-0.5"
             />
             <div>
-              <label htmlFor="detailed" className="text-sm text-near-gray-600 cursor-pointer">
+              <label htmlFor="detailed" className="text-sm text-near-gray-600 cursor-pointer font-semibold">
                 Detailed format (for 10+ years experience)
               </label>
               <p className="text-xs text-near-gray-500 mt-0.5">
-                Produces a two-page resume with more comprehensive job descriptions
+                Creates a comprehensive two-page resume with detailed bullet points, extensive 
+                metrics, and complete work history. Recommended for senior professionals with 15+ years experience.
               </p>
             </div>
           </div>
