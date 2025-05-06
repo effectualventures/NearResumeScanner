@@ -285,9 +285,13 @@ Your response must be a valid JSON object representing the processed resume with
       
       console.log("Consolidated skills categories to just Skills and Languages");
       
+      // NEW VALIDATION STEP - Run the resume through a quality check
+      console.log("Running resume validation and enhancement process...");
+      const enhancedResume = await validateAndEnhanceResume(resumeData, resumeText);
+      
       return {
         success: true,
-        resume: resumeData
+        resume: enhancedResume
       };
     } catch (error: any) {
       console.error('OpenAI API error:', error);
@@ -833,5 +837,194 @@ Example response format:
       changes: [],
       error: error?.message || 'Failed to process chat message'
     };
+  }
+}
+
+/**
+ * Validate and enhance a processed resume using a quality checklist
+ * @param resume The processed resume to validate
+ * @param originalText The original resume text for reference
+ * @returns Enhanced and validated resume with all sections properly populated
+ */
+export async function validateAndEnhanceResume(
+  resume: Resume,
+  originalText: string
+): Promise<Resume> {
+  try {
+    // Load project context for better validation
+    let projectContext = '';
+    try {
+      const mdFiles = [
+        path.join(process.cwd(), 'attached_assets', 'near-resume-processor-prd-clean.md'),
+        path.join(process.cwd(), 'attached_assets', 'resume-processor-principles.md'),
+        path.join(process.cwd(), 'attached_assets', 'near-resume-implementation-guide.md')
+      ];
+      
+      for (const filePath of mdFiles) {
+        if (fs.existsSync(filePath)) {
+          const content = fs.readFileSync(filePath, 'utf8');
+          projectContext += content + '\n\n';
+        }
+      }
+    } catch (err) {
+      console.log('Could not load project context files for validation:', err);
+    }
+    
+    console.log('Starting resume validation and enhancement process...');
+    
+    // Create system prompt for validation
+    const systemPrompt = `
+You are an expert resume quality assurance specialist. Your job is to analyze this resume against a strict checklist 
+and identify any issues or missing elements. Then you'll provide a JSON response with recommendations for fixing each issue.
+
+${projectContext ? 'USE THIS PROJECT CONTEXT TO GUIDE YOUR VALIDATION:\n' + projectContext : ''}
+
+CRITICAL CHECKLIST - YOU MUST CHECK FOR ALL THESE ISSUES:
+
+1. SKILLS ANALYSIS (HIGHEST PRIORITY):
+   - Are ALL relevant skills extracted and properly listed?
+   - For construction estimator roles: Check specifically for technical skills like Quantity Take-off, Cost Analysis, BOQ preparation, AutoCAD, etc.
+   - For sales roles: Check for sales methodologies, CRM systems, pipeline management, etc.
+   - For engineering roles: Check for programming languages, frameworks, methodologies, tools, etc.
+   - The skills section should be COMPREHENSIVE and include at least 8-12 skills for the role
+
+2. LANGUAGE CHECK:
+   - English must ALWAYS be listed in the resume (listed as "English (Professional)" if proficiency level unknown)
+   - All relevant languages from the original resume should be included
+
+3. EXPERIENCE BULLET POINT QUALITY:
+   - Every bullet point must include at least one measurable metric or quantified achievement
+   - Metrics should be specific and believable (e.g., "increased sales by 23%" instead of just "increased sales")
+
+4. FORMATTING COMPLIANCE:
+   - First name only (no last name)
+   - Clean professional tagline in 3-5 words
+   - Location format should be "City, Country"
+   - Section order is correct: Header, Summary, Skills, Experience, Education
+
+5. SUMMARY QUALITY:
+   - Must be concise (2-3 sentences max)
+   - Includes years of experience and key specializations
+   - Mentions measurable achievements
+   
+6. MISSING CONTENT CHECK:
+   - All significant experiences from original resume are included
+   - No critical details are lost in transformation
+
+FORMAT YOUR RESPONSE AS A STRUCTURED JSON OBJECT:
+{
+  "validation_successful": boolean, // true if all checks pass, false if issues found
+  "issues": [
+    {
+      "section": "string", // e.g., "skills", "experience", "header", etc.
+      "issue": "string", // Description of the issue
+      "fix": "string" // Specific recommendation with exact wording/content to fix
+    }
+  ],
+  "enhanced_resume": { } // Only include if validation_successful is false - complete fixed resume JSON
+}
+
+IMPORTANT GUIDANCE FOR FIXES:
+- For skills issues, provide a COMPREHENSIVE list of skills that should be included
+- For missing English language, add "English (Professional)" to languages
+- For metric issues, provide specific metrics to add to each bullet point
+- Your fixes should be exact text replacements that can be applied programmatically`;
+
+    // User prompt contains the resume and original text
+    const userPrompt = `
+Please validate and enhance this resume against your quality checklist.
+
+PROCESSED RESUME JSON:
+${JSON.stringify(resume, null, 2)}
+
+ORIGINAL RESUME TEXT (FOR REFERENCE):
+${originalText}`;
+
+    // Call OpenAI API with JSON response format
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt }
+      ],
+      response_format: { type: "json_object" },
+      temperature: 0.2 // Lower temperature for more consistent validation
+    });
+
+    // Parse the validation response from the API response
+    const content = response.choices[0].message.content || '{"validation_successful": true}';
+    const validationResponse = JSON.parse(content);
+    
+    // If validation was successful, return the original resume
+    if (validationResponse.validation_successful) {
+      console.log('Resume validation successful, no issues found');
+      return resume;
+    }
+    
+    console.log(`Resume validation found ${validationResponse.issues.length} issues to fix`);
+    
+    // If issues were found and enhanced resume was provided, use that
+    if (validationResponse.enhanced_resume) {
+      console.log('Using AI-enhanced resume from validation');
+      return validationResponse.enhanced_resume as Resume;
+    }
+    
+    // Otherwise, apply fixes to the original resume
+    let enhancedResume = structuredClone(resume);
+    
+    // Apply fixes based on identified issues
+    for (const issue of validationResponse.issues) {
+      console.log(`Fixing issue in ${issue.section}: ${issue.issue}`);
+      
+      if (issue.section === 'skills') {
+        // Handle skills issues - parse the fix recommendation to extract skills
+        const skillsFix = issue.fix;
+        
+        if (skillsFix.includes(';')) {
+          // If skills are provided in semicolon-separated format, split and add them
+          const skillsList = skillsFix.split(';').map(s => s.trim()).filter(s => s);
+          
+          // Find or create the Skills category
+          let skillsCategory = enhancedResume.skills.find(s => s.category === 'Skills');
+          if (!skillsCategory) {
+            skillsCategory = { category: 'Skills', items: [] };
+            enhancedResume.skills.push(skillsCategory);
+          }
+          
+          // Add new skills, avoiding duplicates
+          for (const skill of skillsList) {
+            if (!skillsCategory.items.includes(skill)) {
+              skillsCategory.items.push(skill);
+            }
+          }
+        }
+      }
+      
+      if (issue.section === 'languages') {
+        // Handle language issues
+        if (issue.issue.includes('English') || issue.fix.includes('English')) {
+          // Add English if it's missing
+          let languageCategory = enhancedResume.skills.find(s => s.category === 'Languages');
+          if (!languageCategory) {
+            languageCategory = { category: 'Languages', items: [] };
+            enhancedResume.skills.push(languageCategory);
+          }
+          
+          // Add English if not already there
+          if (!languageCategory.items.some(l => l.includes('English'))) {
+            languageCategory.items.push('English (Professional)');
+          }
+        }
+      }
+      
+      // More fix handlers can be added here for other issue types
+    }
+    
+    console.log('Resume enhancement complete');
+    return enhancedResume;
+  } catch (error) {
+    console.error('Error validating and enhancing resume:', error);
+    // Return the original resume if validation fails
+    return resume;
   }
 }
