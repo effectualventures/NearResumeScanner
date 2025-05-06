@@ -142,11 +142,9 @@ try {
     {{summary}}
   </div>
   
-  <div class="section-title">SKILLS & TOOLS</div>
+  <div class="section-title">SKILLS</div>
   <div class="skills">
-    {{#each skills}}
-      {{this.category}} | {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
-    {{/each}}
+    Skills: {{#each skills}}{{#each this.items}}{{#if @first}}{{this}}{{else}}, {{this}}{{/if}}{{/each}}{{#unless @last}}{{#if this.items.length}}, {{/if}}{{/unless}}{{/each}}
   </div>
   
   <div class="section-title">PROFESSIONAL EXPERIENCE</div>
