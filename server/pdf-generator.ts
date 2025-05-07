@@ -18,19 +18,8 @@ type PDFOptions = Omit<PuppeteerPDFOptions, 'format'> & {
 // Path to the resume template
 const templatePath = path.resolve(process.cwd(), 'server', 'templates', 'resume.html');
 
-// Define a cleaner SVG Near logo for better rendering
-const NEAR_LOGO_SVG = `
-<svg xmlns="http://www.w3.org/2000/svg" width="60" height="18" viewBox="0 0 60 18" fill="none">
-  <path d="M3.98 0.81L0.36 7.92C0.23 8.17 0.25 8.47 0.41 8.7C0.57 8.93 0.84 9.06 1.13 9.06H4.80L5.98 11.01C6.13 11.3 6.44 11.48 6.77 11.48C6.83 11.48 6.89 11.47 6.95 11.46C7.35 11.36 7.63 11.02 7.63 10.62V0.46C7.63 0.2 7.38 0.02 7.15 0.1C7 0.14 6.87 0.24 6.82 0.38L3.98 0.81Z" fill="#000F24"/>
-  <path d="M9.04 3.41V10.62C9.04 11.02 9.32 11.36 9.72 11.46C9.78 11.47 9.85 11.48 9.91 11.48C10.24 11.48 10.55 11.3 10.7 11.01L14.58 3.71C14.66 3.55 14.59 3.34 14.42 3.26C14.35 3.23 14.28 3.23 14.21 3.24L9.04 3.41Z" fill="#000F24"/>
-  <path d="M4.82 9.06H6.92C7.19 9.06 7.4 8.85 7.4 8.59V3.78C7.4 3.63 7.27 3.5 7.12 3.5C7.1 3.5 7.09 3.5 7.07 3.51L2.47 4.37C2.33 4.39 2.23 4.49 2.2 4.62C2.19 4.66 2.18 4.69 2.18 4.73V7.48C2.18 7.72 2.31 7.94 2.51 8.07L4.82 9.06Z" fill="#000F24"/>
-  <path d="M24.39 3.35L22.98 6.64L21.58 3.35H20.31L22.44 8.14V11.24H23.52V8.14L25.66 3.35H24.39Z" fill="#000F24"/>
-  <path d="M26.3 11.24H27.39V3.35H26.3V11.24Z" fill="#000F24"/>
-  <path d="M32.07 6.98L29.71 3.35H28.72V11.24H29.8V5.62L31.58 8.36H32.56L34.35 5.62V11.24H35.43V3.35H34.44L32.07 6.98Z" fill="#000F24"/>
-  <path d="M41.69 3.35H40.59V8.72C40.59 9.54 40.13 10.25 39.2 10.25C38.28 10.25 37.82 9.54 37.82 8.72V3.35H36.72V8.94C36.72 10.25 37.68 11.36 39.2 11.36C40.73 11.36 41.69 10.25 41.69 8.94V3.35Z" fill="#000F24"/>
-  <path d="M48 3.35H46.9V6.95H44.16V3.35H43.06V11.24H44.16V7.95H46.9V11.24H48V3.35Z" fill="#000F24"/>
-</svg>
-`;
+// Load the Near logo SVG from file
+const NEAR_LOGO_SVG = fs.readFileSync(path.resolve(process.cwd(), 'near logo.svg'), 'utf8');
 
 // Convert the SVG to a data URL for embedding
 const NEAR_LOGO_BASE64 = 'data:image/svg+xml;base64,' + Buffer.from(NEAR_LOGO_SVG).toString('base64');
@@ -168,9 +157,11 @@ try {
     }
     
     .footer img, .footer svg {
-      height: 16px;
+      height: 20px;
       width: auto;
-      opacity: 0.9;
+      margin-top: 15px;
+      margin-right: 5px;
+      opacity: 0.95;
     }
   </style>
 </head>
@@ -252,7 +243,7 @@ try {
   {{/if}}
   
   <div class="footer">
-    <img src="${NEAR_LOGO_BASE64}" alt="Near Logo" style="height: 18px; width: auto;">
+    <img src="${NEAR_LOGO_BASE64}" alt="Near Logo" style="height: 22px; width: auto;">
   </div>
 </body>
 </html>`;
