@@ -442,78 +442,134 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       // Load the content into the page
       await page.setContent(html, { waitUntil: 'networkidle0' });
       
-      // EXPERIMENTAL: First pass to identify and remove problematic elements
+      // Very aggressive cleanup of problematic elements
       await page.evaluate(() => {
-        // Remove all hidden elements and potential watermarks
-        document.querySelectorAll('*').forEach(el => {
-          const style = window.getComputedStyle(el);
-          
-          // Remove any suspected captcha or watermark elements
-          if (el.textContent && 
-             (el.textContent.includes('POP') || 
-              el.textContent.includes('S·H') || 
-              el.textContent.trim() === 'POP' || 
-              el.textContent.trim() === 'S·H')
-          ) {
-            console.log('Removing element with captcha-like content:', el.textContent);
-            el.remove();
-          }
-          
-          // Remove all SVG elements - we'll add our own clean logo
-          if (el.tagName === 'svg' || el.tagName === 'SVG') {
-            el.remove();
-          }
-        });
+        // First, define all the text patterns we want to remove
+        const problematicPatterns = ['POP', 'S·H', 'S*H', 'S·', '·H', 'pop', 's·h', 'CAPTCHA'];
         
-        // Clean up any text nodes containing POP or S·H
-        const walker = document.createTreeWalker(
-          document.body, 
-          NodeFilter.SHOW_TEXT
-        );
-        
-        const textsToRemove = [];
-        let node;
-        while (node = walker.nextNode()) {
-          if (node.textContent && 
-             (node.textContent.includes('POP') || 
-              node.textContent.includes('S·H'))
-          ) {
-            textsToRemove.push(node);
+        // APPROACH 1: Search for all elements containing problematic text and remove them
+        const allElements = document.querySelectorAll('*');
+        for (const el of allElements) {
+          try {
+            // Check if the element contains any problematic text
+            if (el.textContent) {
+              for (const pattern of problematicPatterns) {
+                if (el.textContent.includes(pattern)) {
+                  // Found problematic content, remove the element entirely
+                  console.log('Removing element with problematic content:', el.textContent);
+                  el.remove();
+                  break;
+                }
+              }
+            }
+            
+            // Also remove any small SVG elements which might be causing issues
+            if (el.tagName === 'svg' || el.tagName === 'SVG') {
+              // Only remove small SVGs that aren't part of a chart or major diagram
+              const rect = el.getBoundingClientRect();
+              if (rect.width < 100 && rect.height < 100) {
+                el.remove();
+              }
+            }
+          } catch (e) {
+            console.error('Error processing element:', e);
           }
         }
         
-        textsToRemove.forEach(node => {
-          try {
-            node.textContent = '';
-          } catch (e) {
-            console.error('Error clearing text node:', e);
+        // APPROACH 2: Use DOM mutation to replace all text nodes containing problematic text
+        const replaceProblematicTextNodes = (rootNode) => {
+          const walker = document.createTreeWalker(rootNode, NodeFilter.SHOW_TEXT);
+          const nodesToProcess = [];
+          let node;
+          
+          // Collect all text nodes first (to avoid issues with live walker during removal)
+          while (node = walker.nextNode()) {
+            nodesToProcess.push(node);
           }
-        });
+          
+          // Process the collected nodes
+          nodesToProcess.forEach(textNode => {
+            if (textNode.textContent) {
+              let needsReplacement = false;
+              for (const pattern of problematicPatterns) {
+                if (textNode.textContent.includes(pattern)) {
+                  needsReplacement = true;
+                  break;
+                }
+              }
+              
+              if (needsReplacement) {
+                console.log('Clearing problematic text node:', textNode.textContent);
+                textNode.textContent = '';
+              }
+            }
+          });
+        };
+        
+        // Apply text node replacement to the entire document
+        replaceProblematicTextNodes(document.body);
       });
       
-      // Add our own clean Near logo using the PNG from the project
+      // Use a very direct method to add the Near logo - embedded Base64
       await page.evaluate(() => {
         try {
-          // Create container for the Near logo
+          // Create container for the Near logo that's directly embedded
           const logoContainer = document.createElement('div');
           logoContainer.style.position = 'fixed';
           logoContainer.style.bottom = '0.25in';
           logoContainer.style.right = '0.5in';
-          logoContainer.style.width = '40px';
-          logoContainer.style.height = '40px';
+          logoContainer.style.width = '60px';
+          logoContainer.style.height = '24px';
           logoContainer.style.zIndex = '9999999';
           logoContainer.style.pointerEvents = 'none';
+          logoContainer.style.background = '#fff';
           
-          // Add the Near logo as an img with absolute path
-          const img = document.createElement('img');
-          img.src = '/api/near-logo'; // We'll serve the image from our API
-          img.style.width = '40px';
-          img.style.height = 'auto';
-          img.style.opacity = '1';
-          img.style.objectFit = 'contain';
+          // Create a custom Near logo with pure CSS to avoid any SVG/image loading issues
+          logoContainer.innerHTML = `
+            <div style="
+              position: relative;
+              width: 60px;
+              height: 24px;
+              overflow: visible;
+              display: flex;
+              align-items: center;
+            ">
+              <!-- Two blue circles for the Near logo icon -->
+              <div style="
+                width: 12px;
+                height: 12px;
+                border-radius: 6px;
+                background-color: #0000FF;
+                display: inline-block;
+                position: absolute;
+                left: 4px;
+                top: 6px;
+              "></div>
+              <div style="
+                width: 12px;
+                height: 12px;
+                border-radius: 6px;
+                background-color: #0000FF;
+                display: inline-block;
+                position: absolute;
+                left: 12px;
+                top: 6px;
+              "></div>
+              
+              <!-- Text "near" -->
+              <div style="
+                color: #0000FF;
+                font-family: Arial, sans-serif;
+                font-weight: bold;
+                font-size: 14px;
+                position: absolute;
+                left: 26px;
+                top: 4px;
+              ">near</div>
+            </div>
+          `;
           
           // Add to page
-          logoContainer.appendChild(img);
           document.body.appendChild(logoContainer);
         } catch (e) {
           console.error('Error adding Near logo:', e);
