@@ -423,8 +423,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
             format: 'letter',
             printBackground: true,
             margin: detailedFormat 
-              ? { top: '0.45in', right: '0.45in', bottom: '0.45in', left: '0.45in' }
-              : { top: '0.6in', right: '0.5in', bottom: '0.6in', left: '0.5in' }
+              ? { top: '0.35in', right: '0.3in', bottom: '0.35in', left: '0.3in' }
+              : { top: '0.3in', right: '0.3in', bottom: '0.3in', left: '0.3in' }
           });
           
           await browser.close();

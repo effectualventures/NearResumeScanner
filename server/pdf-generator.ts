@@ -56,9 +56,9 @@ try {
     body {
       font-family: 'Times New Roman', Times, serif;
       font-size: {{#if detailedFormat}}9.5pt{{else}}11pt{{/if}};
-      margin: {{#if detailedFormat}}0.45in 0.45in{{else}}0.5in 0.5in{{/if}};
+      margin: {{#if detailedFormat}}0.35in 0.3in{{else}}0.3in 0.3in{{/if}};
       color: #000;
-      line-height: {{#if detailedFormat}}1.05{{else}}1.2{{/if}};
+      line-height: {{#if detailedFormat}}1.05{{else}}1.15{{/if}};
       width: 8.5in;
       max-width: 100%;
     }
@@ -95,20 +95,20 @@ try {
       text-transform: uppercase;
       font-weight: bold;
       font-size: {{#if detailedFormat}}10.5pt{{else}}11pt{{/if}};
-      margin-top: {{#if detailedFormat}}6px{{else}}10px{{/if}};
-      margin-bottom: {{#if detailedFormat}}2px{{else}}3px{{/if}};
+      margin-top: {{#if detailedFormat}}4px{{else}}6px{{/if}};
+      margin-bottom: {{#if detailedFormat}}2px{{else}}2px{{/if}};
       color: #000;
       border-bottom: 1px solid #000;
       padding-bottom: {{#if detailedFormat}}0px{{else}}1px{{/if}};
     }
     
     .skills {
-      margin-bottom: 8px;
+      margin-bottom: 5px;
       font-size: 10pt;
     }
     
     .experience {
-      margin-bottom: {{#if detailedFormat}}5px{{else}}7px{{/if}};
+      margin-bottom: {{#if detailedFormat}}4px{{else}}5px{{/if}};
     }
     
     .experience-header {
@@ -139,17 +139,17 @@ try {
     }
     
     ul {
-      margin: {{#if detailedFormat}}1px{{else}}2px{{/if}} 0;
-      padding-left: {{#if detailedFormat}}14px{{else}}16px{{/if}};
+      margin: {{#if detailedFormat}}1px{{else}}1px{{/if}} 0;
+      padding-left: {{#if detailedFormat}}12px{{else}}12px{{/if}};
     }
     
     li {
-      margin-bottom: {{#if detailedFormat}}0px{{else}}1px{{/if}};
+      margin-bottom: {{#if detailedFormat}}0px{{else}}0px{{/if}};
       font-size: {{#if detailedFormat}}9.5pt{{else}}10pt{{/if}};
-      padding-left: 2px;
-      line-height: {{#if detailedFormat}}1.05{{else}}1.2{{/if}};
+      padding-left: 1px;
+      line-height: {{#if detailedFormat}}1.05{{else}}1.15{{/if}};
       text-align: justify;
-      max-width: 7.5in;
+      max-width: 7.9in;
     }
     
     .education {
@@ -420,17 +420,17 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
         margin: detailedFormat 
           ? {
             // Narrower margins for detailed format to maximize content
-            top: '0.45in',
-            right: '0.45in',
-            bottom: '0.45in',
-            left: '0.45in'
+            top: '0.35in',
+            right: '0.3in',
+            bottom: '0.35in',
+            left: '0.3in'
           } 
           : {
-            // Adjusted margins to match the reference file
-            top: '0.5in',
-            right: '0.5in',
-            bottom: '0.5in',
-            left: '0.5in'
+            // Much narrower margins to match the reference files and maximize content
+            top: '0.3in',
+            right: '0.3in',
+            bottom: '0.3in',
+            left: '0.3in'
           }
       };
       
