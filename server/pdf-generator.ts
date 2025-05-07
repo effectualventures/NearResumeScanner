@@ -18,11 +18,19 @@ type PDFOptions = Omit<PuppeteerPDFOptions, 'format'> & {
 // Path to the resume template
 const templatePath = path.resolve(process.cwd(), 'server', 'templates', 'resume.html');
 
-// Load the Near logo SVG from file
-const NEAR_LOGO_SVG = fs.readFileSync(path.resolve(process.cwd(), 'near logo.svg'), 'utf8');
+// Use the PNG version of the Near logo instead of SVG to avoid rendering issues
+const nearLogoPath = path.resolve(process.cwd(), 'near_logo.png');
+let NEAR_LOGO_BASE64 = '';
 
-// Convert the SVG to a data URL for embedding
-const NEAR_LOGO_BASE64 = 'data:image/svg+xml;base64,' + Buffer.from(NEAR_LOGO_SVG).toString('base64');
+// Only try to load the logo if it exists
+if (fs.existsSync(nearLogoPath)) {
+  try {
+    const logoBuffer = fs.readFileSync(nearLogoPath);
+    NEAR_LOGO_BASE64 = 'data:image/png;base64,' + logoBuffer.toString('base64');
+  } catch (err) {
+    console.error('Error loading Near logo:', err);
+  }
+}
 
 // Ensure the templates directory exists
 try {
@@ -254,16 +262,9 @@ try {
     <div>{{additionalExperience}}</div>
   {{/if}}
   
-  <!-- Near logo implemented directly in the template -->
+  <!-- Near logo image from PNG file -->
   <div style="position:fixed; bottom:0.25in; right:0.5in; width:60px; height:24px; z-index:9999; background-color:#ffffff;">
-    <div style="position:relative; width:60px; height:24px; overflow:visible; display:flex; align-items:center;">
-      <!-- Two blue circles -->
-      <div style="width:12px; height:12px; border-radius:6px; background-color:#0000FF; display:inline-block; position:absolute; left:4px; top:6px;"></div>
-      <div style="width:12px; height:12px; border-radius:6px; background-color:#0000FF; display:inline-block; position:absolute; left:12px; top:6px;"></div>
-      
-      <!-- Near text -->
-      <div style="color:#0000FF; font-family:Arial,sans-serif; font-weight:bold; font-size:14px; position:absolute; left:26px; top:4px;">near</div>
-    </div>
+    <img src="https://near.org/wp-content/themes/near-19/assets/img/logo.svg" alt="NEAR" style="height:24px; width:auto;" />
   </div>
 </body>
 </html>`;
@@ -449,8 +450,11 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
         </style>
       </head>`);
 
-      // Load the content into the page
+      // Load the content into the page and wait for all resources to load
       await page.setContent(html, { waitUntil: 'networkidle0' });
+      
+      // Ensure images have loaded (important for the logo)
+      await page.waitForFunction('document.images.length > 0 && Array.from(document.images).every(img => img.complete)');
       
       // Optional cleanup of any problematic text, using basic JavaScript only
       // to avoid issues with TypeScript in the browser environment
@@ -496,15 +500,19 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
         }
       };
       
-      // For detailed format, allow multiple pages
+      // Configure how PDF is generated based on format
       if (detailedFormat) {
+        // For detailed format, allow multiple pages and ensure all experience is shown
+        console.log('Using detailed format: showing all bullets points and allowing multiple pages');
         await page.pdf({
           ...pdfOptions,
           displayHeaderFooter: false,
-          preferCSSPageSize: true // Use CSS page size with our forced margins
+          preferCSSPageSize: true, // Use CSS page size with our forced margins
+          scale: 1.0 // Normal scale to ensure all content fits appropriately
         });
       } else {
-        // For standard format, maximize page space
+        // For standard format, restrict to one page
+        console.log('Using standard format: limiting bullet points to fit one page');
         await page.pdf({
           ...pdfOptions,
           preferCSSPageSize: true // Use CSS page size with our forced margins
