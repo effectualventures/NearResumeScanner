@@ -56,11 +56,13 @@ try {
     body {
       font-family: 'Times New Roman', Times, serif;
       font-size: {{#if detailedFormat}}9.5pt{{else}}11pt{{/if}};
-      margin: {{#if detailedFormat}}0.35in 0.3in{{else}}0.3in 0.3in{{/if}};
+      margin: 0.2in 0.2in;
+      padding: 0;
       color: #000;
       line-height: {{#if detailedFormat}}1.05{{else}}1.15{{/if}};
       width: 8.5in;
       max-width: 100%;
+      box-sizing: border-box;
     }
     
     .header {
@@ -417,21 +419,13 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
         path: pdfOutputPath,
         format: 'letter',
         printBackground: true,
-        margin: detailedFormat 
-          ? {
-            // Narrower margins for detailed format to maximize content
-            top: '0.35in',
-            right: '0.3in',
-            bottom: '0.35in',
-            left: '0.3in'
-          } 
-          : {
-            // Much narrower margins to match the reference files and maximize content
-            top: '0.3in',
-            right: '0.3in',
-            bottom: '0.3in',
-            left: '0.3in'
-          }
+        margin: {
+          // Extremely narrow margins to match the reference resume
+          top: '0.2in',
+          right: '0.2in',
+          bottom: '0.2in',
+          left: '0.2in'
+        }
       };
       
       // For detailed format, allow multiple pages
@@ -439,14 +433,15 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
         await page.pdf({
           ...pdfOptions,
           displayHeaderFooter: false, 
-          scale: 1.0, // Full scale for more detailed content
+          scale: 1.05, // Scale up to fill more of the page
           preferCSSPageSize: false // Allow content to flow to multiple pages as needed
         });
       } else {
-        // For standard format, try to fit on one page
+        // For standard format, maximize page space
         await page.pdf({
           ...pdfOptions,
-          scale: 0.98 // Slightly scale down to fit on one page
+          scale: 1.05, // Scale up to fill more of the page
+          preferCSSPageSize: false
         });
       }
       
