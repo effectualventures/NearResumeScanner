@@ -30,11 +30,13 @@ export interface ChatResult {
  * Upload and process a resume file
  * @param file The resume file to upload
  * @param detailedFormat Whether to use the detailed (two-page) format for 10+ years experience
+ * @param useOpenAIValidation Whether to use OpenAI for additional validation (slower but better quality)
  */
-export async function uploadResume(file: File, detailedFormat: boolean = false): Promise<ProcessingResult> {
+export async function uploadResume(file: File, detailedFormat: boolean = false, useOpenAIValidation: boolean = true): Promise<ProcessingResult> {
   const formData = new FormData();
   formData.append("file", file);
   formData.append("detailedFormat", detailedFormat.toString());
+  formData.append("useOpenAIValidation", useOpenAIValidation.toString());
   
   const response = await fetch("/api/convert", {
     method: "POST",

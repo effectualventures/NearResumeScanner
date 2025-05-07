@@ -54,6 +54,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Check if detailed format option is provided
         const useDetailedFormat = req.body.detailedFormat === 'true';
         
+        // Check if OpenAI validation should be used (enabled by default)
+        const useOpenAIValidation = req.body.useOpenAIValidation !== 'false';
+        
         // Parse the uploaded file
         const parsedFile = await parseResumeFile(
           req.file.buffer,
@@ -90,7 +93,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           const transformResult = await transformResume(
             parsedFile.extractedText,
             parsedFile.id,
-            useDetailedFormat // Pass the detailed format flag
+            useDetailedFormat, // Pass the detailed format flag
+            useOpenAIValidation // Pass the OpenAI validation flag
           );
           
           if (!transformResult.success) {

@@ -16,6 +16,7 @@ export default function Home() {
   const [fileUrl, setFileUrl] = useState<string | null>(null);
   const [extractedText, setExtractedText] = useState<string | null>(null);
   const [detailedFormat, setDetailedFormat] = useState<boolean>(false);
+  const [useOpenAIValidation, setUseOpenAIValidation] = useState<boolean>(true);
   
   // Processing state
   const [isUploading, setIsUploading] = useState(false);
@@ -95,6 +96,11 @@ export default function Home() {
     setDetailedFormat(useDetailed);
   };
   
+  // Handle OpenAI validation change
+  const handleOpenAIValidationChange = (useValidation: boolean) => {
+    setUseOpenAIValidation(useValidation);
+  };
+  
   // Handle process button click
   const handleProcessClick = async () => {
     if (!selectedFile) return;
@@ -103,8 +109,8 @@ export default function Home() {
     setIsProcessing(true);
     
     try {
-      // Upload and process the file with detailed format preference
-      const result = await uploadResume(selectedFile, detailedFormat);
+      // Upload and process the file with detailed format preference and OpenAI validation setting
+      const result = await uploadResume(selectedFile, detailedFormat, useOpenAIValidation);
       
       // Set session data
       setSessionId(result.sessionId);
@@ -217,6 +223,8 @@ export default function Home() {
             onRemoveFile={handleRemoveFile}
             detailedFormat={detailedFormat}
             onDetailedFormatChange={handleDetailedFormatChange}
+            useOpenAIValidation={useOpenAIValidation}
+            onUseOpenAIValidationChange={handleOpenAIValidationChange}
           />
           
           <ProcessedResumePanel

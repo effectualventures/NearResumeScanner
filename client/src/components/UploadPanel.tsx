@@ -238,6 +238,24 @@ export default function UploadPanel({
               </p>
             </div>
           </div>
+          
+          <div className="flex items-start space-x-2">
+            <Checkbox 
+              id="openai-validation" 
+              checked={useOpenAIValidation} 
+              onCheckedChange={() => setUseOpenAIValidation(!useOpenAIValidation)} 
+              className="mt-0.5"
+            />
+            <div>
+              <label htmlFor="openai-validation" className="text-sm text-near-gray-600 cursor-pointer font-semibold">
+                Use AI validation and enhancement
+              </label>
+              <p className="text-xs text-near-gray-500 mt-0.5">
+                Performs additional validation and enhancement of the resume with OpenAI. 
+                Uncheck for faster processing (15+ seconds faster).
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
