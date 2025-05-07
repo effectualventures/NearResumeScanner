@@ -15,6 +15,8 @@ interface UploadPanelProps {
   onRemoveFile: () => void;
   detailedFormat?: boolean;
   onDetailedFormatChange?: (useDetailed: boolean) => void;
+  useOpenAIValidation?: boolean;
+  onUseOpenAIValidationChange?: (useValidation: boolean) => void;
 }
 
 export default function UploadPanel({
@@ -25,7 +27,9 @@ export default function UploadPanel({
   selectedFile,
   onRemoveFile,
   detailedFormat: propDetailedFormat,
-  onDetailedFormatChange
+  onDetailedFormatChange,
+  useOpenAIValidation: propUseOpenAIValidation,
+  onUseOpenAIValidationChange
 }: UploadPanelProps) {
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -36,6 +40,7 @@ export default function UploadPanel({
   const [convertCurrencies, setConvertCurrencies] = useState(true);
   const [addLogo, setAddLogo] = useState(true);
   const [detailedFormat, setDetailedFormat] = useState(propDetailedFormat || false);
+  const [useOpenAIValidation, setUseOpenAIValidation] = useState(propUseOpenAIValidation !== undefined ? propUseOpenAIValidation : true);
   
   // Sync the detailed format state with parent component
   useEffect(() => {
@@ -50,6 +55,20 @@ export default function UploadPanel({
       onDetailedFormatChange(detailedFormat);
     }
   }, [detailedFormat, onDetailedFormatChange]);
+  
+  // Sync the OpenAI validation state with parent component
+  useEffect(() => {
+    if (propUseOpenAIValidation !== undefined && propUseOpenAIValidation !== useOpenAIValidation) {
+      setUseOpenAIValidation(propUseOpenAIValidation);
+    }
+  }, [propUseOpenAIValidation]);
+  
+  // Notify parent when OpenAI validation setting changes
+  useEffect(() => {
+    if (onUseOpenAIValidationChange) {
+      onUseOpenAIValidationChange(useOpenAIValidation);
+    }
+  }, [useOpenAIValidation, onUseOpenAIValidationChange]);
   
   const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
