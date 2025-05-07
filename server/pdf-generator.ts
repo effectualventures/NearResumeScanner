@@ -252,7 +252,7 @@ try {
   {{/if}}
   
   <div class="footer">
-    ${NEAR_LOGO_SVG}
+    <img src="${NEAR_LOGO_BASE64}" alt="Near Logo" style="height: 18px; width: auto;">
   </div>
 </body>
 </html>`;
