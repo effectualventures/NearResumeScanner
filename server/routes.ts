@@ -387,8 +387,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Regenerate PDF to ensure we have the latest version
       try {
-        // Use puppeteer directly for improved PDF generation
-        const puppeteer = require('puppeteer');
+        // Use puppeteer-core with ESM imports for Replit compatibility
+        const { default: puppeteer } = await import('puppeteer-core');
         
         // Generate the HTML content
         const freshPdfPath = await generatePDF(resumeData, sessionId, detailedFormat);

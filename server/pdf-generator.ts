@@ -1,4 +1,5 @@
-import puppeteer from 'puppeteer';
+// Using dynamic import for Puppeteer for better Replit compatibility
+import type { Browser } from 'puppeteer-core';
 import fs from 'fs';
 import path from 'path';
 import { Resume } from '@shared/schema';
@@ -389,6 +390,9 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
     
     // Attempt to generate PDF with Puppeteer
     try {
+      // Dynamically import puppeteer-core for Replit compatibility
+      const { default: puppeteer } = await import('puppeteer-core');
+      
       // Try to launch browser with more robust error handling
       const browser = await puppeteer.launch({
         args: [
@@ -398,7 +402,8 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
           '--disable-accelerated-2d-canvas',
           '--disable-gpu'
         ],
-        headless: true
+        headless: 'new',
+        executablePath: '/usr/bin/chromium-browser'  // Path to Replit's Chromium
       });
       
       const page = await browser.newPage();
