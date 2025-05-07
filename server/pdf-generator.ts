@@ -18,18 +18,15 @@ type PDFOptions = Omit<PuppeteerPDFOptions, 'format'> & {
 // Path to the resume template
 const templatePath = path.resolve(process.cwd(), 'server', 'templates', 'resume.html');
 
-// Use the PNG version of the Near logo instead of SVG to avoid rendering issues
-const nearLogoPath = path.resolve(process.cwd(), 'near_logo.png');
-let NEAR_LOGO_BASE64 = '';
+// IMPORTANT: Using direct local file path for Near logo instead of base64 encoding
+// This ensures reliable rendering in PDFs via Puppeteer
+const nearLogoPath = path.resolve(process.cwd(), 'public/images/near_logo.png');
 
-// Only try to load the logo if it exists
-if (fs.existsSync(nearLogoPath)) {
-  try {
-    const logoBuffer = fs.readFileSync(nearLogoPath);
-    NEAR_LOGO_BASE64 = 'data:image/png;base64,' + logoBuffer.toString('base64');
-  } catch (err) {
-    console.error('Error loading Near logo:', err);
-  }
+// Verify logo exists and log for easier debugging
+if (!fs.existsSync(nearLogoPath)) {
+  console.error(`NEAR logo not found at path: ${nearLogoPath}`);
+} else {
+  console.log(`NEAR logo file confirmed at: ${nearLogoPath}`);
 }
 
 // Ensure the templates directory exists
@@ -262,9 +259,13 @@ try {
     <div>{{additionalExperience}}</div>
   {{/if}}
   
-  <!-- Near logo using file path -->
-  <div id="footer-logo" style="position:fixed; bottom:0.25in; right:0.5in; z-index:9999; background-color:#ffffff; width:80px; height:auto;">
-    <img src="file://{{logoPath}}" width="80" alt="NEAR Logo" style="max-width:100%; height:auto;" />
+  <!-- Near logo with fail-proof implementation using file path with fallback text -->
+  <div id="footer-logo" style="position:fixed; bottom:20px; right:30px; z-index:9999; background-color:#ffffff; width:100px; height:auto;">
+    {{#if logoPath}}
+      <img src="file://{{logoPath}}" width="100" alt="NEAR Logo" style="max-width:100%; height:auto;" />
+    {{else}}
+      <span style="color: blue; font-weight: bold; font-size: 16px;">NEAR</span>
+    {{/if}}
   </div>
 </body>
 </html>`;
@@ -405,6 +406,11 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
     // Save HTML file first (needed for PDF generation and as a fallback)
     const htmlOutputPath = path.join(tempDir, `${sessionId}.html`);
     fs.writeFileSync(htmlOutputPath, html);
+    
+    // Debug file to check template rendering (especially the logo)
+    const debugHtmlPath = path.join(tempDir, 'test_resume_preview.html');
+    fs.writeFileSync(debugHtmlPath, html);
+    console.log(`Debug HTML file created at: ${debugHtmlPath} - Check this file if logo issues persist`);
     
     // Attempt to generate PDF with Puppeteer
     try {
