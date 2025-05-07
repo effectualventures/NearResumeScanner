@@ -262,9 +262,9 @@ try {
     <div>{{additionalExperience}}</div>
   {{/if}}
   
-  <!-- Near logo created with HTML/CSS -->
-  <div style="position:fixed; bottom:0.25in; right:0.5in; z-index:9999; background-color:#ffffff;">
-    <div style="color:blue; font-family:Arial, sans-serif; font-weight:bold; font-size:16px;">NEAR</div>
+  <!-- Near logo using file path -->
+  <div id="footer-logo" style="position:fixed; bottom:0.25in; right:0.5in; z-index:9999; background-color:#ffffff; width:80px; height:auto;">
+    <img src="file://{{logoPath}}" width="80" alt="NEAR Logo" style="max-width:100%; height:auto;" />
   </div>
 </body>
 </html>`;
@@ -330,10 +330,14 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
     const templateSource = fs.readFileSync(templatePath, 'utf8');
     const template = Handlebars.compile(templateSource);
     
-    // Pass the detailed format flag to the template and ensure correct section titles
+    // Pass the detailed format flag and logo path to the template
+    const logoPath = path.resolve(process.cwd(), 'public/images/near_logo.png');
+    console.log('Using logo from path:', logoPath);
+    
     let html = template({
       ...resume,
-      detailedFormat: detailedFormat
+      detailedFormat: detailedFormat,
+      logoPath: logoPath
     });
     
     // Ensure the Skills section always has the right title
@@ -415,7 +419,8 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
           '--disable-setuid-sandbox',
           '--disable-dev-shm-usage',
           '--disable-accelerated-2d-canvas',
-          '--disable-gpu'
+          '--disable-gpu',
+          '--allow-file-access-from-files' // Allow loading local files
         ],
         headless: true, // Use true for compatibility with older puppeteer-core versions
         executablePath: '/nix/store/zi4f80l169xlmivz8vja8wlphq74qqk0-chromium-125.0.6422.141/bin/chromium'  // Path to Replit's Chromium
