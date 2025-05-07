@@ -500,24 +500,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Serve Near logo file directly
   app.get('/api/near-logo', (_req: Request, res: Response) => {
     try {
-      const logoPath = path.resolve(process.cwd(), 'near logo.svg');
-      if (fs.existsSync(logoPath)) {
-        res.setHeader('Content-Type', 'image/svg+xml');
-        res.status(200).sendFile(logoPath);
-      } else {
-        res.status(404).json({
-          success: false,
-          error: { code: 'LOGO_NOT_FOUND', message: 'Near logo file not found' }
-        });
+      // Try multiple possible logo files in order of preference
+      const logoPaths = [
+        path.resolve(process.cwd(), 'near_logo.png'),  // Try the new logo first
+        path.resolve(process.cwd(), 'near-logo.png'),  // Then the original logo
+        path.resolve(process.cwd(), 'near logo.svg'),  // Then the SVG
+        path.resolve(process.cwd(), 'public', 'near-logo.png')  // Then check in public folder
+      ];
+      
+      // Find the first logo that exists
+      for (const logoPath of logoPaths) {
+        if (fs.existsSync(logoPath)) {
+          console.log('Serving Near logo from:', logoPath);
+          
+          // Set the appropriate content type based on file extension
+          if (logoPath.endsWith('.png')) {
+            res.setHeader('Content-Type', 'image/png');
+          } else if (logoPath.endsWith('.svg')) {
+            res.setHeader('Content-Type', 'image/svg+xml');
+          }
+          
+          return res.status(200).sendFile(logoPath);
+        }
       }
+      
+      // If no logo file is found, create a simple SVG as fallback
+      console.log('No Near logo file found, generating a simple SVG');
+      
+      const svgLogo = `<svg width="40" height="20" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="0" width="15" height="20" rx="5" fill="#151DED" />
+        <rect x="15" y="0" width="15" height="20" rx="5" fill="#151DED" />
+      </svg>`;
+      
+      res.setHeader('Content-Type', 'image/svg+xml');
+      return res.status(200).send(svgLogo);
     } catch (error) {
       console.error('Error serving Near logo:', error);
-      res.status(500).json({
+      return res.status(500).json({
         success: false,
-        error: {
-          code: "INTERNAL_ERROR",
-          message: "Failed to serve Near logo",
-        },
+        error: { code: 'LOGO_ERROR', message: 'Error serving Near logo' }
       });
     }
   });

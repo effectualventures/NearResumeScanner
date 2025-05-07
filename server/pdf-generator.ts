@@ -442,38 +442,81 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       // Load the content into the page
       await page.setContent(html, { waitUntil: 'networkidle0' });
       
-      // Clean up any captcha-like content and add Near logo
+      // EXPERIMENTAL: First pass to identify and remove problematic elements
+      await page.evaluate(() => {
+        // Remove all hidden elements and potential watermarks
+        document.querySelectorAll('*').forEach(el => {
+          const style = window.getComputedStyle(el);
+          
+          // Remove any suspected captcha or watermark elements
+          if (el.textContent && 
+             (el.textContent.includes('POP') || 
+              el.textContent.includes('S·H') || 
+              el.textContent.trim() === 'POP' || 
+              el.textContent.trim() === 'S·H')
+          ) {
+            console.log('Removing element with captcha-like content:', el.textContent);
+            el.remove();
+          }
+          
+          // Remove all SVG elements - we'll add our own clean logo
+          if (el.tagName === 'svg' || el.tagName === 'SVG') {
+            el.remove();
+          }
+        });
+        
+        // Clean up any text nodes containing POP or S·H
+        const walker = document.createTreeWalker(
+          document.body, 
+          NodeFilter.SHOW_TEXT
+        );
+        
+        const textsToRemove = [];
+        let node;
+        while (node = walker.nextNode()) {
+          if (node.textContent && 
+             (node.textContent.includes('POP') || 
+              node.textContent.includes('S·H'))
+          ) {
+            textsToRemove.push(node);
+          }
+        }
+        
+        textsToRemove.forEach(node => {
+          try {
+            node.textContent = '';
+          } catch (e) {
+            console.error('Error clearing text node:', e);
+          }
+        });
+      });
+      
+      // Add our own clean Near logo using the PNG from the project
       await page.evaluate(() => {
         try {
-          // Remove any text nodes containing "POP" or "S·H"
-          const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-          const textsToRemove = [];
-          let node;
-          while (node = walker.nextNode()) {
-            if (node.textContent && (node.textContent.includes('POP') || node.textContent.includes('S·H'))) {
-              textsToRemove.push(node);
-            }
-          }
-          textsToRemove.forEach(node => node.textContent = '');
-          
-          // Add a simple blue Near logo directly on the page
+          // Create container for the Near logo
           const logoContainer = document.createElement('div');
           logoContainer.style.position = 'fixed';
-          logoContainer.style.bottom = '0.25in'; 
+          logoContainer.style.bottom = '0.25in';
           logoContainer.style.right = '0.5in';
-          logoContainer.style.width = '28px';
-          logoContainer.style.height = '14px'; 
+          logoContainer.style.width = '40px';
+          logoContainer.style.height = '40px';
           logoContainer.style.zIndex = '9999999';
+          logoContainer.style.pointerEvents = 'none';
           
-          // Create a simple dot pattern for Near logo - just two blue circles side by side
-          logoContainer.innerHTML = `
-            <div style="width: 14px; height: 14px; border-radius: 50%; background-color: #151DED; display: inline-block;"></div>
-            <div style="width: 14px; height: 14px; border-radius: 50%; background-color: #151DED; display: inline-block; margin-left: -5px;"></div>
-          `;
+          // Add the Near logo as an img with absolute path
+          const img = document.createElement('img');
+          img.src = '/api/near-logo'; // We'll serve the image from our API
+          img.style.width = '40px';
+          img.style.height = 'auto';
+          img.style.opacity = '1';
+          img.style.objectFit = 'contain';
           
+          // Add to page
+          logoContainer.appendChild(img);
           document.body.appendChild(logoContainer);
         } catch (e) {
-          console.error('Error in page processing:', e);
+          console.error('Error adding Near logo:', e);
         }
       });
       
