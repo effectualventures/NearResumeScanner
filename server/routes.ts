@@ -497,6 +497,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Serve Near logo file directly
+  app.get('/api/near-logo', (_req: Request, res: Response) => {
+    try {
+      const logoPath = path.resolve(process.cwd(), 'near logo.svg');
+      if (fs.existsSync(logoPath)) {
+        res.setHeader('Content-Type', 'image/svg+xml');
+        res.status(200).sendFile(logoPath);
+      } else {
+        res.status(404).json({
+          success: false,
+          error: { code: 'LOGO_NOT_FOUND', message: 'Near logo file not found' }
+        });
+      }
+    } catch (error) {
+      console.error('Error serving Near logo:', error);
+      res.status(500).json({
+        success: false,
+        error: {
+          code: "INTERNAL_ERROR",
+          message: "Failed to serve Near logo",
+        },
+      });
+    }
+  });
+  
   // Auto-generate feedback for a resume
   app.get('/api/auto-feedback/:sessionId', async (req: Request, res: Response) => {
     try {
