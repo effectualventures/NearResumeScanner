@@ -416,15 +416,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
           
           // Create a new page and set the HTML content
           const page = await browser.newPage();
-          await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
+          
+          // Insert additional inline styles to override any potential CSS conflicts
+          const enhancedHTML = htmlContent.replace('</head>', `
+            <style>
+              /* Force narrow margins */
+              body {
+                margin: 0.25in !important; 
+                padding: 0 !important;
+                max-width: 8.0in !important;
+              }
+              /* Tighter spacing for lists */
+              ul { padding-left: 12px !important; margin: 1px 0 !important; }
+              li { margin-bottom: 0 !important; }
+            </style>
+          </head>`);
+          
+          await page.setContent(enhancedHTML, { waitUntil: 'networkidle0' });
           
           // Configure PDF options for optimal formatting
           const pdfBuffer = await page.pdf({
             format: 'letter',
             printBackground: true,
-            margin: { top: '0.2in', right: '0.2in', bottom: '0.2in', left: '0.2in' },
-            scale: 1.05,
-            preferCSSPageSize: false
+            margin: { top: '0.25in', right: '0.25in', bottom: '0.25in', left: '0.25in' },
+            preferCSSPageSize: true
           });
           
           await browser.close();

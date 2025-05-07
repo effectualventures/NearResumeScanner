@@ -410,21 +410,37 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       });
       
       const page = await browser.newPage();
+
+      // Insert additional inline styles to override any potential CSS conflicts
+      html = html.replace('</head>', `
+        <style>
+          /* Force narrow margins */
+          body {
+            margin: 0.25in !important; 
+            padding: 0 !important;
+            max-width: 8.0in !important;
+          }
+          /* Tighter spacing for lists */
+          ul { padding-left: 12px !important; margin: 1px 0 !important; }
+          li { margin-bottom: 0 !important; }
+        </style>
+      </head>`);
+
       await page.setContent(html, { waitUntil: 'networkidle0' });
       
       // Format for US Letter size (8.5" x 11")
       const pdfOutputPath = path.join(tempDir, `${sessionId}.pdf`);
-      // Configure PDF generation options to match reference file "Resume - HC - 5.8.2"
+      
+      // Configure PDF generation options to match reference file
       const pdfOptions: PDFOptions = {
         path: pdfOutputPath,
         format: 'letter',
         printBackground: true,
         margin: {
-          // Extremely narrow margins to match the reference resume
-          top: '0.2in',
-          right: '0.2in',
-          bottom: '0.2in',
-          left: '0.2in'
+          top: '0.25in',
+          right: '0.25in',
+          bottom: '0.25in',
+          left: '0.25in'
         }
       };
       
@@ -432,16 +448,14 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       if (detailedFormat) {
         await page.pdf({
           ...pdfOptions,
-          displayHeaderFooter: false, 
-          scale: 1.05, // Scale up to fill more of the page
-          preferCSSPageSize: false // Allow content to flow to multiple pages as needed
+          displayHeaderFooter: false,
+          preferCSSPageSize: true // Use CSS page size with our forced margins
         });
       } else {
         // For standard format, maximize page space
         await page.pdf({
           ...pdfOptions,
-          scale: 1.05, // Scale up to fill more of the page
-          preferCSSPageSize: false
+          preferCSSPageSize: true // Use CSS page size with our forced margins
         });
       }
       
