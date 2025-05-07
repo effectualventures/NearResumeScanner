@@ -391,7 +391,8 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
     // Attempt to generate PDF with Puppeteer
     try {
       // Dynamically import puppeteer-core for Replit compatibility
-      const { default: puppeteer } = await import('puppeteer-core');
+      const puppeteerModule = await import('puppeteer-core');
+      const puppeteer = puppeteerModule.default;
       
       // Try to launch browser with more robust error handling
       const browser = await puppeteer.launch({
@@ -402,8 +403,8 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
           '--disable-accelerated-2d-canvas',
           '--disable-gpu'
         ],
-        headless: 'new',
-        executablePath: '/usr/bin/chromium-browser'  // Path to Replit's Chromium
+        headless: true, // Use true for compatibility with older puppeteer-core versions
+        executablePath: '/nix/store/zi4f80l169xlmivz8vja8wlphq74qqk0-chromium-125.0.6422.141/bin/chromium'  // Path to Replit's Chromium
       });
       
       const page = await browser.newPage();

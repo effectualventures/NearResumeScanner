@@ -387,8 +387,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Regenerate PDF to ensure we have the latest version
       try {
-        // Use puppeteer-core with ESM imports for Replit compatibility
-        const { default: puppeteer } = await import('puppeteer-core');
+        // Use dynamic import for puppeteer-core for Replit compatibility
+        const puppeteerModule = await import('puppeteer-core');
+        const puppeteer = puppeteerModule.default;
         
         // Generate the HTML content
         const freshPdfPath = await generatePDF(resumeData, sessionId, detailedFormat);
@@ -405,9 +406,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
             args: [
               '--no-sandbox',
               '--disable-setuid-sandbox',
+              '--disable-dev-shm-usage',
+              '--disable-accelerated-2d-canvas',
               '--disable-gpu'
             ],
-            headless: true
+            headless: true,
+            executablePath: '/nix/store/zi4f80l169xlmivz8vja8wlphq74qqk0-chromium-125.0.6422.141/bin/chromium'
           });
           
           // Create a new page and set the HTML content
