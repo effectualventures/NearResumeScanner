@@ -132,7 +132,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
           processedJson: JSON.stringify(resumeData),
           originalFilePath: parsedFile.originalFilePath,
           processedPdfPath: pdfPath as string,
-          metadata: JSON.stringify({ detailedFormat: useDetailedFormat ? 'true' : 'false' }),
+          metadata: JSON.stringify({ 
+            detailedFormat: useDetailedFormat ? 'true' : 'false',
+            useOpenAIValidation: useOpenAIValidation ? 'true' : 'false'
+          }),
           expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24h expiry
         });
         

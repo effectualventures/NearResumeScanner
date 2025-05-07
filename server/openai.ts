@@ -16,7 +16,8 @@ const openai = new OpenAI({
 export async function transformResume(
   resumeText: string,
   sessionId: string,
-  detailedFormat: boolean = false
+  detailedFormat: boolean = false,
+  useOpenAIValidation: boolean = true
 ): Promise<ResumeTransformationResponse> {
   try {
     // Create system prompt with comprehensive stakeholder feedback and role-aware logic
@@ -285,13 +286,20 @@ Your response must be a valid JSON object representing the processed resume with
       
       console.log("Consolidated skills categories to just Skills and Languages");
       
-      // NEW VALIDATION STEP - Run the resume through a quality check
-      console.log("Running resume validation and enhancement process...");
-      const enhancedResume = await validateAndEnhanceResume(resumeData, resumeText);
+      let finalResume = resumeData;
+      
+      // Only run validation step if enabled
+      if (useOpenAIValidation) {
+        // NEW VALIDATION STEP - Run the resume through a quality check
+        console.log("Running resume validation and enhancement process...");
+        finalResume = await validateAndEnhanceResume(resumeData, resumeText);
+      } else {
+        console.log("Skipping OpenAI validation step (faster processing)");
+      }
       
       return {
         success: true,
-        resume: enhancedResume
+        resume: finalResume
       };
     } catch (error: any) {
       console.error('OpenAI API error:', error);
