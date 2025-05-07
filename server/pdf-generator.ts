@@ -442,33 +442,55 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       // Load the content into the page
       await page.setContent(html, { waitUntil: 'networkidle0' });
       
-      // Now add the Near logo via JavaScript
+      // Let's add a short delay to make sure all content is properly loaded
+      await page.waitForTimeout(500);
+      
+      // Remove any elements with common watermark or captcha patterns before doing anything else
       await page.evaluate(() => {
-        // Remove any existing elements with IDs or classes containing "watermark", "captcha", etc.
-        const elementsToRemove = document.querySelectorAll('[id*="watermark"], [class*="watermark"], [id*="captcha"], [class*="captcha"], [id*="near"], [class*="near"]');
-        elementsToRemove.forEach(el => el.remove());
-        
-        // Create a container for the Near logo
-        const nearLogo = document.createElement('div');
-        nearLogo.style.position = 'fixed';
-        nearLogo.style.bottom = '0.75in';
-        nearLogo.style.right = '0.5in';
-        nearLogo.style.height = '24px';
-        nearLogo.style.width = 'auto';
-        nearLogo.style.zIndex = '9999';
-        
-        // Add the NEAR logo SVG directly in the DOM
-        // Using only the icon part to keep it simple, no text
-        nearLogo.innerHTML = `
-          <svg width="24" height="24" viewBox="0 0 40 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20.1775 2.04473L25.2553 5.46979L11.2028 26.3035C10.753 26.9703 10.1763 27.542 9.50556 27.986C8.83483 28.4299 8.08322 28.7374 7.29365 28.8909C6.50408 29.0444 5.69202 29.0408 4.90382 28.8805C4.11562 28.7201 3.36672 28.4061 2.69989 27.9563C1.35316 27.0479 0.422442 25.6418 0.112481 24.0471C-0.197479 22.4525 0.13871 20.8001 1.04709 19.4534L11.6746 3.69753C12.5829 2.3508 13.9891 1.42008 15.5837 1.11012C17.1783 0.80016 18.8307 1.13635 20.1775 2.04473Z" fill="#151DED"/>
-            <path d="M37.5525 2.04472C38.8992 2.9531 39.8299 4.35926 40.1399 5.95387C40.4498 7.54847 40.1136 9.2009 39.2053 10.5476L28.5778 26.3035C27.6694 27.6502 26.2633 28.5809 24.6687 28.8909C23.074 29.2009 21.4216 28.8647 20.0749 27.9563L14.997 24.5312L29.0496 3.69751C29.9579 2.35078 31.3641 1.42007 32.9587 1.11011C34.5533 0.800145 36.2057 1.13633 37.5525 2.04472Z" fill="#151DED"/>
-            <path d="M36.4695 29C38.5571 29 40.2495 27.3076 40.2495 25.22C40.2495 23.1324 38.5571 21.44 36.4695 21.44C34.3818 21.44 32.6895 23.1324 32.6895 25.22C32.6895 27.3076 34.3818 29 36.4695 29Z" fill="#151DED"/>
-          </svg>
-        `;
-        
-        // Append the logo to the document
-        document.body.appendChild(nearLogo);
+        try {
+          // Find and remove any elements containing these texts
+          const elementsToRemove = Array.from(document.querySelectorAll('*')).filter(el => 
+            (el.textContent || '').includes('POP') || 
+            (el.textContent || '').includes('S·H') ||
+            (el.textContent || '').includes('captcha') ||
+            (el.textContent || '').includes('watermark')
+          );
+          
+          elementsToRemove.forEach(el => el.remove());
+          
+          // Also remove any SVG elements that might be causing issues
+          document.querySelectorAll('svg').forEach(svg => svg.remove());
+        } catch (e) {
+          console.error('Error removing problematic elements:', e);
+        }
+      });
+      
+      // Add our Near logo at the very end of processing, to ensure it's really at the bottom
+      await page.evaluate(() => {
+        try {
+          // Create an absolutely positioned div
+          const logoContainer = document.createElement('div');
+          
+          // Position it at the very bottom of the page with plenty of margin
+          logoContainer.style.position = 'fixed';
+          logoContainer.style.bottom = '0.3in'; // Lower position
+          logoContainer.style.right = '0.5in';
+          logoContainer.style.width = '30px';
+          logoContainer.style.height = '20px';
+          logoContainer.style.zIndex = '9999999'; // Very high z-index
+          logoContainer.style.opacity = '0.9';
+          
+          // Use a very simple blue shape rather than a complex SVG
+          logoContainer.innerHTML = `
+            <div style="width: 15px; height: 15px; border-radius: 30%; background-color: #151DED; display: inline-block;"></div>
+            <div style="width: 15px; height: 15px; border-radius: 30%; background-color: #151DED; display: inline-block; margin-left: -5px;"></div>
+          `;
+          
+          // Add it to the document
+          document.body.appendChild(logoContainer);
+        } catch (e) {
+          console.error('Error adding Near logo:', e);
+        }
       });
       
       // Format for US Letter size (8.5" x 11")
