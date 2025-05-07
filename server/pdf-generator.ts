@@ -254,7 +254,17 @@ try {
     <div>{{additionalExperience}}</div>
   {{/if}}
   
-  <!-- Near logo gets added via Puppeteer directly -->
+  <!-- Near logo implemented directly in the template -->
+  <div style="position:fixed; bottom:0.25in; right:0.5in; width:60px; height:24px; z-index:9999; background-color:#ffffff;">
+    <div style="position:relative; width:60px; height:24px; overflow:visible; display:flex; align-items:center;">
+      <!-- Two blue circles -->
+      <div style="width:12px; height:12px; border-radius:6px; background-color:#0000FF; display:inline-block; position:absolute; left:4px; top:6px;"></div>
+      <div style="width:12px; height:12px; border-radius:6px; background-color:#0000FF; display:inline-block; position:absolute; left:12px; top:6px;"></div>
+      
+      <!-- Near text -->
+      <div style="color:#0000FF; font-family:Arial,sans-serif; font-weight:bold; font-size:14px; position:absolute; left:26px; top:4px;">near</div>
+    </div>
+  </div>
 </body>
 </html>`;
     
@@ -442,79 +452,33 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       // Load the content into the page
       await page.setContent(html, { waitUntil: 'networkidle0' });
       
-      // Simplified cleanup approach to avoid errors
-      await page.evaluate(function() {
-        // Just focus on removing elements with POP S·H text
-        const allElements = document.querySelectorAll('*');
-        
-        // First pass: find and remove elements with problematic text
-        for (let i = 0; i < allElements.length; i++) {
+      // Optional cleanup of any problematic text, using basic JavaScript only
+      // to avoid issues with TypeScript in the browser environment
+      await page.evaluate(`
+        (function() {
           try {
-            const el = allElements[i];
-            const text = el.textContent || '';
+            // Simple direct replacement of problematic text in text nodes
+            const walker = document.createTreeWalker(
+              document.body, 
+              NodeFilter.SHOW_TEXT, 
+              null
+            );
             
-            // Remove text nodes containing problematic terms
-            if (text.includes('POP') || text.includes('S·H')) {
-              el.textContent = '';
+            // Process all text nodes
+            let node;
+            while(node = walker.nextNode()) {
+              if (node.textContent && (
+                  node.textContent.includes('POP') || 
+                  node.textContent.includes('S·H') ||
+                  node.textContent.includes('S*H'))) {
+                node.textContent = '';
+              }
             }
-            
-            // Also remove any SVG elements to be safe
-            if (el.tagName === 'svg' || el.tagName === 'SVG') {
-              el.remove();
-            }
-          } catch (err) {
-            // Ignore errors and continue
+          } catch(e) {
+            // Ignore errors
           }
-        }
-        
-        // Second pass: clean up text nodes directly
-        function cleanTextNodes(node) {
-          if (node.nodeType === 3) { // Text node
-            if (node.textContent && (node.textContent.includes('POP') || node.textContent.includes('S·H'))) {
-              node.textContent = '';
-            }
-          } else {
-            // Process children
-            for (let i = 0; i < node.childNodes.length; i++) {
-              cleanTextNodes(node.childNodes[i]);
-            }
-          }
-        }
-        
-        // Apply text node cleaning to the body
-        cleanTextNodes(document.body);
-      });
-      
-      // Use a very direct method to add the Near logo - embedded Base64
-      await page.evaluate(function() {
-        try {
-          // Create container for the Near logo that's directly embedded
-          var logoContainer = document.createElement('div');
-          logoContainer.style.position = 'fixed';
-          logoContainer.style.bottom = '0.25in';
-          logoContainer.style.right = '0.5in';
-          logoContainer.style.width = '60px';
-          logoContainer.style.height = '24px';
-          logoContainer.style.zIndex = '9999999';
-          logoContainer.style.pointerEvents = 'none';
-          logoContainer.style.background = '#fff';
-          
-          // Create a custom Near logo with pure CSS to avoid any SVG/image loading issues
-          logoContainer.innerHTML = '<div style="position:relative; width:60px; height:24px; overflow:visible; display:flex; align-items:center;">' +
-            // First circle 
-            '<div style="width:12px; height:12px; border-radius:6px; background-color:#0000FF; display:inline-block; position:absolute; left:4px; top:6px;"></div>' +
-            // Second circle
-            '<div style="width:12px; height:12px; border-radius:6px; background-color:#0000FF; display:inline-block; position:absolute; left:12px; top:6px;"></div>' +
-            // Near text
-            '<div style="color:#0000FF; font-family:Arial,sans-serif; font-weight:bold; font-size:14px; position:absolute; left:26px; top:4px;">near</div>' +
-          '</div>';
-          
-          // Add to page
-          document.body.appendChild(logoContainer);
-        } catch (e) {
-          // Ignore errors
-        }
-      });
+        })();
+      `);
       
       // Format for US Letter size (8.5" x 11")
       const pdfOutputPath = path.join(tempDir, `${sessionId}.pdf`);
