@@ -426,9 +426,11 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
           '--disable-dev-shm-usage',
           '--disable-accelerated-2d-canvas',
           '--disable-gpu',
-          '--allow-file-access-from-files' // Allow loading local files
+          '--allow-file-access-from-files', // Allow loading local files
+          '--allow-file-access', // Additional permission for file access
+          '--disable-web-security' // Disable CORS for local file access
         ],
-        headless: true, // Use true for compatibility with older puppeteer-core versions
+        headless: true, // Use headless mode (default for Puppeteer)
         executablePath: '/nix/store/zi4f80l169xlmivz8vja8wlphq74qqk0-chromium-125.0.6422.141/bin/chromium'  // Path to Replit's Chromium
       });
       
@@ -448,15 +450,19 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
           li { margin-bottom: 0 !important; }
           
           /* Position the Near logo properly */
-          .near-logo {
-            position: fixed;
-            bottom: 0.7in !important;
-            right: 0.5in !important;
-            width: auto !important;
-            height: 30px !important;
-            z-index: 9999 !important;
-            text-align: right !important;
-            overflow: visible !important;
+          #footer-logo {
+            position: fixed !important;
+            bottom: 20px !important;
+            right: 30px !important;
+            width: 100px !important;
+            z-index: 1000 !important;
+            background-color: #ffffff !important;
+          }
+          
+          #footer-logo img {
+            max-width: 100% !important;
+            height: auto !important;
+            display: block !important;
           }
         </style>
       </head>`);
