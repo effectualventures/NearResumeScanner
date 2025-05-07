@@ -467,6 +467,28 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
         </style>
       </head>`);
 
+      // Set up request interception to handle file:// URLs (critical for logo loading)
+      await page.setRequestInterception(true);
+      page.on('request', (req) => {
+        if (req.url().startsWith('file://')) {
+          const filePath = req.url().replace('file://', '');
+          try {
+            const buffer = fs.readFileSync(filePath);
+            req.respond({
+              status: 200,
+              body: buffer,
+              contentType: 'image/png'
+            });
+            console.log(`Successfully intercepted and loaded image from: ${filePath}`);
+          } catch (err) {
+            console.error(`Error loading image from ${filePath}:`, err);
+            req.continue();
+          }
+        } else {
+          req.continue();
+        }
+      });
+      
       // Load the content into the page and wait for all resources to load
       await page.setContent(html, { waitUntil: 'networkidle0' });
       
