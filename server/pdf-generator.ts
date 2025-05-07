@@ -442,54 +442,38 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       // Load the content into the page
       await page.setContent(html, { waitUntil: 'networkidle0' });
       
-      // Let's add a short delay to make sure all content is properly loaded
-      await page.waitForTimeout(500);
-      
-      // Remove any elements with common watermark or captcha patterns before doing anything else
+      // Clean up any captcha-like content and add Near logo
       await page.evaluate(() => {
         try {
-          // Find and remove any elements containing these texts
-          const elementsToRemove = Array.from(document.querySelectorAll('*')).filter(el => 
-            (el.textContent || '').includes('POP') || 
-            (el.textContent || '').includes('S·H') ||
-            (el.textContent || '').includes('captcha') ||
-            (el.textContent || '').includes('watermark')
-          );
+          // Remove any text nodes containing "POP" or "S·H"
+          const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+          const textsToRemove = [];
+          let node;
+          while (node = walker.nextNode()) {
+            if (node.textContent && (node.textContent.includes('POP') || node.textContent.includes('S·H'))) {
+              textsToRemove.push(node);
+            }
+          }
+          textsToRemove.forEach(node => node.textContent = '');
           
-          elementsToRemove.forEach(el => el.remove());
-          
-          // Also remove any SVG elements that might be causing issues
-          document.querySelectorAll('svg').forEach(svg => svg.remove());
-        } catch (e) {
-          console.error('Error removing problematic elements:', e);
-        }
-      });
-      
-      // Add our Near logo at the very end of processing, to ensure it's really at the bottom
-      await page.evaluate(() => {
-        try {
-          // Create an absolutely positioned div
+          // Add a simple blue Near logo directly on the page
           const logoContainer = document.createElement('div');
-          
-          // Position it at the very bottom of the page with plenty of margin
           logoContainer.style.position = 'fixed';
-          logoContainer.style.bottom = '0.3in'; // Lower position
+          logoContainer.style.bottom = '0.25in'; 
           logoContainer.style.right = '0.5in';
-          logoContainer.style.width = '30px';
-          logoContainer.style.height = '20px';
-          logoContainer.style.zIndex = '9999999'; // Very high z-index
-          logoContainer.style.opacity = '0.9';
+          logoContainer.style.width = '28px';
+          logoContainer.style.height = '14px'; 
+          logoContainer.style.zIndex = '9999999';
           
-          // Use a very simple blue shape rather than a complex SVG
+          // Create a simple dot pattern for Near logo - just two blue circles side by side
           logoContainer.innerHTML = `
-            <div style="width: 15px; height: 15px; border-radius: 30%; background-color: #151DED; display: inline-block;"></div>
-            <div style="width: 15px; height: 15px; border-radius: 30%; background-color: #151DED; display: inline-block; margin-left: -5px;"></div>
+            <div style="width: 14px; height: 14px; border-radius: 50%; background-color: #151DED; display: inline-block;"></div>
+            <div style="width: 14px; height: 14px; border-radius: 50%; background-color: #151DED; display: inline-block; margin-left: -5px;"></div>
           `;
           
-          // Add it to the document
           document.body.appendChild(logoContainer);
         } catch (e) {
-          console.error('Error adding Near logo:', e);
+          console.error('Error in page processing:', e);
         }
       });
       
