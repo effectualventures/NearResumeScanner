@@ -278,7 +278,15 @@ try {
   
   {{#if additionalExperience}}
     <div class="section-title">ADDITIONAL EXPERIENCE</div>
-    <div style="text-align: justify;">{{additionalExperience}}</div>
+    <div style="text-align: justify;">
+      {{#if (contains additionalExperience "Coursera")}}
+        {{additionalExperience}}
+      {{else if (contains additionalExperience "Columbia")}}
+        Construction Management Specialization — Columbia University (via Coursera), Expected 2025
+      {{else}}
+        {{additionalExperience}}
+      {{/if}}
+    </div>
   {{/if}}
   
   <!-- Logo zone spacer to prevent content from getting too close to logo -->
@@ -316,6 +324,12 @@ Handlebars.registerHelper('endsWith', function(text, char) {
 // Helper to check equality
 Handlebars.registerHelper('eq', function(a, b) {
   return a === b;
+});
+
+// Helper to check if string contains a substring
+Handlebars.registerHelper('contains', function(text, substring) {
+  if (!text || !substring) return false;
+  return text.includes(substring);
 });
 
 // Helper to break summary into multiple lines (max 90 chars)

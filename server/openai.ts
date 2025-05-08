@@ -308,6 +308,9 @@ Your response must be a valid JSON object representing the processed resume with
       const maxBullets = 7; // Set hard limit to 7 regardless of format
       finalResume = limitBulletPoints(finalResume, maxBullets);
       
+      // Clean up education degree formatting
+      finalResume = cleanEducationFormat(finalResume);
+      
       return {
         success: true,
         resume: finalResume
@@ -1256,6 +1259,117 @@ function normalizeSquareMeters(resume: Resume): Resume {
  * @param text Text to process
  * @returns Processed text with normalized square meter symbols
  */
+/**
+ * Limits the number of bullet points per role to the specified maximum
+ * Keeps the most important bullets with metrics and leadership information
+ * @param resume The resume to process
+ * @param maxBullets Maximum number of bullets per role (default: 7)
+ * @returns Resume with limited bullet points per role
+ */
+function limitBulletPoints(resume: Resume, maxBullets: number = 7): Resume {
+  if (!resume || !resume.experience || !Array.isArray(resume.experience)) {
+    return resume;
+  }
+  
+  // Create a deep copy of the resume to avoid reference issues
+  const processedResume = JSON.parse(JSON.stringify(resume));
+  
+  // Process each experience entry
+  processedResume.experience.forEach((exp: any) => {
+    if (exp.bullets && Array.isArray(exp.bullets) && exp.bullets.length > maxBullets) {
+      // Score each bullet based on importance indicators
+      const scoredBullets = exp.bullets.map((bullet: any, index: number) => {
+        let score = 0;
+        const text = bullet.text || '';
+        
+        // Prioritize bullets with metrics
+        if (text.match(/\d+%|\$\d+|\d+x|\d+X/)) score += 10;
+        if (text.match(/increased|improved|reduced|saved|generated/i)) score += 5;
+        
+        // Prioritize leadership indicators
+        if (text.match(/led|managed|supervised|directed|oversaw/i)) score += 7;
+        
+        // Prioritize process improvements
+        if (text.match(/implemented|developed|designed|created|established/i)) score += 4;
+        
+        // Lower priority for vague statements
+        if (text.match(/responsible for|duties included|worked on/i)) score -= 5;
+        
+        // Prioritize the first few bullets as they're often more important
+        score += Math.max(0, 10 - index); // Earlier bullets get higher score bonus
+        
+        return { bullet, score, index };
+      });
+      
+      // Sort bullets by score (descending) and then by original index (ascending)
+      scoredBullets.sort((a: any, b: any) => {
+        if (a.score !== b.score) return b.score - a.score;
+        return a.index - b.index;
+      });
+      
+      // Take top bullets up to maxBullets
+      exp.bullets = scoredBullets.slice(0, maxBullets).map((item: any) => item.bullet);
+      
+      // Resort by original index to maintain order
+      exp.bullets.sort((a: any, b: any) => {
+        const indexA = scoredBullets.find((item: any) => item.bullet === a)?.index || 0;
+        const indexB = scoredBullets.find((item: any) => item.bullet === b)?.index || 0;
+        return indexA - indexB;
+      });
+    }
+  });
+  
+  return processedResume;
+}
+
+/**
+ * Cleans up education degree formatting to be more consistent
+ * @param resume The resume to process
+ * @returns Resume with standardized education formatting
+ */
+function cleanEducationFormat(resume: Resume): Resume {
+  if (!resume || !resume.education || !Array.isArray(resume.education)) {
+    return resume;
+  }
+  
+  // Create a deep copy of the resume to avoid reference issues
+  const processedResume = JSON.parse(JSON.stringify(resume));
+  
+  // Process each education entry
+  processedResume.education.forEach((edu: any) => {
+    if (edu.degree) {
+      // 1. Remove redundant "(Building)" from "Diploma of Building and Construction (Building)"
+      edu.degree = edu.degree.replace(/\s*\(Building\)$/i, '').trim();
+      
+      // 2. Fix architecture degrees to be cleaner
+      if (edu.degree.toLowerCase().includes('architecture') || 
+          edu.degree.toLowerCase().includes('architect')) {
+        
+        // Remove "Bachelor's Degree in" prefix if present
+        if (edu.degree.match(/Bachelor['']s Degree in /i)) {
+          const cleanedDegree = edu.degree.replace(/Bachelor['']s Degree in /i, '').trim();
+          // Add the year to the degree if available
+          if (edu.year) {
+            edu.degree = `${cleanedDegree}, ${edu.year}`;
+          } else {
+            edu.degree = cleanedDegree;
+          }
+        }
+      }
+      
+      // 3. Remove redundant degree verbiage
+      edu.degree = edu.degree
+        .replace(/^Bachelor['']s Degree in /i, '')
+        .replace(/^Master['']s Degree in /i, '')
+        .replace(/^Associate['']s Degree in /i, '')
+        .trim();
+    }
+  });
+  
+  console.log('Education format cleaned up');
+  return processedResume;
+}
+
 /**
  * Standardizes location formatting to remove city and keep only State, Country or just Country
  * @param resume The resume to process
