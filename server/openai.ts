@@ -300,6 +300,9 @@ Your response must be a valid JSON object representing the processed resume with
       // Apply square meter normalization to fix m2/m² rendering issues
       finalResume = normalizeSquareMeters(finalResume);
       
+      // Standardize location formatting (remove city, keep State, Country)
+      finalResume = standardizeLocations(finalResume);
+      
       // Apply bullet point limitation (max 7 bullets per role)
       // For detailed format, allow more bullets (up to 10)
       const maxBullets = detailedFormat ? 10 : 7;
@@ -1246,6 +1249,94 @@ function normalizeSquareMeters(resume: Resume): Resume {
     // Return the original resume if normalization fails
     return resume;
   }
+}
+
+/**
+ * Helper function to replace various square meter notations with the proper symbol
+ * @param text Text to process
+ * @returns Processed text with normalized square meter symbols
+ */
+/**
+ * Standardizes location formatting to remove city and keep only State, Country or just Country
+ * @param resume The resume to process
+ * @returns Resume with standardized location format
+ */
+function standardizeLocations(resume: Resume): Resume {
+  if (!resume) return resume;
+  
+  // Create a deep copy of the resume to avoid reference issues
+  const processedResume = JSON.parse(JSON.stringify(resume));
+  
+  // First, process the header location
+  if (processedResume.header && processedResume.header.location) {
+    // Header location formatting - try to standardize to "State, Country" or "Country"
+    const locationParts = processedResume.header.location.split(',').map((part: string) => part.trim());
+    
+    if (locationParts.length >= 3) {
+      // Format like "City, State, Country" - remove the city
+      processedResume.header.location = `${locationParts[1]}, ${locationParts[2]}`;
+    } else if (locationParts.length === 2) {
+      // Check if first part seems like a city - if so, consider using just the country
+      // This is a simplification - in production we'd use a geo database
+      const isFirstPartACity = locationParts[0].length > 0 && !locationParts[0].includes('Province');
+      
+      if (isFirstPartACity && locationParts[0].toLowerCase() !== 'são paulo') {
+        // If it's likely a city, just use the country
+        // Exception for São Paulo which can be both a city and state
+        processedResume.header.location = locationParts[1];
+      }
+      // Otherwise keep as is - it's likely already "State, Country"
+    }
+    // If only one part, keep as is - it's likely just a country
+  }
+  
+  // Next, process each experience location field
+  if (processedResume.experience && Array.isArray(processedResume.experience)) {
+    processedResume.experience.forEach((exp: any) => {
+      if (exp.location) {
+        const locationParts = exp.location.split(',').map((part: string) => part.trim());
+        
+        if (locationParts.length >= 3) {
+          // Format like "City, State, Country" - remove the city
+          exp.location = `${locationParts[1]}, ${locationParts[2]}`;
+        } else if (locationParts.length === 2) {
+          // Check if first part seems like a city name
+          const isFirstPartACity = locationParts[0].length > 0 && !locationParts[0].includes('Province');
+          
+          if (isFirstPartACity && locationParts[0].toLowerCase() !== 'são paulo') {
+            // If it's likely a city, just use the country
+            exp.location = locationParts[1];
+          }
+          // Otherwise keep as is - it's likely already "State, Country"
+        }
+        // If only one part, keep as is - it's likely just a country
+      }
+    });
+  }
+  
+  // Process education locations
+  if (processedResume.education && Array.isArray(processedResume.education)) {
+    processedResume.education.forEach((edu: any) => {
+      if (edu.location) {
+        const locationParts = edu.location.split(',').map((part: string) => part.trim());
+        
+        if (locationParts.length >= 3) {
+          // Format like "City, State, Country" - remove the city
+          edu.location = `${locationParts[1]}, ${locationParts[2]}`;
+        } else if (locationParts.length === 2) {
+          // Same logic as above for 2-part locations
+          const isFirstPartACity = locationParts[0].length > 0 && !locationParts[0].includes('Province');
+          
+          if (isFirstPartACity && locationParts[0].toLowerCase() !== 'são paulo') {
+            edu.location = locationParts[1];
+          }
+        }
+      }
+    });
+  }
+  
+  console.log('Location formatting standardized');
+  return processedResume;
 }
 
 /**
