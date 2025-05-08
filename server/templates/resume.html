@@ -128,7 +128,7 @@
     }
     
     .education {
-      margin-bottom: 15px;
+      margin-bottom: 25px; /* Increased bottom margin for education section */
       line-height: 1.4;
     }
     
@@ -212,7 +212,10 @@
   
   {{#if additionalExperience}}
     <div class="section-title">ADDITIONAL EXPERIENCE</div>
-    <div class="additional">{{additionalExperience}}</div>
+    <div class="additional" style="margin-bottom: 0.7in;">{{additionalExperience}}</div>
+  {{else}}
+    <!-- Add spacer at the bottom if no additional experience section exists -->
+    <div style="height: 0.7in;"></div>
   {{/if}}
   
   <div class="footer">
