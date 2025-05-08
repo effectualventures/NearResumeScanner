@@ -147,18 +147,27 @@
     
     /* No duplicate body style needed as we updated the main body styles */
     
-    .footer {
+    .branding-footer {
       position: fixed !important;
-      bottom: 0.2in !important; /* Better position with the 1 inch bottom margin */
-      right: 0.3in !important; /* Position more to the right */
-      text-align: right !important;
+      bottom: 30px !important;
+      right: 30px !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
       z-index: 1000 !important;
-      background-color: transparent !important;
     }
     
-    .footer img {
-      height: auto !important;
-      width: 60px !important; /* Slightly larger logo size */
+    .branding-text {
+      font-weight: 600 !important;
+      font-size: 10pt !important;
+      color: #000 !important;
+    }
+    
+    .branding-logo {
+      height: 16px !important;
+      width: auto !important;
+      opacity: 0.95 !important;
     }
   </style>
 </head>
@@ -215,9 +224,10 @@
     <div class="additional">{{additionalExperience}}</div>
   {{/if}}
   
-  <div class="footer">
+  <div class="branding-footer">
+    <span class="branding-text">Presented by</span>
     {{#if logoPath}}
-      <img src="file://{{logoPath}}" alt="Near Logo" width="60" />
+      <img class="branding-logo" src="file://{{logoPath}}" alt="Near Logo" />
     {{else}}
       <span style="color: blue; font-weight: bold; font-size: 16px;">NEAR</span>
     {{/if}}
