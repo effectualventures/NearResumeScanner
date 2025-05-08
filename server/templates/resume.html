@@ -11,13 +11,12 @@
     body {
       font-family: 'Calibri', 'Arial', sans-serif;
       font-size: 11pt;
-      margin: 0.5in 1in 1.2in 1in; /* Increased bottom margin to 1.2 inches for more space */
+      margin: 0.5in 1in 1in 1in; /* Standard 1-inch bottom margin */
       color: #333;
       line-height: 1.3;
       max-width: 6in;
       margin-left: auto;
       margin-right: auto;
-      padding-bottom: 1.2in !important; /* Enforcing minimum bottom spacing */
     }
     
     .header {
@@ -173,7 +172,7 @@
     
     .footer {
       position: fixed !important;
-      bottom: 0.35in !important; /* Positioned to create equal spacing from text and page bottom */
+      bottom: 0.05in !important; /* Original position - right at the bottom edge */
       right: 0.3in !important; /* Position more to the right */
       text-align: right !important;
       z-index: 1000 !important;
@@ -183,6 +182,17 @@
     .footer img {
       height: auto !important;
       width: 60px !important; /* Slightly larger logo size */
+      margin-bottom: 0 !important; /* Ensure no bottom margin on logo */
+      padding-bottom: 0 !important; /* Ensure no bottom padding on logo */
+    }
+    
+    /* Create a clear logo zone that nothing else should enter */
+    .logo-zone {
+      height: 0.7in !important;
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      clear: both !important;
     }
   </style>
 </head>
@@ -241,11 +251,13 @@
   
   {{#if additionalExperience}}
     <div class="section-title">ADDITIONAL EXPERIENCE</div>
-    <div class="additional" style="margin-bottom: 0.75in;">{{additionalExperience}}</div>
+    <div class="additional" style="margin-bottom: 0;">{{additionalExperience}}</div>
   {{else}}
-    <!-- Add spacer at the bottom if no additional experience section exists -->
-    <div style="height: 0.75in;"></div>
+    <!-- No additional spacer needed here -->
   {{/if}}
+  
+  <!-- Add logo zone spacer to prevent text from getting too close to logo -->
+  <div class="logo-zone"></div>
   
   <div class="footer">
     {{#if logoPath}}
