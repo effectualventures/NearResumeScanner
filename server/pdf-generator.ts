@@ -85,6 +85,7 @@ try {
       margin-bottom: 8px;
       font-weight: 400;
       font-size: 10pt;
+      text-align: justify;
     }
     
     .section-title {
@@ -172,13 +173,22 @@ try {
     /* Logo styling */
     .near-logo {
       position: fixed;
-      bottom: 0.7in;
+      bottom: 0.05in; /* Logo positioned exactly 0.05in from bottom */
       right: 0.5in;
       width: auto;
-      height: 30px;
+      height: 25px; /* Slightly smaller logo to match reference */
       z-index: 1000;
       text-align: right;
       overflow: visible;
+    }
+    
+    /* Logo zone spacer - prevents content from getting too close to logo */
+    .logo-zone-spacer {
+      height: 0.7in; /* Creates space between content and logo */
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      visibility: hidden; /* Hidden but takes up space */
     }
   </style>
 </head>
@@ -202,7 +212,7 @@ try {
           <span style="font-weight: 600;">{{category}}:</span>
           <span style="font-weight: normal;">
             {{#each this.items}}
-              {{this}}{{#unless @last}}; {{/unless}}
+              {{this}}{{#unless @last}}; &nbsp;{{/unless}}
             {{/each}}
           </span>
         </div>
@@ -212,7 +222,7 @@ try {
         <span style="font-weight: 600;">{{category}}:</span>
         <span style="font-weight: normal;">
           {{#each this.items}}
-            {{this}}{{#unless @last}}; {{/unless}}
+            {{this}}{{#unless @last}}; &nbsp;{{/unless}}
           {{/each}}
         </span>
         {{#if @last}}{{else}} | {{/if}}
@@ -256,13 +266,16 @@ try {
   
   {{#if additionalExperience}}
     <div class="section-title">ADDITIONAL EXPERIENCE</div>
-    <div>{{additionalExperience}}</div>
+    <div style="text-align: justify;">{{additionalExperience}}</div>
   {{/if}}
   
+  <!-- Logo zone spacer to prevent content from getting too close to logo -->
+  <div class="logo-zone-spacer"></div>
+  
   <!-- Near logo with fail-proof implementation using file path with fallback text -->
-  <div id="footer-logo" style="position:fixed; bottom:20px; right:30px; z-index:9999; background-color:#ffffff; width:100px; height:auto;">
+  <div id="footer-logo" style="position:fixed; bottom:0.05in; right:0.5in; z-index:9999; background-color:#ffffff; width:100px; height:25px;">
     {{#if logoPath}}
-      <img src="file://{{logoPath}}" width="100" alt="NEAR Logo" style="max-width:100%; height:auto;" />
+      <img src="file://{{logoPath}}" height="25" alt="NEAR Logo" style="height:25px; width:auto;" />
     {{else}}
       <span style="color: blue; font-weight: bold; font-size: 16px;">NEAR</span>
     {{/if}}
@@ -452,17 +465,27 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
           /* Position the Near logo properly */
           #footer-logo {
             position: fixed !important;
-            bottom: 20px !important;
-            right: 30px !important;
-            width: 100px !important;
+            bottom: 0.05in !important;
+            right: 0.5in !important;
+            width: auto !important;
+            height: 25px !important;
             z-index: 1000 !important;
-            background-color: #ffffff !important;
+            background-color: transparent !important;
           }
           
           #footer-logo img {
-            max-width: 100% !important;
-            height: auto !important;
+            height: 25px !important;
+            width: auto !important;
             display: block !important;
+          }
+          
+          /* Logo zone spacer needs fixed height */
+          .logo-zone-spacer {
+            height: 0.7in !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            visibility: hidden !important;
           }
         </style>
       </head>`);
