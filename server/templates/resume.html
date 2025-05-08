@@ -147,8 +147,8 @@
     
     .footer {
       position: fixed !important;
-      bottom: 0.4in !important;
-      right: 0.6in !important;
+      bottom: 0.25in !important; /* Position in the bottom margin */
+      right: 0.4in !important;
       text-align: right !important;
       z-index: 1000 !important;
       background-color: transparent !important;
@@ -156,7 +156,7 @@
     
     .footer img {
       height: auto !important;
-      width: 100px !important;
+      width: 50px !important; /* Smaller logo size */
     }
   </style>
 </head>
@@ -215,7 +215,7 @@
   
   <div class="footer">
     {{#if logoPath}}
-      <img src="file://{{logoPath}}" alt="Near Logo" width="100" />
+      <img src="file://{{logoPath}}" alt="Near Logo" width="50" />
     {{else}}
       <span style="color: blue; font-weight: bold; font-size: 16px;">NEAR</span>
     {{/if}}

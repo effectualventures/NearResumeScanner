@@ -346,7 +346,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/download/:sessionId", async (req: Request, res: Response) => {
     try {
       const { sessionId } = req.params;
-      const detailedFormat = req.query.detailed === 'true';
+      let detailedFormat = req.query.detailed === 'true';
       
       // Retrieve session data
       const sessionData = await storage.getSession(sessionId);
@@ -361,10 +361,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const resumeData: Resume = JSON.parse(sessionData.processedJson);
       
       // Parse metadata for detailed format preference if not provided in query
-      if (!req.query.detailed && sessionData.metadata) {
+      if (sessionData.metadata) {
         try {
           const metadata = JSON.parse(sessionData.metadata);
           if (metadata.detailedFormat === 'true') {
+            detailedFormat = true;
             console.log("Using detailed format from metadata");
           }
         } catch (e) {
