@@ -101,6 +101,14 @@
       font-weight: bold;
       color: #000;
       letter-spacing: 0.2px;
+      display: inline;
+    }
+    
+    .location {
+      display: inline;
+      color: #444;
+      font-size: 10.5pt;
+      font-weight: normal;
     }
     
     .dates {
@@ -111,9 +119,11 @@
     
     .title {
       font-style: italic;
-      color: #444;
+      color: #333;
       margin-bottom: 5px;
-      font-weight: 500;
+      font-weight: 600; /* Slightly bolder */
+      font-size: 11pt; /* Slightly larger */
+      margin-top: 3px;
     }
     
     ul {
@@ -132,11 +142,24 @@
       line-height: 1.4;
     }
     
+    .education-institution {
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+    
+    .education-degree {
+      margin-bottom: 4px;
+      font-size: 10.5pt;
+      color: #333;
+      margin-left: 0.03in;
+    }
+    
     .education-details {
       font-size: 10pt;
       color: #444;
       margin-top: 2px;
       margin-left: 0.05in;
+      margin-bottom: 10px;
     }
     
     .additional {
@@ -190,7 +213,11 @@
   {{#each experience}}
     <div class="experience">
       <div class="experience-header">
-        <div class="company">{{company}} — {{location}}</div>
+        <div>
+          <span class="company">{{company}}</span>
+          <span> — </span>
+          <span class="location">{{location}}</span>
+        </div>
         <div class="dates">{{startDate}} – {{endDate}}</div>
       </div>
       <div class="title">{{title}}</div>
@@ -205,7 +232,8 @@
   <div class="section-title">EDUCATION</div>
   <div class="education">
     {{#each education}}
-      <div><strong>{{institution}}</strong> — {{degree}}, {{location}}, {{year}}</div>
+      <div class="education-institution"><strong>{{institution}}</strong> — {{location}}</div>
+      <div class="education-degree">{{degree}}, {{year}}</div>
       {{#if additionalInfo}}<div class="education-details">{{additionalInfo}}</div>{{/if}}
     {{/each}}
   </div>

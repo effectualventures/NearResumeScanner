@@ -1120,7 +1120,7 @@ function normalizeSquareMeters(resume: Resume): Resume {
     
     // Process experience section, focusing on bullet points
     if (processedResume.experience && Array.isArray(processedResume.experience)) {
-      processedResume.experience.forEach(exp => {
+      processedResume.experience.forEach((exp: any) => {
         // Process company name
         if (exp.company) {
           exp.company = replaceSquareMeters(exp.company);
@@ -1133,14 +1133,14 @@ function normalizeSquareMeters(resume: Resume): Resume {
         
         // Process each bullet point
         if (exp.bullets && Array.isArray(exp.bullets)) {
-          exp.bullets.forEach(bullet => {
+          exp.bullets.forEach((bullet: any) => {
             if (bullet.text) {
               bullet.text = replaceSquareMeters(bullet.text);
             }
             
             // Process metrics array 
             if (bullet.metrics && Array.isArray(bullet.metrics)) {
-              bullet.metrics = bullet.metrics.map(metric => replaceSquareMeters(metric));
+              bullet.metrics = bullet.metrics.map((metric: string) => replaceSquareMeters(metric));
             }
           });
         }
@@ -1149,7 +1149,7 @@ function normalizeSquareMeters(resume: Resume): Resume {
     
     // Process education section
     if (processedResume.education && Array.isArray(processedResume.education)) {
-      processedResume.education.forEach(edu => {
+      processedResume.education.forEach((edu: any) => {
         if (edu.degree) {
           edu.degree = replaceSquareMeters(edu.degree);
         }
