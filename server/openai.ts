@@ -297,6 +297,9 @@ Your response must be a valid JSON object representing the processed resume with
         console.log("Skipping OpenAI validation step (faster processing)");
       }
       
+      // Apply square meter normalization to fix m2/m² rendering issues
+      finalResume = normalizeSquareMeters(finalResume);
+      
       return {
         success: true,
         resume: finalResume
@@ -1097,4 +1100,100 @@ ${originalText}`;
     // Return the original resume if validation fails
     return resume;
   }
+}
+
+/**
+ * Normalizes all references to square meters in a resume
+ * Converts various formats like "m2", "m 2", "sq m" to the proper "m²" symbol
+ * @param resume The resume to process
+ * @returns Resume with normalized square meter references
+ */
+function normalizeSquareMeters(resume: Resume): Resume {
+  try {
+    // Create a deep copy of the resume to avoid reference issues
+    const processedResume = JSON.parse(JSON.stringify(resume));
+    
+    // Process the summary text
+    if (processedResume.summary) {
+      processedResume.summary = replaceSquareMeters(processedResume.summary);
+    }
+    
+    // Process experience section, focusing on bullet points
+    if (processedResume.experience && Array.isArray(processedResume.experience)) {
+      processedResume.experience.forEach(exp => {
+        // Process company name
+        if (exp.company) {
+          exp.company = replaceSquareMeters(exp.company);
+        }
+        
+        // Process title
+        if (exp.title) {
+          exp.title = replaceSquareMeters(exp.title);
+        }
+        
+        // Process each bullet point
+        if (exp.bullets && Array.isArray(exp.bullets)) {
+          exp.bullets.forEach(bullet => {
+            if (bullet.text) {
+              bullet.text = replaceSquareMeters(bullet.text);
+            }
+            
+            // Process metrics array 
+            if (bullet.metrics && Array.isArray(bullet.metrics)) {
+              bullet.metrics = bullet.metrics.map(metric => replaceSquareMeters(metric));
+            }
+          });
+        }
+      });
+    }
+    
+    // Process education section
+    if (processedResume.education && Array.isArray(processedResume.education)) {
+      processedResume.education.forEach(edu => {
+        if (edu.degree) {
+          edu.degree = replaceSquareMeters(edu.degree);
+        }
+        if (edu.additionalInfo) {
+          edu.additionalInfo = replaceSquareMeters(edu.additionalInfo);
+        }
+      });
+    }
+    
+    // Process additional experience 
+    if (processedResume.additionalExperience) {
+      processedResume.additionalExperience = replaceSquareMeters(processedResume.additionalExperience);
+    }
+    
+    console.log('Square meter normalization complete');
+    return processedResume;
+  } catch (error) {
+    console.error('Error during square meter normalization:', error);
+    // Return the original resume if normalization fails
+    return resume;
+  }
+}
+
+/**
+ * Helper function to replace various square meter notations with the proper symbol
+ * @param text Text to process
+ * @returns Processed text with normalized square meter symbols
+ */
+function replaceSquareMeters(text: string): string {
+  if (!text) return text;
+  
+  // Replace various formats of square meters with the proper symbol
+  return text
+    // Handle cases with space between m and 2
+    .replace(/(\d+)\s*m\s*2/gi, '$1 m²')
+    .replace(/(\d+)\s*sq\s*m/gi, '$1 m²')
+    .replace(/(\d+)\s*sqm/gi, '$1 m²')
+    // Handle cases without space between number and unit
+    .replace(/(\d+)m2/gi, '$1 m²')
+    .replace(/(\d+)sqm/gi, '$1 m²')
+    // Fix cases where m2 is used as a unit
+    .replace(/\bm2\b/gi, 'm²')
+    .replace(/\bsqm\b/gi, 'm²')
+    .replace(/\bsq\.\s*m\b/gi, 'm²')
+    .replace(/\bsquare\s*meters?\b/gi, 'm²')
+    .replace(/\bsquare\s*m\b/gi, 'm²');
 }
