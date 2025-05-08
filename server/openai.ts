@@ -300,6 +300,11 @@ Your response must be a valid JSON object representing the processed resume with
       // Apply square meter normalization to fix m2/m² rendering issues
       finalResume = normalizeSquareMeters(finalResume);
       
+      // Apply bullet point limitation (max 7 bullets per role)
+      // For detailed format, allow more bullets (up to 10)
+      const maxBullets = detailedFormat ? 10 : 7;
+      finalResume = limitBulletPoints(finalResume, maxBullets);
+      
       return {
         success: true,
         resume: finalResume
@@ -1108,6 +1113,76 @@ ${originalText}`;
  * @param resume The resume to process
  * @returns Resume with normalized square meter references
  */
+/**
+ * Limits the number of bullet points per role to the specified maximum
+ * Keeps the most important bullets with metrics and leadership information
+ * @param resume The resume to process
+ * @param maxBullets Maximum number of bullets per role (default: 7)
+ * @returns Resume with limited bullet points per role
+ */
+function limitBulletPoints(resume: Resume, maxBullets: number = 7): Resume {
+  if (!resume || !resume.experience || !Array.isArray(resume.experience)) {
+    return resume;
+  }
+  
+  // Create a deep copy of the resume to avoid reference issues
+  const processedResume = JSON.parse(JSON.stringify(resume));
+  
+  // Process each experience entry
+  processedResume.experience.forEach((exp: any) => {
+    if (exp.bullets && Array.isArray(exp.bullets) && exp.bullets.length > maxBullets) {
+      // Score each bullet based on importance indicators
+      const scoredBullets = exp.bullets.map((bullet: any, index: number) => {
+        let score = 0;
+        const text = bullet.text || '';
+        
+        // Prioritize bullets with metrics
+        if (text.match(/\d+%|\$\d+|\d+x|\d+X/)) score += 10;
+        if (text.match(/increased|improved|reduced|saved|generated/i)) score += 5;
+        
+        // Prioritize leadership indicators
+        if (text.match(/led|managed|supervised|directed|oversaw/i)) score += 7;
+        
+        // Prioritize process improvements
+        if (text.match(/implemented|developed|designed|created|established/i)) score += 4;
+        
+        // Lower priority for vague statements
+        if (text.match(/responsible for|duties included|worked on/i)) score -= 5;
+        
+        // Prioritize the first few bullets as they're often more important
+        score += Math.max(0, 10 - index); // Earlier bullets get higher score bonus
+        
+        return { bullet, score, index };
+      });
+      
+      // Sort bullets by score (descending) and then by original index (ascending)
+      scoredBullets.sort((a: any, b: any) => {
+        if (a.score !== b.score) return b.score - a.score;
+        return a.index - b.index;
+      });
+      
+      // Take top bullets up to maxBullets
+      exp.bullets = scoredBullets.slice(0, maxBullets).map((item: any) => item.bullet);
+      
+      // Resort by original index to maintain order
+      exp.bullets.sort((a: any, b: any) => {
+        const indexA = scoredBullets.find((item: any) => item.bullet === a)?.index || 0;
+        const indexB = scoredBullets.find((item: any) => item.bullet === b)?.index || 0;
+        return indexA - indexB;
+      });
+    }
+  });
+  
+  console.log(`Bullet points limited to max ${maxBullets} per role`);
+  return processedResume;
+}
+
+/**
+ * Normalizes all references to square meters in a resume
+ * Converts various formats like "m2", "m 2", "sq m" to the proper "m²" symbol
+ * @param resume The resume to process
+ * @returns Resume with normalized square meter references
+ */
 function normalizeSquareMeters(resume: Resume): Resume {
   try {
     // Create a deep copy of the resume to avoid reference issues
@@ -1153,7 +1228,7 @@ function normalizeSquareMeters(resume: Resume): Resume {
         if (edu.degree) {
           edu.degree = replaceSquareMeters(edu.degree);
         }
-        if (edu.additionalInfo) {
+        if (edu.additionalInfo && typeof edu.additionalInfo === 'string') {
           edu.additionalInfo = replaceSquareMeters(edu.additionalInfo);
         }
       });
@@ -1181,19 +1256,62 @@ function normalizeSquareMeters(resume: Resume): Resume {
 function replaceSquareMeters(text: string): string {
   if (!text) return text;
   
-  // Replace various formats of square meters with the proper symbol
-  return text
+  // Enhanced square meter conversion with approximate sq ft equivalent
+  // First create a function to convert m² to sq ft
+  const convertToSqFt = (match: string, p1: string) => {
+    const squareMeters = parseFloat(p1);
+    if (!isNaN(squareMeters)) {
+      const squareFeet = Math.round(squareMeters * 10.764);
+      return `${p1} m² (~${squareFeet.toLocaleString()} sq ft)`;
+    }
+    return `${p1} m²`;
+  };
+  
+  // Apply the replacements with conversion
+  let result = text
     // Handle cases with space between m and 2
-    .replace(/(\d+)\s*m\s*2/gi, '$1 m²')
-    .replace(/(\d+)\s*sq\s*m/gi, '$1 m²')
-    .replace(/(\d+)\s*sqm/gi, '$1 m²')
+    .replace(/(\d[\d,.]*)(?:\s*)m(?:\s*)2\b/gi, convertToSqFt)
+    .replace(/(\d[\d,.]*)(?:\s*)sq(?:\s*)m\b/gi, convertToSqFt)
+    .replace(/(\d[\d,.]*)(?:\s*)sqm\b/gi, convertToSqFt)
     // Handle cases without space between number and unit
-    .replace(/(\d+)m2/gi, '$1 m²')
-    .replace(/(\d+)sqm/gi, '$1 m²')
-    // Fix cases where m2 is used as a unit
+    .replace(/(\d[\d,.]*)m2\b/gi, convertToSqFt)
+    .replace(/(\d[\d,.]*)sqm\b/gi, convertToSqFt)
+    // Fix cases where m2 is used as a unit without a preceding number (don't add conversion here)
+    .replace(/\bm\s*2\b/gi, 'm²')
+    .replace(/\bm\s*8\b/gi, 'm²') // Fix common OCR error
     .replace(/\bm2\b/gi, 'm²')
     .replace(/\bsqm\b/gi, 'm²')
     .replace(/\bsq\.\s*m\b/gi, 'm²')
     .replace(/\bsquare\s*meters?\b/gi, 'm²')
     .replace(/\bsquare\s*m\b/gi, 'm²');
+  
+  // Also convert Brazilian Real currency if present
+  result = result.replace(/R\$\s*([\d,.]+)(?:\s*[KkMmBb])?/g, (match, amount) => {
+    // Approximate conversion rate of 5:1 (R$ to USD)
+    const brAmount = match;
+    const numericAmount = amount.replace(/,/g, '');
+    let approxUSD;
+    
+    if (numericAmount.includes('.')) {
+      // Handle decimal point notation
+      approxUSD = parseFloat(numericAmount) / 5;
+    } else {
+      // Handle comma as decimal separator
+      approxUSD = parseFloat(numericAmount.replace(/\./g, '').replace(/,/g, '.')) / 5;
+    }
+    
+    if (!isNaN(approxUSD)) {
+      const unitMatch = match.match(/[KkMmBb]/);
+      const unit = unitMatch ? unitMatch[0].toUpperCase() : '';
+      if (unit) {
+        return `${brAmount} (~$${(approxUSD).toFixed(1)}${unit} USD)`;
+      } else {
+        return `${brAmount} (~$${(approxUSD).toFixed(0)} USD)`;
+      }
+    }
+    
+    return match; // Return original if conversion fails
+  });
+  
+  return result;
 }

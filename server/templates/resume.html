@@ -219,7 +219,7 @@
   <div class="section-title">SKILLS & TOOLS</div>
   <div class="skills">
     {{#each skills}}
-      <div style="margin-bottom: 4px; margin-right: 12px;">
+      <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
         <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
       </div>
     {{/each}}
