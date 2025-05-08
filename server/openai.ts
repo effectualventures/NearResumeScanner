@@ -304,8 +304,8 @@ Your response must be a valid JSON object representing the processed resume with
       finalResume = standardizeLocations(finalResume);
       
       // Apply bullet point limitation (max 7 bullets per role)
-      // For detailed format, allow more bullets (up to 10)
-      const maxBullets = detailedFormat ? 10 : 7;
+      // For detailed format, still limit to 7 bullets per stakeholder feedback
+      const maxBullets = 7; // Set hard limit to 7 regardless of format
       finalResume = limitBulletPoints(finalResume, maxBullets);
       
       return {
@@ -1341,13 +1341,15 @@ function standardizeLocations(resume: Resume): Resume {
 
 /**
  * Helper function to replace various square meter notations with the proper symbol
+ * and add square feet conversion
  * @param text Text to process
- * @returns Processed text with normalized square meter symbols
+ * @returns Processed text with normalized square meter symbols and sq ft conversion
  */
 function replaceSquareMeters(text: string): string {
   if (!text) return text;
   
   // Enhanced square meter conversion with approximate sq ft equivalent
+  // First, normalize all square meter formats to m²
   // First create a function to convert m² to sq ft
   const convertToSqFt = (match: string, p1: string) => {
     const squareMeters = parseFloat(p1);
@@ -1376,7 +1378,7 @@ function replaceSquareMeters(text: string): string {
     .replace(/\bsquare\s*meters?\b/gi, 'm²')
     .replace(/\bsquare\s*m\b/gi, 'm²');
   
-  // Also convert Brazilian Real currency if present
+  // Convert Brazilian Real currency if present
   result = result.replace(/R\$\s*([\d,.]+)(?:\s*[KkMmBb])?/g, (match, amount) => {
     // Approximate conversion rate of 5:1 (R$ to USD)
     const brAmount = match;
@@ -1403,6 +1405,42 @@ function replaceSquareMeters(text: string): string {
     
     return match; // Return original if conversion fails
   });
+  
+  // Also consistently add R$ to any plain USD amounts in Brazilian context
+  if (text.includes('Brazil') || text.includes('São Paulo') || text.includes('Sao Paulo') || 
+      text.includes('Brazilian') || text.includes('Brasil')) {
+    
+    // Convert USD amounts to also show estimated R$ equivalent
+    result = result.replace(/\$\s*([\d,.]+)(?:\s*[KkMmBb])?(?!\s*~|\s*USD)/g, (match, amount) => {
+      // Approximate conversion rate of 5:1 (USD to R$)
+      const numericAmount = amount.replace(/,/g, '');
+      let approxBRL;
+      
+      if (numericAmount.includes('.')) {
+        // Handle decimal point notation
+        approxBRL = parseFloat(numericAmount) * 5;
+      } else {
+        // Handle comma as decimal separator
+        approxBRL = parseFloat(numericAmount.replace(/\./g, '').replace(/,/g, '.')) * 5;
+      }
+      
+      if (!isNaN(approxBRL)) {
+        const unitMatch = match.match(/[KkMmBb]/);
+        const unit = unitMatch ? unitMatch[0].toUpperCase() : '';
+        if (unit) {
+          if (!match.includes("USD")) {
+            return `R$${(approxBRL).toFixed(1)}${unit} (~${match} USD)`;
+          }
+        } else {
+          if (!match.includes("USD")) {
+            return `R$${(approxBRL).toFixed(0)} (~${match} USD)`;
+          }
+        }
+      }
+      
+      return match; // Return original if conversion fails or already has USD marker
+    });
+  }
   
   return result;
 }

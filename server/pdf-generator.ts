@@ -219,13 +219,25 @@ try {
       {{/each}}
     {{else}}
       {{#each skills}}
-        <span style="font-weight: 600;">{{category}}:</span>
-        <span style="font-weight: normal;">
-          {{#each this.items}}
-            {{this}}{{#unless @last}}; &nbsp;{{/unless}}
-          {{/each}}
-        </span>
-        {{#if @last}}{{else}} | {{/if}}
+        {{#if @first}}
+          <div style="margin-bottom: 4px;">
+            <span style="font-weight: 600;">{{category}}:</span>
+            <span style="font-weight: normal;">
+              {{#each this.items}}
+                {{this}}{{#unless @last}}; &nbsp;{{/unless}}
+              {{/each}}
+            </span>
+          </div>
+        {{else}}
+          <div style="margin-top: 4px;">
+            <span style="font-weight: 600;">{{category}}:</span>
+            <span style="font-weight: normal;">
+              {{#each this.items}}
+                {{this}}{{#unless @last}}; &nbsp;{{/unless}}
+              {{/each}}
+            </span>
+          </div>
+        {{/if}}
       {{/each}}
     {{/if}}
   </div>
