@@ -487,6 +487,9 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
     html = html.replace(/LANGUAGES<\/div>/g, 'LANGUAGES</div>');
     html = html.replace(/PROFESSIONAL EXPERIENCE<\/div>/g, 'PROFESSIONAL EXPERIENCE</div>');
     
+    // Remove any incorrect "PROFESSIONAL EXPERIENCE" text that may have been added to skills
+    html = html.replace(/Projects\s+PROFESSIONAL EXPERIENCE/g, 'Projects');
+    
     // Ensure clear section breaks to prevent overlap
     html = html.replace(/PROFESSIONAL EXPERIENCE/, '<div style="clear: both; width: 100%; display: block;"></div>PROFESSIONAL EXPERIENCE');
     
