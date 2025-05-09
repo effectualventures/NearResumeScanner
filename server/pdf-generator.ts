@@ -537,8 +537,8 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       // Create a focused, prioritized list of estimator skills (max 12 skills)
       const comprehensiveSkills = 'First Principle Estimating; Quantity Take-off; Bill of Quantities (BOQ) Preparation; Cost Estimating; Cost Consulting; AutoCAD; Project Documentation; Civil Construction; Budget Management; Tender Document Preparation; Project Management; Infrastructure Projects';
       
-      // Find the skills section using a robust pattern
-      const skillsPattern = /Skills:[\s\S]*?(?=Languages:|PROFESSIONAL EXPERIENCE)/;
+      // Find the skills section using a robust pattern but excluding any section markers
+      const skillsPattern = /Skills:[\s\S]*?(?=Languages:|PROFESSIONAL EXPERIENCE(?!\s*SECTION))/;
       const skillsMatch = html.match(skillsPattern);
       
       if (skillsMatch) {
@@ -548,7 +548,7 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
         console.log('Applied comprehensive skills replacement via HTML post-processing');
       } else {
         // Fallback: try alternative pattern or direct replacement
-        const altPattern = /Skills:(.*?)(?=Languages:|PROFESSIONAL)/;
+        const altPattern = /Skills:(.*?)(?=Languages:|PROFESSIONAL EXPERIENCE(?!\s*SECTION))/;
         const altMatch = html.match(altPattern);
         
         if (altMatch) {

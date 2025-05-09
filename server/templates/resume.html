@@ -19,14 +19,16 @@
     }
     
     /* Global rules to control page breaks and spacing */
-    section,
-    .summary,
-    .skills,
-    .experience,
-    .education,
-    .additional {
+    .experience, /* Only apply break-inside avoid to individual experience items */
+    .education-institution {
       page-break-inside: avoid;
       break-inside: avoid;
+    }
+    
+    /* Remove page breaks between sections */
+    section {
+      page-break-inside: auto;
+      break-inside: auto;
     }
     
     /* Tighter spacing for better page efficiency */
@@ -294,7 +296,6 @@
     </div>
   </section>
   
-  <!-- PROFESSIONAL EXPERIENCE SECTION -->
   <section style="display: block; width: 100%; clear: both; margin-top: 5px;">
     <div id="experience-section" class="section-title">PROFESSIONAL EXPERIENCE</div>
     {{#each experience}}
