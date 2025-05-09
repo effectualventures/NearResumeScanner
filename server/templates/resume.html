@@ -227,13 +227,14 @@
       {{/if}}
     {{/each}}
     
-    <!-- Then display languages on a separate line with clear break -->
-    <div style="width: 100%; height: 8px; clear: both;"></div>
+    <div style="display: block; margin-top: 10px; margin-bottom: 5px;"></div>
     
+    <!-- Then display languages with explicit line break -->
     {{#each skills}}
       {{#if (eq category "Languages")}}
-        <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
-          <span class="skill-category"><strong>{{this.category}}:</strong></span> English (Fluent){{#if this.items.[0]}}; {{this.items.[0]}}{{/if}}{{#each (slice this.items 1)}}; {{this}}{{/each}}
+        <div style="display: block; clear: both; margin-top: 10px;">
+          <span class="skill-category" style="display: block; margin-top: 5px;"><strong>{{this.category}}:</strong></span> 
+          <span style="display: inline-block; margin-left: 5px;">English (Fluent){{#if this.items.[0]}}; {{this.items.[0]}}{{/if}}{{#each (slice this.items 1)}}; {{this}}{{/each}}</span>
         </div>
       {{/if}}
     {{/each}}
