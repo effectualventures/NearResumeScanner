@@ -464,6 +464,8 @@ Handlebars.registerHelper('breaklines', function(text) {
  * @returns Path to the generated HTML file or PDF file
  */
 export async function generatePDF(resume: Resume, sessionId: string, detailedFormat: boolean = false): Promise<string> {
+  // Force single page format regardless of input
+  const singlePage = true; // Override detailedFormat to always create a single page
   try {
     // Read template
     const templateSource = fs.readFileSync(templatePath, 'utf8');
@@ -489,6 +491,17 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
     
     // Remove any incorrect "PROFESSIONAL EXPERIENCE" text that may have been added to skills
     html = html.replace(/Projects\s+PROFESSIONAL EXPERIENCE/g, 'Projects');
+    html = html.replace(/Projects; PROFESSIONAL EXPERIENCE/g, 'Projects');
+    html = html.replace(/Infrastructure Projects PROFESSIONAL EXPERIENCE/g, 'Infrastructure Projects');
+    html = html.replace(/Infrastructure Projects; PROFESSIONAL EXPERIENCE/g, 'Infrastructure Projects');
+    
+    // More aggressive removal of PROFESSIONAL EXPERIENCE from Skills section
+    html = html.replace(/(Skills|Languages).*?PROFESSIONAL EXPERIENCE/g, function(match) {
+      if (match.includes('section-title') || match.includes('id="experience-section"')) {
+        return match; // Don't replace if it's the actual section title
+      }
+      return match.replace('PROFESSIONAL EXPERIENCE', '');
+    });
     
     // Ensure clear section breaks to prevent overlap
     html = html.replace(/PROFESSIONAL EXPERIENCE/, '<div style="clear: both; width: 100%; display: block;"></div>PROFESSIONAL EXPERIENCE');
@@ -798,39 +811,40 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
         }
       };
       
-      // Configure how PDF is generated based on format
-      if (detailedFormat) {
-        // For detailed format, allow multiple pages and ensure all experience is shown
-        console.log('Using detailed format: showing all bullets points and allowing multiple pages');
-        await page.pdf({
-          ...pdfOptions,
-          displayHeaderFooter: false,
-          preferCSSPageSize: true, // Use CSS page size with our forced margins
-          scale: 1.0 // Normal scale to ensure all content fits appropriately
+      // Always use single page mode - force all content to fit on one page
+      console.log('Using single page mode (forced) - all content will be scaled to fit one page');
+      
+      // Check if we need to adjust scale dynamically to fit on one page
+      const contentHeight = await page.evaluate(() => {
+        const bodyHeight = document.body.scrollHeight;
+        return bodyHeight;
+      });
+      
+      // Default scale - if content is too tall, reduce scale to fit on one page
+      const pageHeight = 11 * 96; // Letter height in pixels (11 inches at 96 DPI)
+      const availableHeight = pageHeight - 96; // Account for margins
+      const scale = contentHeight > availableHeight ? Math.min(0.90, availableHeight / contentHeight) : 1.0;
+      
+      console.log(`Content height: ${contentHeight}px, using scale factor: ${scale}`);
+      
+      // Apply a transform to fix the page breaks issue
+      await page.evaluate(() => {
+        // Force all sections to stay together
+        document.querySelectorAll('section').forEach(section => {
+          section.style.pageBreakInside = 'avoid';
+          section.style.breakInside = 'avoid';
         });
-      } else {
-        // For standard format, restrict to one page
-        console.log('Using standard format: limiting bullet points to fit one page');
         
-        // Check if we need to adjust scale dynamically to fit on one page
-        const contentHeight = await page.evaluate(() => {
-          const bodyHeight = document.body.scrollHeight;
-          return bodyHeight;
-        });
-        
-        // Default scale - if content is too tall, reduce scale to fit on one page
-        const pageHeight = 11 * 96; // Letter height in pixels (11 inches at 96 DPI)
-        const availableHeight = pageHeight - 96; // Account for margins
-        const scale = contentHeight > availableHeight ? Math.min(0.95, availableHeight / contentHeight) : 1.0;
-        
-        console.log(`Content height: ${contentHeight}px, using scale factor: ${scale}`);
-        
-        await page.pdf({
-          ...pdfOptions,
-          preferCSSPageSize: true, // Use CSS page size with our forced margins
-          scale: scale, // Dynamic scale to ensure all content fits on one page
-        });
-      }
+        // Force the body to be a single page
+        document.body.style.pageBreakInside = 'avoid';
+        document.body.style.breakInside = 'avoid';
+      });
+      
+      await page.pdf({
+        ...pdfOptions,
+        preferCSSPageSize: true, // Use CSS page size with our forced margins
+        scale: scale, // Dynamic scale to ensure all content fits on one page
+      });
       
       await browser.close();
       console.log(`Generated PDF file for resume: ${pdfOutputPath}`);
