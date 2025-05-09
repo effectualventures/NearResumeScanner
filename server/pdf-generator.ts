@@ -398,8 +398,22 @@ Handlebars.registerHelper('some', function(arr, options) {
     });
   } catch (err) {
     console.error('Error in some helper:', err);
-    return false;
   }
+});
+
+// Helper to split text into lines for bulletpoints (split by semicolons)
+Handlebars.registerHelper('splitLines', function(text: string) {
+  if (!text) return [];
+  // Split by semicolons, trim each item, and filter out empty lines
+  return text.split(';')
+    .map((line: string) => line.trim())
+    .filter((line: string) => line.length > 0);
+});
+
+// Helper to check if text contains any of the items in an array
+Handlebars.registerHelper('containsAny', function(text: string, items: string[]) {
+  if (!text || !items || !Array.isArray(items)) return false;
+  return items.some((item: string) => text.includes(item));
 });
 
 // No longer need the lambda helper since we're using a simpler pattern with property/equals
