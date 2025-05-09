@@ -1513,9 +1513,9 @@ function replaceSquareMeters(text: string): string {
       const unitMatch = match.match(/[KkMmBb]/);
       const unit = unitMatch ? unitMatch[0].toUpperCase() : '';
       if (unit) {
-        return `$${(approxUSD).toFixed(1)}${unit} USD`;
+        return `$${(approxUSD).toFixed(1)}${unit}`;
       } else {
-        return `$${(approxUSD).toFixed(0)} USD`;
+        return `$${Math.round(approxUSD).toLocaleString()}`;
       }
     }
     
@@ -1714,9 +1714,9 @@ function replaceSquareMeters(text: string): string {
             const unitMatch = match.match(/[KkMmBb]/);
             const unit = unitMatch ? unitMatch[0].toUpperCase() : '';
             if (unit) {
-              return `$${(approxUSD).toFixed(1)}${unit} USD`;
+              return `$${(approxUSD).toFixed(1)}${unit}`;
             } else {
-              return `$${(approxUSD).toFixed(0)} USD`;
+              return `$${Math.round(approxUSD).toLocaleString()}`;
             }
           }
         }
@@ -1728,15 +1728,15 @@ function replaceSquareMeters(text: string): string {
   // In user's request, we only show USD values without conversions
   // So we'll skip any additional back-conversions for Brazilian context
   
-  // Ensure all USD values are properly formatted with "USD" explicitly
+  // Format USD values without adding "USD" (as per user requirement)
   result = result.replace(/\$\s*([\d,.]+)(?:\s*[KkMmBb])?(?!\s*USD)/g, (match, amount) => {
     const unitMatch = match.match(/[KkMmBb]/);
     const unit = unitMatch ? unitMatch[0].toUpperCase() : '';
     
     if (unit) {
-      return `$${amount}${unit} USD`;
+      return `$${amount}${unit}`;
     } else {
-      return `$${amount} USD`;
+      return `$${amount}`;
     }
   });
   
