@@ -92,11 +92,12 @@ try {
       text-transform: uppercase;
       font-weight: bold;
       font-size: {{#if detailedFormat}}10.5pt{{else}}11pt{{/if}};
-      margin-top: {{#if detailedFormat}}4px{{else}}6px{{/if}};
-      margin-bottom: {{#if detailedFormat}}2px{{else}}2px{{/if}};
+      margin-top: {{#if detailedFormat}}12px{{else}}14px{{/if}};
+      margin-bottom: {{#if detailedFormat}}3px{{else}}3px{{/if}};
       color: #000;
       border-bottom: 1px solid #000;
-      padding-bottom: {{#if detailedFormat}}0px{{else}}1px{{/if}};
+      padding-bottom: {{#if detailedFormat}}1px{{else}}1px{{/if}};
+      clear: both;
     }
     
     .skills {
@@ -200,7 +201,7 @@ try {
   
   <div class="divider"></div>
   
-  <div class="summary">
+  <div class="summary" style="line-height: 1.3; margin-bottom: 12px;">
     {{breaklines summary}}
   </div>
   
@@ -246,10 +247,10 @@ try {
   {{#each experience}}
     <div class="experience">
       <div class="experience-header">
-        <div class="company">{{company}}, {{location}}</div>
+        <div class="company">{{company}} — {{location}}</div>
         <div class="dates">{{startDate}} &ndash; {{endDate}}</div>
       </div>
-      <div class="title">{{title}}</div>
+      <div class="title" style="font-style: italic; font-weight: normal;">{{title}}</div>
       <ul>
         {{#if detailedFormat}}
           {{#each bullets}}
@@ -268,10 +269,10 @@ try {
   <div class="education">
     {{#each education}}
       <div class="experience-header">
-        <div class="company">{{institution}}, {{location}}</div>
+        <div class="company">{{institution}} — {{location}}</div>
         <div class="dates">{{year}}</div>
       </div>
-      <div class="title">{{degree}}</div>
+      <div class="title" style="font-style: italic; font-weight: normal;">{{degree}}</div>
       {{#if additionalInfo}}<div style="margin-top: 2px; margin-bottom: 3px;">{{additionalInfo}}</div>{{/if}}
     {{/each}}
   </div>
@@ -280,11 +281,29 @@ try {
     <div class="section-title">ADDITIONAL EXPERIENCE</div>
     <div style="text-align: justify;">
       {{#if (contains additionalExperience "Coursera")}}
-        {{additionalExperience}}
-      {{else if (contains additionalExperience "Columbia")}}
-        Construction Management Specialization — Columbia University (via Coursera), Expected 2025
+        <ul style="list-style-type: disc; padding-left: 12px; margin: 2px 0;">
+          <li>Construction Management Specialization — Columbia University (via Coursera), Expected 2025</li>
+          {{#if (contains additionalExperience "AIQS")}}
+          <li>Member, AIQS — Since December 2023</li>
+          {{/if}}
+          {{#if (contains additionalExperience "CAU BR")}}
+          <li>CAU BR Certified Architect — Since 2011</li>
+          {{/if}}
+        </ul>
+      {{else if (contains additionalExperience "AIQS")}}
+        <ul style="list-style-type: disc; padding-left: 12px; margin: 2px 0;">
+          {{#if (contains additionalExperience "Columbia")}}
+          <li>Construction Management Specialization — Columbia University (via Coursera), Expected 2025</li>
+          {{/if}}
+          <li>Member, AIQS — Since December 2023</li>
+          {{#if (contains additionalExperience "CAU BR")}}
+          <li>CAU BR Certified Architect — Since 2011</li>
+          {{/if}}
+        </ul>
       {{else}}
-        {{additionalExperience}}
+        <ul style="list-style-type: disc; padding-left: 12px; margin: 2px 0;">
+          <li>{{additionalExperience}}</li>
+        </ul>
       {{/if}}
     </div>
   {{/if}}
@@ -332,22 +351,43 @@ Handlebars.registerHelper('contains', function(text, substring) {
   return text.includes(substring);
 });
 
-// Helper to break summary into multiple lines (max 90 chars)
+// Helper to break summary into multiple lines with smart sentence splitting
 Handlebars.registerHelper('breaklines', function(text) {
   if (!text) return '';
   
-  // Split the text into two sentences if possible
-  const sentences = text.split(/(?<=\.|\?|\!) /);
-  if (sentences.length >= 2) {
-    return new Handlebars.SafeString(sentences[0] + '<br>' + sentences.slice(1).join(' '));
+  // If text is less than 120 chars (more forgiving), return as is
+  if (text.length <= 120) return text;
+  
+  // Try to split at the end of a sentence (which is more natural)
+  const sentenceBreak = text.match(/[.!?]\s+/);
+  if (sentenceBreak && sentenceBreak.index && sentenceBreak.index > 40 && sentenceBreak.index < 120) {
+    // Found a good natural sentence break that's not too short or too long
+    const firstLine = text.substring(0, sentenceBreak.index + 1); // Include the period/question mark/exclamation
+    const secondLine = text.substring(sentenceBreak.index + 2); // Skip the period and space
+    return new Handlebars.SafeString(`${firstLine}<br>${secondLine}`);
   }
   
-  // If text is less than 90 chars, return as is
-  if (text.length <= 90) return text;
+  // If no good sentence break, find a good break point around 100-120 chars
+  // Try to avoid breaking in the middle of a phrase with "in", "of", "and", etc.
+  const goodBreakPattern = /\s+(?!(?:in|of|and|with|for|on|to|by)\s+)/g;
+  let matches = [];
+  let match;
+  while ((match = goodBreakPattern.exec(text)) !== null) {
+    if (match.index > 75 && match.index < 120) {
+      matches.push(match.index);
+    }
+  }
   
-  // Find a good break point around 90 chars
-  const breakPoint = text.lastIndexOf(' ', 90);
-  if (breakPoint === -1) return text; // No space found, return as is
+  // If we found good break points, use the last one that still fits our constraint
+  let breakPoint = -1;
+  if (matches.length > 0) {
+    breakPoint = matches[matches.length - 1];
+  } else {
+    // Fallback to simple space-based breaking if no good phrases found
+    breakPoint = text.lastIndexOf(' ', 120);
+  }
+  
+  if (breakPoint === -1) return text; // No good break found, return as is
   
   // Split text into two parts
   const firstLine = text.substring(0, breakPoint);

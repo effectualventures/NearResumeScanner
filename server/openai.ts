@@ -1119,76 +1119,6 @@ ${originalText}`;
  * @param resume The resume to process
  * @returns Resume with normalized square meter references
  */
-/**
- * Limits the number of bullet points per role to the specified maximum
- * Keeps the most important bullets with metrics and leadership information
- * @param resume The resume to process
- * @param maxBullets Maximum number of bullets per role (default: 7)
- * @returns Resume with limited bullet points per role
- */
-function limitBulletPoints(resume: Resume, maxBullets: number = 7): Resume {
-  if (!resume || !resume.experience || !Array.isArray(resume.experience)) {
-    return resume;
-  }
-  
-  // Create a deep copy of the resume to avoid reference issues
-  const processedResume = JSON.parse(JSON.stringify(resume));
-  
-  // Process each experience entry
-  processedResume.experience.forEach((exp: any) => {
-    if (exp.bullets && Array.isArray(exp.bullets) && exp.bullets.length > maxBullets) {
-      // Score each bullet based on importance indicators
-      const scoredBullets = exp.bullets.map((bullet: any, index: number) => {
-        let score = 0;
-        const text = bullet.text || '';
-        
-        // Prioritize bullets with metrics
-        if (text.match(/\d+%|\$\d+|\d+x|\d+X/)) score += 10;
-        if (text.match(/increased|improved|reduced|saved|generated/i)) score += 5;
-        
-        // Prioritize leadership indicators
-        if (text.match(/led|managed|supervised|directed|oversaw/i)) score += 7;
-        
-        // Prioritize process improvements
-        if (text.match(/implemented|developed|designed|created|established/i)) score += 4;
-        
-        // Lower priority for vague statements
-        if (text.match(/responsible for|duties included|worked on/i)) score -= 5;
-        
-        // Prioritize the first few bullets as they're often more important
-        score += Math.max(0, 10 - index); // Earlier bullets get higher score bonus
-        
-        return { bullet, score, index };
-      });
-      
-      // Sort bullets by score (descending) and then by original index (ascending)
-      scoredBullets.sort((a: any, b: any) => {
-        if (a.score !== b.score) return b.score - a.score;
-        return a.index - b.index;
-      });
-      
-      // Take top bullets up to maxBullets
-      exp.bullets = scoredBullets.slice(0, maxBullets).map((item: any) => item.bullet);
-      
-      // Resort by original index to maintain order
-      exp.bullets.sort((a: any, b: any) => {
-        const indexA = scoredBullets.find((item: any) => item.bullet === a)?.index || 0;
-        const indexB = scoredBullets.find((item: any) => item.bullet === b)?.index || 0;
-        return indexA - indexB;
-      });
-    }
-  });
-  
-  console.log(`Bullet points limited to max ${maxBullets} per role`);
-  return processedResume;
-}
-
-/**
- * Normalizes all references to square meters in a resume
- * Converts various formats like "m2", "m 2", "sq m" to the proper "m²" symbol
- * @param resume The resume to process
- * @returns Resume with normalized square meter references
- */
 function normalizeSquareMeters(resume: Resume): Resume {
   try {
     // Create a deep copy of the resume to avoid reference issues
@@ -1258,13 +1188,6 @@ function normalizeSquareMeters(resume: Resume): Resume {
  * Helper function to replace various square meter notations with the proper symbol
  * @param text Text to process
  * @returns Processed text with normalized square meter symbols
- */
-/**
- * Limits the number of bullet points per role to the specified maximum
- * Keeps the most important bullets with metrics and leadership information
- * @param resume The resume to process
- * @param maxBullets Maximum number of bullets per role (default: 7)
- * @returns Resume with limited bullet points per role
  */
 function limitBulletPoints(resume: Resume, maxBullets: number = 7): Resume {
   if (!resume || !resume.experience || !Array.isArray(resume.experience)) {
@@ -1491,33 +1414,75 @@ function replaceSquareMeters(text: string): string {
     .replace(/\bsq\.\s*m\b/gi, 'm²')
     .replace(/\bsquare\s*meters?\b/gi, 'm²')
     .replace(/\bsquare\s*m\b/gi, 'm²');
-  
-  // Convert Brazilian Real currency if present
-  result = result.replace(/R\$\s*([\d,.]+)(?:\s*[KkMmBb])?/g, (match, amount) => {
-    // Approximate conversion rate of 5:1 (R$ to USD)
-    const brAmount = match;
+    
+  // Create a helper function to convert any currency to USD
+  const convertToUSD = (match: string, currency: string, amount: string, rate: number) => {
+    const originalAmount = match;
     const numericAmount = amount.replace(/,/g, '');
     let approxUSD;
     
     if (numericAmount.includes('.')) {
       // Handle decimal point notation
-      approxUSD = parseFloat(numericAmount) / 5;
+      approxUSD = parseFloat(numericAmount) / rate;
     } else {
       // Handle comma as decimal separator
-      approxUSD = parseFloat(numericAmount.replace(/\./g, '').replace(/,/g, '.')) / 5;
+      approxUSD = parseFloat(numericAmount.replace(/\./g, '').replace(/,/g, '.')) / rate;
     }
     
     if (!isNaN(approxUSD)) {
       const unitMatch = match.match(/[KkMmBb]/);
       const unit = unitMatch ? unitMatch[0].toUpperCase() : '';
       if (unit) {
-        return `${brAmount} (~$${(approxUSD).toFixed(1)}${unit} USD)`;
+        return `${originalAmount} (~$${(approxUSD).toFixed(1)}${unit} USD)`;
       } else {
-        return `${brAmount} (~$${(approxUSD).toFixed(0)} USD)`;
+        return `${originalAmount} (~$${(approxUSD).toFixed(0)} USD)`;
       }
     }
     
     return match; // Return original if conversion fails
+  };
+    
+  // Convert AUD currency to show USD equivalent
+  result = result.replace(/AUD\s*([\d,.]+)(?:\s*[KkMmBb])?/g, (match, amount) => {
+    return convertToUSD(match, 'AUD', amount, 1.5); // Approximate AUD to USD rate
+  });
+  
+  // Convert Brazilian Real (R$) currency to show USD equivalent
+  result = result.replace(/R\$\s*([\d,.]+)(?:\s*[KkMmBb])?/g, (match, amount) => {
+    return convertToUSD(match, 'R$', amount, 5.0); // Approximate BRL to USD rate
+  });
+  
+  // Convert EUR currency to show USD equivalent
+  result = result.replace(/[€Ee][Uu][Rr]?\s*([\d,.]+)(?:\s*[KkMmBb])?|(\d[\d,.]*)\s*[€Ee][Uu][Rr]?/g, (match, amount1, amount2) => {
+    const amount = amount1 || amount2;
+    return convertToUSD(match, 'EUR', amount, 0.92); // Approximate EUR to USD rate
+  });
+  
+  // Convert GBP (British Pound) to USD
+  result = result.replace(/£\s*([\d,.]+)(?:\s*[KkMmBb])?|(\d[\d,.]*)\s*GBP/g, (match, amount1, amount2) => {
+    const amount = amount1 || amount2;
+    return convertToUSD(match, 'GBP', amount, 0.78); // Approximate GBP to USD rate
+  });
+  
+  // Convert CAD (Canadian Dollar) to USD
+  result = result.replace(/CAD\s*([\d,.]+)(?:\s*[KkMmBb])?/g, (match, amount) => {
+    return convertToUSD(match, 'CAD', amount, 1.35); // Approximate CAD to USD rate
+  });
+  
+  // Convert NZD (New Zealand Dollar) to USD
+  result = result.replace(/NZD\s*([\d,.]+)(?:\s*[KkMmBb])?/g, (match, amount) => {
+    return convertToUSD(match, 'NZD', amount, 1.65); // Approximate NZD to USD rate
+  });
+  
+  // Convert CHF (Swiss Franc) to USD
+  result = result.replace(/CHF\s*([\d,.]+)(?:\s*[KkMmBb])?/g, (match, amount) => {
+    return convertToUSD(match, 'CHF', amount, 0.9); // Approximate CHF to USD rate
+  });
+  
+  // Convert JPY (Japanese Yen) to USD (very different scale)
+  result = result.replace(/JPY\s*([\d,.]+)(?:\s*[KkMmBb])?|¥\s*([\d,.]+)(?:\s*[KkMmBb])?/g, (match, amount1, amount2) => {
+    const amount = amount1 || amount2;
+    return convertToUSD(match, 'JPY', amount, 145); // Approximate JPY to USD rate
   });
   
   // Also consistently add R$ to any plain USD amounts in Brazilian context
