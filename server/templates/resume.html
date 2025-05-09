@@ -219,8 +219,8 @@
     {{/if}}
   </div>
   
-  <div class="section-title">SKILLS</div>
-  <div class="skills">
+  <div id="skills-section" class="section-title" style="page-break-before: avoid; clear: both;">SKILLS</div>
+  <div class="skills" style="page-break-inside: avoid;">
     <!-- First display skills -->
     {{#each skills}}
       {{#if (eq category "Skills")}}
@@ -241,24 +241,21 @@
   </div>
   
   <!-- Completely separate Languages section with its own title -->
-  <div class="section-title">LANGUAGES</div>
-  <div class="skills">
+  <div id="languages-section" class="section-title" style="page-break-before: avoid; clear: both; margin-top: 15px;">LANGUAGES</div>
+  <div class="skills" style="page-break-inside: avoid; margin-bottom: 18px;">
+    <div style="margin-bottom: 10px; width: 100%;">
+      <span style="font-weight: normal;">English (Fluent)</span>
+    </div>
     {{#each skills}}
       {{#if (eq category "Languages")}}
         <div style="margin-bottom: 10px; width: 100%;">
-          <span style="font-weight: normal;">English (Fluent){{#if this.items.[0]}}; {{this.items.[0]}}{{/if}}{{#each (slice this.items 1)}}; {{this}}{{/each}}</span>
+          <span style="font-weight: normal;">{{#each this.items}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}</span>
         </div>
       {{/if}}
     {{/each}}
-    <!-- Make sure Languages section is never empty -->
-    {{#unless (some skills property="category" equals="Languages")}}
-      <div style="margin-bottom: 10px; width: 100%;">
-        <span style="font-weight: normal;">English (Fluent)</span>
-      </div>
-    {{/unless}}
   </div>
   
-  <div class="section-title">PROFESSIONAL EXPERIENCE</div>
+  <div id="experience-section" class="section-title" style="page-break-before: avoid; clear: both; display: block; width: 100%; margin-top: 30px;">PROFESSIONAL EXPERIENCE</div>
   {{#each experience}}
     <div class="experience">
       <div class="experience-header">

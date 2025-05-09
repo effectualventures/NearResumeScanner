@@ -480,7 +480,15 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
     });
     
     // Ensure the Skills section always has the right title
-    html = html.replace('SKILLS & TOOLS', 'SKILLS & LANGUAGES');
+    html = html.replace('SKILLS & TOOLS', 'SKILLS');
+    
+    // Make sure section titles are properly formatted and separated
+    html = html.replace(/SKILLS<\/div>/g, 'SKILLS</div>');
+    html = html.replace(/LANGUAGES<\/div>/g, 'LANGUAGES</div>');
+    html = html.replace(/PROFESSIONAL EXPERIENCE<\/div>/g, 'PROFESSIONAL EXPERIENCE</div>');
+    
+    // Ensure clear section breaks to prevent overlap
+    html = html.replace(/PROFESSIONAL EXPERIENCE/, '<div style="clear: both; width: 100%; display: block;"></div>PROFESSIONAL EXPERIENCE');
     
     // ALWAYS apply comprehensive skills for estimator roles
     if (html.includes('Skills:') && 
@@ -620,7 +628,7 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
         <style>
           /* Force narrow margins */
           body {
-            margin: 0.25in !important; 
+            margin: 0.50in !important; 
             padding: 0 !important;
             max-width: 8.0in !important;
           }
@@ -639,6 +647,36 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
           /* Keep metrics section styled correctly */
           li span[style*="font-weight: 500"] {
             font-weight: 500 !important;
+          }
+          
+          /* Fix section headings */
+          .section-title {
+            clear: both !important;
+            display: block !important;
+            width: 100% !important;
+            margin-top: 18px !important;
+            padding-top: 5px !important;
+            page-break-before: avoid !important;
+            page-break-after: avoid !important;
+          }
+          
+          /* Add specific styling for each section */
+          #skills-section {
+            margin-top: 15px !important;
+            border-bottom: 0.5px solid #eee !important;
+          }
+          
+          #languages-section {
+            margin-top: 20px !important;
+            padding-top: 5px !important;
+            border-bottom: 0.5px solid #eee !important;
+          }
+          
+          #experience-section {
+            margin-top: 25px !important;
+            padding-top: 5px !important;
+            clear: both !important;
+            border-bottom: 0.5px solid #eee !important;
           }
           
           /* Position the Near logo properly */
