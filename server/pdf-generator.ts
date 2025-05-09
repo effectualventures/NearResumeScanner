@@ -476,23 +476,33 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       }
     }
     
-    // Check if Languages section only includes Portuguese and not English
-    if (html.includes('Languages:') && 
-        html.includes('Portuguese')) {
+    // Make sure languages section is properly formatted
+    if (html.includes('Languages:')) {
       
-      console.log('Enhancing language section with English proficiency level');
+      console.log('Ensuring proper language proficiency levels (English: Fluent)');
       
-      // If English is missing completely, add it with proficiency
+      // If English is missing completely, add it with Fluent proficiency
       if (!html.includes('English')) {
-        html = html.replace(/Languages:\s*Portuguese/g, '<span style="font-weight: 600;">Languages:</span> <span style="font-weight: normal;">English (Professional Working Proficiency); Portuguese (Native)</span>');
+        if (html.includes('Portuguese')) {
+          html = html.replace(/Languages:\s*Portuguese/g, '<span style="font-weight: 600;">Languages:</span> <span style="font-weight: normal;">English (Fluent); Portuguese (Native)</span>');
+        } else if (html.includes('Spanish')) {
+          html = html.replace(/Languages:\s*Spanish/g, '<span style="font-weight: 600;">Languages:</span> <span style="font-weight: normal;">English (Fluent); Spanish (Native)</span>');
+        } else {
+          // Just add English if no other languages
+          html = html.replace(/Languages:\s*([^<]+)/g, '<span style="font-weight: 600;">Languages:</span> <span style="font-weight: normal;">English (Fluent); $1</span>');
+        }
       } 
-      // If English is there but doesn't have a proficiency level
-      else if (!html.includes('English (') && !html.includes('(Professional') && !html.includes('(Native') && !html.includes('(Fluent')) {
-        html = html.replace(/Languages:.*?English.*?Portuguese/g, '<span style="font-weight: 600;">Languages:</span> <span style="font-weight: normal;">English (Professional Working Proficiency); Portuguese (Native)</span>');
+      // If English is there but doesn't have "Fluent" proficiency level
+      else if (!html.includes('English (Fluent)')) {
+        html = html.replace(/English(\s*\([^)]*\))?/g, 'English (Fluent)');
       }
-      // If Portuguese doesn't have a proficiency level
-      else if (!html.includes('Portuguese (')) {
+      
+      // Ensure native languages have proper marking
+      if (html.includes('Portuguese') && !html.includes('Portuguese (Native)')) {
         html = html.replace(/Portuguese(?!\s*\()/g, 'Portuguese (Native)');
+      }
+      if (html.includes('Spanish') && !html.includes('Spanish (Native)')) {
+        html = html.replace(/Spanish(?!\s*\()/g, 'Spanish (Native)');
       }
     }
     
