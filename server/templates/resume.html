@@ -217,6 +217,8 @@
   </div>
   
   <div class="section-title">SKILLS & LANGUAGES</div>
+  
+  <!-- SKILLS SECTION -->
   <div class="skills">
     <!-- First display skills -->
     {{#each skills}}
@@ -224,10 +226,12 @@
         <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
       </div>
     {{/each}}
-    
-    <!-- Then display languages on a separate line with clear break -->
-    <div style="width: 100%; height: 16px; clear: both;"></div>
-    
+  </div>
+  
+  <!-- LANGUAGES SECTION - clearly separate with its own divs and larger spacing -->
+  <div style="width: 100%; height: 20px; clear: both;"></div>
+  
+  <div class="languages" style="margin-top: 10px; margin-bottom: 15px; padding-top: 5px; border-top: 1px dotted #eee;">
     <!-- Use the separate languageSkills property specifically designed for this -->
     {{#if languageSkills}}
       <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
