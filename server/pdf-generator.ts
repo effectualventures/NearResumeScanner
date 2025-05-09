@@ -362,6 +362,11 @@ Handlebars.registerHelper('contains', function(text, substring) {
   return text.includes(substring);
 });
 
+// Helper for logical "and" operation
+Handlebars.registerHelper('and', function() {
+  return Array.prototype.slice.call(arguments, 0, -1).every(Boolean);
+});
+
 // Helper to break summary into multiple lines with smart sentence splitting
 Handlebars.registerHelper('breaklines', function(text) {
   if (!text) return '';

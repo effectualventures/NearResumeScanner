@@ -193,7 +193,7 @@
     
     /* Create a clear logo zone that nothing else should enter */
     .logo-zone {
-      height: 0.7in !important;
+      height: 1.1in !important;
       width: 100% !important;
       margin: 0 !important;
       padding: 0 !important;
@@ -216,12 +216,22 @@
     {{/if}}
   </div>
   
-  <div class="section-title">SKILLS & TOOLS</div>
+  <div class="section-title">SKILLS & LANGUAGES</div>
   <div class="skills">
     {{#each skills}}
-      <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
-        <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
-      </div>
+      {{#if (eq category "Skills")}}
+        <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
+          <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
+        </div>
+      {{else if (eq category "Languages")}}
+        <div style="margin-bottom: 8px; margin-right: 0; width: 100%; margin-top: 8px;">
+          <span class="skill-category"><strong>{{this.category}}:</strong></span> English (Fluent){{#if this.items.[0]}}; {{this.items.[0]}}{{/if}}{{#each (slice this.items 1)}}; {{this}}{{/each}}
+        </div>
+      {{else}}
+        <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
+          <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
+        </div>
+      {{/if}}
     {{/each}}
   </div>
   
@@ -249,7 +259,7 @@
   <div class="education">
     {{#each education}}
       <div class="education-institution"><strong>{{institution}}</strong> — {{location}}</div>
-      <div class="education-degree">{{degree}}, {{year}}</div>
+      <div class="education-degree">{{degree}}{{#if (and degree year)}}, {{/if}}{{year}}</div>
       {{#if additionalInfo}}<div class="education-details">{{additionalInfo}}</div>{{/if}}
     {{/each}}
   </div>
