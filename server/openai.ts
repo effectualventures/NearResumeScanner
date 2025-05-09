@@ -1278,6 +1278,31 @@ function cleanEducationFormat(resume: Resume): Resume {
   
   // Process each education entry
   processedResume.education.forEach((edu: any) => {
+    // Fix "Columbia University via Coursera" and similar online platform issues
+    if (edu.institution) {
+      // Handle "via Coursera" pattern
+      if (edu.institution.includes(" via ")) {
+        const parts = edu.institution.split(" via ");
+        if (parts.length === 2) {
+          // Move the platform info to additionalInfo
+          const institution = parts[0].trim();
+          const platform = parts[1].trim();
+          
+          // Update the institution
+          edu.institution = institution;
+          
+          // Add platform info to additionalInfo
+          if (edu.additionalInfo) {
+            if (!edu.additionalInfo.includes(platform)) {
+              edu.additionalInfo = `${edu.additionalInfo}; Delivered via ${platform}`;
+            }
+          } else {
+            edu.additionalInfo = `Delivered via ${platform}`;
+          }
+        }
+      }
+    }
+    
     if (edu.degree) {
       // 1. Remove redundant "(Building)" from "Diploma of Building and Construction (Building)"
       edu.degree = edu.degree.replace(/\s*\(Building\)$/i, '').trim();
@@ -1780,7 +1805,7 @@ function replaceSquareMeters(text: string): string {
 }
 
 /**
- * Removes word repetition at the beginning of consecutive bullet points
+ * Removes word repetition at the beginning of bullet points across an entire experience section
  * @param resume The resume to process
  * @returns Resume with improved bullet point variety
  */
@@ -1791,51 +1816,79 @@ function removeBulletRepetition(resume: Resume): Resume {
     // Create a deep copy of the resume to avoid reference issues
     const processedResume = JSON.parse(JSON.stringify(resume));
     
+    // List of common action verbs to use as replacements
+    const actionVerbs = [
+      "Achieved", "Accelerated", "Accomplished", "Advanced", "Architected",
+      "Boosted", "Built", "Championed", "Collaborated", "Conducted", 
+      "Coordinated", "Created", "Delivered", "Demonstrated", "Designed", 
+      "Developed", "Directed", "Drove", "Earned", "Enabled", "Engineered",
+      "Established", "Executed", "Expanded", "Facilitated", "Forged", 
+      "Generated", "Guided", "Headed", "Identified", "Implemented", 
+      "Improved", "Increased", "Initiated", "Innovated", "Launched",
+      "Maintained", "Maximized", "Navigated", "Negotiated",
+      "Operated", "Optimized", "Orchestrated", "Organized", "Performed",
+      "Pioneered", "Produced", "Reduced", "Restructured", "Revitalized",
+      "Secured", "Simplified", "Solved", "Streamlined", "Strengthened",
+      "Supervised", "Supported", "Transformed", "Upgraded", "Utilized"
+    ];
+    
+    // Get a random action verb excluding those to avoid
+    const getAlternativeVerb = (verbsToAvoid: string[]): string => {
+      const availableVerbs = actionVerbs.filter(verb => !verbsToAvoid.includes(verb.toLowerCase()));
+      if (availableVerbs.length === 0) return actionVerbs[0]; // Fallback
+      return availableVerbs[Math.floor(Math.random() * availableVerbs.length)];
+    };
+    
     // Process all experience sections
     if (processedResume.experience && Array.isArray(processedResume.experience)) {
       processedResume.experience.forEach((exp: any) => {
         if (exp.bullets && Array.isArray(exp.bullets) && exp.bullets.length > 1) {
           // Track the first word of each bullet point to detect repetition
-          const startingWords: Record<string, number> = {};
+          const startingVerbs: Record<string, number> = {};
+          const verbIndexes: Record<string, number[]> = {};
           
-          // First pass: count repetition
-          exp.bullets.forEach((bullet: any) => {
+          // First pass: collect all starting verbs and their indexes
+          exp.bullets.forEach((bullet: any, index: number) => {
             if (bullet.text) {
-              // Extract first word (ignore case for counting)
+              // Extract first word (verb) - ignore case for counting
               const firstWord = bullet.text.split(' ')[0].toLowerCase();
               if (firstWord.length > 3) { // Only count words longer than 3 characters
-                startingWords[firstWord] = (startingWords[firstWord] || 0) + 1;
+                // Track occurrences and indexes
+                startingVerbs[firstWord] = (startingVerbs[firstWord] || 0) + 1;
+                if (!verbIndexes[firstWord]) {
+                  verbIndexes[firstWord] = [];
+                }
+                verbIndexes[firstWord].push(index);
               }
             }
           });
           
-          // Identify words that are used more than twice
-          const overusedWords = Object.entries(startingWords)
-            .filter(([word, count]) => count > 2) // Only consider words used 3+ times
-            .map(([word]) => word);
+          // Find verbs used more than once in the section
+          const repeatedVerbs = Object.entries(startingVerbs)
+            .filter(([verb, count]) => count > 1)
+            .map(([verb]) => verb);
           
-          if (overusedWords.length > 0) {
-            // Second pass: fix repetition by removing the repeated word in some bullets
-            for (let i = 1; i < exp.bullets.length; i++) {
-              if (!exp.bullets[i].text) continue;
+          // Second pass: replace repeated verbs across the whole section
+          repeatedVerbs.forEach(verb => {
+            const indexes = verbIndexes[verb] || [];
+            
+            // Keep the first occurrence, replace others with alternative verbs
+            for (let i = 1; i < indexes.length; i++) {
+              const bulletIndex = indexes[i];
               
-              const words = exp.bullets[i].text.split(' ');
-              const firstWord = words[0].toLowerCase();
-              
-              // If this is an overused word AND previous bullet also starts with it
-              if (overusedWords.includes(firstWord) && 
-                  exp.bullets[i-1].text && 
-                  exp.bullets[i-1].text.toLowerCase().startsWith(firstWord)) {
-                // Remove the first word and capitalize the next word
-                words.shift(); // Remove first word
-                if (words.length > 0) {
-                  // Capitalize first letter of new first word
-                  words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
-                  exp.bullets[i].text = words.join(' ');
+              if (exp.bullets[bulletIndex] && exp.bullets[bulletIndex].text) {
+                const text = exp.bullets[bulletIndex].text;
+                const words = text.split(' ');
+                
+                if (words.length > 1) {
+                  // Replace the first word with an alternative verb
+                  const alternativeVerb = getAlternativeVerb(repeatedVerbs);
+                  words[0] = alternativeVerb;
+                  exp.bullets[bulletIndex].text = words.join(' ');
                 }
               }
             }
-          }
+          });
         }
       });
     }
