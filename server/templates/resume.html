@@ -219,43 +219,50 @@
     {{/if}}
   </div>
   
-  <div id="skills-section" class="section-title" style="page-break-before: avoid; clear: both;">SKILLS</div>
-  <div class="skills" style="page-break-inside: avoid;">
-    <!-- First display skills -->
-    {{#each skills}}
-      {{#if (eq category "Skills")}}
-        <div style="margin-bottom: 10px; margin-right: 0; width: 100%;">
-          <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
-        </div>
-      {{/if}}
-    {{/each}}
-    
-    <!-- Display any other categories except Languages -->
-    {{#each skills}}
-      {{#if (and (not (eq category "Skills")) (not (eq category "Languages")))}}
-        <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
-          <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
-        </div>
-      {{/if}}
-    {{/each}}
-  </div>
-  
-  <!-- Completely separate Languages section with its own title -->
-  <div id="languages-section" class="section-title" style="page-break-before: avoid; clear: both; margin-top: 15px;">LANGUAGES</div>
-  <div class="skills" style="page-break-inside: avoid; margin-bottom: 18px;">
-    <div style="margin-bottom: 10px; width: 100%;">
-      <span style="font-weight: normal;">English (Fluent)</span>
+  <!-- SKILLS SECTION -->
+  <section style="display: block; width: 100%; clear: both; margin-bottom: 15px;">
+    <div id="skills-section" class="section-title" style="page-break-before: avoid; clear: both;">SKILLS</div>
+    <div class="skills" style="page-break-inside: avoid;">
+      <!-- First display skills -->
+      {{#each skills}}
+        {{#if (eq category "Skills")}}
+          <div style="margin-bottom: 10px; margin-right: 0; width: 100%;">
+            <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
+          </div>
+        {{/if}}
+      {{/each}}
+      
+      <!-- Display any other categories except Languages -->
+      {{#each skills}}
+        {{#if (and (not (eq category "Skills")) (not (eq category "Languages")))}}
+          <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
+            <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
+          </div>
+        {{/if}}
+      {{/each}}
     </div>
-    {{#each skills}}
-      {{#if (eq category "Languages")}}
-        <div style="margin-bottom: 10px; width: 100%;">
-          <span style="font-weight: normal;">{{#each this.items}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}</span>
-        </div>
-      {{/if}}
-    {{/each}}
-  </div>
+  </section>
   
-  <div id="experience-section" class="section-title" style="page-break-before: avoid; clear: both; display: block; width: 100%; margin-top: 30px;">PROFESSIONAL EXPERIENCE</div>
+  <!-- LANGUAGES SECTION - Completely separate from Skills -->
+  <section style="display: block; width: 100%; clear: both; margin-bottom: 20px;">
+    <div id="languages-section" class="section-title" style="clear: both; margin-top: 5px;">LANGUAGES</div>
+    <div class="skills" style="page-break-inside: avoid; margin-bottom: 10px;">
+      <div style="margin-bottom: 5px; width: 100%;">
+        <span style="font-weight: normal;">English (Fluent)</span>
+      </div>
+      {{#each skills}}
+        {{#if (eq category "Languages")}}
+          <div style="margin-bottom: 5px; width: 100%;">
+            <span style="font-weight: normal;">{{#each this.items}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}</span>
+          </div>
+        {{/if}}
+      {{/each}}
+    </div>
+  </section>
+  
+  <!-- PROFESSIONAL EXPERIENCE SECTION - With clear margin-top to ensure separation -->
+  <section style="display: block; width: 100%; clear: both; margin-top: 25px; padding-top: 5px;">
+    <div id="experience-section" class="section-title" style="page-break-before: avoid; width: 100%;">PROFESSIONAL EXPERIENCE</div>
   {{#each experience}}
     <div class="experience">
       <div class="experience-header">
@@ -282,21 +289,26 @@
       </ul>
     </div>
   {{/each}}
+  </section>
   
-  <div class="section-title">EDUCATION</div>
-  <div class="education">
-    {{#each education}}
-      <div class="education-institution"><strong>{{institution}}</strong> — {{location}}</div>
-      <div class="education-degree">{{degree}}{{#if (and degree year)}}, {{/if}}{{year}}</div>
-      {{#if additionalInfo}}<div class="education-details">{{additionalInfo}}</div>{{/if}}
-    {{/each}}
-  </div>
+  <section style="display: block; width: 100%; clear: both; margin-top: 25px; padding-top: 5px;">
+    <div id="education-section" class="section-title" style="page-break-before: avoid; width: 100%;">EDUCATION</div>
+    <div class="education">
+      {{#each education}}
+        <div class="education-institution"><strong>{{institution}}</strong> — {{location}}</div>
+        <div class="education-degree">{{degree}}{{#if (and degree year)}}, {{/if}}{{year}}</div>
+        {{#if additionalInfo}}<div class="education-details">{{additionalInfo}}</div>{{/if}}
+      {{/each}}
+    </div>
+  </section>
   
   {{#if additionalExperience}}
-    <div class="section-title">ADDITIONAL EXPERIENCE</div>
-    <div class="additional" style="margin-bottom: 0;">{{additionalExperience}}</div>
+    <section style="display: block; width: 100%; clear: both; margin-top: 25px; padding-top: 5px;">
+      <div id="additional-section" class="section-title" style="page-break-before: avoid; width: 100%;">ADDITIONAL EXPERIENCE</div>
+      <div class="additional" style="margin-bottom: 15px;">{{additionalExperience}}</div>
+    </section>
   {{else}}
-    <!-- No additional spacer needed here -->
+    <!-- No additional experience section needed -->
   {{/if}}
   
   <!-- Add logo zone spacer to prevent text from getting too close to logo -->

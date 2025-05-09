@@ -661,22 +661,36 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
           }
           
           /* Add specific styling for each section */
+          section {
+            display: block !important;
+            page-break-inside: avoid !important;
+            clear: both !important;
+            position: relative !important;
+            margin-bottom: 10px !important;
+          }
+          
           #skills-section {
             margin-top: 15px !important;
             border-bottom: 0.5px solid #eee !important;
+            clear: both !important;
+            padding-bottom: 3px !important;
           }
           
           #languages-section {
             margin-top: 20px !important;
             padding-top: 5px !important;
             border-bottom: 0.5px solid #eee !important;
+            clear: both !important;
+            padding-bottom: 3px !important;
           }
           
           #experience-section {
-            margin-top: 25px !important;
-            padding-top: 5px !important;
+            margin-top: 30px !important;
+            padding-top: 10px !important;
             clear: both !important;
             border-bottom: 0.5px solid #eee !important;
+            padding-bottom: 3px !important;
+            font-weight: bold !important;
           }
           
           /* Position the Near logo properly */
