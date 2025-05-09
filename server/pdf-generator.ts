@@ -465,7 +465,7 @@ Handlebars.registerHelper('breaklines', function(text) {
  */
 export async function generatePDF(resume: Resume, sessionId: string, detailedFormat: boolean = false): Promise<string> {
   // Force single page format regardless of input
-  const singlePage = true; // Override detailedFormat to always create a single page
+  detailedFormat = false; // Override to use condensed format for single page
   try {
     // Read template
     const templateSource = fs.readFileSync(templatePath, 'utf8');
@@ -820,24 +820,56 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
         return bodyHeight;
       });
       
-      // Default scale - if content is too tall, reduce scale to fit on one page
+      // Enforce smaller scale to ensure one-page output regardless of content length
       const pageHeight = 11 * 96; // Letter height in pixels (11 inches at 96 DPI)
       const availableHeight = pageHeight - 96; // Account for margins
-      const scale = contentHeight > availableHeight ? Math.min(0.90, availableHeight / contentHeight) : 1.0;
+      
+      // Always use a smaller scale regardless of content height
+      // This is more aggressive scaling to ensure single page output
+      let scale = 0.80;
+      
+      // If content is still too tall after our manipulations, scale down further
+      if (contentHeight > availableHeight) {
+        scale = Math.min(0.75, availableHeight / contentHeight);
+      }
       
       console.log(`Content height: ${contentHeight}px, using scale factor: ${scale}`);
       
-      // Apply a transform to fix the page breaks issue
+      // Apply a transform to fix the page breaks issue and force single page
       await page.evaluate(() => {
         // Force all sections to stay together
         document.querySelectorAll('section').forEach(section => {
-          section.style.pageBreakInside = 'avoid';
-          section.style.breakInside = 'avoid';
+          (section as HTMLElement).style.pageBreakInside = 'avoid';
+          (section as HTMLElement).style.breakInside = 'avoid';
         });
         
         // Force the body to be a single page
-        document.body.style.pageBreakInside = 'avoid';
-        document.body.style.breakInside = 'avoid';
+        (document.body as HTMLElement).style.pageBreakInside = 'avoid';
+        (document.body as HTMLElement).style.breakInside = 'avoid';
+        
+        // More aggressive formatting for single page
+        (document.body as HTMLElement).style.zoom = '0.85';
+        
+        // Reduce line heights
+        document.querySelectorAll('ul, li').forEach(elem => {
+          (elem as HTMLElement).style.lineHeight = '1.1';
+          (elem as HTMLElement).style.marginBottom = '0';
+        });
+        
+        // Reduce spacing between sections
+        document.querySelectorAll('.section-title').forEach(elem => {
+          (elem as HTMLElement).style.marginTop = '10px';
+          (elem as HTMLElement).style.paddingTop = '2px';
+        });
+        
+        // Make all text smaller
+        document.querySelectorAll('div, span, p, li').forEach(elem => {
+          const currentSize = window.getComputedStyle(elem).fontSize;
+          if (currentSize && parseInt(currentSize) > 10) {
+            const newSize = Math.max(parseInt(currentSize) * 0.93, 10);
+            (elem as HTMLElement).style.fontSize = `${newSize}px`;
+          }
+        });
       });
       
       await page.pdf({
