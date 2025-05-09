@@ -303,6 +303,9 @@ Your response must be a valid JSON object representing the processed resume with
       // Standardize location formatting (remove city, keep State, Country)
       finalResume = standardizeLocations(finalResume);
       
+      // Remove repetitive starts in bullet points (e.g. "Developed... Developed... Developed...")
+      finalResume = removeBulletRepetition(finalResume);
+      
       // Apply bullet point limitation (max 7 bullets per role)
       // For detailed format, still limit to 7 bullets per stakeholder feedback
       const maxBullets = 7; // Set hard limit to 7 regardless of format
