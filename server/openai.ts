@@ -1385,12 +1385,30 @@ function standardizeLocations(resume: Resume): Resume {
   
   // First, process the header location - ALWAYS just show the country
   if (processedResume.location) {
-    processedResume.location = extractCountry(processedResume.location);
+    // Process for header locations - only country name should appear
+    const countryOnly = extractCountry(processedResume.location);
+    // Remove any state/province that might remain
+    const countryParts = countryOnly.split(',').map(part => part.trim());
+    processedResume.location = countryParts[countryParts.length - 1];
+    
+    // If result is "USA", change to "United States"
+    if (processedResume.location === 'USA') {
+      processedResume.location = 'United States';
+    }
   }
   
   // For backward compatibility with older schema structures
   if (processedResume.header && processedResume.header.location) {
-    processedResume.header.location = extractCountry(processedResume.header.location);
+    // Process for header locations - only country name should appear
+    const countryOnly = extractCountry(processedResume.header.location);
+    // Remove any state/province that might remain
+    const countryParts = countryOnly.split(',').map(part => part.trim());
+    processedResume.header.location = countryParts[countryParts.length - 1];
+    
+    // If result is "USA", change to "United States"
+    if (processedResume.header.location === 'USA') {
+      processedResume.header.location = 'United States';
+    }
   }
   
   // Next, process each experience location field
