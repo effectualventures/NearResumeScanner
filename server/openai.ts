@@ -1541,8 +1541,11 @@ function replaceSquareMeters(text: string): string {
   if (!text) return text;
   
   // Replace square meters with square feet (conversion factor: 1 m² = 10.764 sq ft)
+  // More aggressive conversion to ensure no m² remains
   const convertToSqFtOnly = (match: string, p1: string) => {
-    const squareMeters = parseFloat(p1);
+    // Strip commas for proper numeric parsing
+    const numericStr = p1.replace(/,/g, '');
+    const squareMeters = parseFloat(numericStr);
     if (!isNaN(squareMeters)) {
       const squareFeet = Math.round(squareMeters * 10.764);
       return `${squareFeet.toLocaleString()} sq ft`;
@@ -1551,23 +1554,39 @@ function replaceSquareMeters(text: string): string {
   };
   
   // Apply the replacements with only sq ft (no original square meter values)
+  // First, transform the text to normalize different representations of m²
   let result = text
-    // Handle cases with space between m and 2
+    // Replace unicode m² with m2 for consistent handling
+    .replace(/m²/g, 'm2')
+    // Handle cases with number followed by m2/m 2/sqm with any spacing
     .replace(/(\d[\d,.]*)(?:\s*)m(?:\s*)2\b/gi, convertToSqFtOnly)
+    .replace(/(\d[\d,.]*)(?:\s*)m(?:\s*)²\b/gi, convertToSqFtOnly)
     .replace(/(\d[\d,.]*)(?:\s*)sq(?:\s*)m\b/gi, convertToSqFtOnly)
     .replace(/(\d[\d,.]*)(?:\s*)sqm\b/gi, convertToSqFtOnly)
     // Handle cases without space between number and unit
     .replace(/(\d[\d,.]*)m2\b/gi, convertToSqFtOnly)
+    .replace(/(\d[\d,.]*)m²\b/gi, convertToSqFtOnly)
     .replace(/(\d[\d,.]*)sqm\b/gi, convertToSqFtOnly)
-    // Fix remaining square meter references (e.g., "area in m²")
+    // Fix isolated unit references
     .replace(/\bm\s*2\b/gi, 'sq ft')
+    .replace(/\bm\s*²\b/gi, 'sq ft')
     .replace(/\bm\s*8\b/gi, 'sq ft') // Fix common OCR error
     .replace(/\bm2\b/gi, 'sq ft')
     .replace(/\bm²\b/gi, 'sq ft')
     .replace(/\bsqm\b/gi, 'sq ft')
     .replace(/\bsq\.\s*m\b/gi, 'sq ft')
     .replace(/\bsquare\s*meters?\b/gi, 'square feet')
-    .replace(/\bsquare\s*m\b/gi, 'square feet');
+    .replace(/\bsquare\s*m\b/gi, 'square feet')
+    // Specific pattern for "20,000+ m²" format
+    .replace(/(\d[\d,.]*)\+\s*m2/gi, (match, p1) => {
+      const numericStr = p1.replace(/,/g, '');
+      const squareMeters = parseFloat(numericStr);
+      if (!isNaN(squareMeters)) {
+        const squareFeet = Math.round(squareMeters * 10.764);
+        return `${squareFeet.toLocaleString()}+ sq ft`;
+      }
+      return `${p1}+ sq ft`;
+    });
     
   // Create a helper function to convert any currency to USD (shows only USD value)
   const convertToUSD = (match: string, currency: string, amount: string, rate: number) => {
@@ -1818,8 +1837,9 @@ function replaceSquareMeters(text: string): string {
 
 /**
  * Removes word repetition at the beginning of bullet points across an entire experience section
+ * and fixes erroneous repetition of text after periods
  * @param resume The resume to process
- * @returns Resume with improved bullet point variety
+ * @returns Resume with improved bullet point variety and fixed repetitions
  */
 function removeBulletRepetition(resume: Resume): Resume {
   if (!resume || !resume.experience) return resume;
@@ -1851,7 +1871,48 @@ function removeBulletRepetition(resume: Resume): Resume {
       return availableVerbs[Math.floor(Math.random() * availableVerbs.length)];
     };
     
-    // Process all experience sections
+    // First pass: fix repetition after periods in bullet points
+    if (processedResume.experience && Array.isArray(processedResume.experience)) {
+      processedResume.experience.forEach((exp: any) => {
+        if (exp.bullets && Array.isArray(exp.bullets)) {
+          exp.bullets.forEach((bullet: any) => {
+            if (bullet.text) {
+              // Fix repetition after periods (e.g., "Text abc. Text abc")
+              const segments = bullet.text.split(/\.\s+/);
+              if (segments.length > 1) {
+                let cleanedText = segments[0];
+                
+                for (let i = 1; i < segments.length; i++) {
+                  const currentSegment = segments[i];
+                  const prevSegment = segments[i-1];
+                  
+                  // Check if current segment is contained within previous segment or vice versa
+                  // or if they're almost identical (>80% match)
+                  if ((prevSegment.includes(currentSegment) && currentSegment.length > 5) || 
+                      (currentSegment.includes(prevSegment) && prevSegment.length > 5) ||
+                      (currentSegment.length > 10 && prevSegment.toLowerCase() === currentSegment.toLowerCase())) {
+                    // Skip adding this segment as it's repetitive
+                    continue;
+                  }
+                  
+                  // Add non-repetitive segment
+                  cleanedText += '. ' + currentSegment;
+                }
+                
+                // Ensure ending period
+                if (!cleanedText.endsWith('.')) {
+                  cleanedText += '.';
+                }
+                
+                bullet.text = cleanedText;
+              }
+            }
+          });
+        }
+      });
+    }
+    
+    // Second pass: process starting verb repetition
     if (processedResume.experience && Array.isArray(processedResume.experience)) {
       processedResume.experience.forEach((exp: any) => {
         if (exp.bullets && Array.isArray(exp.bullets) && exp.bullets.length > 1) {
@@ -1923,8 +1984,12 @@ function dedupeMetricEcho(r: Resume): Resume {
   const clone = structuredClone(r);
   clone.experience.forEach(exp => {
     exp.bullets.forEach(b => {
-      if (!b.text) return;
-      b.metrics.forEach(m => {
+      if (!b.text || !b.metrics || !Array.isArray(b.metrics)) return;
+      
+      // Create a safe copy of metrics to work with
+      const metrics = [...b.metrics];
+      
+      metrics.forEach(m => {
         const plain = m.replace(/[.$]/g,'').trim();
         if (b.text.toLowerCase().includes(plain.toLowerCase())) {
           // remove metric that simply repeats what text already contains

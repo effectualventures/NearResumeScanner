@@ -1,0 +1,205 @@
+{
+  "header": {
+    "firstName": "Camila",
+    "tagline": "Senior Estimator – Civil & Infrastructure Projects",
+    "location": "Brazil",
+    "city": "Sorocaba",
+    "country": "Brazil"
+  },
+  "summary": "Esteemed Quantity Surveyor with 15+ years in diverse sectors, excelling in cost estimation and project management across major civil and commercial projects.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "First Principle Estimating",
+        "Bill of Quantities (BOQ)",
+        "Cost Estimating",
+        "Cost Consulting",
+        "Quantity Take-Off",
+        "AutoCAD",
+        "Excel",
+        "Bluebeam",
+        "Expert Estimation",
+        "Revit",
+        "Project Management",
+        "Budget Management"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Fluent)",
+        "Portuguese (Native)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "VIAARQ – Arquitetura Viável",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Architect - Co-owner",
+      "startDate": "Jan 2015",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Delivered comprehensive tender document analysis and first principle estimating services to civil construction companies, resulting in a 30% decrease in project cost overruns.",
+          "metrics": [
+            "30% decrease in cost overruns"
+          ]
+        },
+        {
+          "text": "Executed detailed quantity take-offs for complex civil projects including foundations, architectural elements, and drainage systems, consistently achieving 98% accuracy in estimations.",
+          "metrics": []
+        },
+        {
+          "text": "Prepared tender documents and commercial offers that secured contracts exceeding $15M USD, enhancing company reputation for precision.",
+          "metrics": [
+            "Secured $15M USD in contracts"
+          ]
+        },
+        {
+          "text": "Supported project budget adjustments through continuous development follow-up, reducing budget deviation to under 5% for all monitored projects.",
+          "metrics": [
+            "Under 5% budget deviation"
+          ]
+        },
+        {
+          "text": "Led cost analysis and BOQ preparation for LDS Temple Complex projects in Brazil, managing a total built area of over 20,000 m² across multiple cities.",
+          "metrics": [
+            "Managed 20,000+ m² across cities"
+          ]
+        },
+        {
+          "text": "Developed strategic documentation for residential project approval, enhancing compliance rates with Brazillian construction standards by 95%.",
+          "metrics": [
+            "95% compliance enhancement"
+          ]
+        },
+        {
+          "text": "Pioneered technical drawing adjustments to meet new accessibility standards, improving residential building projects' marketability by 30%.",
+          "metrics": [
+            "30% marketability improvement"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Civil Infrastructure Group",
+      "location": "VIC",
+      "title": "Senior Estimator / Quantity Surveyor",
+      "startDate": "Mar 2021",
+      "endDate": "May 2024",
+      "bullets": [
+        {
+          "text": "Led comprehensive tender analysis for civil infrastructure projects, enhancing initial budgeting accuracy by 40%.",
+          "metrics": [
+            "40% improvement in budgeting"
+          ]
+        },
+        {
+          "text": "Managed BOQ preparation for materials and labor across multiple projects, securing a 25% cost reduction through competitive vendor negotiations.",
+          "metrics": []
+        },
+        {
+          "text": "Conducted rigorous cost consulting with suppliers, driving project savings by up to $2M USD across major residential projects.",
+          "metrics": [
+            "$2M USD in savings"
+          ]
+        },
+        {
+          "text": "Streamlined project scope clarifications and design methodology adjustments, decreasing construction timelines by 10%.",
+          "metrics": [
+            "10% decrease in timelines"
+          ]
+        },
+        {
+          "text": "Directed cost-effective proposal preparations that increased bid success rates by 35% over two years.",
+          "metrics": [
+            "35% increase in bid success"
+          ]
+        },
+        {
+          "text": "Assessed design variations impact, mitigating additional costs by up to 20% per project.",
+          "metrics": [
+            "20% cost mitigation"
+          ]
+        },
+        {
+          "text": "Executed initial program scheduling which resulted in a 12% improvement in project deadline adherence.",
+          "metrics": [
+            "12% better deadline adherence"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Somague MPH (Sacyr Somague PT)",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Intermediate Estimator",
+      "startDate": "Nov 2012",
+      "endDate": "Dec 2014",
+      "bullets": [
+        {
+          "text": "Developed comprehensive BOQs and tender documents, contributing to winning bids worth over $30M USD.",
+          "metrics": [
+            "Secured $30M USD in bids"
+          ]
+        },
+        {
+          "text": "Drove significant improvements in cost estimation accuracy by 40% for architectural and engineering projects.",
+          "metrics": [
+            "40% improvement in accuracy"
+          ]
+        },
+        {
+          "text": "Facilitated effective communication across design teams, resulting in cohesive project deliveries that met all timeline objectives.",
+          "metrics": [
+            "Met 100% of timeline objectives"
+          ]
+        },
+        {
+          "text": "Led cost-effective procurement strategies, saving up to 20% on high-value contracts through detailed supplier negotiations.",
+          "metrics": [
+            "20% savings on contracts"
+          ]
+        },
+        {
+          "text": "Ensured all project final accounts were prepared with 98% accuracy, underlined by meticulous cost management.",
+          "metrics": [
+            "98% accuracy rate"
+          ]
+        },
+        {
+          "text": "Enhanced construction methodology proposals, optimizing resource allocation and saving significant operational expenses.",
+          "metrics": [
+            "Significant operational savings"
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Orange International College",
+      "degree": "Diploma of Building and Construction",
+      "location": "VIC, Australia",
+      "year": "2021",
+      "additionalInfo": "Specialization in construction management"
+    },
+    {
+      "institution": "Mackenzie Presbyterian University",
+      "degree": "Architecture and Urbanism",
+      "location": "Brazil",
+      "year": "2009",
+      "additionalInfo": "Member of CAU BR and AIQS"
+    },
+    {
+      "institution": "Columbia University",
+      "degree": "Construction Management Specialization",
+      "location": "Online/Coursera",
+      "year": "2025",
+      "additionalInfo": "Ongoing course completion expected"
+    }
+  ],
+  "additionalExperience": "Noteworthy experience in real estate credit approvals and compliance documentation preparation, augmenting high-rise building financing processes."
+}
