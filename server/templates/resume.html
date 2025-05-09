@@ -244,30 +244,23 @@
   </section>
   
   <!-- LANGUAGES SECTION - Completely separate from Skills -->
-  <section style="display: block; width: 100%; clear: both; margin-top: 20px; margin-bottom: 15px; page-break-inside: avoid; break-inside: avoid;">
+  <section style="display: block; width: 100%; clear: both; margin-top: 20px; margin-bottom: 15px; page-break-inside: avoid;">
     <div id="languages-section" class="section-title" style="border-bottom: 0.5px solid #eee; margin-top: 5px; padding-bottom: 3px;">LANGUAGES</div>
-    <div class="languages-list" style="page-break-inside: avoid; margin-bottom: 10px;">
-      <!-- Always include English by default -->
-      <div style="margin-bottom: 5px; width: 100%;">
-        <span style="font-weight: normal;">English (Fluent)</span>
-      </div>
-      
-      <!-- Include other languages from skills section if they exist -->
+    <div class="skills" style="page-break-inside: avoid; margin-bottom: 10px;">
       {{#each skills}}
         {{#if (eq category "Languages")}}
-          {{#each this.items}}
-            {{#unless (eq this "English (Fluent)")}}
-              {{#unless (eq this "English")}}
-                {{#unless (eq this "English (Professional)")}}
-                  {{#unless (eq this "English (Native)")}}
-                    <div style="margin-bottom: 5px; width: 100%;">
-                      <span style="font-weight: normal;">{{this}}</span>
-                    </div>
-                  {{/unless}}
-                {{/unless}}
-              {{/unless}}
+          <div style="margin-bottom: 5px; width: 100%;">
+            <span style="font-weight: normal;">{{#each this.items}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}</span>
+          </div>
+        {{else}}
+          <!-- If no languages section found, add default -->
+          {{#unless @index}}
+            {{#unless (some ../skills (lookup this 'category') 'Languages')}}
+              <div style="margin-bottom: 5px; width: 100%;">
+                <span style="font-weight: normal;">English (Fluent)</span>
+              </div>
             {{/unless}}
-          {{/each}}
+          {{/unless}}
         {{/if}}
       {{/each}}
     </div>
