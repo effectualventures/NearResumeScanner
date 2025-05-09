@@ -386,7 +386,7 @@ Handlebars.registerHelper('some', function(arr, options) {
 
 // Helper for using lambda functions in templates
 Handlebars.registerHelper('lambda', function(context, options) {
-  return function(item) {
+  return function(item: any) {
     return options.fn(item);
   };
 });
@@ -613,27 +613,42 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
           }
           /* Tighter spacing for lists */
           ul { padding-left: 12px !important; margin: 1px 0 !important; }
-          li { margin-bottom: 0 !important; }
+          li { 
+            margin-bottom: 0 !important; 
+            font-weight: normal !important;
+          }
+          
+          /* Ensure no first sentence bolding */
+          li span, li strong, li p, li div { 
+            font-weight: normal !important;
+          }
+          
+          /* Keep metrics section styled correctly */
+          li span[style*="font-weight: 500"] {
+            font-weight: 500 !important;
+          }
           
           /* Position the Near logo properly */
-          #footer-logo {
+          .footer {
             position: fixed !important;
             bottom: 0.05in !important;
-            right: 0.5in !important;
-            width: auto !important;
+            right: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
             height: 25px !important;
             z-index: 1000 !important;
+            text-align: center !important;
             background-color: transparent !important;
           }
           
-          #footer-logo img {
+          .footer img {
             height: 25px !important;
             width: auto !important;
-            display: block !important;
+            display: inline-block !important;
           }
           
           /* Logo zone spacer needs fixed height */
-          .logo-zone-spacer {
+          .logo-zone, .logo-zone-spacer {
             height: 1.1in !important;
             width: 100% !important;
             margin: 0 !important;
