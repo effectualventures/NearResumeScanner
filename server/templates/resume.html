@@ -208,14 +208,15 @@
   <div class="header">
     <h1>{{header.firstName}}</h1>
     <p><strong>{{header.tagline}}</strong></p>
+    <!-- Only use header.location, never city or country -->
     <p>{{header.location}}</p>
   </div>
   
   <div class="divider"></div>
   
-  <div class="summary">
+  <div class="summary" style="margin-bottom: 15px; white-space: normal; text-align: left; width: 100%; max-width: none;">
     {{#if summary}}
-      {{breaklines summary}}
+      {{summary}}
     {{/if}}
   </div>
   
@@ -245,8 +246,8 @@
   
   <!-- LANGUAGES SECTION - Completely separate from Skills -->
   <section style="display: block; width: 100%; clear: both; margin-top: 20px; margin-bottom: 15px; page-break-inside: avoid;">
-    <div id="languages-section" class="section-title" style="border-bottom: 0.5px solid #eee; margin-top: 5px; padding-bottom: 3px;">LANGUAGES</div>
-    <div class="skills" style="page-break-inside: avoid; margin-bottom: 10px;">
+    <div id="languages-section" class="section-title" style="clear: both; margin-top: 5px; padding-bottom: 3px; font-weight: bold;">LANGUAGES</div>
+    <div class="languages-list" style="page-break-inside: avoid; margin-bottom: 10px;">
       {{#each skills}}
         {{#if (eq category "Languages")}}
           <div style="margin-bottom: 5px; width: 100%;">
