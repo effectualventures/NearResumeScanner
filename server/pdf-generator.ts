@@ -209,19 +209,8 @@ try {
   <div class="skills">
     {{#if detailedFormat}}
       {{#each skills}}
-        <div style="margin-bottom: 4px;">
-          <span style="font-weight: 600;">{{category}}:</span>
-          <span style="font-weight: normal;">
-            {{#each this.items}}
-              {{this}}{{#unless @last}}; &nbsp;{{/unless}}
-            {{/each}}
-          </span>
-        </div>
-      {{/each}}
-    {{else}}
-      {{#each skills}}
-        {{#if @first}}
-          <div style="margin-bottom: 4px;">
+        {{#if (eq category "Skills")}}
+          <div style="margin-bottom: 8px;">
             <span style="font-weight: 600;">{{category}}:</span>
             <span style="font-weight: normal;">
               {{#each this.items}}
@@ -230,7 +219,29 @@ try {
             </span>
           </div>
         {{else}}
-          <div style="margin-top: 4px;">
+          <div style="margin-top: 6px;">
+            <span style="font-weight: 600;">{{category}}:</span>
+            <span style="font-weight: normal;">
+              {{#each this.items}}
+                {{this}}{{#unless @last}}; &nbsp;{{/unless}}
+              {{/each}}
+            </span>
+          </div>
+        {{/if}}
+      {{/each}}
+    {{else}}
+      {{#each skills}}
+        {{#if (eq category "Skills")}}
+          <div style="margin-bottom: 8px;">
+            <span style="font-weight: 600;">{{category}}:</span>
+            <span style="font-weight: normal;">
+              {{#each this.items}}
+                {{this}}{{#unless @last}}; &nbsp;{{/unless}}
+              {{/each}}
+            </span>
+          </div>
+        {{else}}
+          <div style="margin-top: 6px; display: block; clear: both;">
             <span style="font-weight: 600;">{{category}}:</span>
             <span style="font-weight: normal;">
               {{#each this.items}}
@@ -467,13 +478,22 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
     
     // Check if Languages section only includes Portuguese and not English
     if (html.includes('Languages:') && 
-        html.includes('Portuguese') && 
-        !html.includes('English')) {
+        html.includes('Portuguese')) {
       
-      console.log('Detected missing English language, adding it to languages section');
+      console.log('Enhancing language section with English proficiency level');
       
-      // Add English to languages with proper styling
-      html = html.replace(/Languages:\s*Portuguese/g, '<span style="font-weight: 600;">Languages:</span> <span style="font-weight: normal;">English (Professional); Portuguese</span>');
+      // If English is missing completely, add it with proficiency
+      if (!html.includes('English')) {
+        html = html.replace(/Languages:\s*Portuguese/g, '<span style="font-weight: 600;">Languages:</span> <span style="font-weight: normal;">English (Professional Working Proficiency); Portuguese (Native)</span>');
+      } 
+      // If English is there but doesn't have a proficiency level
+      else if (!html.includes('English (') && !html.includes('(Professional') && !html.includes('(Native') && !html.includes('(Fluent')) {
+        html = html.replace(/Languages:.*?English.*?Portuguese/g, '<span style="font-weight: 600;">Languages:</span> <span style="font-weight: normal;">English (Professional Working Proficiency); Portuguese (Native)</span>');
+      }
+      // If Portuguese doesn't have a proficiency level
+      else if (!html.includes('Portuguese (')) {
+        html = html.replace(/Portuguese(?!\s*\()/g, 'Portuguese (Native)');
+      }
     }
     
     // Ensure temp directory exists
