@@ -29,394 +29,85 @@ if (!fs.existsSync(nearLogoPath)) {
   console.log(`NEAR logo file confirmed at: ${nearLogoPath}`);
 }
 
-// Ensure the templates directory exists
-try {
-  const templatesDir = path.dirname(templatePath);
-  if (!fs.existsSync(templatesDir)) {
-    fs.mkdirSync(templatesDir, { recursive: true });
-  }
+/**
+ * Register Handlebars helpers for template formatting
+ */
+function registerHandlebarsHelpers() {
+  // Replace square meters with square feet in bullet points
+  Handlebars.registerHelper('replaceSquareMeters', function(text: string) {
+    if (!text) return '';
+    
+    // Replace metric with imperial units
+    // m² or m2 to square feet (approx conversion factor)
+    return text.replace(/(\d+(?:\.\d+)?)\s*(?:m²|m2|m 2|sq\.? ?m)/gi, function(match, num) {
+      const sqFeet = Math.round(parseFloat(num) * 10.764);
+      return `${sqFeet} sq ft`;
+    });
+  });
 
-  // Create the template file if it doesn't exist
-  if (!fs.existsSync(templatePath)) {
-    const template = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>{{header.firstName}} - {{header.tagline}}</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap');
-    
-    body {
-      font-family: 'Times New Roman', Times, serif;
-      font-size: {{#if detailedFormat}}9.5pt{{else}}11pt{{/if}};
-      margin: 0.2in 0.2in;
-      padding: 0;
-      color: #000;
-      line-height: {{#if detailedFormat}}1.05{{else}}1.15{{/if}};
-      width: 8.5in;
-      max-width: 100%;
-      box-sizing: border-box;
+  // Format end date with "Present" for current position
+  Handlebars.registerHelper('formatEndDate', function(endDate: string) {
+    if (!endDate || endDate.toLowerCase() === 'current' || endDate.toLowerCase() === 'present') {
+      return 'Present';
     }
-    
-    .header {
-      text-align: center;
-      margin-bottom: 8px;
-    }
-    
-    .header h1 {
-      font-size: 16pt;
-      font-weight: bold;
-      margin: 0 0 3px 0;
-      text-transform: uppercase;
-    }
-    
-    .header p {
-      margin: 1px 0;
-      font-size: 10pt;
-    }
-    
-    .divider {
-      border-top: 1.5px solid #000;
-      margin: 3px 0 5px 0;
-    }
-    
-    .summary {
-      margin-bottom: 8px;
-      font-weight: 400;
-      font-size: 10pt;
-      text-align: justify;
-    }
-    
-    .section-title {
-      text-transform: uppercase;
-      font-weight: bold;
-      font-size: {{#if detailedFormat}}10.5pt{{else}}11pt{{/if}};
-      margin-top: {{#if detailedFormat}}12px{{else}}14px{{/if}};
-      margin-bottom: {{#if detailedFormat}}3px{{else}}3px{{/if}};
-      color: #000;
-      border-bottom: 1px solid #000;
-      padding-bottom: {{#if detailedFormat}}1px{{else}}1px{{/if}};
-      clear: both;
-    }
-    
-    .skills {
-      margin-bottom: 5px;
-      font-size: 10pt;
-    }
-    
-    .experience {
-      margin-bottom: {{#if detailedFormat}}4px{{else}}5px{{/if}};
-    }
-    
-    .experience-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0px;
-    }
-    
-    .company {
-      font-weight: bold;
-      flex: 1;
-      padding-right: 10px; /* Add some space between company and dates */
-      max-width: 70%; /* Limit company width to ensure space for dates */
-      overflow-wrap: break-word; /* Allow words to break if necessary */
-    }
-    
-    .dates {
-      text-align: right;
-      font-size: 10pt;
-      white-space: nowrap; /* Keep dates on one line */
-      min-width: 120px; /* Ensure enough space for the date range */
-    }
-    
-    .title {
-      font-style: italic;
-      margin-bottom: 1px;
-      font-size: 10pt;
-    }
-    
-    ul {
-      margin: {{#if detailedFormat}}1px{{else}}1px{{/if}} 0;
-      padding-left: {{#if detailedFormat}}12px{{else}}12px{{/if}};
-    }
-    
-    li {
-      margin-bottom: {{#if detailedFormat}}0px{{else}}0px{{/if}};
-      font-size: {{#if detailedFormat}}9.5pt{{else}}10pt{{/if}};
-      padding-left: 1px;
-      line-height: {{#if detailedFormat}}1.05{{else}}1.15{{/if}};
-      text-align: justify;
-      max-width: 7.9in;
-    }
-    
-    .education {
-      margin-bottom: {{#if detailedFormat}}6px{{else}}8px{{/if}};
-      font-size: {{#if detailedFormat}}9.5pt{{else}}10pt{{/if}};
-    }
-    
-    .footer {
-      position: fixed;
-      bottom: {{#if detailedFormat}}0.25in{{else}}0.3in{{/if}};
-      right: 0.5in;
-      text-align: right;
-      width: 100%;
-    }
-    
-    .footer img, .footer svg {
-      height: 20px;
-      width: auto;
-      margin-top: 15px;
-      margin-right: 5px;
-      opacity: 0.95;
-    }
-    
-    /* Logo styling */
-    .near-logo {
-      position: fixed;
-      bottom: 0.05in; /* Logo positioned exactly 0.05in from bottom */
-      right: 0.5in;
-      width: auto;
-      height: 25px; /* Slightly smaller logo to match reference */
-      z-index: 1000;
-      text-align: right;
-      overflow: visible;
-    }
-    
-    /* Logo zone spacer - prevents content from getting too close to logo */
-    .logo-zone-spacer {
-      height: 1.1in; /* Creates space between content and logo - increased to match reference */
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      visibility: hidden; /* Hidden but takes up space */
-    }
-  </style>
-</head>
-<body>
-  <div class="header">
-    <h1>{{header.firstName}}</h1>
-    <p>{{header.tagline}} — {{header.location}}</p>
-  </div>
+    return endDate;
+  });
   
-  <div class="divider"></div>
+  // Helper to check if text ends with a specific character
+  Handlebars.registerHelper('endsWith', function(text: string, suffix: string) {
+    if (!text) return false;
+    return text.endsWith(suffix);
+  });
   
-  <div class="summary" style="line-height: 1.3; margin-bottom: 12px;">
-    {{breaklines summary}}
-  </div>
+  // Helper to split text into lines
+  Handlebars.registerHelper('splitLines', function(text: string) {
+    if (!text) return [];
+    return text.split(/\r?\n/);
+  });
   
-  <div class="section-title">SKILLS & LANGUAGES</div>
-  <div class="skills">
-    {{#if detailedFormat}}
-      {{#each skills}}
-        {{#if (eq category "Skills")}}
-          <div style="margin-bottom: 8px;">
-            <span style="font-weight: 600;">{{category}}:</span>
-            <span style="font-weight: normal;">
-              {{#each this.items}}
-                {{this}}{{#unless @last}}; &nbsp;{{/unless}}
-              {{/each}}
-            </span>
-          </div>
-        {{else}}
-          <div style="margin-top: 6px;">
-            <span style="font-weight: 600;">{{category}}:</span>
-            <span style="font-weight: normal;">
-              {{#each this.items}}
-                {{this}}{{#unless @last}}; &nbsp;{{/unless}}
-              {{/each}}
-            </span>
-          </div>
-        {{/if}}
-      {{/each}}
-    {{else}}
-      {{#each skills}}
-        {{#if (eq category "Skills")}}
-          <div style="margin-bottom: 8px;">
-            <span style="font-weight: 600;">{{category}}:</span>
-            <span style="font-weight: normal;">
-              {{#each this.items}}
-                {{this}}{{#unless @last}}; &nbsp;{{/unless}}
-              {{/each}}
-            </span>
-          </div>
-        {{else}}
-          <div style="margin-top: 6px; display: block; clear: both;">
-            <span style="font-weight: 600;">{{category}}:</span>
-            <span style="font-weight: normal;">
-              {{#each this.items}}
-                {{this}}{{#unless @last}}; &nbsp;{{/unless}}
-              {{/each}}
-            </span>
-          </div>
-        {{/if}}
-      {{/each}}
-    {{/if}}
-  </div>
+  // Helper to check if a string contains another string
+  Handlebars.registerHelper('contains', function(text: string, searchStr: string) {
+    if (!text) return false;
+    return text.includes(searchStr);
+  });
   
-  <div class="section-title">PROFESSIONAL EXPERIENCE</div>
-  {{#each experience}}
-    <div class="experience">
-      <div class="experience-header">
-        <div class="company">{{company}} — {{location}}</div>
-        <div class="dates">{{startDate}} &ndash; {{endDate}}</div>
-      </div>
-      <div class="title" style="font-style: italic; font-weight: normal;">{{title}}</div>
-      <ul>
-        {{#if detailedFormat}}
-          {{#each bullets}}
-            <li>{{text}}{{#if metrics.length}}{{#unless (endsWith text ".")}}. {{/unless}} <span style="color: #333; font-weight: 500; font-style: normal;">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>{{/if}}</li>
-          {{/each}}
-        {{else}}
-          {{#each (slice bullets 0 5)}}
-            <li>{{text}}{{#if metrics.length}}{{#unless (endsWith text ".")}}. {{/unless}} <span style="color: #333; font-weight: 500; font-style: normal;">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>{{/if}}</li>
-          {{/each}}
-        {{/if}}
-      </ul>
-    </div>
-  {{/each}}
+  // Helper to check if any item in a metrics array is contained in the text
+  Handlebars.registerHelper('containsAny', function(text: string, metrics: string[]) {
+    if (!text || !metrics || !metrics.length) return false;
+    return metrics.some(metric => text.includes(metric));
+  });
   
-  <div class="section-title">EDUCATION</div>
-  <div class="education">
-    {{#each education}}
-      <div class="experience-header">
-        <div class="company">{{institution}} — {{location}}</div>
-        <div class="dates">{{year}}</div>
-      </div>
-      <div class="title" style="font-style: italic; font-weight: normal;">{{degree}}</div>
-      {{#if additionalInfo}}<div style="margin-top: 2px; margin-bottom: 3px;">{{additionalInfo}}</div>{{/if}}
-    {{/each}}
-  </div>
+  // Helper to slice an array
+  Handlebars.registerHelper('slice', function(array: any[], start: number, end?: number) {
+    if (!array) return [];
+    return array.slice(start, end);
+  });
   
-  {{#if additionalExperience}}
-    <div class="section-title">ADDITIONAL EXPERIENCE</div>
-    <div style="text-align: justify;">
-      {{#if (contains additionalExperience "Coursera")}}
-        <ul style="list-style-type: disc; padding-left: 12px; margin: 2px 0;">
-          <li>Construction Management Specialization — Columbia University (via Coursera), Expected 2025</li>
-          {{#if (contains additionalExperience "AIQS")}}
-          <li>Member, AIQS — Since December 2023</li>
-          {{/if}}
-          {{#if (contains additionalExperience "CAU BR")}}
-          <li>CAU BR Certified Architect — Since 2011</li>
-          {{/if}}
-        </ul>
-      {{else if (contains additionalExperience "AIQS")}}
-        <ul style="list-style-type: disc; padding-left: 12px; margin: 2px 0;">
-          {{#if (contains additionalExperience "Columbia")}}
-          <li>Construction Management Specialization — Columbia University (via Coursera), Expected 2025</li>
-          {{/if}}
-          <li>Member, AIQS — Since December 2023</li>
-          {{#if (contains additionalExperience "CAU BR")}}
-          <li>CAU BR Certified Architect — Since 2011</li>
-          {{/if}}
-        </ul>
-      {{else}}
-        <ul style="list-style-type: disc; padding-left: 12px; margin: 2px 0;">
-          <li>{{additionalExperience}}</li>
-        </ul>
-      {{/if}}
-    </div>
-  {{/if}}
+  // Helper to check if a value equals another value
+  Handlebars.registerHelper('eq', function(a: any, b: any) {
+    return a === b;
+  });
   
-  <!-- Logo zone spacer to prevent content from getting too close to logo -->
-  <div class="logo-zone-spacer"></div>
+  // Helper to check multiple conditions (and)
+  Handlebars.registerHelper('and', function() {
+    return Array.prototype.slice.call(arguments, 0, -1).every(Boolean);
+  });
   
-  <!-- Near logo with fail-proof implementation using file path with fallback text -->
-  <div id="footer-logo" style="position:fixed; bottom:0.05in; right:0.5in; z-index:9999; background-color:#ffffff; width:100px; height:25px;">
-    {{#if logoPath}}
-      <img src="file://{{logoPath}}" height="25" alt="NEAR Logo" style="height:25px; width:auto;" />
-    {{else}}
-      <span style="color: blue; font-weight: bold; font-size: 16px;">NEAR</span>
-    {{/if}}
-  </div>
-</body>
-</html>`;
-    
-    fs.writeFileSync(templatePath, template);
-  }
-} catch (error) {
-  console.error('Error ensuring template exists:', error);
+  // Helper to check if a value does not equal another value
+  Handlebars.registerHelper('not', function(a: any) {
+    return !a;
+  });
+  
+  // Helper to check if an array contains an element with a specific property value
+  Handlebars.registerHelper('some', function(array: any[], property: string, value: any) {
+    if (!array) return false;
+    return array.some(item => item[property] === value);
+  });
 }
 
-// Register Handlebars helpers
-Handlebars.registerHelper('slice', function(arr, start, end) {
-  if (!arr || !Array.isArray(arr)) return [];
-  return arr.slice(start, end);
-});
-
-// Helper to check if text ends with a specific character
-Handlebars.registerHelper('endsWith', function(text, char) {
-  if (!text) return false;
-  return text.endsWith(char);
-});
-
-// Helper to check equality
-Handlebars.registerHelper('eq', function(a, b) {
-  return a === b;
-});
-
-// Helper to check if string contains a substring
-Handlebars.registerHelper('contains', function(text, substring) {
-  if (!text || !substring) return false;
-  return text.includes(substring);
-});
-
-// Helper for logical "and" operation
-Handlebars.registerHelper('and', function() {
-  return Array.prototype.slice.call(arguments, 0, -1).every(Boolean);
-});
-
-// Helper for logical "not" operation
-Handlebars.registerHelper('not', function(value) {
-  return !value;
-});
-
-// Helper to replace "Current" with "Present" in dates
-Handlebars.registerHelper('formatEndDate', function(endDate) {
-  if (!endDate) return '';
-  return endDate === 'Current' ? 'Present' : endDate;
-});
-
-// Helper to check if any element in an array satisfies a condition
-Handlebars.registerHelper('some', function(arr, propertyName, value) {
-  if (!arr || !Array.isArray(arr)) return false;
-  
-  // Enhanced version - check if any item in array has matching property value
-  return arr.some(item => {
-    // If looking for a category that equals 'Languages'
-    if (propertyName === 'category' && value === 'Languages') {
-      return item && item.category === 'Languages';
-    }
-    
-    // For other cases
-    return item && item[propertyName] === value;
-  });
-});
-
-// Helper to split text into lines for bulletpoints (split by semicolons)
-Handlebars.registerHelper('splitLines', function(text: string) {
-  if (!text) return [];
-  // Split by semicolons, trim each item, and filter out empty lines
-  return text.split(';')
-    .map((line: string) => line.trim())
-    .filter((line: string) => line.length > 0);
-});
-
-// Helper to check if text contains any of the items in an array
-Handlebars.registerHelper('containsAny', function(text: string, items: string[]) {
-  if (!text || !items || !Array.isArray(items)) return false;
-  return items.some((item: string) => text.includes(item));
-});
-
-// No longer need the lambda helper since we're using a simpler pattern with property/equals
-
-// Helper to intelligently handle line breaks for the summary
-// Register format helpers for the template
-
 /**
- * Generate a PDF from a Resume object
- * @param resume The resume data
+ * Generate a PDF file from a resume object
+ * @param resume The resume object to convert
  * @param sessionId Unique identifier for the session
  * @param detailedFormat Whether to generate a detailed 2-page format
  * @returns Path to the generated HTML file or PDF file
@@ -436,39 +127,34 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
   }
   
   try {
+    // Initialize Handlebars helpers if needed
+    registerHandlebarsHelpers();
+    
     // Read template
     const templateSource = fs.readFileSync(templatePath, 'utf8');
     const template = Handlebars.compile(templateSource);
     
-    // Pass the detailed format flag and logo path to the template
-    const logoPath = path.resolve(process.cwd(), 'public/images/near_logo.png');
-    console.log('Using logo from path:', logoPath);
-    
+    // Pass the resume data and logo path to the template
     let html = template({
       ...resume,
       detailedFormat: detailedFormat,
-      logoPath: logoPath
+      logoPath: nearLogoPath
     });
     
-    // Ensure the Skills section always has the right title
-    html = html.replace('SKILLS & TOOLS', 'SKILLS');
-    
-    // Make sure section titles are properly formatted and separated
-    html = html.replace(/SKILLS<\/div>/g, 'SKILLS</div>');
-    html = html.replace(/LANGUAGES<\/div>/g, 'LANGUAGES</div>');
-    html = html.replace(/PROFESSIONAL EXPERIENCE<\/div>/g, 'PROFESSIONAL EXPERIENCE</div>');
+    // Fix some formatting issues
+    // Ensure "Present" is used instead of "Current" for end dates
+    html = html.replace(/– Current</g, '– Present<');
     
     // Remove any incorrect "PROFESSIONAL EXPERIENCE" text that may have been added to skills
-    html = html.replace(/Projects\s+PROFESSIONAL EXPERIENCE/g, 'Projects');
-    
-    // Remove any incorrect "PROFESSIONAL EXPERIENCE" text that may have been added to skills or other sections
     html = html.replace(/Projects\s+PROFESSIONAL EXPERIENCE/g, 'Projects');
     
     // Fix any case where "PROFESSIONAL EXPERIENCE" appears at the end of the skills line
     html = html.replace(/Infrastructure Projects\s+PROFESSIONAL EXPERIENCE/g, 'Infrastructure Projects');
     
-    // More aggressive cleanup for any pattern where PROFESSIONAL EXPERIENCE is out of place
-    html = html.replace(/(Skills:.*?)(PROFESSIONAL EXPERIENCE)(?!\s*SECTION)/g, '$1');
+    // Extremely aggressive cleanup for any pattern where PROFESSIONAL EXPERIENCE appears in skills section
+    html = html.replace(/(Skills:.*?)\s*PROFESSIONAL EXPERIENCE/g, '$1');
+    html = html.replace(/(<\/span>.*?)\s*PROFESSIONAL EXPERIENCE(?=<\/div>)/g, '$1');
+    html = html.replace(/(Projects.*?)\s*PROFESSIONAL EXPERIENCE/g, '$1');
     
     // ALWAYS apply comprehensive skills for estimator roles
     if (html.includes('Skills:') && 
@@ -487,8 +173,8 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       // Create a focused, prioritized list of estimator skills (max 12 skills)
       const comprehensiveSkills = 'First Principle Estimating; Quantity Take-off; Bill of Quantities (BOQ) Preparation; Cost Estimating; Cost Consulting; AutoCAD; Project Documentation; Civil Construction; Budget Management; Tender Document Preparation; Project Management; Infrastructure Projects';
       
-      // Find the skills section using a robust pattern but excluding any section markers
-      const skillsPattern = /Skills:[\s\S]*?(?=Languages:|PROFESSIONAL EXPERIENCE(?!\s*SECTION))/;
+      // Find the skills section using a robust pattern with negative lookahead to avoid matching PROFESSIONAL EXPERIENCE
+      const skillsPattern = /Skills:[\s\S]*?(?=Languages:|<div[^>]*>PROFESSIONAL EXPERIENCE|LANGUAGES)/i;
       const skillsMatch = html.match(skillsPattern);
       
       if (skillsMatch) {
@@ -497,17 +183,14 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
         html = html.replace(skillsPattern, `<span style="font-weight: 600;">Skills:</span> <span style="font-weight: normal;">${comprehensiveSkills}</span>\n\n      `);
         console.log('Applied comprehensive skills replacement via HTML post-processing');
       } else {
-        // Fallback: try alternative pattern or direct replacement
-        const altPattern = /Skills:(.*?)(?=Languages:|PROFESSIONAL EXPERIENCE(?!\s*SECTION))/;
-        const altMatch = html.match(altPattern);
+        // Emergency fallback - replace first instance of Skills: followed by anything
+        html = html.replace(/Skills:(.*?)(?=<)/g, `<span style="font-weight: 600;">Skills:</span> <span style="font-weight: normal;">${comprehensiveSkills}</span>`);
+        console.log('Applied emergency skills replacement via basic pattern');
         
-        if (altMatch) {
-          html = html.replace(altPattern, `<span style="font-weight: 600;">Skills:</span> <span style="font-weight: normal;">${comprehensiveSkills}</span> `);
-          console.log('Applied skills replacement via alternative HTML pattern');
-        } else {
-          // Emergency fallback - replace first instance of Skills: followed by anything
-          html = html.replace(/Skills:(.*?)(?=<)/g, `<span style="font-weight: 600;">Skills:</span> <span style="font-weight: normal;">${comprehensiveSkills}</span>`);
-          console.log('Applied emergency skills replacement via basic pattern');
+        // If still no match, try to insert at the beginning of skills div
+        if (!html.includes(comprehensiveSkills)) {
+          html = html.replace(/<div class="skills">([\s\S]*?)/, '<div class="skills"><div style="margin-bottom: 4px; margin-right: 0; width: 100%;"><span style="font-weight: 600;">Skills:</span> <span style="font-weight: normal;">' + comprehensiveSkills + '</span></div>$1');
+          console.log('Inserted skills at the beginning of skills section');
         }
       }
     }
@@ -519,7 +202,7 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       
       // 1. Fix broken Skills/Languages HTML from post-processing 
       // Ensure the Languages heading is properly on its own line
-      html = html.replace(/Skills:[^<]+Languages:/g, (match) => {
+      html = html.replace(/Skills:[^<]+Languages:/g, (match: string) => {
         // Split the Skills and Languages sections properly
         return match.replace(/Languages:/, '</span></div><div style="display: block; width: 100%; clear: both; margin-top: 15px;"><span style="font-weight: 600;"><strong>Languages:</strong></span>');
       });
