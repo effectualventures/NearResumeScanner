@@ -180,7 +180,7 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       if (skillsMatch) {
         // We found the skills section, replace it entirely with enhanced skills
         // Apply the proper HTML with the category bold but not the skills themselves
-        html = html.replace(skillsPattern, `<span style="font-weight: 600;">Skills:</span> <span style="font-weight: normal;">${comprehensiveSkills}</span>\n\n      `);
+        html = html.replace(skillsPattern, `<span style="font-weight: 600;">Skills:</span> <span style="font-weight: normal;">${comprehensiveSkills}</span>`);
         console.log('Applied comprehensive skills replacement via HTML post-processing');
       } else {
         // Emergency fallback - replace first instance of Skills: followed by anything
@@ -194,6 +194,9 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
         }
       }
     }
+    
+    // Clean up any "Languages -->" text that may appear in the skills section
+    html = html.replace(/Languages\s*-->/g, '');
     
     // Clean up formatting of language section - ensure proper standalone formatting
     if (html.includes('Skills:') && html.includes('Languages:')) {
