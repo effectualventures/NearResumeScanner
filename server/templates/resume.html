@@ -23,7 +23,7 @@
     }
     
     .page-body {
-      padding: 0;
+      padding: 40px 40px 90px 40px; /* top, right, bottom, left */
       margin: 0;
       position: relative;
     }
@@ -107,10 +107,17 @@
       text-transform: uppercase;
       font-size: 10.5pt;
       color: #000;
-      margin-bottom: 4px;
+      margin-bottom: 1px;
       letter-spacing: 0.2px;
-      border-bottom: 0.5px solid #aaa;
-      padding-bottom: 1px;
+      padding-bottom: 0;
+    }
+    
+    .section-rule {
+      border: 0;
+      height: 1px;
+      background-color: #d9d9d9;
+      margin-top: 0;
+      margin-bottom: 8px;
     }
     
     .skills {
@@ -368,8 +375,8 @@
   
   {{#if additionalExperience}}
     <section style="display: block; width: 100%; clear: both; margin-top: 5px;">
-      <div id="additional-section" class="section-title">ADDITIONAL EXPERIENCE</div>
-      <div class="divider"></div>
+      <h2 class="section-title">ADDITIONAL EXPERIENCE</h2>
+      <hr class="section-rule"/>
       <ul class="additional" style="margin-top: 2px; margin-bottom: 2px; padding-left: 16px;">
         {{#each (splitLines additionalExperience)}}
           <li style="font-weight: normal; font-size: 10pt;">{{this}}{{#unless (endsWith this ".")}}{{#unless (endsWith this "?")}}{{#unless (endsWith this "!")}}{{#unless (endsWith this ":")}}{{#unless (endsWith this ";")}}{{#unless (endsWith this "...")}}{{#unless (endsWith this "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</li>
@@ -382,8 +389,8 @@
       {{#if (contains additionalInfo "CAU BR")}}
         {{#unless @index}}
           <section style="display: block; width: 100%; clear: both; margin-top: 5px;">
-            <div id="memberships-section" class="section-title">PROFESSIONAL MEMBERSHIPS</div>
-            <div class="divider"></div>
+            <h2 class="section-title">PROFESSIONAL MEMBERSHIPS</h2>
+            <hr class="section-rule"/>
             <ul class="additional" style="margin-top: 2px; margin-bottom: 2px; padding-left: 16px;">
               <li style="font-weight: normal; font-size: 10pt;">CAU BR Certified Architect — Since 2011.</li>
             </ul>
