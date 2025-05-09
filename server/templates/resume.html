@@ -285,7 +285,7 @@
         {{else}}
           <!-- If no languages section found, add default -->
           {{#unless @index}}
-            {{#unless (some ../skills (lookup this 'category') 'Languages')}}
+            {{#unless (some ../skills 'category' 'Languages')}}
               <div style="margin-bottom: 2px; width: 100%;">
                 <span style="font-weight: normal;">English (Fluent)</span>
               </div>

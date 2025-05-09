@@ -379,26 +379,19 @@ Handlebars.registerHelper('formatEndDate', function(endDate) {
 });
 
 // Helper to check if any element in an array satisfies a condition
-Handlebars.registerHelper('some', function(arr, options) {
+Handlebars.registerHelper('some', function(arr, propertyName, value) {
   if (!arr || !Array.isArray(arr)) return false;
   
-  // For simple cases like checking equality with a property
-  // Use a safer approach that doesn't rely on function execution
-  if (options.hash && options.hash.property && options.hash.equals) {
-    return arr.some(item => item[options.hash.property] === options.hash.equals);
-  }
-  
-  // For more complex conditions, safely try options.fn if available
-  try {
-    return arr.some(item => {
-      if (typeof options.fn === 'function') {
-        return options.fn(item);
-      }
-      return false;
-    });
-  } catch (err) {
-    console.error('Error in some helper:', err);
-  }
+  // Enhanced version - check if any item in array has matching property value
+  return arr.some(item => {
+    // If looking for a category that equals 'Languages'
+    if (propertyName === 'category' && value === 'Languages') {
+      return item && item.category === 'Languages';
+    }
+    
+    // For other cases
+    return item && item[propertyName] === value;
+  });
 });
 
 // Helper to split text into lines for bulletpoints (split by semicolons)
