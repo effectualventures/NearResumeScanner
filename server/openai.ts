@@ -1982,14 +1982,26 @@ function removeBulletRepetition(resume: Resume): Resume {
  */
 function dedupeMetricEcho(r: Resume): Resume {
   const clone = structuredClone(r);
+  
+  if (!clone.experience) return clone;
+  
   clone.experience.forEach(exp => {
+    if (!exp.bullets) return;
+    
     exp.bullets.forEach(b => {
-      if (!b.text || !b.metrics || !Array.isArray(b.metrics)) return;
+      if (!b.text) return;
+      if (!b.metrics || !Array.isArray(b.metrics)) {
+        // Initialize metrics array if missing
+        b.metrics = [];
+        return;
+      }
       
       // Create a safe copy of metrics to work with
       const metrics = [...b.metrics];
       
       metrics.forEach(m => {
+        if (!m) return; // Skip null/undefined metrics
+        
         const plain = m.replace(/[.$]/g,'').trim();
         if (b.text.toLowerCase().includes(plain.toLowerCase())) {
           // remove metric that simply repeats what text already contains

@@ -293,11 +293,19 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       html = html.replace('</head>', `
         <style>
           /* No margin/padding - use the PDF margins instead */
+          @page {
+            size: letter;
+            margin: 0.5in 0.5in 0.7in 0.5in; /* top, right, bottom, left */
+          }
+          
           body {
             margin: 0 !important; 
             padding: 0 !important;
-            max-width: 8.0in !important;
+            max-width: 7.5in !important;
+            width: 7.5in !important;
+            box-sizing: border-box !important;
           }
+          
           /* Tighter spacing for lists */
           ul { padding-left: 12px !important; margin: 1px 0 !important; }
           li { 
@@ -333,55 +341,44 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
             clear: both !important;
             position: relative !important;
             margin-bottom: 10px !important;
+            width: 100% !important;
           }
           
-          #skills-section {
-            margin-top: 15px !important;
-            border-bottom: 0.5px solid #eee !important;
-            clear: both !important;
-            padding-bottom: 3px !important;
+          /* Fix page body width constraints */
+          .page-body {
+            width: 7.5in !important;
+            max-width: 7.5in !important;
+            box-sizing: border-box !important;
+            padding: 0 !important;
+            margin: 0 !important;
           }
           
-          #languages-section {
-            margin-top: 20px !important;
-            padding-top: 5px !important;
-            border-bottom: 0.5px solid #eee !important;
-            clear: both !important;
-            padding-bottom: 3px !important;
-          }
-          
-          #experience-section {
-            margin-top: 30px !important;
-            padding-top: 10px !important;
-            clear: both !important;
-            border-bottom: 0.5px solid #eee !important;
-            padding-bottom: 3px !important;
-            font-weight: bold !important;
-          }
-          
-          /* Position the Near logo properly */
-          .footer {
+          /* Branding footer override - make sure it shows in right position */
+          .branding-footer {
             position: fixed !important;
             bottom: 0.05in !important; /* Position exactly 0.05in from bottom as required */
             right: 0.5in !important;   /* Align with right margin */
             left: 0 !important;
-            width: 100% !important;
-            height: 25px !important;
+            display: flex !important;
+            gap: 6px !important;
+            align-items: center !important;
             z-index: 1000 !important;
             text-align: right !important;
             background-color: transparent !important;
           }
           
-          .footer img {
-            height: 25px !important;
+          .branding-footer img {
+            height: 25px !important; 
             width: auto !important;
             display: inline-block !important;
           }
           
           /* Logo zone spacer needs fixed height */
-          .logo-zone, .logo-zone-spacer {
-            height: 1.1in !important;
+          .logo-zone {
+            height: 0.25in !important;
             width: 100% !important;
+            clear: both !important;
+            display: block !important;
             margin: 0 !important;
             padding: 0 !important;
             visibility: hidden !important;
