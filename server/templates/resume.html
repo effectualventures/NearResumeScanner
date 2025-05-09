@@ -239,7 +239,7 @@
   
   <div class="divider"></div>
   
-  <div class="summary" style="white-space: normal; page-break-inside: avoid; break-inside: avoid; display: block; text-align: left; max-width: 100%; line-height: 1.3; font-size: 10.5pt;">
+  <div class="summary">
     {{#if summary}}
       {{summary}}{{#unless (endsWith summary ".")}}{{#unless (endsWith summary "?")}}{{#unless (endsWith summary "!")}}{{#unless (endsWith summary ":")}}{{#unless (endsWith summary ";")}}{{#unless (endsWith summary "...")}}{{#unless (endsWith summary "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}
     {{/if}}
@@ -248,6 +248,7 @@
   <!-- SKILLS SECTION -->
   <section style="display: block; width: 100%; clear: both; margin-bottom: 5px;">
     <div id="skills-section" class="section-title">SKILLS & LANGUAGES</div>
+    <div class="divider"></div>
     <div class="skills">
       <!-- First display skills -->
       {{#each skills}}
@@ -272,6 +273,7 @@
   <!-- LANGUAGES SECTION - Always shown even if empty -->
   <section style="display: block; width: 100%; clear: both; margin-top: 5px; margin-bottom: 5px;">
     <div id="languages-section" class="section-title">LANGUAGES</div>
+    <div class="divider"></div>
     <div class="languages-list">
       {{#each skills}}
         {{#if (eq category "Languages")}}
@@ -293,6 +295,7 @@
   
   <section style="display: block; width: 100%; clear: both; margin-top: 5px;">
     <div id="experience-section" class="section-title">PROFESSIONAL EXPERIENCE</div>
+    <div class="divider"></div>
     {{#each experience}}
       <div class="experience">
         <div class="experience-header">
@@ -323,6 +326,7 @@
   
   <section style="display: block; width: 100%; clear: both; margin-top: 5px;">
     <div id="education-section" class="section-title">EDUCATION</div>
+    <div class="divider"></div>
     <div class="education" style="margin-bottom: 5px;">
       {{#each education}}
         <div class="education-institution" style="margin-bottom: 1px;"><strong>{{institution}}</strong>{{#if location}} — {{location}}{{/if}}</div>
@@ -346,6 +350,7 @@
   {{#if additionalExperience}}
     <section style="display: block; width: 100%; clear: both; margin-top: 5px;">
       <div id="additional-section" class="section-title">ADDITIONAL EXPERIENCE</div>
+      <div class="divider"></div>
       <ul class="additional" style="margin-top: 2px; margin-bottom: 2px; padding-left: 16px;">
         {{#each (splitLines additionalExperience)}}
           <li style="font-weight: normal; font-size: 10pt;">{{this}}{{#unless (endsWith this ".")}}{{#unless (endsWith this "?")}}{{#unless (endsWith this "!")}}{{#unless (endsWith this ":")}}{{#unless (endsWith this ";")}}{{#unless (endsWith this "...")}}{{#unless (endsWith this "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</li>
@@ -359,6 +364,7 @@
         {{#unless @index}}
           <section style="display: block; width: 100%; clear: both; margin-top: 5px;">
             <div id="memberships-section" class="section-title">PROFESSIONAL MEMBERSHIPS</div>
+            <div class="divider"></div>
             <ul class="additional" style="margin-top: 2px; margin-bottom: 2px; padding-left: 16px;">
               <li style="font-weight: normal; font-size: 10pt;">CAU BR Certified Architect — Since 2011.</li>
             </ul>
