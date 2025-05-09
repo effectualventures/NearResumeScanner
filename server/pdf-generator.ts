@@ -478,6 +478,19 @@ Handlebars.registerHelper('breaklines', function(text) {
  * @returns Path to the generated HTML file or PDF file
  */
 export async function generatePDF(resume: Resume, sessionId: string, detailedFormat: boolean = false): Promise<string> {
+  // Create debug output of the final resume JSON for troubleshooting
+  try {
+    const debugDir = path.join(process.cwd(), "temp");
+    if (!fs.existsSync(debugDir)) {
+      fs.mkdirSync(debugDir, { recursive: true });
+    }
+    const debugPath = path.join(debugDir, `debug-resume-${sessionId}.json`);
+    fs.writeFileSync(debugPath, JSON.stringify(resume, null, 2));
+    console.log(`Debug resume JSON saved to: ${debugPath}`);
+  } catch (debugError) {
+    console.error('Error saving debug resume JSON:', debugError);
+  }
+  
   try {
     // Read template
     const templateSource = fs.readFileSync(templatePath, 'utf8');
