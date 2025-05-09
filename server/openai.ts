@@ -314,6 +314,16 @@ Your response must be a valid JSON object representing the processed resume with
       // Clean up education degree formatting
       finalResume = cleanEducationFormat(finalResume);
       
+      // Create temp directory if it doesn't exist
+      if (!fs.existsSync('temp')) {
+        fs.mkdirSync('temp', { recursive: true });
+      }
+      
+      // Write debug JSON with session ID in filename for easier correlation with PDFs
+      const debugPath = `temp/debug-resume-${sessionId}.json`;
+      fs.writeFileSync(debugPath, JSON.stringify(finalResume, null, 2));
+      console.log(`Debug resume JSON written to: ${debugPath}`);
+      
       return {
         success: true,
         resume: finalResume
@@ -442,6 +452,11 @@ Your response must be a valid JSON object representing the processed resume with
           ],
           additionalExperience: "Led quarterly go-to-market strategy sessions for LATAM B2B SaaS market entry. Delivered presentations at SaaS Connect 2022 conference on 'Enterprise Sales Enablement in Emerging Markets' and contributed to SalesHacker blog series on optimizing sales technology stacks."
         };
+        
+        // Also write debug JSON for demo resume
+        const debugDemoPath = `temp/debug-demo-resume-${sessionId}.json`;
+        fs.writeFileSync(debugDemoPath, JSON.stringify(demoResume, null, 2));
+        console.log(`Debug demo resume JSON written to: ${debugDemoPath}`);
         
         return {
           success: true,
