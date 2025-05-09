@@ -811,9 +811,24 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       } else {
         // For standard format, restrict to one page
         console.log('Using standard format: limiting bullet points to fit one page');
+        
+        // Check if we need to adjust scale dynamically to fit on one page
+        const contentHeight = await page.evaluate(() => {
+          const bodyHeight = document.body.scrollHeight;
+          return bodyHeight;
+        });
+        
+        // Default scale - if content is too tall, reduce scale to fit on one page
+        const pageHeight = 11 * 96; // Letter height in pixels (11 inches at 96 DPI)
+        const availableHeight = pageHeight - 96; // Account for margins
+        const scale = contentHeight > availableHeight ? Math.min(0.95, availableHeight / contentHeight) : 1.0;
+        
+        console.log(`Content height: ${contentHeight}px, using scale factor: ${scale}`);
+        
         await page.pdf({
           ...pdfOptions,
-          preferCSSPageSize: true // Use CSS page size with our forced margins
+          preferCSSPageSize: true, // Use CSS page size with our forced margins
+          scale: scale, // Dynamic scale to ensure all content fits on one page
         });
       }
       

@@ -1763,3 +1763,73 @@ function replaceSquareMeters(text: string): string {
   
   return result;
 }
+
+/**
+ * Removes word repetition at the beginning of consecutive bullet points
+ * @param resume The resume to process
+ * @returns Resume with improved bullet point variety
+ */
+function removeBulletRepetition(resume: Resume): Resume {
+  if (!resume || !resume.experience) return resume;
+  
+  try {
+    // Create a deep copy of the resume to avoid reference issues
+    const processedResume = JSON.parse(JSON.stringify(resume));
+    
+    // Process all experience sections
+    if (processedResume.experience && Array.isArray(processedResume.experience)) {
+      processedResume.experience.forEach((exp: any) => {
+        if (exp.bullets && Array.isArray(exp.bullets) && exp.bullets.length > 1) {
+          // Track the first word of each bullet point to detect repetition
+          const startingWords: Record<string, number> = {};
+          
+          // First pass: count repetition
+          exp.bullets.forEach((bullet: any) => {
+            if (bullet.text) {
+              // Extract first word (ignore case for counting)
+              const firstWord = bullet.text.split(' ')[0].toLowerCase();
+              if (firstWord.length > 3) { // Only count words longer than 3 characters
+                startingWords[firstWord] = (startingWords[firstWord] || 0) + 1;
+              }
+            }
+          });
+          
+          // Identify words that are used more than twice
+          const overusedWords = Object.entries(startingWords)
+            .filter(([word, count]) => count > 2) // Only consider words used 3+ times
+            .map(([word]) => word);
+          
+          if (overusedWords.length > 0) {
+            // Second pass: fix repetition by removing the repeated word in some bullets
+            for (let i = 1; i < exp.bullets.length; i++) {
+              if (!exp.bullets[i].text) continue;
+              
+              const words = exp.bullets[i].text.split(' ');
+              const firstWord = words[0].toLowerCase();
+              
+              // If this is an overused word AND previous bullet also starts with it
+              if (overusedWords.includes(firstWord) && 
+                  exp.bullets[i-1].text && 
+                  exp.bullets[i-1].text.toLowerCase().startsWith(firstWord)) {
+                // Remove the first word and capitalize the next word
+                words.shift(); // Remove first word
+                if (words.length > 0) {
+                  // Capitalize first letter of new first word
+                  words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
+                  exp.bullets[i].text = words.join(' ');
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+    
+    console.log('Removed bullet point repetition');
+    return processedResume;
+  } catch (error) {
+    console.error('Error removing bullet point repetition:', error);
+    // Return the original resume if processing fails
+    return resume;
+  }
+}
