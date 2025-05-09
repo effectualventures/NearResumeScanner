@@ -1,0 +1,217 @@
+{
+  "header": {
+    "firstName": "Camila",
+    "tagline": "Senior Construction Estimator – Residential & Infrastructure",
+    "location": "Brazil",
+    "city": "São Paulo",
+    "country": "Brazil"
+  },
+  "summary": "Senior estimator with 15+ years in diverse sectors like infrastructure and residential, achieving ~$120M in project budgets managed.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "First Principle Estimating",
+        "Bill of Quantities (BOQ)",
+        "Tender Documents",
+        "Quantity Take-Off",
+        "Cost Estimating",
+        "Cost Consulting",
+        "Project Management",
+        "Budget Management",
+        "Autodesk Revit",
+        "AutoCAD",
+        "Bluebeam",
+        "Excel"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "Portuguese (Native)",
+        "English (Fluent)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "VIAARQ — Arquitetura Viável",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Architect, Co-owner",
+      "startDate": "Jan 2015",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Analyzed tender documents and conducted First Principle estimating for large-scale civil projects, ensuring precise cost projections and competitive bidding.",
+          "metrics": []
+        },
+        {
+          "text": "Prepared detailed Bills of Quantities (BOQ) and tendering documents for comprehensive civil and architectural projects, covering aspects from foundations to interior design.",
+          "metrics": []
+        },
+        {
+          "text": "Executed quantity take-off processes for various construction elements, facilitating precise cost estimation and material allocation.",
+          "metrics": []
+        },
+        {
+          "text": "Managed cost estimation and consulting for major projects, including procurement of quotes for MEP installations.",
+          "metrics": []
+        },
+        {
+          "text": "Supervised the preparation of final detailed BOQs and final accounts, contributing to successful project closures.",
+          "metrics": []
+        },
+        {
+          "text": "Led residential project documentations for approval and regularization, streamlining regulatory compliance.",
+          "metrics": []
+        },
+        {
+          "text": "Took charge of the Fortaleza Brazil Temple Complex, conducting detailed quantity take-offs for complex architectural designs.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Civil Infrastructure Group",
+      "location": "Australia",
+      "title": "Senior Estimator / Quantity Surveyor",
+      "startDate": "Mar 2021",
+      "endDate": "May 2024",
+      "bullets": [
+        {
+          "text": "Oversaw tender analysis for infrastructure projects, establishing accurate preliminary budgets for Tender Opening Committee (TOC) reviews.",
+          "metrics": []
+        },
+        {
+          "text": "Constructed comprehensive Bill of Quantities (BOQ), covering materials, labour, and technical plant requirements for major infrastructure contracts.",
+          "metrics": []
+        },
+        {
+          "text": "Engaged in stringent cost estimation and consulting, establishing strong negotiations with suppliers to optimise project budgets.",
+          "metrics": []
+        },
+        {
+          "text": "Crafted submission documents inclusive of assumptions, exclusions, and pricing schedules, securing competitive project bids.",
+          "metrics": []
+        },
+        {
+          "text": "Directed the analysis of civil and engineering drawings to ascertain cost implications and propose budgetary enhancements.",
+          "metrics": []
+        },
+        {
+          "text": "Managed the quantity take-off processes for infrastructure projects such as South Morang Terminal Station, interfacing with contractors to ensure clarity in scope.",
+          "metrics": []
+        },
+        {
+          "text": "Achieved strategic shifts in construction methods, allowing projects to adhere strictly to financial guidelines.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Somague MPH",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Intermediate Estimator",
+      "startDate": "Nov 2012",
+      "endDate": "Dec 2014",
+      "bullets": [
+        {
+          "text": "Facilitated scope analysis and quantity take-off for a portfolio surpassing 100,000 m² of commercial building projects.",
+          "metrics": []
+        },
+        {
+          "text": "Executed cost estimations and detailed BOQs, playing a pivotal role in project budgeting and final account settlements.",
+          "metrics": []
+        },
+        {
+          "text": "Enabled effective cost consulting, ensuring comprehensive cost reviews with suppliers and contractual partners.",
+          "metrics": []
+        },
+        {
+          "text": "Directed meetings with site and management teams for project explanations, establishing open communication for seamless project execution.",
+          "metrics": []
+        },
+        {
+          "text": "Implemented strategic solutions for dispute resolutions, showcasing adaptability and technical problem-solving in challenging scenarios.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Trisul-SA",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Intermediate Estimator",
+      "startDate": "Sep 2011",
+      "endDate": "Sep 2012",
+      "bullets": [
+        {
+          "text": "Led feasibility studies and cost analysis for high-rise residential buildings, advancing investment viability assessments.",
+          "metrics": []
+        },
+        {
+          "text": "Prepared final Bill of Quantities (BOQ) for Poema Castro Alves Residencial, streamlining costing for projects exceeding 15,000 m².",
+          "metrics": []
+        },
+        {
+          "text": "Coordinated cost comparisons for design stages, ensuring optimal budgeting and project fidelity.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "MV Escritório de Projetos Ltda.",
+      "location": "Brazil",
+      "title": "Architect / Intermediate Quantity Surveyor",
+      "startDate": "Apr 2011",
+      "endDate": "Sep 2011",
+      "bullets": [
+        {
+          "text": "Engineered feasibility cost studies for logistic warehouses, contributing to strategic budget planning.",
+          "metrics": []
+        },
+        {
+          "text": "Formulated comprehensive budgeting strategies, synchronizing construction schedules with financial programs.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Afonso França Engenharia Ltda.",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Junior Estimator",
+      "startDate": "Mar 2008",
+      "endDate": "Mar 2011",
+      "bullets": [
+        {
+          "text": "Handled material and cost estimations for IGESP Hospital, overseeing a major expansion worth $9.6M.",
+          "metrics": []
+        },
+        {
+          "text": "Conducted thorough analysis and documentation for Shopping Metrópole, balancing cost adjustments for a 22,000 m² project.",
+          "metrics": []
+        },
+        {
+          "text": "Implemented project compatibility reviews, facilitating design adjustments and variance reconciliations.",
+          "metrics": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Orange International College",
+      "degree": "Diploma of Building and Construction",
+      "location": "VIC, Australia",
+      "year": "2021",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Mackenzie Presbyterian University",
+      "degree": "Architecture and Urbanism",
+      "location": "SP, Brazil",
+      "year": "2009",
+      "additionalInfo": "CAU BR, AIQS Member as of Dec 2023"
+    }
+  ],
+  "additionalExperience": "Specialized in construction management via Columbia University courses, skilled in Autodesk software suite with a focus on improving design accuracy and project efficiency."
+}

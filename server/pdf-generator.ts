@@ -289,9 +289,9 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       // Insert additional inline styles to override any potential CSS conflicts
       html = html.replace('</head>', `
         <style>
-          /* Force narrow margins */
+          /* No margin/padding - use the PDF margins instead */
           body {
-            margin: 0.50in !important; 
+            margin: 0 !important; 
             padding: 0 !important;
             max-width: 8.0in !important;
           }
@@ -359,13 +359,13 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
           /* Position the Near logo properly */
           .footer {
             position: fixed !important;
-            bottom: 0.05in !important;
-            right: 0 !important;
+            bottom: 0.05in !important; /* Position exactly 0.05in from bottom as required */
+            right: 0.5in !important;   /* Align with right margin */
             left: 0 !important;
             width: 100% !important;
             height: 25px !important;
             z-index: 1000 !important;
-            text-align: center !important;
+            text-align: right !important;
             background-color: transparent !important;
           }
           
@@ -447,10 +447,10 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       
       // Configure PDF generation options with exact margins
       const defaultPdfMargins = {
-        top: '0.4in',     // Exact top margin
-        right: '0.4in',   // Exact right margin
-        bottom: '0.8in',  // Exact bottom margin
-        left: '0.4in'     // Exact left margin
+        top: '0.5in',     // Exact top margin
+        right: '0.5in',   // Exact right margin
+        bottom: '0.7in',  // Exact bottom margin
+        left: '0.5in'     // Exact left margin
       };
       
       // Configure PDF generation options
