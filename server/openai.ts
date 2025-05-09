@@ -1607,42 +1607,6 @@ function replaceSquareMeters(text: string): string {
     return convertToUSD(match, 'EUR', amount, currencyRates['EUR']);
   });
   
-  // Actively preserve and enhance quantitative values
-  // Look for numbers followed by % and ensure they're properly formatted
-  const percentagePattern = /(\d+(\.\d+)?)\s*%\s*(improvement|reduction|increase|decrease|growth|savings|profit|efficiency|accuracy|faster|higher|lower|ROI|revenue|budget|sales|completion|target|boost|utilization)/gi;
-  result = result.replace(percentagePattern, (match) => {
-    // Make the percentage more prominent if needed
-    if (!match.includes('(') && !match.includes(')')) {
-      const parts = match.match(/(\d+(\.\d+)?)\s*%\s*(.*)/i);
-      if (parts && parts.length >= 4) {
-        const number = parts[1];
-        const term = parts[3];
-        return `${number}% ${term}`;
-      }
-    }
-    return match;
-  });
-  
-  // Enhance and preserve dollar amounts 
-  const dollarPattern = /\$\s*(\d[\d,.]+)\s*(million|billion|thousand|k|m|b)?/gi;
-  result = result.replace(dollarPattern, (match) => {
-    // Keep dollar amounts as is to ensure retention
-    return match;
-  });
-  
-  // Add more quantitative metrics for numbers followed by units
-  const metricPattern = /(\d+(\.\d+)?)\s*(million|billion|thousand|projects|clients|users|customers|properties|sites|buildings|developments|platforms|applications|contracts|opportunities|transactions|orders)/gi;
-  result = result.replace(metricPattern, (match) => {
-    // Keep numeric metrics as is but ensure they're retained
-    return match;
-  });
-  
-  // Preserve time-based metrics (ensure they're kept)
-  const timePattern = /(\d+)\s*(months|years|days|weeks|hours|minutes)/gi;
-  result = result.replace(timePattern, (match) => {
-    return match;
-  });
-  
   // 6. Only convert strong currency patterns - be more selective
   // Only convert when we're pretty sure it's actually a currency
   const clearCurrencyPattern = /(?<!\$)(\d[\d,.]+)\s*(?:EUR|GBP|JPY|AUD|CAD|CHF|[€£¥])/gi;

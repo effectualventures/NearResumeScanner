@@ -217,36 +217,35 @@
   </div>
   
   <div class="section-title">SKILLS & LANGUAGES</div>
-  
-  <!-- SKILLS SECTION -->
   <div class="skills">
     <!-- First display skills -->
     {{#each skills}}
-      <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
-        <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
-      </div>
+      {{#if (eq category "Skills")}}
+        <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
+          <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
+        </div>
+      {{/if}}
     {{/each}}
-  </div>
-  
-  <!-- LANGUAGES SECTION - clearly separate with its own divs and larger spacing -->
-  <div style="width: 100%; height: 20px; clear: both;"></div>
-  
-  <div class="languages" style="margin-top: 10px; margin-bottom: 15px; padding-top: 5px; border-top: 1px dotted #eee;">
-    <!-- Use the separate languageSkills property specifically designed for this -->
-    {{#if languageSkills}}
-      <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
-        <span class="skill-category"><strong>Languages:</strong></span> {{#each languageSkills.items}}{{#if @index}}; {{/if}}{{this}}{{/each}}
-      </div>
-    {{else}}
-      <!-- Fallback to traditional skills iteration if no languageSkills property -->
-      {{#each skills}}
-        {{#if (eq category "Languages")}}
-          <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
-            <span class="skill-category"><strong>{{this.category}}:</strong></span> English (Fluent){{#if this.items.[0]}}; {{this.items.[0]}}{{/if}}{{#each (slice this.items 1)}}; {{this}}{{/each}}
-          </div>
-        {{/if}}
-      {{/each}}
-    {{/if}}
+    
+    <!-- Then display languages on a separate line with clear break -->
+    <div style="width: 100%; height: 8px; clear: both;"></div>
+    
+    {{#each skills}}
+      {{#if (eq category "Languages")}}
+        <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
+          <span class="skill-category"><strong>{{this.category}}:</strong></span> English (Fluent){{#if this.items.[0]}}; {{this.items.[0]}}{{/if}}{{#each (slice this.items 1)}}; {{this}}{{/each}}
+        </div>
+      {{/if}}
+    {{/each}}
+    
+    <!-- Display any other categories (just in case) -->
+    {{#each skills}}
+      {{#if (and (not (eq category "Skills")) (not (eq category "Languages")))}}
+        <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
+          <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
+        </div>
+      {{/if}}
+    {{/each}}
   </div>
   
   <div class="section-title">PROFESSIONAL EXPERIENCE</div>

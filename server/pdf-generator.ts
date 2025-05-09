@@ -431,42 +431,6 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
     const templateSource = fs.readFileSync(templatePath, 'utf8');
     const template = Handlebars.compile(templateSource);
     
-    // Prepare data for the template, ensuring Languages section is properly separate
-    if (resume.skills && Array.isArray(resume.skills)) {
-      // Separate language skills from other skills
-      const languageSkills = resume.skills.find(skill => skill.category === 'Languages');
-      const otherSkills = resume.skills.filter(skill => skill.category !== 'Languages');
-      
-      // If we have language skills, ensure English is included as Fluent
-      if (languageSkills) {
-        if (!languageSkills.items.includes('English (Fluent)')) {
-          // Check if English is there but without proficiency marker
-          const englishIndex = languageSkills.items.findIndex(item => 
-            item === 'English' || item.startsWith('English (') && !item.startsWith('English (Fluent)')
-          );
-          
-          if (englishIndex >= 0) {
-            // Replace existing English entry with English (Fluent)
-            languageSkills.items[englishIndex] = 'English (Fluent)';
-          } else {
-            // Add English (Fluent) at the beginning
-            languageSkills.items.unshift('English (Fluent)');
-          }
-        }
-        
-        // Add Native marker to Portuguese or Spanish if missing
-        languageSkills.items = languageSkills.items.map(item => {
-          if (item === 'Portuguese') return 'Portuguese (Native)';
-          if (item === 'Spanish') return 'Spanish (Native)';
-          return item;
-        });
-      }
-      
-      // Update resume object with separated skills
-      resume.skills = otherSkills;
-      resume.languageSkills = languageSkills;
-    }
-    
     // Pass the detailed format flag and logo path to the template
     const logoPath = path.resolve(process.cwd(), 'public/images/near_logo.png');
     console.log('Using logo from path:', logoPath);
