@@ -378,6 +378,19 @@ Handlebars.registerHelper('formatEndDate', function(endDate) {
   return endDate === 'Current' ? 'Present' : endDate;
 });
 
+// Helper to check if any element in an array satisfies a condition
+Handlebars.registerHelper('some', function(arr, options) {
+  if (!arr || !Array.isArray(arr)) return false;
+  return arr.some(item => options.fn(item));
+});
+
+// Helper for using lambda functions in templates
+Handlebars.registerHelper('lambda', function(context, options) {
+  return function(item) {
+    return options.fn(item);
+  };
+});
+
 // Helper to intelligently handle line breaks for the summary
 // The summary should only break if the text is substantially longer than a full line
 Handlebars.registerHelper('breaklines', function(text) {
