@@ -29,6 +29,12 @@
       break-inside: avoid;
     }
     
+    /* Tighter spacing for better page efficiency */
+    section {
+      margin-top: 5px !important;
+      margin-bottom: 5px !important;
+    }
+    
     .header {
       text-align: center;
       margin-bottom: 8px;
@@ -74,18 +80,19 @@
     .section-title {
       font-weight: bold;
       text-transform: uppercase;
-      font-size: 11pt;
+      font-size: 10.5pt;
       color: #000;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
       letter-spacing: 0.2px;
       border-bottom: 0.5px solid #aaa;
-      padding-bottom: 2px;
+      padding-bottom: 1px;
     }
     
     .skills {
-      margin-bottom: 12px;
+      margin-bottom: 6px;
       display: flex;
       flex-wrap: wrap;
+      font-size: 10pt;
     }
     
     .skill-category {
@@ -100,14 +107,14 @@
     }
     
     .experience {
-      margin-bottom: 12px; /* Reduced spacing between experience sections */
+      margin-bottom: 8px; /* Further reduced spacing between experience sections */
     }
     
     .experience-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
     
     .company {
@@ -138,16 +145,17 @@
     }
     
     ul {
-      margin-top: 3px;
-      margin-bottom: 7px;
-      padding-left: 18px; /* Slightly reduced bullet indentation */
+      margin-top: 2px;
+      margin-bottom: 4px;
+      padding-left: 16px; /* More reduced bullet indentation */
     }
     
     li {
-      margin-bottom: 2px;
+      margin-bottom: 1px;
       color: #333;
       page-break-inside: avoid;
       break-inside: avoid;
+      font-size: 10pt; /* Smaller font size for bullets */
     }
     
     .education {
@@ -232,20 +240,20 @@
   
   <div class="divider"></div>
   
-  <div class="summary">
+  <div class="summary" style="white-space: normal; page-break-inside: avoid; break-inside: avoid; display: block; text-align: left; max-width: 100%; line-height: 1.4;">
     {{#if summary}}
       {{summary}}{{#unless (endsWith summary ".")}}{{#unless (endsWith summary "?")}}{{#unless (endsWith summary "!")}}{{#unless (endsWith summary ":")}}{{#unless (endsWith summary ";")}}{{#unless (endsWith summary "...")}}{{#unless (endsWith summary "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}
     {{/if}}
   </div>
   
   <!-- SKILLS SECTION -->
-  <section style="display: block; width: 100%; clear: both; margin-bottom: 12px;">
+  <section style="display: block; width: 100%; clear: both; margin-bottom: 5px;">
     <div id="skills-section" class="section-title">SKILLS</div>
     <div class="skills">
       <!-- First display skills -->
       {{#each skills}}
         {{#if (eq category "Skills")}}
-          <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
+          <div style="margin-bottom: 4px; margin-right: 0; width: 100%;">
             <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
           </div>
         {{/if}}
@@ -254,7 +262,7 @@
       <!-- Display any other categories except Languages -->
       {{#each skills}}
         {{#if (and (not (eq category "Skills")) (not (eq category "Languages")))}}
-          <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
+          <div style="margin-bottom: 4px; margin-right: 0; width: 100%;">
             <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
           </div>
         {{/if}}
@@ -263,19 +271,19 @@
   </section>
   
   <!-- LANGUAGES SECTION - Completely separate from Skills -->
-  <section style="display: block; width: 100%; clear: both; margin-top: 10px; margin-bottom: 12px;">
+  <section style="display: block; width: 100%; clear: both; margin-top: 5px; margin-bottom: 5px;">
     <div id="languages-section" class="section-title">LANGUAGES</div>
     <div class="languages-list">
       {{#each skills}}
         {{#if (eq category "Languages")}}
-          <div style="margin-bottom: 5px; width: 100%;">
+          <div style="margin-bottom: 2px; width: 100%;">
             <span style="font-weight: normal;">{{#each this.items}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}</span>
           </div>
         {{else}}
           <!-- If no languages section found, add default -->
           {{#unless @index}}
             {{#unless (some ../skills (lookup this 'category') 'Languages')}}
-              <div style="margin-bottom: 5px; width: 100%;">
+              <div style="margin-bottom: 2px; width: 100%;">
                 <span style="font-weight: normal;">English (Fluent)</span>
               </div>
             {{/unless}}
@@ -286,7 +294,7 @@
   </section>
   
   <!-- PROFESSIONAL EXPERIENCE SECTION -->
-  <section style="display: block; width: 100%; clear: both; margin-top: 10px;">
+  <section style="display: block; width: 100%; clear: both; margin-top: 5px;">
     <div id="experience-section" class="section-title">PROFESSIONAL EXPERIENCE</div>
     {{#each experience}}
       <div class="experience">
@@ -316,13 +324,19 @@
     {{/each}}
   </section>
   
-  <section style="display: block; width: 100%; clear: both; margin-top: 12px;">
+  <section style="display: block; width: 100%; clear: both; margin-top: 8px;">
     <div id="education-section" class="section-title">EDUCATION</div>
     <div class="education">
       {{#each education}}
         <div class="education-institution"><strong>{{institution}}</strong> — {{location}}</div>
         <div class="education-degree">{{degree}}{{#if (and degree year)}}, {{/if}}{{year}}</div>
-        {{#if additionalInfo}}<div class="education-details">{{additionalInfo}}</div>{{/if}}
+        {{#if additionalInfo}}
+          {{#if (contains additionalInfo "CAU BR")}}
+            <div class="education-details">CAU BR Certified Architect — Since 2011</div>
+          {{else}}
+            <div class="education-details">{{additionalInfo}}</div>
+          {{/if}}
+        {{/if}}
       {{/each}}
     </div>
   </section>

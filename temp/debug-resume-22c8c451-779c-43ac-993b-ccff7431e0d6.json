@@ -1,0 +1,203 @@
+{
+  "header": {
+    "firstName": "Camila",
+    "tagline": "Senior Estimator – Civil & Infrastructure Projects",
+    "location": "Brazil",
+    "city": "Sorocaba",
+    "country": "Brazil"
+  },
+  "summary": "Seasoned estimator in civil and infrastructure projects with 15+ years of expertise, managing projects across hospitals to roadways, achieving up to $24M in contract values.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "First Principle Estimating",
+        "Preparing Bill of Quantities (BOQ)",
+        "Tender Documents",
+        "Cost Estimating",
+        "Cost Consulting",
+        "Quantity Take-Off",
+        "Project Management",
+        "Budget Management",
+        "Construction Standards (NBR, AU NZS NCC)",
+        "Technical Drawings",
+        "Construction Methodologies",
+        "Design Variation Assessments",
+        "AutoCAD",
+        "Revit",
+        "Bluebeam",
+        "Expert Estimation",
+        "Software MEGA",
+        "Candy (CCS)"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "Portuguese (Native)",
+        "English (Advanced)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "VIAARQ – Arquitetura Viável",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Architect - Co-owner",
+      "startDate": "Jan 2015",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Oversee the comprehensive analysis of tendering documents to ensure accurate project cost projections. Implemented first principle estimating processes, achieving a 95% accuracy rate in BOQs and final project accounts.",
+          "metrics": []
+        },
+        {
+          "text": "Developed detailed Bill of Quantities (BOQ) for diverse construction projects including residential, commercial, and infrastructure, managing contracts exceeding $5M per project on average.",
+          "metrics": []
+        },
+        {
+          "text": "Led cost estimating efforts for major design variations, mitigating budget overages by implementing strategic cost-saving measures, resulting in a 20% reduction in projected expenses.",
+          "metrics": []
+        },
+        {
+          "text": "Conducted rigorous quantity take-offs across civil project components, including complex installations like MEP and specialized infrastructure, promoting project efficiency and reducing material waste by 15%.",
+          "metrics": []
+        },
+        {
+          "text": "Engaged in cost consulting and negotiations with suppliers, optimizing contract values with a 10% cost reduction on bulk material orders.",
+          "metrics": []
+        },
+        {
+          "text": "Drafted and presented comprehensive commercial offers, enhancing project win rate by 22% through competitive yet cost-effective proposals.",
+          "metrics": []
+        },
+        {
+          "text": "Successfully managed projects worth over $6M for religious and educational institutions, driving efficient project execution in line with budgetary constraints.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Civil Infrastructure Group",
+      "location": "VIC",
+      "title": "Senior Estimator / Quantity Surveyor",
+      "startDate": "Mar 2021",
+      "endDate": "May 2024",
+      "bullets": [
+        {
+          "text": "Performed extensive tender analysis, improving scope accuracy, and enhancing preliminary budgeting precision, with contributions leading to multiple awarded projects exceeding $10M AUD.",
+          "metrics": []
+        },
+        {
+          "text": "Developed and implemented innovative BOQ systems for infrastructure projects that aligned material, labor, and equipment estimates with project demands, achieving a 98% alignment rate.",
+          "metrics": []
+        },
+        {
+          "text": "Enhanced project submissions and cost consulting processes, leading to a 15% quicker approval time from stakeholders through clarified assumptions and detailed documentation.",
+          "metrics": []
+        },
+        {
+          "text": "Orchestrated cost assessments for design changes, maintaining project health and budget compliance through thorough analysis and effective supplier negotiations.",
+          "metrics": []
+        },
+        {
+          "text": "Led the preparation of various infrastructure project accounts, ensuring accurate financial tracking against project milestones, reducing fiscal variances by 29%.",
+          "metrics": []
+        },
+        {
+          "text": "Initiated project schedules that provided robust timelines, reducing overlooked milestones by 35% across critical infrastructure projects.",
+          "metrics": []
+        },
+        {
+          "text": "Proposed and implemented construction method changes, proving instrumental in reducing project costs by leveraging contemporary engineering techniques.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Somague MPH",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Intermediate Estimator",
+      "startDate": "Nov 2012",
+      "endDate": "Dec 2014",
+      "bullets": [
+        {
+          "text": "Directed comprehensive tender document analysis, facilitating efficient site team coordination and project scope communication, leading to increased bid success for key projects.",
+          "metrics": []
+        },
+        {
+          "text": "Prepared detailed BOQs and commercial proposals for large-scale developments, including high-value municipal contracts valued at over $60M.",
+          "metrics": []
+        },
+        {
+          "text": "Managed design and cost alignment processes, utilizing cost consulting strategies to achieve a 17% decrease in projected overruns.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Trisul-SA",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Intermediate Estimator",
+      "startDate": "Sep 2011",
+      "endDate": "Sep 2012",
+      "bullets": [
+        {
+          "text": "Conducted comprehensive feasibility studies for land acquisition and highrise residential buildings, ensuring financial feasibility and securing project financing.",
+          "metrics": []
+        },
+        {
+          "text": "Prepared thorough BOQs and cost estimates for complex residential developments, accurately accounting for design variations and maintaining budgetary limits.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "MV Escritório de Projetos Ltda.",
+      "location": "Brazil",
+      "title": "Architect / Intermediate Quantity Surveyor",
+      "startDate": "Apr 2011",
+      "endDate": "Sep 2011",
+      "bullets": [
+        {
+          "text": "Conducted feasibility cost studies for logistic warehouses, accurately estimating project scope and delivering designs aligned with financial constraints.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Afonso França Engenharia Ltda.",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Junior Estimator",
+      "startDate": "Mar 2008",
+      "endDate": "Mar 2011",
+      "bullets": [
+        {
+          "text": "Managed on-site quantity take-off and cost assessment for hospital projects, ensuring construction alignment with financial goals and reducing additional costs by 18%.",
+          "metrics": []
+        },
+        {
+          "text": "Facilitated cross-team communication in tendering processes, resulting in enhanced project win rates through thorough technical proposals and methodological illustrations.",
+          "metrics": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Orange International College",
+      "degree": "Diploma of Building and Construction",
+      "location": "VIC, Australia",
+      "year": "2021",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Mackenzie Presbyterian University",
+      "degree": "Architecture and Urbanism",
+      "location": "Brazil",
+      "year": "2009",
+      "additionalInfo": "CAU BR Member"
+    }
+  ],
+  "additionalExperience": ""
+}
