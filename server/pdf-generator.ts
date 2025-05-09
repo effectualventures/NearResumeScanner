@@ -412,56 +412,7 @@ Handlebars.registerHelper('containsAny', function(text: string, items: string[])
 // No longer need the lambda helper since we're using a simpler pattern with property/equals
 
 // Helper to intelligently handle line breaks for the summary
-// The summary should only break if the text is substantially longer than a full line
-Handlebars.registerHelper('breaklines', function(text) {
-  if (!text) return '';
-  
-  // For summary section, use a higher minimum character threshold to avoid premature line breaks
-  // Only break very long summaries that would look cramped on a single line
-  if (text.length <= 180) {
-    // Return the text as a single line for most summaries (no line break)
-    return text;
-  }
-  
-  // For longer text, find the most natural break point
-  // First try to break at the end of a complete sentence
-  const sentenceBreak = text.match(/[.!?]\s+/);
-  if (sentenceBreak && sentenceBreak.index && sentenceBreak.index > 100 && sentenceBreak.index < 180) {
-    // Found a good natural sentence break that's not too short or too long
-    const firstLine = text.substring(0, sentenceBreak.index + 1); // Include the period/question mark/exclamation
-    const secondLine = text.substring(sentenceBreak.index + 2); // Skip the period and space
-    return new Handlebars.SafeString(`${firstLine}<br>${secondLine}`);
-  }
-  
-  // If no good sentence break, find a good break point that doesn't cut off phrases
-  // Look for breaks that don't occur in the middle of common phrases
-  const goodBreakPattern = /\s+(?!(?:in|of|and|with|for|on|to|by|the|a|an)\s+)/g;
-  let matches = [];
-  let match;
-  while ((match = goodBreakPattern.exec(text)) !== null) {
-    if (match.index > 120 && match.index < 180) {
-      matches.push(match.index);
-    }
-  }
-  
-  // If we found good break points, use the last one that still fits our constraint
-  let breakPoint = -1;
-  if (matches.length > 0) {
-    breakPoint = matches[matches.length - 1];
-  } else {
-    // Fallback to simple space-based breaking if no good phrases found
-    breakPoint = text.lastIndexOf(' ', 180);
-  }
-  
-  if (breakPoint === -1) return text; // No good break found, return as is
-  
-  // Split text into two parts
-  const firstLine = text.substring(0, breakPoint);
-  const secondLine = text.substring(breakPoint + 1);
-  
-  // Return with HTML line break
-  return new Handlebars.SafeString(`${firstLine}<br>${secondLine}`);
-});
+// Register format helpers for the template
 
 /**
  * Generate a PDF from a Resume object
@@ -867,6 +818,7 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       
       await browser.close();
       console.log(`Generated PDF file for resume: ${pdfOutputPath}`);
+      console.log(`🟢 PDF generated with margins ${JSON.stringify(defaultPdfMargins)} and footer locked.`);
       return pdfOutputPath;
     } catch (pdfError) {
       console.error('Error generating PDF, falling back to HTML:', pdfError);
