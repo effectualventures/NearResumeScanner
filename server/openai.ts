@@ -1327,33 +1327,77 @@ function standardizeLocations(resume: Resume): Resume {
   // Create a deep copy of the resume to avoid reference issues
   const processedResume = JSON.parse(JSON.stringify(resume));
   
-  // First, process the header location
-  if (processedResume.header && processedResume.header.location) {
-    // Header location formatting - try to standardize to "State, Country" or "Country"
-    const locationParts = processedResume.header.location.split(',').map((part: string) => part.trim());
-    
-    if (locationParts.length >= 3) {
-      // Format like "City, State, Country" - remove the city
-      processedResume.header.location = `${locationParts[1]}, ${locationParts[2]}`;
-    } else if (locationParts.length === 2) {
-      // Check if first part seems like a city - if so, consider using just the country
-      // This is a simplification - in production we'd use a geo database
-      const isFirstPartACity = locationParts[0].length > 0 && !locationParts[0].includes('Province');
-      
-      if (isFirstPartACity && locationParts[0].toLowerCase() !== 'são paulo') {
-        // If it's likely a city, just use the country
-        // Exception for São Paulo which can be both a city and state
-        processedResume.header.location = locationParts[1];
+  // Country lookup for common cities/states
+  const knownLocations: Record<string, string> = {
+    'são paulo': 'Brazil',
+    'sao paulo': 'Brazil',
+    'brasilia': 'Brazil',
+    'rio de janeiro': 'Brazil',
+    'new york': 'USA',
+    'california': 'USA',
+    'texas': 'USA',
+    'florida': 'USA',
+    'illinois': 'USA',
+    'pennsylvania': 'USA',
+    'ohio': 'USA',
+    'london': 'UK',
+    'sydney': 'Australia',
+    'melbourne': 'Australia',
+    'toronto': 'Canada',
+    'ontario': 'Canada',
+    'quebec': 'Canada',
+    'british columbia': 'Canada',
+    'vancouver': 'Canada',
+    'auckland': 'New Zealand',
+    'singapore': 'Singapore',
+    'hong kong': 'Hong Kong',
+    'tokyo': 'Japan',
+    'beijing': 'China',
+    'shanghai': 'China',
+    'dubai': 'UAE',
+    'abu dhabi': 'UAE',
+    'buenos aires': 'Argentina', 
+    'santiago': 'Chile',
+    'lima': 'Peru',
+    'bogota': 'Colombia',
+    'mexico city': 'Mexico'
+  };
+  
+  // Function to extract just the country
+  const extractCountry = (location: string): string => {
+    // Check if location matches a known city/state
+    const locationLower = location.toLowerCase();
+    for (const [city, country] of Object.entries(knownLocations)) {
+      if (locationLower.includes(city)) {
+        return country;
       }
-      // Otherwise keep as is - it's likely already "State, Country"
     }
-    // If only one part, keep as is - it's likely just a country
+    
+    // Otherwise, use the last part of the location which is typically the country
+    const locationParts = location.split(',').map(part => part.trim());
+    if (locationParts.length > 1) {
+      return locationParts[locationParts.length - 1]; // Return the last part
+    }
+    
+    // If only one part and not matched above, just return it as-is
+    return location;
+  };
+  
+  // First, process the header location - ALWAYS just show the country
+  if (processedResume.location) {
+    processedResume.location = extractCountry(processedResume.location);
+  }
+  
+  // For backward compatibility with older schema structures
+  if (processedResume.header && processedResume.header.location) {
+    processedResume.header.location = extractCountry(processedResume.header.location);
   }
   
   // Next, process each experience location field
   if (processedResume.experience && Array.isArray(processedResume.experience)) {
     processedResume.experience.forEach((exp: any) => {
       if (exp.location) {
+        // For experience entries, preserve State + Country format if present
         const locationParts = exp.location.split(',').map((part: string) => part.trim());
         
         if (locationParts.length >= 3) {
@@ -1363,32 +1407,48 @@ function standardizeLocations(resume: Resume): Resume {
           // Check if first part seems like a city name
           const isFirstPartACity = locationParts[0].length > 0 && !locationParts[0].includes('Province');
           
-          if (isFirstPartACity && locationParts[0].toLowerCase() !== 'são paulo') {
-            // If it's likely a city, just use the country
+          if (isFirstPartACity) {
+            // Keep just the country for cities
             exp.location = locationParts[1];
           }
           // Otherwise keep as is - it's likely already "State, Country"
+        } else if (locationParts.length === 1) {
+          // For single-part locations, check if it's a known city
+          for (const [city, country] of Object.entries(knownLocations)) {
+            if (exp.location.toLowerCase().includes(city)) {
+              exp.location = country;
+              break;
+            }
+          }
         }
-        // If only one part, keep as is - it's likely just a country
       }
     });
   }
   
-  // Process education locations
+  // Process education locations - similar to experience locations
   if (processedResume.education && Array.isArray(processedResume.education)) {
     processedResume.education.forEach((edu: any) => {
       if (edu.location) {
+        // For education entries, preserve State + Country format if present
         const locationParts = edu.location.split(',').map((part: string) => part.trim());
         
         if (locationParts.length >= 3) {
           // Format like "City, State, Country" - remove the city
           edu.location = `${locationParts[1]}, ${locationParts[2]}`;
         } else if (locationParts.length === 2) {
-          // Same logic as above for 2-part locations
+          // Check if first part seems like a city name
           const isFirstPartACity = locationParts[0].length > 0 && !locationParts[0].includes('Province');
           
-          if (isFirstPartACity && locationParts[0].toLowerCase() !== 'são paulo') {
+          if (isFirstPartACity) {
             edu.location = locationParts[1];
+          }
+        } else if (locationParts.length === 1) {
+          // For single-part locations, check if it's a known city
+          for (const [city, country] of Object.entries(knownLocations)) {
+            if (edu.location.toLowerCase().includes(city)) {
+              edu.location = country;
+              break;
+            }
           }
         }
       }
