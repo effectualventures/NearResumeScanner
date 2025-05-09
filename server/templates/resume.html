@@ -302,9 +302,10 @@
   <!-- Add logo zone spacer to prevent text from getting too close to logo -->
   <div class="logo-zone"></div>
   
-  <div class="footer">
+  <!-- Fixed positioned footer with precise positioning -->
+  <div class="footer" style="position: fixed; bottom: 0.05in; left: 0; width: 100%; text-align: center;">
     {{#if logoPath}}
-      <img src="file://{{logoPath}}" alt="Near Logo" width="60" />
+      <img src="file://{{logoPath}}" alt="Near Logo" width="60" style="height: 25px; width: auto;" />
     {{else}}
       <span style="color: blue; font-weight: bold; font-size: 16px;">NEAR</span>
     {{/if}}
