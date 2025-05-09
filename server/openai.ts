@@ -1400,47 +1400,44 @@ function standardizeLocations(resume: Resume): Resume {
 }
 
 /**
- * Helper function to replace various square meter notations with the proper symbol
- * and add square feet conversion
+ * Helper function to replace all square meter notations with square feet
  * @param text Text to process
- * @returns Processed text with normalized square meter symbols and sq ft conversion
+ * @returns Processed text with only square feet measurements
  */
 function replaceSquareMeters(text: string): string {
   if (!text) return text;
   
-  // Enhanced square meter conversion with approximate sq ft equivalent
-  // First, normalize all square meter formats to m²
-  // First create a function to convert m² to sq ft
-  const convertToSqFt = (match: string, p1: string) => {
+  // Replace square meters with square feet (conversion factor: 1 m² = 10.764 sq ft)
+  const convertToSqFtOnly = (match: string, p1: string) => {
     const squareMeters = parseFloat(p1);
     if (!isNaN(squareMeters)) {
       const squareFeet = Math.round(squareMeters * 10.764);
-      return `${p1} m² (~${squareFeet.toLocaleString()} sq ft)`;
+      return `${squareFeet.toLocaleString()} sq ft`;
     }
-    return `${p1} m²`;
+    return `${p1} sq ft`; // Fallback if parsing fails
   };
   
-  // Apply the replacements with conversion
+  // Apply the replacements with only sq ft (no original square meter values)
   let result = text
     // Handle cases with space between m and 2
-    .replace(/(\d[\d,.]*)(?:\s*)m(?:\s*)2\b/gi, convertToSqFt)
-    .replace(/(\d[\d,.]*)(?:\s*)sq(?:\s*)m\b/gi, convertToSqFt)
-    .replace(/(\d[\d,.]*)(?:\s*)sqm\b/gi, convertToSqFt)
+    .replace(/(\d[\d,.]*)(?:\s*)m(?:\s*)2\b/gi, convertToSqFtOnly)
+    .replace(/(\d[\d,.]*)(?:\s*)sq(?:\s*)m\b/gi, convertToSqFtOnly)
+    .replace(/(\d[\d,.]*)(?:\s*)sqm\b/gi, convertToSqFtOnly)
     // Handle cases without space between number and unit
-    .replace(/(\d[\d,.]*)m2\b/gi, convertToSqFt)
-    .replace(/(\d[\d,.]*)sqm\b/gi, convertToSqFt)
-    // Fix cases where m2 is used as a unit without a preceding number (don't add conversion here)
-    .replace(/\bm\s*2\b/gi, 'm²')
-    .replace(/\bm\s*8\b/gi, 'm²') // Fix common OCR error
-    .replace(/\bm2\b/gi, 'm²')
-    .replace(/\bsqm\b/gi, 'm²')
-    .replace(/\bsq\.\s*m\b/gi, 'm²')
-    .replace(/\bsquare\s*meters?\b/gi, 'm²')
-    .replace(/\bsquare\s*m\b/gi, 'm²');
+    .replace(/(\d[\d,.]*)m2\b/gi, convertToSqFtOnly)
+    .replace(/(\d[\d,.]*)sqm\b/gi, convertToSqFtOnly)
+    // Fix remaining square meter references (e.g., "area in m²")
+    .replace(/\bm\s*2\b/gi, 'sq ft')
+    .replace(/\bm\s*8\b/gi, 'sq ft') // Fix common OCR error
+    .replace(/\bm2\b/gi, 'sq ft')
+    .replace(/\bm²\b/gi, 'sq ft')
+    .replace(/\bsqm\b/gi, 'sq ft')
+    .replace(/\bsq\.\s*m\b/gi, 'sq ft')
+    .replace(/\bsquare\s*meters?\b/gi, 'square feet')
+    .replace(/\bsquare\s*m\b/gi, 'square feet');
     
-  // Create a helper function to convert any currency to USD
+  // Create a helper function to convert any currency to USD (shows only USD value)
   const convertToUSD = (match: string, currency: string, amount: string, rate: number) => {
-    const originalAmount = match;
     const numericAmount = amount.replace(/,/g, '');
     let approxUSD;
     
@@ -1456,9 +1453,9 @@ function replaceSquareMeters(text: string): string {
       const unitMatch = match.match(/[KkMmBb]/);
       const unit = unitMatch ? unitMatch[0].toUpperCase() : '';
       if (unit) {
-        return `${originalAmount} (~$${(approxUSD).toFixed(1)}${unit} USD)`;
+        return `$${(approxUSD).toFixed(1)}${unit} USD`;
       } else {
-        return `${originalAmount} (~$${(approxUSD).toFixed(0)} USD)`;
+        return `$${(approxUSD).toFixed(0)} USD`;
       }
     }
     
@@ -1657,9 +1654,9 @@ function replaceSquareMeters(text: string): string {
             const unitMatch = match.match(/[KkMmBb]/);
             const unit = unitMatch ? unitMatch[0].toUpperCase() : '';
             if (unit) {
-              return `${match} (~$${(approxUSD).toFixed(1)}${unit} USD)`;
+              return `$${(approxUSD).toFixed(1)}${unit} USD`;
             } else {
-              return `${match} (~$${(approxUSD).toFixed(0)} USD)`;
+              return `$${(approxUSD).toFixed(0)} USD`;
             }
           }
         }
@@ -1668,41 +1665,20 @@ function replaceSquareMeters(text: string): string {
     return match;
   });
   
-  // Also consistently add R$ to any plain USD amounts in Brazilian context
-  if (text.includes('Brazil') || text.includes('São Paulo') || text.includes('Sao Paulo') || 
-      text.includes('Brazilian') || text.includes('Brasil')) {
+  // In user's request, we only show USD values without conversions
+  // So we'll skip any additional back-conversions for Brazilian context
+  
+  // Ensure all USD values are properly formatted with "USD" explicitly
+  result = result.replace(/\$\s*([\d,.]+)(?:\s*[KkMmBb])?(?!\s*USD)/g, (match, amount) => {
+    const unitMatch = match.match(/[KkMmBb]/);
+    const unit = unitMatch ? unitMatch[0].toUpperCase() : '';
     
-    // Convert USD amounts to also show estimated R$ equivalent
-    result = result.replace(/\$\s*([\d,.]+)(?:\s*[KkMmBb])?(?!\s*~|\s*USD)/g, (match, amount) => {
-      // Approximate conversion rate of 5:1 (USD to R$)
-      const numericAmount = amount.replace(/,/g, '');
-      let approxBRL;
-      
-      if (numericAmount.includes('.')) {
-        // Handle decimal point notation
-        approxBRL = parseFloat(numericAmount) * 5;
-      } else {
-        // Handle comma as decimal separator
-        approxBRL = parseFloat(numericAmount.replace(/\./g, '').replace(/,/g, '.')) * 5;
-      }
-      
-      if (!isNaN(approxBRL)) {
-        const unitMatch = match.match(/[KkMmBb]/);
-        const unit = unitMatch ? unitMatch[0].toUpperCase() : '';
-        if (unit) {
-          if (!match.includes("USD")) {
-            return `R$${(approxBRL).toFixed(1)}${unit} (~${match} USD)`;
-          }
-        } else {
-          if (!match.includes("USD")) {
-            return `R$${(approxBRL).toFixed(0)} (~${match} USD)`;
-          }
-        }
-      }
-      
-      return match; // Return original if conversion fails or already has USD marker
-    });
-  }
+    if (unit) {
+      return `$${amount}${unit} USD`;
+    } else {
+      return `$${amount} USD`;
+    }
+  });
   
   return result;
 }
