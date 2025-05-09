@@ -1441,48 +1441,167 @@ function replaceSquareMeters(text: string): string {
     
     return match; // Return original if conversion fails
   };
+  
+  // Currency conversion rates to USD (approximate)
+  const currencyRates: {[key: string]: number} = {
+    'AUD': 1.5, // Australian Dollar
+    'BRL': 5.0, // Brazilian Real
+    'EUR': 0.92, // Euro
+    'GBP': 0.78, // British Pound
+    'CAD': 1.35, // Canadian Dollar
+    'NZD': 1.65, // New Zealand Dollar
+    'CHF': 0.9, // Swiss Franc
+    'JPY': 145, // Japanese Yen
+    'MXN': 20, // Mexican Peso
+    'INR': 83, // Indian Rupee
+    'CNY': 7.2, // Chinese Yuan
+    'RUB': 91, // Russian Ruble
+    'ZAR': 18, // South African Rand
+    'SEK': 10.5, // Swedish Krona
+    'NOK': 10.7, // Norwegian Krone
+    'DKK': 6.9, // Danish Krone
+    'PLN': 4, // Polish Zloty
+    'SGD': 1.35, // Singapore Dollar
+    'HKD': 7.8, // Hong Kong Dollar
+    'THB': 36, // Thai Baht
+    'KRW': 1370, // South Korean Won
+    'ILS': 3.7, // Israeli Shekel
+    'TRY': 30, // Turkish Lira
+    'ARS': 870, // Argentine Peso
+    'CLP': 930, // Chilean Peso
+    'COP': 4100, // Colombian Peso
+    'PEN': 3.7, // Peruvian Sol
+    'CZK': 23, // Czech Koruna
+    'HUF': 360, // Hungarian Forint
+    'PHP': 57, // Philippine Peso
+    'IDR': 15800, // Indonesian Rupiah
+    'MYR': 4.7, // Malaysian Ringgit
+    'VND': 25000, // Vietnamese Dong
+    'AED': 3.67, // UAE Dirham
+    'SAR': 3.75, // Saudi Riyal
+    'QAR': 3.64, // Qatari Riyal
+    'EGP': 47, // Egyptian Pound
+    'NGN': 1500, // Nigerian Naira
+    'KES': 130, // Kenyan Shilling
+    'MAD': 10, // Moroccan Dirham
+    'UAH': 40, // Ukrainian Hryvnia
+    'RON': 4.6, // Romanian Leu
+    'BHD': 0.38, // Bahraini Dinar
+    'JOD': 0.71, // Jordanian Dinar
+    'KWD': 0.31, // Kuwaiti Dinar
+    'OMR': 0.38, // Omani Rial
+    'PKR': 280, // Pakistani Rupee
+    'BDT': 110, // Bangladeshi Taka
+    'LKR': 300, // Sri Lankan Rupee
+    'CRC': 530, // Costa Rican Colón
+  };
     
-  // Convert AUD currency to show USD equivalent
-  result = result.replace(/AUD\s*([\d,.]+)(?:\s*[KkMmBb])?/g, (match, amount) => {
-    return convertToUSD(match, 'AUD', amount, 1.5); // Approximate AUD to USD rate
+  // Common currency symbols and their corresponding codes
+  const currencySymbols: {[key: string]: string} = {
+    '€': 'EUR',
+    '£': 'GBP',
+    '¥': 'JPY',
+    '₹': 'INR',
+    '₩': 'KRW',
+    '₽': 'RUB',
+    '₿': 'BTC',
+    '฿': 'THB',
+    '₴': 'UAH',
+    '₦': 'NGN',
+    '₱': 'PHP',
+    '₲': 'PYG',
+    '₺': 'TRY',
+    '₼': 'AZN',
+    '₾': 'GEL',
+    '₵': 'GHS',
+    'R$': 'BRL',
+    'kr': 'SEK', // Also NOK, DKK
+    'Kč': 'CZK',
+    'zł': 'PLN',
+    'Ft': 'HUF',
+    'RM': 'MYR',
+    'S$': 'SGD',
+    'R': 'ZAR',
+    '₪': 'ILS',
+    '₫': 'VND',
+    'Mex$': 'MXN',
+    '₡': 'CRC',
+    'QR': 'QAR',
+    'SR': 'SAR',
+    '৳': 'BDT',
+    'KSh': 'KES',
+    'RON': 'RON',
+    'Rp': 'IDR',
+    'ARS': 'ARS',
+    'COP': 'COP',
+    'B/.': 'PAB',
+    'RD$': 'DOP',
+    'L': 'HNL',
+    'Q': 'GTQ',
+    'C$': 'NIO',
+  };
+  
+  // 1. First, handle explicit currency codes with number after the code (e.g., "EUR 1000")
+  Object.keys(currencyRates).forEach(currencyCode => {
+    const regex = new RegExp(`${currencyCode}\\s*(\\d[\\d,.]+)(?:\\s*[KkMmBb])?`, 'g');
+    result = result.replace(regex, (match, amount) => {
+      return convertToUSD(match, currencyCode, amount, currencyRates[currencyCode]);
+    });
   });
   
-  // Convert Brazilian Real (R$) currency to show USD equivalent
+  // 2. Handle currency symbols with number after the symbol (e.g., "€ 1000")
+  Object.keys(currencySymbols).forEach(symbol => {
+    const currencyCode = currencySymbols[symbol];
+    const rate = currencyRates[currencyCode];
+    
+    if (rate) {
+      // Escape special characters in the symbol for regex
+      const escapedSymbol = symbol.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(`${escapedSymbol}\\s*(\\d[\\d,.]+)(?:\\s*[KkMmBb])?`, 'g');
+      
+      result = result.replace(regex, (match, amount) => {
+        return convertToUSD(match, currencyCode, amount, rate);
+      });
+    }
+  });
+  
+  // 3. Handle number followed by currency code (e.g., "1000 EUR")
+  Object.keys(currencyRates).forEach(currencyCode => {
+    const regex = new RegExp(`(\\d[\\d,.]+)\\s*${currencyCode}(?:\\s*[KkMmBb])?`, 'g');
+    result = result.replace(regex, (match, amount) => {
+      return convertToUSD(match, currencyCode, amount, currencyRates[currencyCode]);
+    });
+  });
+  
+  // 4. Special handling for Brazilian Real
   result = result.replace(/R\$\s*([\d,.]+)(?:\s*[KkMmBb])?/g, (match, amount) => {
-    return convertToUSD(match, 'R$', amount, 5.0); // Approximate BRL to USD rate
+    return convertToUSD(match, 'BRL', amount, currencyRates['BRL']);
   });
   
-  // Convert EUR currency to show USD equivalent
+  // 5. Handle Euro variants with special parsing
   result = result.replace(/[€Ee][Uu][Rr]?\s*([\d,.]+)(?:\s*[KkMmBb])?|(\d[\d,.]*)\s*[€Ee][Uu][Rr]?/g, (match, amount1, amount2) => {
     const amount = amount1 || amount2;
-    return convertToUSD(match, 'EUR', amount, 0.92); // Approximate EUR to USD rate
+    return convertToUSD(match, 'EUR', amount, currencyRates['EUR']);
   });
   
-  // Convert GBP (British Pound) to USD
-  result = result.replace(/£\s*([\d,.]+)(?:\s*[KkMmBb])?|(\d[\d,.]*)\s*GBP/g, (match, amount1, amount2) => {
-    const amount = amount1 || amount2;
-    return convertToUSD(match, 'GBP', amount, 0.78); // Approximate GBP to USD rate
-  });
-  
-  // Convert CAD (Canadian Dollar) to USD
-  result = result.replace(/CAD\s*([\d,.]+)(?:\s*[KkMmBb])?/g, (match, amount) => {
-    return convertToUSD(match, 'CAD', amount, 1.35); // Approximate CAD to USD rate
-  });
-  
-  // Convert NZD (New Zealand Dollar) to USD
-  result = result.replace(/NZD\s*([\d,.]+)(?:\s*[KkMmBb])?/g, (match, amount) => {
-    return convertToUSD(match, 'NZD', amount, 1.65); // Approximate NZD to USD rate
-  });
-  
-  // Convert CHF (Swiss Franc) to USD
-  result = result.replace(/CHF\s*([\d,.]+)(?:\s*[KkMmBb])?/g, (match, amount) => {
-    return convertToUSD(match, 'CHF', amount, 0.9); // Approximate CHF to USD rate
-  });
-  
-  // Convert JPY (Japanese Yen) to USD (very different scale)
-  result = result.replace(/JPY\s*([\d,.]+)(?:\s*[KkMmBb])?|¥\s*([\d,.]+)(?:\s*[KkMmBb])?/g, (match, amount1, amount2) => {
-    const amount = amount1 || amount2;
-    return convertToUSD(match, 'JPY', amount, 145); // Approximate JPY to USD rate
+  // 6. Generic catch-all for common currency patterns not covered above
+  // This looks for numbers next to currency indicators that aren't in USD ($)
+  const nonUsdCurrencyPattern = /(?<!\$)(\d[\d,.]+)\s*(?:[A-Z]{3}|[^\s\da-zA-Z$.,])/g;
+  result = result.replace(nonUsdCurrencyPattern, (match) => {
+    // Only attempt conversion if it doesn't already have a USD conversion
+    if (!match.includes('USD') && !match.includes('~$')) {
+      // Try to extract the numeric portion
+      const numericMatch = match.match(/(\d[\d,.]+)/);
+      if (numericMatch && numericMatch[1]) {
+        const amount = numericMatch[1];
+        const currencyIndicator = match.replace(amount, '').trim();
+        
+        // Use a default conversion rate of 1:1 for unknown currencies
+        // This at least formats it consistently even if we don't know the exact rate
+        return `${match} (~$${amount} USD)`;
+      }
+    }
+    return match;
   });
   
   // Also consistently add R$ to any plain USD amounts in Brazilian context
