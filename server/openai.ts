@@ -1584,21 +1584,62 @@ function replaceSquareMeters(text: string): string {
     return convertToUSD(match, 'EUR', amount, currencyRates['EUR']);
   });
   
-  // 6. Generic catch-all for common currency patterns not covered above
-  // This looks for numbers next to currency indicators that aren't in USD ($)
-  const nonUsdCurrencyPattern = /(?<!\$)(\d[\d,.]+)\s*(?:[A-Z]{3}|[^\s\da-zA-Z$.,])/g;
-  result = result.replace(nonUsdCurrencyPattern, (match) => {
+  // 6. Only convert strong currency patterns - be more selective
+  // Only convert when we're pretty sure it's actually a currency
+  const clearCurrencyPattern = /(?<!\$)(\d[\d,.]+)\s*(?:EUR|GBP|JPY|AUD|CAD|CHF|[€£¥])/gi;
+  result = result.replace(clearCurrencyPattern, (match) => {
     // Only attempt conversion if it doesn't already have a USD conversion
     if (!match.includes('USD') && !match.includes('~$')) {
       // Try to extract the numeric portion
       const numericMatch = match.match(/(\d[\d,.]+)/);
       if (numericMatch && numericMatch[1]) {
         const amount = numericMatch[1];
-        const currencyIndicator = match.replace(amount, '').trim();
         
-        // Use a default conversion rate of 1:1 for unknown currencies
-        // This at least formats it consistently even if we don't know the exact rate
-        return `${match} (~$${amount} USD)`;
+        // Find which currency it is to use appropriate rate
+        let rate = 1.0; // Default if we can't determine
+        let currencyCode = '';
+        
+        if (match.includes('EUR') || match.includes('€')) {
+          rate = currencyRates['EUR'];
+          currencyCode = 'EUR';
+        } else if (match.includes('GBP') || match.includes('£')) {
+          rate = currencyRates['GBP'];
+          currencyCode = 'GBP';
+        } else if (match.includes('JPY') || match.includes('¥')) {
+          rate = currencyRates['JPY'];
+          currencyCode = 'JPY';
+        } else if (match.includes('AUD')) {
+          rate = currencyRates['AUD'];
+          currencyCode = 'AUD';
+        } else if (match.includes('CAD')) {
+          rate = currencyRates['CAD'];
+          currencyCode = 'CAD';
+        } else if (match.includes('CHF')) {
+          rate = currencyRates['CHF'];
+          currencyCode = 'CHF';
+        }
+        
+        if (currencyCode) {
+          // Proper conversion with the right rate
+          const numericAmount = amount.replace(/,/g, '');
+          let approxUSD;
+          
+          if (numericAmount.includes('.')) {
+            approxUSD = parseFloat(numericAmount) / rate;
+          } else {
+            approxUSD = parseFloat(numericAmount.replace(/\./g, '').replace(/,/g, '.')) / rate;
+          }
+          
+          if (!isNaN(approxUSD)) {
+            const unitMatch = match.match(/[KkMmBb]/);
+            const unit = unitMatch ? unitMatch[0].toUpperCase() : '';
+            if (unit) {
+              return `${match} (~$${(approxUSD).toFixed(1)}${unit} USD)`;
+            } else {
+              return `${match} (~$${(approxUSD).toFixed(0)} USD)`;
+            }
+          }
+        }
       }
     }
     return match;
