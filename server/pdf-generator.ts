@@ -717,16 +717,16 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       // Format for US Letter size (8.5" x 11")
       const pdfOutputPath = path.join(tempDir, `${sessionId}.pdf`);
       
-      // Configure PDF generation options to match reference file
+      // Configure PDF generation options to match reference file exactly
       const pdfOptions: PDFOptions = {
         path: pdfOutputPath,
         format: 'letter',
         printBackground: true,
         margin: {
-          top: '0.25in',
-          right: '0.25in',
-          bottom: '0.25in',
-          left: '0.25in'
+          top: '0.50in',    // Match reference file margins
+          right: '0.50in',  // Match reference file margins  
+          bottom: '0.50in', // Match reference file margins
+          left: '0.50in'    // Match reference file margins
         }
       };
       

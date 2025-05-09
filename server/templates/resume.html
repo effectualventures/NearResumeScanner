@@ -11,10 +11,10 @@
     body {
       font-family: 'Calibri', 'Arial', sans-serif;
       font-size: 11pt;
-      margin: 0.5in 1in 1in 1in; /* Standard 1-inch bottom margin */
+      margin: 0.5in; /* Match reference file margins exactly */
       color: #333;
       line-height: 1.3;
-      max-width: 6in;
+      max-width: 7.5in; /* Adjusted to account for margins */
       margin-left: auto;
       margin-right: auto;
     }
@@ -177,18 +177,21 @@
     
     .footer {
       position: fixed !important;
-      bottom: 0.05in !important; /* Original position - right at the bottom edge */
-      right: 0.3in !important; /* Position more to the right */
+      bottom: 0.05in !important; /* Exactly 0.05in from bottom as requested */
+      right: 0.5in !important; /* Align with right margin */
       text-align: right !important;
       z-index: 1000 !important;
       background-color: transparent !important;
+      width: auto !important;
     }
     
     .footer img {
-      height: auto !important;
-      width: 60px !important; /* Slightly larger logo size */
-      margin-bottom: 0 !important; /* Ensure no bottom margin on logo */
-      padding-bottom: 0 !important; /* Ensure no bottom padding on logo */
+      height: 25px !important; /* Fixed height to match reference file exactly */
+      width: auto !important; 
+      margin: 0 !important; /* Remove all margins */
+      padding: 0 !important; /* Remove all padding */
+      display: inline-block !important; /* Ensure proper rendering */
+      vertical-align: bottom !important; /* Align to bottom exactly */
     }
     
     /* Create a clear logo zone that nothing else should enter */
@@ -303,7 +306,7 @@
   <div class="logo-zone"></div>
   
   <!-- Fixed positioned footer with precise positioning -->
-  <div class="footer" style="position: fixed; bottom: 0.05in; left: 0; width: 100%; text-align: center;">
+  <div class="footer" style="position: fixed; bottom: 0.05in; right: 0.5in; width: auto; text-align: right;">
     {{#if logoPath}}
       <img src="file://{{logoPath}}" alt="Near Logo" width="60" style="height: 25px; width: auto;" />
     {{else}}
