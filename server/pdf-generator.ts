@@ -367,6 +367,11 @@ Handlebars.registerHelper('and', function() {
   return Array.prototype.slice.call(arguments, 0, -1).every(Boolean);
 });
 
+// Helper for logical "not" operation
+Handlebars.registerHelper('not', function(value) {
+  return !value;
+});
+
 // Helper to break summary into multiple lines with smart sentence splitting
 Handlebars.registerHelper('breaklines', function(text) {
   if (!text) return '';
