@@ -1271,12 +1271,7 @@ function cleanEducationFormat(resume: Resume): Resume {
         // Remove "Bachelor's Degree in" prefix if present
         if (edu.degree.match(/Bachelor['']s Degree in /i)) {
           const cleanedDegree = edu.degree.replace(/Bachelor['']s Degree in /i, '').trim();
-          // Add the year to the degree if available
-          if (edu.year) {
-            edu.degree = `${cleanedDegree}, ${edu.year}`;
-          } else {
-            edu.degree = cleanedDegree;
-          }
+          edu.degree = cleanedDegree;
         }
       }
       
@@ -1286,6 +1281,23 @@ function cleanEducationFormat(resume: Resume): Resume {
         .replace(/^Master['']s Degree in /i, '')
         .replace(/^Associate['']s Degree in /i, '')
         .trim();
+      
+      // 4. Remove redundant year at the end if it matches the year field
+      if (edu.year && edu.degree.endsWith(edu.year.toString())) {
+        edu.degree = edu.degree.replace(new RegExp(`, ${edu.year}$`), '').trim();
+      }
+      
+      // 5. Fix duplicate years (like "2009, 2009")
+      const yearPattern = /(\d{4}),\s*\1/;
+      if (yearPattern.test(edu.degree)) {
+        edu.degree = edu.degree.replace(yearPattern, '$1');
+      }
+      
+      // 6. Check if the degree field contains the year already and remove it from the year field to avoid duplication
+      const degreeYearMatch = edu.degree.match(/\b(19|20)\d{2}\b/);
+      if (degreeYearMatch && edu.year && edu.year.toString() === degreeYearMatch[0]) {
+        edu.degree = edu.degree.replace(/,?\s*\b(19|20)\d{2}\b/, '').trim();
+      }
     }
   });
   

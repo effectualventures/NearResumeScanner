@@ -185,7 +185,7 @@ try {
     
     /* Logo zone spacer - prevents content from getting too close to logo */
     .logo-zone-spacer {
-      height: 0.7in; /* Creates space between content and logo */
+      height: 1.1in; /* Creates space between content and logo - increased to match reference */
       width: 100%;
       margin: 0;
       padding: 0;
@@ -476,28 +476,36 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       }
     }
     
-    // Make sure languages section is properly formatted
-    if (html.includes('Languages:')) {
+    // Clean up formatting of language section - ensure it's on separate line
+    if (html.includes('Skills:') && html.includes('Languages:')) {
       
-      console.log('Ensuring proper language proficiency levels (English: Fluent)');
+      console.log('Formatting language section to separate line with English (Fluent)');
       
-      // If English is missing completely, add it with Fluent proficiency
+      // 1. First ensure Languages is on a separate line
+      if (!html.includes('<br>Languages:') && !html.includes('<div') && !html.includes('</div>Languages:')) {
+        html = html.replace(/Languages:/g, '<br><br><span style="font-weight: 600;">Languages:</span>');
+      }
+      
+      // 2. If English is missing completely, add it with Fluent proficiency
       if (!html.includes('English')) {
         if (html.includes('Portuguese')) {
-          html = html.replace(/Languages:\s*Portuguese/g, '<span style="font-weight: 600;">Languages:</span> <span style="font-weight: normal;">English (Fluent); Portuguese (Native)</span>');
+          html = html.replace(/<span style="font-weight: 600;">Languages:<\/span>\s*<span style="font-weight: normal;">Portuguese/g, 
+            '<span style="font-weight: 600;">Languages:</span> <span style="font-weight: normal;">English (Fluent); Portuguese');
         } else if (html.includes('Spanish')) {
-          html = html.replace(/Languages:\s*Spanish/g, '<span style="font-weight: 600;">Languages:</span> <span style="font-weight: normal;">English (Fluent); Spanish (Native)</span>');
+          html = html.replace(/<span style="font-weight: 600;">Languages:<\/span>\s*<span style="font-weight: normal;">Spanish/g, 
+            '<span style="font-weight: 600;">Languages:</span> <span style="font-weight: normal;">English (Fluent); Spanish');
         } else {
           // Just add English if no other languages
-          html = html.replace(/Languages:\s*([^<]+)/g, '<span style="font-weight: 600;">Languages:</span> <span style="font-weight: normal;">English (Fluent); $1</span>');
+          html = html.replace(/<span style="font-weight: 600;">Languages:<\/span>\s*<span style="font-weight: normal;">([^<]+)/g, 
+            '<span style="font-weight: 600;">Languages:</span> <span style="font-weight: normal;">English (Fluent); $1');
         }
       } 
-      // If English is there but doesn't have "Fluent" proficiency level
+      // 3. If English is there but doesn't have "Fluent" proficiency level
       else if (!html.includes('English (Fluent)')) {
         html = html.replace(/English(\s*\([^)]*\))?/g, 'English (Fluent)');
       }
       
-      // Ensure native languages have proper marking
+      // 4. Ensure native languages have proper marking
       if (html.includes('Portuguese') && !html.includes('Portuguese (Native)')) {
         html = html.replace(/Portuguese(?!\s*\()/g, 'Portuguese (Native)');
       }
@@ -577,7 +585,7 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
           
           /* Logo zone spacer needs fixed height */
           .logo-zone-spacer {
-            height: 0.7in !important;
+            height: 1.1in !important;
             width: 100% !important;
             margin: 0 !important;
             padding: 0 !important;
