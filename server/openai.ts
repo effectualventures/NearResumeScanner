@@ -1607,6 +1607,31 @@ function replaceSquareMeters(text: string): string {
     return convertToUSD(match, 'EUR', amount, currencyRates['EUR']);
   });
   
+  // Restore some of the quantitative values that were removed
+  // Look for numbers followed by % that don't already have a percentage marker
+  const percentagePattern = /(\d+(\.\d+)?)\s*%\s*(improvement|reduction|increase|decrease|growth|savings|profit|efficiency|accuracy|faster|higher|lower)/gi;
+  result = result.replace(percentagePattern, (match) => {
+    // Make the percentage more prominent by adding parentheses around it if not already there
+    if (!match.includes('(') && !match.includes(')')) {
+      const parts = match.match(/(\d+(\.\d+)?)\s*%\s*(.*)/i);
+      if (parts && parts.length >= 4) {
+        const number = parts[1];
+        const term = parts[3];
+        return `${number}% ${term}`;
+      }
+    }
+    return match;
+  });
+  
+  // Add more quantitative metrics if numbers are present but not highlighted
+  const metricPattern = /(\d+(\.\d+)?)\s*(million|billion|thousand|projects|clients|users|customers|properties|sites|buildings)/gi;
+  result = result.replace(metricPattern, (match) => {
+    if (!match.includes('(') && !match.includes(')')) {
+      return match; // Keep as is but ensure it's retained
+    }
+    return match;
+  });
+  
   // 6. Only convert strong currency patterns - be more selective
   // Only convert when we're pretty sure it's actually a currency
   const clearCurrencyPattern = /(?<!\$)(\d[\d,.]+)\s*(?:EUR|GBP|JPY|AUD|CAD|CHF|[€£¥])/gi;

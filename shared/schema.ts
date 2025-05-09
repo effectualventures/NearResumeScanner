@@ -75,6 +75,7 @@ export interface Resume {
   header: ResumeHeader;
   summary: string;
   skills: ResumeSkill[];
+  languageSkills?: ResumeSkill; // Added for separating skills from languages
   experience: ResumeExperience[];
   education: ResumeEducation[];
   additionalExperience?: string;
