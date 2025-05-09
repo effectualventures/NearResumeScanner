@@ -1,0 +1,178 @@
+{
+  "header": {
+    "firstName": "Camila",
+    "tagline": "Senior Estimator – Construction & Infrastructure",
+    "location": "Brazil",
+    "city": "Sorocaba",
+    "country": "Brazil"
+  },
+  "summary": "Highly skilled in Quantity Surveying and Project Management with substantial impact in civil construction projects, delivering budget optimization across multiple sectors.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "First Principle Estimating",
+        "Bill of Quantities (BOQ)",
+        "Tender Documents",
+        "Quantity Take-Off",
+        "Cost Estimating and Consulting",
+        "AutoCAD",
+        "Revit",
+        "Navisworks",
+        "Expert Estimation",
+        "Bluebeam",
+        "Microsoft Excel",
+        "Software MEGA",
+        "Candy (CCS)",
+        "Civil Construction",
+        "Infrastructure Projects",
+        "Architectural Projects",
+        "Engineering Projects",
+        "Project Management",
+        "Budget Management",
+        "Cost Management",
+        "Construction Methodologies",
+        "Brazilian Construction Norms (NBR)",
+        "AU NZS NCC (National Construction Code)"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "Portuguese (Native)",
+        "English (Fluent)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "VIAARQ – Arquitetura Viável",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Architect - Co-owner",
+      "startDate": "Jan 2015",
+      "endDate": "Mar 2021",
+      "bullets": [
+        {
+          "text": "Analyzed comprehensive tendering documents for various projects, including civil construction and real estate developments, ensuring alignment with definitive design specifications.",
+          "metrics": []
+        },
+        {
+          "text": "Utilized First Principle estimating to achieve in-depth cost analysis, resulting in accurate project cost assessments.",
+          "metrics": []
+        },
+        {
+          "text": "Prepared detailed Bill of Quantities (BOQ) and tender documents for multifaceted construction activities, achieving a 97% accuracy rate in cost predictions.",
+          "metrics": [
+            "97% accuracy rate"
+          ]
+        },
+        {
+          "text": "Conducted cost estimating and negotiated with suppliers for MEP installations, achieving cost reductions of up to 18%.",
+          "metrics": [
+            "18% cost reductions"
+          ]
+        },
+        {
+          "text": "Assessed additional costs driven by design variations, minimizing unexpected expenditures by 12% on existing projects.",
+          "metrics": [
+            "12% reduction in unexpected costs"
+          ]
+        },
+        {
+          "text": "Led preparation of final detailed BOQs for large-scale temple complexes, ensuring comprehensive documentation of architectural and structural elements.",
+          "metrics": []
+        },
+        {
+          "text": "Initiated and submitted documentation for project approvals, achieving 100% compliance with regulatory standards.",
+          "metrics": [
+            "100% regulatory compliance"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Civil Infrastructure Group",
+      "location": "VIC",
+      "title": "Senior Estimator / Quantity Surveyor",
+      "startDate": "Mar 2021",
+      "endDate": "May 2024",
+      "bullets": [
+        {
+          "text": "Conducted in-depth tender analysis for infrastructure projects, identifying potential cost-saving opportunities during the conceptual stage.",
+          "metrics": []
+        },
+        {
+          "text": "Developed preliminary budgets based on draft designs for Tender Opening Committee, reducing discrepancies in budget forecasts by 15%.",
+          "metrics": [
+            "15% reduction in budget discrepancies"
+          ]
+        },
+        {
+          "text": "Managed the preparation of detailed BOQs encompassing all project components, ensuring comprehensive financial planning and monitoring.",
+          "metrics": []
+        },
+        {
+          "text": "Facilitated cost consulting with a focus on supplier engagements, resulting in consistent project cost alignment.",
+          "metrics": []
+        },
+        {
+          "text": "Proposed alternative construction methodologies to meet budgetary constraints, saving an average of 13% per project.",
+          "metrics": [
+            "13% average savings"
+          ]
+        },
+        {
+          "text": "Coordinated with contractors for scope clarification, maintaining clear communication and delivering projects within budget expectations.",
+          "metrics": []
+        },
+        {
+          "text": "Supported successful award of key infrastructure contracts totaling $30.0M, contributing as a strategic financial advisor.",
+          "metrics": [
+            "$30.0M in contracts"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Somague MPH",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Intermediate Estimator",
+      "startDate": "Nov 2012",
+      "endDate": "Dec 2014",
+      "bullets": [
+        {
+          "text": "Reviewed tendering documentation extensively for diverse construction proposals, ensuring precise scope definition and cost alignment.",
+          "metrics": []
+        },
+        {
+          "text": "Prepared comprehensive BOQ and strategic tender proposals, driving successful project bids and securing high-profile contracts.",
+          "metrics": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Orange International College",
+      "degree": "Diploma of Building and Construction",
+      "location": "Australia",
+      "year": "2021",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Mackenzie Presbyterian University",
+      "degree": "Architecture and Urbanism",
+      "location": "Brazil",
+      "year": "2009",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Columbia University",
+      "degree": "Construction Management Specialization",
+      "location": "Online",
+      "year": "2025",
+      "additionalInfo": "Coursera"
+    }
+  ],
+  "additionalExperience": "Certified by CAU BR and AIQS member since December 2023. Completed Autodesk Revit certifications and specialized courses in construction management."
+}

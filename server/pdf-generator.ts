@@ -811,19 +811,22 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       // Format for US Letter size (8.5" x 11")
       const pdfOutputPath = path.join(tempDir, `${sessionId}.pdf`);
       
-      // Configure PDF generation options to match reference file exactly
+      // Configure PDF generation options with exact margins
+      const defaultPdfMargins = {
+        top: '0.4in',     // Exact top margin
+        right: '0.4in',   // Exact right margin
+        bottom: '0.8in',  // Exact bottom margin
+        left: '0.4in'     // Exact left margin
+      };
+      
+      // Configure PDF generation options
       const pdfOptions: PDFOptions = {
         path: pdfOutputPath,
         format: 'letter',
         printBackground: true,
         preferCSSPageSize: true, // Honor CSS page size
         scale: 0.9, // Scale down to fit better on page
-        margin: {
-          top: '0.45in',    // Slightly reduced top margin
-          right: '0.50in',  // Match reference file margins  
-          bottom: '0.30in', // Reduced bottom margin for more content space
-          left: '0.50in'    // Match reference file margins
-        }
+        margin: defaultPdfMargins
       };
       
       // Configure how PDF is generated based on format

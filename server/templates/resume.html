@@ -63,7 +63,7 @@
     }
     
     .divider {
-      border-top: 1px solid #000;
+      border-top: 1px solid #d0d0d0;
       margin: 4px 0 6px 0;
       width: 100%;
     }
@@ -201,23 +201,19 @@
       margin: 0.5in; /* Match reference file margins exactly */
     }
     
-    .footer {
-      position: fixed !important;
-      bottom: 0.05in !important; /* Exactly 0.05in from bottom as requested */
-      right: 0.5in !important; /* Align with right margin */
-      text-align: right !important;
-      z-index: 1000 !important;
-      background-color: transparent !important;
-      width: auto !important;
+    #branding-footer{
+      position:fixed;
+      bottom:0.5in;     /* matches 0.8-in bottom page margin */
+      right:0.4in;      /* aligns with side margins */
+      display:flex;
+      align-items:center;
+      font:600 9pt "Inter", Helvetica, Arial, sans-serif;
+      color:#000;
+      gap:4px;
     }
-    
-    .footer img {
-      height: 25px !important; /* Fixed height to match reference file exactly */
-      width: auto !important; 
-      margin: 0 !important; /* Remove all margins */
-      padding: 0 !important; /* Remove all padding */
-      display: inline-block !important; /* Ensure proper rendering */
-      vertical-align: bottom !important; /* Align to bottom exactly */
+    #branding-footer img{
+      height:18px;
+      width:auto;
     }
     
     /* Create a clear logo zone that nothing else should enter */
@@ -251,7 +247,7 @@
   
   <!-- SKILLS SECTION -->
   <section style="display: block; width: 100%; clear: both; margin-bottom: 5px;">
-    <div id="skills-section" class="section-title">SKILLS</div>
+    <div id="skills-section" class="section-title">SKILLS & LANGUAGES</div>
     <div class="skills">
       <!-- First display skills -->
       {{#each skills}}
@@ -375,13 +371,9 @@
   <!-- Add logo zone spacer but keep it minimal -->
   <div class="logo-zone"></div>
   
-  <!-- Fixed positioned footer with precise positioning -->
-  <div class="footer" style="position: fixed; bottom: 0.05in; right: 0.5in; width: auto; text-align: right;">
-    {{#if logoPath}}
-      <img src="file://{{logoPath}}" alt="Near Logo" width="60" style="height: 25px; width: auto;" />
-    {{else}}
-      <span style="color: blue; font-weight: bold; font-size: 16px;">NEAR</span>
-    {{/if}}
-  </div>
+  <!-- Branding footer with "Presented by" -->
+  <footer id="branding-footer">
+    <span class="presented">Presented&nbsp;by&nbsp;</span><img src="file://{{logoPath}}" alt="Near logo">
+  </footer>
 </body>
 </html>

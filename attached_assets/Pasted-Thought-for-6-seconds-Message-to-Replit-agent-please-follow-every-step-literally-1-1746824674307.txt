@@ -1,0 +1,157 @@
+Thought for 6 seconds
+
+
+**Message to Replit agent – please follow every step literally**
+
+---
+
+### 1 — Fix the page margins **once** in `server/pdf-generator.ts`
+
+| Edge   | Target margin | How to set (Puppeteer `page.pdf` options) |
+| ------ | ------------- | ----------------------------------------- |
+| top    | **0.4 in**    | `margin.top = '0.4in'`                    |
+| left   | **0.4 in**    | `margin.left = '0.4in'`                   |
+| right  | **0.4 in**    | `margin.right = '0.4in'`                  |
+| bottom | **0.8 in**    | `margin.bottom = '0.8in'`                 |
+
+*Do **not** change these again; lock them in a single `const defaultPdfMargins` and reuse for every call.*
+
+---
+
+### 2 — Lock the branding footer
+
+*File to edit*: **`server/templates/resume.html`**
+
+1. Add a fixed-position wrapper **inside `<body>` but after all main content**:
+
+   ```html
+   <footer id="branding-footer">
+     <span class="presented">Presented&nbsp;by&nbsp;</span><img src="file://{{logoPath}}" alt="Near logo">
+   </footer>
+   ```
+2. Add **one** CSS block in the same template (no inline `style` attrs elsewhere):
+
+   ```css
+   #branding-footer{
+     position:fixed;
+     bottom:0.5in;     /* matches 0.8-in bottom page margin */
+     right:0.4in;      /* aligns with side margins */
+     display:flex;
+     align-items:center;
+     font:600 9pt "Inter", Helvetica, Arial, sans-serif;
+     color:#000;
+     gap:4px;
+   }
+   #branding-footer img{
+     height:18px;
+     width:auto;
+   }
+   ```
+3. Remove every other rule that positions the logo (there are two IDs: `footer-logo` and `near-logo` – delete them to avoid drift).
+
+---
+
+### 3 — Section layout & headings
+
+*Files to touch*: **`server/templates/resume.html`** + **`server/pdf-generator.ts`**
+
+1. **Rename** the first section title to exactly **`SKILLS & LANGUAGES`**.
+2. Insert an **H-rule** (`<div class="divider"></div>`) after every section header.
+   Single CSS definition (copy from existing `.divider`) but lighten color to `#d0d0d0`.
+3. Move the **Professional Experience** block so it appears **after** Skills & Languages and **before** Education.
+   The generator already delivers the data in that order; the template just needs the header and divider.
+4. Add missing **Languages list** rendering:
+
+   ```handlebars
+   {{#each skills}}
+     {{#eq category "Languages"}}
+       <div class="languages">{{#each items}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}</div>
+     {{/eq}}
+   {{/each}}
+   ```
+5. Education header must reuse the **same CSS** as Skills (weight, size, divider).
+
+---
+
+### 4 — Bullet-point hygiene (deduplication & metric echo)
+
+*File to edit*: **`server/openai.ts`**
+
+1. **After** `removeBulletRepetition()` call, add a new helper `dedupeMetricEcho(resume)`:
+
+   ```ts
+   function dedupeMetricEcho(r:Resume):Resume{
+     const clone = structuredClone(r);
+     clone.experience.forEach(exp=>{
+       exp.bullets.forEach(b=>{
+         if(!b.text) return;
+         b.metrics.forEach(m=>{
+           const plain=m.replace(/[.$]/g,'').trim();
+           if(b.text.toLowerCase().includes(plain.toLowerCase())){
+             // remove metric that simply repeats what text already contains
+             b.metrics = b.metrics.filter(x=>x!==m);
+           }
+         });
+       });
+     });
+     return clone;
+   }
+   ```
+
+2. Insert immediately after `removeBulletRepetition()`:
+
+   ```ts
+   finalResume = dedupeMetricEcho(finalResume);
+   ```
+
+---
+
+### 5 — Ensure **all three experience records render**
+
+Problem: only two roles appear because the template loops stop at `"{{#each (slice experience 0 2)}}"`.
+*Fix*: in `resume.html` change that helper call to simply `{{#each experience}}`.
+
+---
+
+### 6 — Clean summary line break
+
+*Template fix* – in summary block replace `<div class="summary">{{breaklines summary}}</div>` with:
+
+```html
+<div class="summary">{{summary}}</div>
+```
+
+The helper `breaklines` is no longer needed; remove its registration in `pdf-generator.ts`.
+
+---
+
+### 7 — Verify with debug artifacts
+
+1. **Always** write `temp/debug-resume-<sessionId>.json` and `temp/test_resume_preview.html`.
+2. Add a console line after PDF generation:
+
+```ts
+console.log(`🟢 PDF generated with margins ${JSON.stringify(defaultPdfMargins)} and footer locked.`);
+```
+
+---
+
+### 8 — Files you must change in this commit
+
+```
+server/pdf-generator.ts
+server/templates/resume.html
+server/openai.ts
+```
+
+(No other files should be modified.)
+
+After pushing, run one sample resume and confirm:
+
+* Only **one** page (standard format) with the new margins.
+* “Presented by Near” footer flush-right, flush-bottom.
+* Section order: Summary → Skills & Languages → Professional Experience → Education.
+* Languages visible.
+* No duplicated metric echoes.
+
+If anything else moves the margins or footer, revert that change – output must match specs above.
