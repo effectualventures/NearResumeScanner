@@ -1287,17 +1287,28 @@ function cleanEducationFormat(resume: Resume): Resume {
         edu.degree = edu.degree.replace(new RegExp(`, ${edu.year}$`), '').trim();
       }
       
-      // 5. Fix duplicate years (like "2009, 2009")
+      // 5. Fix duplicate years in degree field (like "2009, 2009")
       const yearPattern = /(\d{4}),\s*\1/;
       if (yearPattern.test(edu.degree)) {
         edu.degree = edu.degree.replace(yearPattern, '$1');
       }
       
-      // 6. Check if the degree field contains the year already and remove it from the year field to avoid duplication
-      const degreeYearMatch = edu.degree.match(/\b(19|20)\d{2}\b/);
-      if (degreeYearMatch && edu.year && edu.year.toString() === degreeYearMatch[0]) {
-        edu.degree = edu.degree.replace(/,?\s*\b(19|20)\d{2}\b/, '').trim();
+      // 6. Look for any repeated years between degree and year fields
+      const degreeYearMatch = edu.degree.match(/\b(19|20)\d{2}\b/g);
+      if (degreeYearMatch && edu.year) {
+        // Handle case where the year in the degree field matches the standalone year field
+        for (const match of degreeYearMatch) {
+          if (match === edu.year.toString()) {
+            // Remove the year from the degree field, preserving proper comma formatting
+            edu.degree = edu.degree.replace(new RegExp(`(,\\s*)?\\b${match}\\b(,\\s*)?`), '').trim();
+            // Remove trailing comma if it exists
+            edu.degree = edu.degree.replace(/,\s*$/, '').trim();
+          }
+        }
       }
+      
+      // 7. Clean up multiple commas that might be left after removing years
+      edu.degree = edu.degree.replace(/,\s*,/g, ',').trim();
     }
   });
   

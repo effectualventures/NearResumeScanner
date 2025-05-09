@@ -218,16 +218,29 @@
   
   <div class="section-title">SKILLS & LANGUAGES</div>
   <div class="skills">
+    <!-- First display skills -->
     {{#each skills}}
       {{#if (eq category "Skills")}}
         <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
           <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
         </div>
-      {{else if (eq category "Languages")}}
-        <div style="margin-bottom: 8px; margin-right: 0; width: 100%; margin-top: 8px;">
+      {{/if}}
+    {{/each}}
+    
+    <!-- Then display languages on a separate line with clear break -->
+    <div style="width: 100%; height: 8px; clear: both;"></div>
+    
+    {{#each skills}}
+      {{#if (eq category "Languages")}}
+        <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
           <span class="skill-category"><strong>{{this.category}}:</strong></span> English (Fluent){{#if this.items.[0]}}; {{this.items.[0]}}{{/if}}{{#each (slice this.items 1)}}; {{this}}{{/each}}
         </div>
-      {{else}}
+      {{/if}}
+    {{/each}}
+    
+    <!-- Display any other categories (just in case) -->
+    {{#each skills}}
+      {{#if (and (not (eq category "Skills")) (not (eq category "Languages")))}}
         <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
           <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
         </div>
