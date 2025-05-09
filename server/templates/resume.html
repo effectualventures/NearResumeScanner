@@ -273,7 +273,7 @@
     </div>
   </section>
   
-  <!-- LANGUAGES SECTION - Completely separate from Skills -->
+  <!-- LANGUAGES SECTION - Always shown even if empty -->
   <section style="display: block; width: 100%; clear: both; margin-top: 5px; margin-bottom: 5px;">
     <div id="languages-section" class="section-title">LANGUAGES</div>
     <div class="languages-list">
@@ -282,17 +282,16 @@
           <div style="margin-bottom: 2px; width: 100%;">
             <span style="font-weight: normal;">{{#each this.items}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}</span>
           </div>
-        {{else}}
-          <!-- If no languages section found, add default -->
-          {{#unless @index}}
-            {{#unless (some ../skills 'category' 'Languages')}}
-              <div style="margin-bottom: 2px; width: 100%;">
-                <span style="font-weight: normal;">English (Fluent)</span>
-              </div>
-            {{/unless}}
-          {{/unless}}
+          {{! Languages found, no need to show default }}
         {{/if}}
       {{/each}}
+      
+      {{! Safety Check - Add default if no Languages category is found }}
+      {{#unless (some skills 'category' 'Languages')}}
+        <div style="margin-bottom: 2px; width: 100%;">
+          <span style="font-weight: normal;">English (Fluent)</span>
+        </div>
+      {{/unless}}
     </div>
   </section>
   

@@ -510,8 +510,14 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
     // Remove any incorrect "PROFESSIONAL EXPERIENCE" text that may have been added to skills
     html = html.replace(/Projects\s+PROFESSIONAL EXPERIENCE/g, 'Projects');
     
-    // Ensure clear section breaks to prevent overlap
-    html = html.replace(/PROFESSIONAL EXPERIENCE/, '<div style="clear: both; width: 100%; display: block;"></div>PROFESSIONAL EXPERIENCE');
+    // Remove any incorrect "PROFESSIONAL EXPERIENCE" text that may have been added to skills or other sections
+    html = html.replace(/Projects\s+PROFESSIONAL EXPERIENCE/g, 'Projects');
+    
+    // Fix any case where "PROFESSIONAL EXPERIENCE" appears at the end of the skills line
+    html = html.replace(/Infrastructure Projects\s+PROFESSIONAL EXPERIENCE/g, 'Infrastructure Projects');
+    
+    // More aggressive cleanup for any pattern where PROFESSIONAL EXPERIENCE is out of place
+    html = html.replace(/(Skills:.*?)(PROFESSIONAL EXPERIENCE)(?!\s*SECTION)/g, '$1');
     
     // ALWAYS apply comprehensive skills for estimator roles
     if (html.includes('Skills:') && 
@@ -810,24 +816,24 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
         path: pdfOutputPath,
         format: 'letter',
         printBackground: true,
-        preferCSSPageSize: false, // Use exact dimensions
+        preferCSSPageSize: true, // Honor CSS page size
+        scale: 0.9, // Scale down to fit better on page
         margin: {
-          top: '0.50in',    // Match reference file margins
+          top: '0.45in',    // Slightly reduced top margin
           right: '0.50in',  // Match reference file margins  
-          bottom: '0.50in', // Match reference file margins
+          bottom: '0.30in', // Reduced bottom margin for more content space
           left: '0.50in'    // Match reference file margins
         }
       };
       
       // Configure how PDF is generated based on format
       if (detailedFormat) {
-        // For detailed format, allow multiple pages and ensure all experience is shown
-        console.log('Using detailed format: showing all bullets points and allowing multiple pages');
+        // For detailed format, show all content but keep compact
+        console.log('Using detailed format: showing all bullets points and maintaining compact layout');
         await page.pdf({
           ...pdfOptions,
           displayHeaderFooter: false,
-          preferCSSPageSize: true, // Use CSS page size with our forced margins
-          scale: 1.0 // Normal scale to ensure all content fits appropriately
+          scale: 0.88 // More aggressive scaling to fit content on page
         });
       } else {
         // For standard format, restrict to one page

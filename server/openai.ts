@@ -249,12 +249,21 @@ Your response must be a valid JSON object representing the processed resume with
       
       // If no languages found, add English with reasonable assumption
       if (languageItems.length === 0) {
-        languageItems.push("English (Professional)", "Portuguese (Native)");
+        languageItems.push("English (Fluent)", "Portuguese (Native)");
         console.log("Added default languages since none were found");
       } else if (!languageItems.some(lang => lang.toLowerCase().includes('english'))) {
         // Make sure English is included
-        languageItems.push("English (Professional)");
+        languageItems.push("English (Fluent)");
         console.log("Added English language as it was missing from original output");
+      }
+      
+      // Make sure English is marked as Fluent for consistency
+      for (let i = 0; i < languageItems.length; i++) {
+        if (languageItems[i].toLowerCase().includes('english') && 
+            !languageItems[i].toLowerCase().includes('fluent')) {
+          languageItems[i] = "English (Fluent)";
+          console.log("Updated English language proficiency to Fluent");
+        }
       }
       
       // Create the consolidated skills array with just Skills and Languages
