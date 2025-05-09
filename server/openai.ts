@@ -315,6 +315,9 @@ Your response must be a valid JSON object representing the processed resume with
       // Remove repetitive starts in bullet points (e.g. "Developed... Developed... Developed...")
       finalResume = removeBulletRepetition(finalResume);
       
+      // Remove duplicate metrics that already appear in the bullet text
+      finalResume = dedupeMetricEcho(finalResume);
+      
       // Apply bullet point limitation (max 7 bullets per role)
       // For detailed format, still limit to 7 bullets per stakeholder feedback
       const maxBullets = 7; // Set hard limit to 7 regardless of format
@@ -1909,4 +1912,27 @@ function removeBulletRepetition(resume: Resume): Resume {
     // Return the original resume if processing fails
     return resume;
   }
+}
+
+/**
+ * Remove metrics that simply echo text already present in the bullet point
+ * @param r Resume to process
+ * @returns Resume with duplicate metrics removed
+ */
+function dedupeMetricEcho(r: Resume): Resume {
+  const clone = structuredClone(r);
+  clone.experience.forEach(exp => {
+    exp.bullets.forEach(b => {
+      if (!b.text) return;
+      b.metrics.forEach(m => {
+        const plain = m.replace(/[.$]/g,'').trim();
+        if (b.text.toLowerCase().includes(plain.toLowerCase())) {
+          // remove metric that simply repeats what text already contains
+          b.metrics = b.metrics.filter(x => x !== m);
+        }
+      });
+    });
+  });
+  console.log('Removed duplicate metrics that echo bullet text');
+  return clone;
 }
