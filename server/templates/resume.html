@@ -221,21 +221,27 @@
     <!-- First display skills -->
     {{#each skills}}
       {{#if (eq category "Skills")}}
-        <div style="margin-bottom: 8px; margin-right: 0; width: 100%;">
+        <div style="margin-bottom: 10px; margin-right: 0; width: 100%;">
           <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
         </div>
       {{/if}}
     {{/each}}
     
-    <!-- Force a clear and line break before Languages -->
-    <div style="display: block; width: 100%; height: 12px; clear: both; margin: 10px 0;"></div>
+    <!-- Explicit separation between Skills and Languages sections -->
+    <div style="display: block; width: 100%; height: 20px; clear: both;"></div>
     
-    <!-- Languages on completely separate line with new structure -->
+    <!-- Languages in a completely separate block with clear labeling -->
     {{#each skills}}
       {{#if (eq category "Languages")}}
-        <div style="display: block; width: 100%; clear: both;">
-          <div style="margin-bottom: 5px;"><span class="skill-category"><strong>{{this.category}}:</strong></span></div>
-          <div style="margin-left: 15px; display: block;">English (Fluent){{#if this.items.[0]}}; {{this.items.[0]}}{{/if}}{{#each (slice this.items 1)}}; {{this}}{{/each}}</div>
+        <div style="display: block; width: 100%; clear: both; margin-top: 10px; margin-bottom: 10px;">
+          <!-- Language label standalone on its own line -->
+          <div style="display: block; width: 100%; margin-bottom: 8px;">
+            <span class="skill-category" style="font-weight: 600;"><strong>{{this.category}}:</strong></span>
+          </div>
+          <!-- Language entries with proper indentation -->
+          <div style="display: block; margin-left: 15px;">
+            English (Fluent){{#if this.items.[0]}}; {{this.items.[0]}}{{/if}}{{#each (slice this.items 1)}}; {{this}}{{/each}}
+          </div>
         </div>
       {{/if}}
     {{/each}}

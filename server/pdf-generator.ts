@@ -372,29 +372,35 @@ Handlebars.registerHelper('not', function(value) {
   return !value;
 });
 
-// Helper to break summary into multiple lines with smart sentence splitting
+// Helper to intelligently handle line breaks for the summary
+// The summary should only break if the text is substantially longer than a full line
 Handlebars.registerHelper('breaklines', function(text) {
   if (!text) return '';
   
-  // If text is less than 120 chars (more forgiving), return as is
-  if (text.length <= 120) return text;
+  // For summary section, use a higher minimum character threshold to avoid premature line breaks
+  // Only break very long summaries that would look cramped on a single line
+  if (text.length <= 180) {
+    // Return the text as a single line for most summaries (no line break)
+    return text;
+  }
   
-  // Try to split at the end of a sentence (which is more natural)
+  // For longer text, find the most natural break point
+  // First try to break at the end of a complete sentence
   const sentenceBreak = text.match(/[.!?]\s+/);
-  if (sentenceBreak && sentenceBreak.index && sentenceBreak.index > 40 && sentenceBreak.index < 120) {
+  if (sentenceBreak && sentenceBreak.index && sentenceBreak.index > 100 && sentenceBreak.index < 180) {
     // Found a good natural sentence break that's not too short or too long
     const firstLine = text.substring(0, sentenceBreak.index + 1); // Include the period/question mark/exclamation
     const secondLine = text.substring(sentenceBreak.index + 2); // Skip the period and space
     return new Handlebars.SafeString(`${firstLine}<br>${secondLine}`);
   }
   
-  // If no good sentence break, find a good break point around 100-120 chars
-  // Try to avoid breaking in the middle of a phrase with "in", "of", "and", etc.
-  const goodBreakPattern = /\s+(?!(?:in|of|and|with|for|on|to|by)\s+)/g;
+  // If no good sentence break, find a good break point that doesn't cut off phrases
+  // Look for breaks that don't occur in the middle of common phrases
+  const goodBreakPattern = /\s+(?!(?:in|of|and|with|for|on|to|by|the|a|an)\s+)/g;
   let matches = [];
   let match;
   while ((match = goodBreakPattern.exec(text)) !== null) {
-    if (match.index > 75 && match.index < 120) {
+    if (match.index > 120 && match.index < 180) {
       matches.push(match.index);
     }
   }
@@ -405,7 +411,7 @@ Handlebars.registerHelper('breaklines', function(text) {
     breakPoint = matches[matches.length - 1];
   } else {
     // Fallback to simple space-based breaking if no good phrases found
-    breakPoint = text.lastIndexOf(' ', 120);
+    breakPoint = text.lastIndexOf(' ', 180);
   }
   
   if (breakPoint === -1) return text; // No good break found, return as is
@@ -486,31 +492,34 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       }
     }
     
-    // Clean up formatting of language section - ensure it's on separate line
+    // Clean up formatting of language section - ensure proper standalone formatting
     if (html.includes('Skills:') && html.includes('Languages:')) {
       
       console.log('Formatting language section to separate line with English (Fluent)');
       
-      // 1. First ensure Languages is on a separate line
-      if (!html.includes('<br>Languages:') && !html.includes('<div') && !html.includes('</div>Languages:')) {
-        html = html.replace(/Languages:/g, '<br><br><span style="font-weight: 600;">Languages:</span>');
-      }
+      // 1. Fix broken Skills/Languages HTML from post-processing 
+      // Ensure the Languages heading is properly on its own line
+      html = html.replace(/Skills:[^<]+Languages:/g, (match) => {
+        // Split the Skills and Languages sections properly
+        return match.replace(/Languages:/, '</span></div><div style="display: block; width: 100%; clear: both; margin-top: 15px;"><span style="font-weight: 600;"><strong>Languages:</strong></span>');
+      });
       
       // 2. If English is missing completely, add it with Fluent proficiency
       if (!html.includes('English')) {
+        // Properly format replacement with the correct HTML structure
         if (html.includes('Portuguese')) {
-          html = html.replace(/<span style="font-weight: 600;">Languages:<\/span>\s*<span style="font-weight: normal;">Portuguese/g, 
-            '<span style="font-weight: 600;">Languages:</span> <span style="font-weight: normal;">English (Fluent); Portuguese');
+          html = html.replace(/<strong>Languages:<\/strong><\/span>([^<]*)/g, 
+            '<strong>Languages:</strong></span></div><div style="display: block; margin-left: 15px;">English (Fluent); Portuguese');
         } else if (html.includes('Spanish')) {
-          html = html.replace(/<span style="font-weight: 600;">Languages:<\/span>\s*<span style="font-weight: normal;">Spanish/g, 
-            '<span style="font-weight: 600;">Languages:</span> <span style="font-weight: normal;">English (Fluent); Spanish');
+          html = html.replace(/<strong>Languages:<\/strong><\/span>([^<]*)/g, 
+            '<strong>Languages:</strong></span></div><div style="display: block; margin-left: 15px;">English (Fluent); Spanish');
         } else {
           // Just add English if no other languages
-          html = html.replace(/<span style="font-weight: 600;">Languages:<\/span>\s*<span style="font-weight: normal;">([^<]+)/g, 
-            '<span style="font-weight: 600;">Languages:</span> <span style="font-weight: normal;">English (Fluent); $1');
+          html = html.replace(/<strong>Languages:<\/strong><\/span>([^<]*)/g, 
+            '<strong>Languages:</strong></span></div><div style="display: block; margin-left: 15px;">English (Fluent)');
         }
       } 
-      // 3. If English is there but doesn't have "Fluent" proficiency level
+      // 3. Ensure English has Fluent proficiency level
       else if (!html.includes('English (Fluent)')) {
         html = html.replace(/English(\s*\([^)]*\))?/g, 'English (Fluent)');
       }
@@ -521,6 +530,17 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
       }
       if (html.includes('Spanish') && !html.includes('Spanish (Native)')) {
         html = html.replace(/Spanish(?!\s*\()/g, 'Spanish (Native)');
+      }
+      
+      // 5. Final check to ensure Languages section has proper line break
+      if (!html.includes('<div style="display: block; width: 100%; margin-bottom: 8px;"><span class="skill-category" style="font-weight: 600;"><strong>Languages:</strong></span>')) {
+        html = html.replace(/<strong>Languages:<\/strong>/g, 
+          '<div style="display: block; width: 100%; clear: both; margin-top: 10px;"><div style="display: block; width: 100%; margin-bottom: 8px;"><span class="skill-category" style="font-weight: 600;"><strong>Languages:</strong></span></div><div style="display: block; margin-left: 15px;">');
+        
+        // Close the div for language section if needed
+        if (!html.includes('</div></div><div class="section-title">PROFESSIONAL EXPERIENCE')) {
+          html = html.replace(/<div class="section-title">PROFESSIONAL EXPERIENCE/g, '</div></div><div class="section-title">PROFESSIONAL EXPERIENCE');
+        }
       }
     }
     

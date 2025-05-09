@@ -1,0 +1,177 @@
+This message includes critical formatting, rendering, and data issues that still persist in the resume output. Please read thoroughly. These are not just design tweaks — some fixes may require changes to backend logic, template rendering, post-processing, and HTML formatting. This needs to be solved at the system level, not patched superficially.
+
+1. ❌ Summary Line Break (Critical Rendering Bug)
+What’s happening:
+The summary line is broken mid-sentence even though it’s not long. It currently renders like this:
+
+pgsql
+Copy
+Edit
+15+ years in construction estimation with precise budgeting and cost consulting for major infrastructure projects,  
+delivering sustained cost efficiencies and project value.
+What’s required:
+
+This line should render as one continuous sentence.
+
+Only break naturally if it runs past the max readable width for a paragraph.
+
+This must be fixed in the Handlebars template and/or CSS, likely within .summary.
+
+Why this matters:
+This is the first line on the resume. A line break here looks like an error or lazy formatting. It undermines confidence in the overall output.
+
+What to check:
+
+CSS for .summary in the resume HTML template
+
+Any logic that injects line breaks (\n, <br>, or wrapping via max-width)
+
+Post-processing logic that splits lines
+
+Whether this is occurring in the HTML file passed to Puppeteer or caused by Puppeteer PDF rendering
+
+✅ This must be visually tested in both the HTML preview and final PDF.
+
+2. ❌ “Languages:” Label Placement (Broken Skills Section)
+What’s happening:
+"Languages" is now on its own line — but the label is still incorrectly placed at the end of the last skill, like this:
+
+css
+Copy
+Edit
+...Infrastructure Projects Languages:  
+English (Fluent); Portuguese (Native)
+What’s required:
+
+“Languages:” must appear on its own line, directly above the list of languages
+
+It should mirror how “Skills:” is formatted
+
+Why this matters:
+This section visually breaks and looks malformed. It also introduces alignment and accessibility issues when scanned visually or by screen readers.
+
+What to check:
+
+The Handlebars template where skills and languages are rendered
+
+Any custom helpers or inline conditions that concatenate those two fields
+
+The backend structuring of the resume JSON — are skills and languages two separate arrays?
+
+✅ This should be consistent across every resume, not hardcoded per template.
+
+3. ❌ Currency Formatting Is Incorrect and Confusing
+What’s happening:
+Currencies are now labeled inconsistently and incorrectly:
+
+“$35 USDM USD”
+
+“$11.4M USD AUD”
+
+“$124M USD BRL”
+
+What’s required:
+Pick one of the following approaches and apply it consistently across the entire app, including:
+
+bullet content
+
+education section (if applicable)
+
+backend processing
+
+PDF output
+
+Option A – Use only USD:
+
+bash
+Copy
+Edit
+$124M USD
+Option B – Show original + converted USD (preferred if values are based on BRL or AUD):
+
+bash
+Copy
+Edit
+R$124M (~$25M USD)
+AUD $11.4M (~$7.4M USD)
+Also:
+
+Never stack multiple currency codes (e.g., “USD AUD”, “USDM USD”)
+
+Don’t suffix “USD” if the symbol already implies it (e.g., don’t say “$25M USD” if that’s the only currency format used throughout)
+
+Why this matters:
+This currently reads as machine-generated and broken. It hurts resume credibility. Real humans don’t format money that way.
+
+What to check:
+
+Currency formatting logic in the resume transformer function (OpenAI handler or backend)
+
+Post-processing step that adds “USD” — this may need to be removed or modified
+
+Handlebars templates that inject these values
+
+Confirm that values being labeled as “USD” actually came from a BRL or AUD value and were properly converted
+
+✅ You must verify the values, not just the labels. Don’t add “USD” to a number unless it was actually converted.
+
+4. ❌ Resume Header Shows City/State Instead of Country
+What’s happening:
+The location under the name at the top currently says “Sao Paulo”.
+
+What’s required:
+
+This should say “Brazil” only
+
+Same rule applies to other countries — always use the country name only in the top header
+
+Why this matters:
+This is a UX simplification that helps make resumes globally legible and avoids inconsistent formatting like “SP”, “Sao Paulo”, “São Paulo”, etc.
+
+What to check:
+
+The source of the location field in the resume JSON
+
+Any formatting logic in the transformer that selects city/state
+
+Ensure country is extracted correctly and shown in the top section
+
+✅ This should be standardized across all resumes, not patched manually per region.
+
+5. 🔍 Other QA Checks You Must Perform System-Wide
+a. Bullet Formatting
+Ensure no bullets have currency or spacing bugs
+
+Check all spacing between sections (Experience → Education → Additional Experience)
+
+Check all company/job title formatting is consistent (e.g., Company bold, Job Title italic, Location regular weight)
+
+b. Template Logic
+Validate that every change is correctly reflected in:
+
+HTML Handlebars template
+
+Puppeteer-rendered PDF
+
+Resume JSON transformer (backend)
+
+Any post-processing logic (if used)
+
+c. Debug Mode
+Before pushing the final PDF, test the intermediate HTML output
+
+Ensure that bugs (like line breaks, currency redundancies) are not already present in the HTML
+
+If they are, fix them upstream — not via CSS hack
+
+✅ Final Deliverable
+Once complete, please:
+
+Confirm which fixes were made
+
+List exactly which files were modified (template, API, CSS, backend logic)
+
+Tell Hayden which files to reupload for final verification
+
+No partial fixes, no visual-only workarounds. These need to be actual root-cause fixes so that all future resumes automatically follow these standards.
+
