@@ -251,9 +251,9 @@
       {{/if}}
     {{/each}}
     <!-- Make sure Languages section is never empty -->
-    {{#unless (some skills (lambda this (eq this.category "Languages")))}}
+    {{#unless (some skills property="category" equals="Languages")}}
       <div style="margin-bottom: 10px; width: 100%;">
-        <span style="font-weight: normal;">English (Fluent); Portuguese (Native)</span>
+        <span style="font-weight: normal;">English (Fluent)</span>
       </div>
     {{/unless}}
   </div>

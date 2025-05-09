@@ -381,15 +381,28 @@ Handlebars.registerHelper('formatEndDate', function(endDate) {
 // Helper to check if any element in an array satisfies a condition
 Handlebars.registerHelper('some', function(arr, options) {
   if (!arr || !Array.isArray(arr)) return false;
-  return arr.some(item => options.fn(item));
+  
+  // For simple cases like checking equality with a property
+  // Use a safer approach that doesn't rely on function execution
+  if (options.hash && options.hash.property && options.hash.equals) {
+    return arr.some(item => item[options.hash.property] === options.hash.equals);
+  }
+  
+  // For more complex conditions, safely try options.fn if available
+  try {
+    return arr.some(item => {
+      if (typeof options.fn === 'function') {
+        return options.fn(item);
+      }
+      return false;
+    });
+  } catch (err) {
+    console.error('Error in some helper:', err);
+    return false;
+  }
 });
 
-// Helper for using lambda functions in templates
-Handlebars.registerHelper('lambda', function(context, options) {
-  return function(item: any) {
-    return options.fn(item);
-  };
-});
+// No longer need the lambda helper since we're using a simpler pattern with property/equals
 
 // Helper to intelligently handle line breaks for the summary
 // The summary should only break if the text is substantially longer than a full line
