@@ -263,7 +263,7 @@
       <div class="title">{{title}}</div>
       <ul>
         {{#each bullets}}
-          <li>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</li>
+          <li>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{#if metrics.length}} <span style="color: #333; font-weight: 500; font-style: normal;">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>{{/if}}</li>
         {{/each}}
       </ul>
     </div>
