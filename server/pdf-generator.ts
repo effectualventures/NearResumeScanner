@@ -372,6 +372,12 @@ Handlebars.registerHelper('not', function(value) {
   return !value;
 });
 
+// Helper to replace "Current" with "Present" in dates
+Handlebars.registerHelper('formatEndDate', function(endDate) {
+  if (!endDate) return '';
+  return endDate === 'Current' ? 'Present' : endDate;
+});
+
 // Helper to intelligently handle line breaks for the summary
 // The summary should only break if the text is substantially longer than a full line
 Handlebars.registerHelper('breaklines', function(text) {
