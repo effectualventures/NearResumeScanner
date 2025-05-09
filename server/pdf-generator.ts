@@ -804,6 +804,7 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
         path: pdfOutputPath,
         format: 'letter',
         printBackground: true,
+        preferCSSPageSize: false, // Use exact dimensions
         margin: {
           top: '0.50in',    // Match reference file margins
           right: '0.50in',  // Match reference file margins  
@@ -835,7 +836,10 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
         // Default scale - if content is too tall, reduce scale to fit on one page
         const pageHeight = 11 * 96; // Letter height in pixels (11 inches at 96 DPI)
         const availableHeight = pageHeight - 96; // Account for margins
-        const scale = contentHeight > availableHeight ? Math.min(0.95, availableHeight / contentHeight) : 1.0;
+        // More aggressive scaling if needed to ensure we fit on one page
+        const scale = contentHeight > availableHeight ? 
+                       Math.min(0.92, (availableHeight / contentHeight) * 0.98) : 
+                       0.98; // Slightly reduced even when it fits to ensure we have buffer space
         
         console.log(`Content height: ${contentHeight}px, using scale factor: ${scale}`);
         
