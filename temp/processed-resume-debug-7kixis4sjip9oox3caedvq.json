@@ -225,20 +225,18 @@
   "education": [
     {
       "institution": "Orange International College",
-      "degree": "DiploMaster of Arts of Building and Construction",
+      "degree": "Diploma of Building and Construction",
       "location": "Australia",
       "year": "2021",
       "additionalInfo": ""
     },
     {
       "institution": "Mackenzie Presbyterian University",
-      "degree": "Architecture and UrBachelor of Artsnism",
+      "degree": "Architecture and Urbanism",
       "location": "Brazil",
       "year": "2009",
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "Member of AIQS; Construction Management specialization from Columbia University in progress; Autodesk Revit training.",
-  "detailedFormat": true,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": "Member of AIQS; Construction Management specialization from Columbia University in progress; Autodesk Revit training."
 }

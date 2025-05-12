@@ -83,6 +83,10 @@
       margin-bottom: 10px;
       width: 100%;
       clear: both;
+    }
+    
+    /* Use page-break-inside: avoid only for experience items */
+    .experience {
       page-break-inside: avoid;
     }
     
@@ -144,6 +148,7 @@
     /* Education section */
     .education {
       margin-bottom: 12px;
+      page-break-inside: avoid;
     }
     
     .education-institution {
@@ -223,7 +228,7 @@
       {{/if}}
     </div>
     
-    <!-- SKILLS SECTION -->
+    <!-- SKILLS AND LANGUAGES SECTION -->
     <section>
       <h2 class="section-title">Skills</h2>
       <hr class="section-rule"/>
@@ -245,28 +250,21 @@
             </div>
           {{/if}}
         {{/each}}
-      </div>
-    </section>
-    
-    <!-- LANGUAGES SECTION -->
-    <section>
-      <h2 class="section-title">Languages</h2>
-      <hr class="section-rule"/>
-      <div class="languages-list">
-        {{#each skills}}
-          {{#if (eq category "Languages")}}
-            <div style="margin-bottom: 2px; width: 100%;">
-              <span style="font-weight: normal;">{{#each this.items}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}</span>
-            </div>
-          {{/if}}
-        {{/each}}
         
-        {{! Safety Check - Add default if no Languages category is found }}
-        {{#unless (some skills 'category' 'Languages')}}
-          <div style="margin-bottom: 2px; width: 100%;">
-            <span style="font-weight: normal;">English (Fluent)</span>
-          </div>
-        {{/unless}}
+        <!-- Display Languages within the same section -->
+        <div style="margin-top: 10px;">
+          <span class="skill-category"><strong>Languages:</strong></span>
+          {{#each skills}}
+            {{#if (eq category "Languages")}}
+              {{#each this.items}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}
+            {{/if}}
+          {{/each}}
+          
+          {{! Safety Check - Add default if no Languages category is found }}
+          {{#unless (some skills 'category' 'Languages')}}
+            English (Fluent)
+          {{/unless}}
+        </div>
       </div>
     </section>
     
