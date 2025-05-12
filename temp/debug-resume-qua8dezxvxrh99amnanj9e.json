@@ -77,27 +77,39 @@
       "bullets": [
         {
           "text": "Lead comprehensive analysis of tendering documents, ensuring alignment with construction norms and regulations, resulting in 95% submission approval.",
-          "metrics": []
+          "metrics": [
+            "95% submission approval"
+          ]
         },
         {
           "text": "Executed first principle estimating for over 100 projects across civil, architectural, and structural domains, enhancing cost accuracy by 20%.",
-          "metrics": []
+          "metrics": [
+            "20% cost accuracy improvement"
+          ]
         },
         {
           "text": "Prepared detailed Bill of Quantities (BOQ) and commercial offers for diverse projects, including hospitals and infrastructure, totaling $30M USD in construction value.",
-          "metrics": []
+          "metrics": [
+            "$30M USD construction value"
+          ]
         },
         {
           "text": "Conducted precise quantity take-offs for extensive civil projects, improving resource allocation efficiency by 25% across foundational, structural, and finishing stages.",
-          "metrics": []
+          "metrics": [
+            "25% efficiency improvement"
+          ]
         },
         {
           "text": "Negotiated with over 50 suppliers to optimize procurement for MEP installations, achieving cost reductions up to 15% through strategic sourcing.",
-          "metrics": []
+          "metrics": [
+            "15% cost reductions"
+          ]
         },
         {
           "text": "Implemented comprehensive project tracking to align budget and design variations, achieving less than 5% deviation from initial budget forecasts.",
-          "metrics": []
+          "metrics": [
+            "<5% budget deviation"
+          ]
         },
         {
           "text": "Managed awarded projects like Cultura Inglesa Schools with meticulous cost control, maintaining within <2% of projected costs.",
@@ -116,23 +128,33 @@
       "bullets": [
         {
           "text": "Analyzed and refined tender scopes, leading to successful bids on 15 major infrastructure projects with collective value over $33.3M.",
-          "metrics": []
+          "metrics": [
+            "$33.3M in project value"
+          ]
         },
         {
           "text": "Executed comprehensive budget analysis and BOQs across infrastructure sectors, increasing bid success rate by 18% within competitive markets.",
-          "metrics": []
+          "metrics": [
+            "18% bid success increase"
+          ]
         },
         {
           "text": "Streamlined quantity take-off processes for key projects like South Morang Terminal Station, reducing man-hours by 20% and cutting preparatory costs.",
-          "metrics": []
+          "metrics": [
+            "20% reduction in man-hours"
+          ]
         },
         {
           "text": "Facilitated around 100 project cost analyses, improving budget adherence across civil works and reducing overruns by 10%.",
-          "metrics": []
+          "metrics": [
+            "10% reduction in budget overruns"
+          ]
         },
         {
           "text": "Supported contractors through effective scope clarification, enhancing contractor execution timelines by 15%.",
-          "metrics": []
+          "metrics": [
+            "15% improvement in execution timelines"
+          ]
         },
         {
           "text": "Produced detailed cost comparative reports for issuance on construction projects, influencing over $8.0M in client decision-making.",
@@ -142,7 +164,9 @@
         },
         {
           "text": "Led value-engineered proposals for major projects, optimizing design feasibility and achieving a 14% increase in project viability.",
-          "metrics": []
+          "metrics": [
+            "14% project viability boost"
+          ]
         }
       ]
     },
@@ -155,11 +179,15 @@
       "bullets": [
         {
           "text": "Analyzed over 50 tendering documents for major construction projects, ensuring precise understanding and strategizing for competitive bidding.",
-          "metrics": []
+          "metrics": [
+            "50+ tender documents analyzed"
+          ]
         },
         {
           "text": "Prepared accurate BOQs and tender documents for high-profile projects, supporting award-winning bids valued at $60M USD.",
-          "metrics": []
+          "metrics": [
+            "$60M USD in successful bids"
+          ]
         },
         {
           "text": "Conducted cost estimations for comprehensive design evaluations, leading to effective financial planning and resource allocation.",
@@ -184,7 +212,9 @@
       "bullets": [
         {
           "text": "Led quantity surveying for complex residential projects, improving initial cost estimates by 20% and ensuring budget compliance.",
-          "metrics": []
+          "metrics": [
+            "20% improved cost estimates"
+          ]
         },
         {
           "text": "Executed comprehensive feasibility studies for land acquisitions, influencing high-value investment decisions with accurate financial projections.",
@@ -234,20 +264,18 @@
   "education": [
     {
       "institution": "Orange International College",
-      "degree": "DiploMaster of Arts of Building and Construction",
+      "degree": "Diploma of Building and Construction",
       "location": "Australia",
       "year": "2021",
       "additionalInfo": ""
     },
     {
       "institution": "Mackenzie Presbyterian University",
-      "degree": "Architecture and UrBachelor of Artsnism",
+      "degree": "Architecture and Urbanism",
       "location": "Brazil",
       "year": "2009",
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "",
-  "detailedFormat": true,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": ""
 }

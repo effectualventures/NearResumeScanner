@@ -29,63 +29,96 @@ export function registerHandlebarsHelpers() {
     return str.includes(substring);
   });
 
-  // Check if any of the metrics appears in the text using an enhanced approach
+  // Check if any of the metrics appears in the text - simple robust approach
   Handlebars.registerHelper('containsAny', function(text: string, metrics: string[]) {
     if (!text || !metrics || !metrics.length) return false;
     
     // Convert text to lowercase for case-insensitive comparison
     const lowerText = text.toLowerCase();
     
-    // Utility function to extract numbers from text (similar to the one in text-processor-v2.ts)
-    const extractNumbers = (str: string): string[] => {
-      if (!str) return [];
-      const matches = str.match(/\d+(?:[,.]\d+)*%?|\d+%?/g);
-      return matches ? matches.map(m => m.replace(/,/g, '')) : [];
-    };
+    // Special cases that are common metrics patterns
+    const findMetricPatterns = [
+      // Check for percentage patterns - number + % in the text
+      (text, metric) => {
+        const percentMatch = metric.match(/(\d+(?:\.\d+)?)%/);
+        if (percentMatch && percentMatch[1]) {
+          const percentValue = percentMatch[1];
+          return text.includes(percentValue + '%') || 
+                 text.includes(percentValue + ' %') || 
+                 text.includes(percentValue + '% ') ||
+                 text.includes(percentValue + ' percent') ||
+                 text.includes(percentValue + ' percentage');
+        }
+        return false;
+      },
+      
+      // Check for currency values - dollar amounts
+      (text, metric) => {
+        const dollarMatch = metric.match(/\$(\d+(?:[\.,]\d+)?(?:[KkMmBb])?)/);
+        if (dollarMatch && dollarMatch[1]) {
+          return text.includes('$' + dollarMatch[1]) || 
+                 text.includes('$ ' + dollarMatch[1]) ||
+                 text.includes(dollarMatch[1] + ' dollars') ||
+                 text.includes('USD ' + dollarMatch[1]);
+        }
+        return false;
+      },
+      
+      // Check for numbers with K, M, B suffixes
+      (text, metric) => {
+        const suffixMatch = metric.match(/(\d+(?:[\.,]\d+)?)\s*([KkMmBb])/);
+        if (suffixMatch && suffixMatch[1] && suffixMatch[2]) {
+          const num = suffixMatch[1];
+          const suffix = suffixMatch[2].toLowerCase();
+          return text.includes(num + suffix) || 
+                 text.includes(num + ' ' + suffix) ||
+                 (suffix === 'k' && text.includes('thousand')) ||
+                 (suffix === 'm' && text.includes('million')) ||
+                 (suffix === 'b' && text.includes('billion'));
+        }
+        return false;
+      }
+    ];
     
-    // Get significant words from text (excluding common stop words)
-    const getSignificantWords = (str: string): string[] => {
-      if (!str) return [];
-      const cleanText = str.replace(/[$€£¥.,()%]/g, ' ').toLowerCase();
-      const stopWords = ['and', 'the', 'in', 'of', 'to', 'for', 'with', 'by', 'at', 'from', 'on', 'an', 'a'];
-      const words = cleanText.split(/\s+/).filter(word => 
-        word.length > 2 && !stopWords.includes(word)
-      );
-      return words.filter((word, index) => words.indexOf(word) === index); // Remove duplicates
-    };
-    
-    // Check if any metric's numbers and context words appear in the text
+    // Check each metric against the bullet text
     return metrics.some(metric => {
       if (!metric) return false;
+      const cleanMetric = metric.toLowerCase().trim();
       
-      // Get numbers from the metric
-      const metricNumbers = extractNumbers(metric);
-      if (metricNumbers.length === 0) return false; // No numbers to compare
+      // First check if the entire metric is in the text
+      if (lowerText.includes(cleanMetric)) {
+        return true;
+      }
       
-      // Check if any number from the metric appears in the text with surrounding context
-      for (const num of metricNumbers) {
-        if (lowerText.includes(num)) {
-          // For contextual verification, check if significant words are also present
-          const metricWords = getSignificantWords(metric);
-          
-          // Check if any significant word is near the number in the text
-          for (const word of metricWords) {
-            if (lowerText.includes(word) && 
-                Math.abs(lowerText.indexOf(word) - lowerText.indexOf(num)) < 30) {
-              // If we find the number and contextual word nearby, it's likely a duplicate
-              return true;
+      // Then check for specific patterns
+      for (const patternCheck of findMetricPatterns) {
+        if (patternCheck(lowerText, cleanMetric)) {
+          return true;
+        }
+      }
+      
+      // Finally, if the metric has numbers, check for the number with context
+      const numbers = cleanMetric.match(/\d+(?:[\.,]\d+)?/g) || [];
+      if (numbers.length > 0) {
+        // If we find any number that's in both the metric and the text,
+        // and the context words around it match, consider it a match
+        for (const num of numbers) {
+          if (lowerText.includes(num)) {
+            // Get the parts of the metric that aren't the number
+            const metricContext = cleanMetric.replace(num, ' ').replace(/\s+/g, ' ').trim();
+            const contextWords = metricContext.split(' ').filter(w => w.length > 2);
+            
+            // Look for these context words near the number in the text
+            for (const word of contextWords) {
+              if (lowerText.includes(word)) {
+                return true; // Found a context word and the number
+              }
             }
           }
         }
       }
       
-      // Also fallback to the original simple check for any remaining cases
-      const cleanMetric = metric.replace(/[$€£¥]/g, '').trim().toLowerCase();
-      if (lowerText.includes(cleanMetric)) {
-        return true;
-      }
-      
-      return false;
+      return false; // No match found
     });
   });
 
