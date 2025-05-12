@@ -213,6 +213,20 @@ export default function Home() {
       <AppHeader />
       
       <main className="container mx-auto px-4 py-6 flex-1">
+        <div className="mb-6 bg-gradient-to-r from-emerald-50 to-blue-50 p-4 rounded-lg border border-emerald-200 shadow-sm">
+          <h2 className="text-xl font-bold text-emerald-700 mb-2">Try Our Enhanced V2 Interface</h2>
+          <p className="text-gray-700 mb-3">
+            We've completely restructured our resume processing engine with improved margin control, better metric conversion,
+            and more consistent formatting. Experience the difference with our new interface.
+          </p>
+          <a 
+            href="/v2/upload" 
+            className="inline-block px-4 py-2 bg-emerald-600 text-white font-medium rounded-md hover:bg-emerald-700 transition-colors"
+          >
+            Switch to Enhanced V2 Interface →
+          </a>
+        </div>
+        
         <div className="flex flex-col lg:flex-row gap-6">
           <UploadPanel
             onFileUpload={handleFileUpload}

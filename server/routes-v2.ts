@@ -52,7 +52,7 @@ export async function registerV2Routes(app: Express): Promise<void> {
       
       // Then, transform the resume using OpenAI
       console.log("Calling OpenAI to transform resume...");
-      const processedResume = await transformResume(resumeText, enhancedFormat) as unknown as Resume;
+      const processedResume = await transformResume(resumeText as string, enhancedFormat) as unknown as Resume;
       
       // Apply enhanced text processing
       console.log("Applying enhanced text processing (v2)...");
