@@ -28,8 +28,8 @@ async function uploadAndProcessResume() {
     formData.append('skipValidation', 'true'); // Skip OpenAI validation for faster processing
     formData.append('detailedFormat', 'false'); // Use standard format, not detailed
 
-    // Upload the file
-    const response = await fetch(`${API_BASE_URL}/convert`, {
+    // Upload the file using v2 API
+    const response = await fetch(`${API_BASE_URL}/v2/convert`, {
       method: 'POST',
       body: formData
     });
@@ -54,7 +54,7 @@ async function downloadProcessedResume(sessionId) {
   try {
     console.log('Step 2: Downloading processed resume...');
     
-    const response = await fetch(`${API_BASE_URL}/download/${sessionId}`);
+    const response = await fetch(`${API_BASE_URL}/v2/download/${sessionId}`);
     
     if (!response.ok) {
       throw new Error(`Failed to download PDF: ${response.statusText}`);
@@ -79,10 +79,10 @@ async function downloadProcessedResume(sessionId) {
 }
 
 // Main function to run the entire process
-async function testLogoIssue() {
+async function testMetricDeduplication() {
   try {
     console.log('=======================================');
-    console.log('Starting Logo Issue Test');
+    console.log('Starting Metric Deduplication Test');
     console.log('=======================================');
     
     // Step 1: Upload and process the resume
@@ -93,7 +93,7 @@ async function testLogoIssue() {
     
     console.log('=======================================');
     console.log('Test completed successfully!');
-    console.log(`Please check ${pdfPath} to verify the Near logo appears correctly`);
+    console.log(`Please check ${pdfPath} to verify metrics are properly deduplicated`);
     console.log('=======================================');
   } catch (error) {
     console.error('Test failed:', error);
@@ -101,4 +101,4 @@ async function testLogoIssue() {
 }
 
 // Run the test
-testLogoIssue();
+testMetricDeduplication();

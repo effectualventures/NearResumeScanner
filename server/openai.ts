@@ -2032,47 +2032,7 @@ function removeBulletRepetition(resume: Resume): Resume {
 }
 
 /**
- * Remove metrics that simply echo text already present in the bullet point
- * @param r Resume to process
- * @returns Resume with duplicate metrics removed
+ * This function has been replaced by an enhanced version in text-processor-v2.ts
+ * The new implementation uses more sophisticated context-aware analysis to better
+ * detect when metrics are duplicated in bullet text.
  */
-function dedupeMetricEcho(r: Resume): Resume {
-  const clone = structuredClone(r);
-  
-  if (!clone.experience) return clone;
-  
-  clone.experience.forEach(exp => {
-    if (!exp.bullets) return;
-    
-    exp.bullets.forEach(b => {
-      if (!b.text) return;
-      if (!b.metrics || !Array.isArray(b.metrics)) {
-        // Initialize metrics array if missing
-        b.metrics = [];
-        return;
-      }
-      
-      // Ensure metrics exists and is an array
-      if (!b.metrics) {
-        b.metrics = [];
-        return; // No metrics to process
-      }
-      
-      // Create a safe copy of metrics to work with
-      const metrics = [...b.metrics];
-      
-      metrics.forEach(m => {
-        if (!m) return; // Skip null/undefined metrics
-        
-        const plain = m.replace(/[.$]/g,'').trim();
-        if (b.text.toLowerCase().includes(plain.toLowerCase()) && b.metrics) {
-          // Ensure metrics exists before filtering
-          // remove metric that simply repeats what text already contains
-          b.metrics = b.metrics.filter(x => x !== m);
-        }
-      });
-    });
-  });
-  console.log('Removed duplicate metrics that echo bullet text');
-  return clone;
-}
