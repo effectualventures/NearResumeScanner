@@ -29,20 +29,63 @@ export function registerHandlebarsHelpers() {
     return str.includes(substring);
   });
 
-  // Check if any of the metrics appears in the text
+  // Check if any of the metrics appears in the text using an enhanced approach
   Handlebars.registerHelper('containsAny', function(text: string, metrics: string[]) {
     if (!text || !metrics || !metrics.length) return false;
     
     // Convert text to lowercase for case-insensitive comparison
     const lowerText = text.toLowerCase();
     
-    // Check if any metric is contained in the text
+    // Utility function to extract numbers from text (similar to the one in text-processor-v2.ts)
+    const extractNumbers = (str: string): string[] => {
+      if (!str) return [];
+      const matches = str.match(/\d+(?:[,.]\d+)*%?|\d+%?/g);
+      return matches ? matches.map(m => m.replace(/,/g, '')) : [];
+    };
+    
+    // Get significant words from text (excluding common stop words)
+    const getSignificantWords = (str: string): string[] => {
+      if (!str) return [];
+      const cleanText = str.replace(/[$€£¥.,()%]/g, ' ').toLowerCase();
+      const stopWords = ['and', 'the', 'in', 'of', 'to', 'for', 'with', 'by', 'at', 'from', 'on', 'an', 'a'];
+      const words = cleanText.split(/\s+/).filter(word => 
+        word.length > 2 && !stopWords.includes(word)
+      );
+      return words.filter((word, index) => words.indexOf(word) === index); // Remove duplicates
+    };
+    
+    // Check if any metric's numbers and context words appear in the text
     return metrics.some(metric => {
       if (!metric) return false;
       
-      // Remove currency symbols and trim for more accurate matching
-      const cleanMetric = metric.replace(/[$€£¥]/g, '').trim();
-      return lowerText.includes(cleanMetric.toLowerCase());
+      // Get numbers from the metric
+      const metricNumbers = extractNumbers(metric);
+      if (metricNumbers.length === 0) return false; // No numbers to compare
+      
+      // Check if any number from the metric appears in the text with surrounding context
+      for (const num of metricNumbers) {
+        if (lowerText.includes(num)) {
+          // For contextual verification, check if significant words are also present
+          const metricWords = getSignificantWords(metric);
+          
+          // Check if any significant word is near the number in the text
+          for (const word of metricWords) {
+            if (lowerText.includes(word) && 
+                Math.abs(lowerText.indexOf(word) - lowerText.indexOf(num)) < 30) {
+              // If we find the number and contextual word nearby, it's likely a duplicate
+              return true;
+            }
+          }
+        }
+      }
+      
+      // Also fallback to the original simple check for any remaining cases
+      const cleanMetric = metric.replace(/[$€£¥]/g, '').trim().toLowerCase();
+      if (lowerText.includes(cleanMetric)) {
+        return true;
+      }
+      
+      return false;
     });
   });
 
