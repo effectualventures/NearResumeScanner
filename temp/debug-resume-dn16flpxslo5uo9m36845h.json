@@ -1,0 +1,177 @@
+{
+  "header": {
+    "firstName": "Luis",
+    "tagline": "Senior Business Development Leader – LATAM & US Sales",
+    "location": "Colombia",
+    "city": "Bogotá",
+    "country": "Colombia"
+  },
+  "summary": "Senior Business Development Leader with over 10 years of experience in LATAM and US markets, specializing in strategic partnerships and achieving $1.2M deals with 120% quota attainment. Proven track record in CRM systems and team leadership.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Sales Development",
+        "Business Development",
+        "Pipeline Management",
+        "Performance Tracking",
+        "Lead Qualification",
+        "Outbound Sales Strategies",
+        "B2B Sales",
+        "Account Management",
+        "CRM Systems",
+        "Salesforce",
+        "Negotiation",
+        "Market Analysis",
+        "Strategic Planning",
+        "Customer Relationship Management",
+        "Sales Forecasting",
+        "Team Leadership"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "Spanish (Native)",
+        "English (Fluent)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Toshiba Global Commerce Solutions",
+      "location": "Colombia",
+      "title": "Business Development Manager",
+      "startDate": "Oct 2023",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Conducted quantitative and qualitative analysis for new business opportunities in LATAM.",
+          "metrics": [
+            "$200K deal for a cosmetic brand"
+          ]
+        },
+        {
+          "text": "Identified and cultivated new customer relationships aligning with Toshiba's strategy.",
+          "metrics": [
+            "Led team of 3 BDRs"
+          ]
+        },
+        {
+          "text": "Represented Toshiba as an expert at industry events.",
+          "metrics": [
+            "Sourced $200K deal",
+            "Optimized pipeline growth"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Incode Technologies",
+      "location": "Colombia",
+      "title": "Senior Business Developer",
+      "startDate": "Jul 2021",
+      "endDate": "Jan 2022",
+      "bullets": [
+        {
+          "text": "Initiated sales opportunities through outbound prospecting and lead qualification.",
+          "metrics": [
+            "$1.2M deal with U.S. rental car company"
+          ]
+        },
+        {
+          "text": "Collaborated to optimize lead qualification processes.",
+          "metrics": [
+            "Achieved quota for 5 consecutive quarters"
+          ]
+        },
+        {
+          "text": "Led team of SDRs to open 50 new opportunities for AEs, resulting in a 20% increase in pipeline conversion rate.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "AltiSales",
+      "location": "Colombia",
+      "title": "Senior Sales Development Representative",
+      "startDate": "Aug 2020",
+      "endDate": "Jun 2021",
+      "bullets": [
+        {
+          "text": "Generated and qualified corporate leads through phone calls and digital channels.",
+          "metrics": [
+            "Average quota attainment of 98% across team"
+          ]
+        },
+        {
+          "text": "Developed lead qualification criteria and call scripts.",
+          "metrics": [
+            "$880K deal with U.S. stadium"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "ProspectHunter",
+      "location": "Colombia",
+      "title": "Business Development Representative",
+      "startDate": "Feb 2018",
+      "endDate": "Dec 2018",
+      "bullets": []
+    },
+    {
+      "company": "Strategic Properties",
+      "location": "Colombia",
+      "title": "Account Executive",
+      "startDate": "Mar 2014",
+      "endDate": "Sep 2017",
+      "bullets": [
+        {
+          "text": "Prepared reports and presentations supporting commercial actions.",
+          "metrics": [
+            "120% of quota attained",
+            "President’s Club award"
+          ]
+        },
+        {
+          "text": "Participated in marketing initiatives, boosting engagement.",
+          "metrics": [
+            "95-105% quota attainment in U.S. market"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Veridas",
+      "location": "Colombia",
+      "title": "Sales Development Manager",
+      "startDate": "Jan 2022",
+      "endDate": "Jul 2023",
+      "bullets": [
+        {
+          "text": "Led and coached a team of 8 SDRs covering LATAM and U.S. markets.",
+          "metrics": []
+        },
+        {
+          "text": "Designed outbound sales strategies and optimized workflows for efficiency.",
+          "metrics": []
+        },
+        {
+          "text": "Developed sales playbooks, performance tracking systems, and training programs.",
+          "metrics": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad Sergio Arboleda",
+      "degree": "Business Administration",
+      "location": "Colombia",
+      "year": "2020",
+      "additionalInfo": ""
+    }
+  ],
+  "additionalExperience": ""
+}

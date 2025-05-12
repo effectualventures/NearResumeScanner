@@ -338,26 +338,51 @@ export async function generatePDFv2(resume: Resume, sessionId: string, detailedF
           scale: 1.0, // Full scale for detailed format
         });
       } else {
-        // For standard format, calculate optimal scale to fit on one page
+        // For standard format, adjust content to fit on one page
         console.log('Using standard format: optimizing for single page');
         
-        // Measure content height
+        // Before scaling, position the footer at the bottom of the page
+        // This function is executed in the browser context
+        await page.evaluate(() => {
+          // Find main content container and footer
+          const container = document.querySelector('.resume-container') as HTMLElement | null;
+          const logoZone = document.querySelector('.logo-zone') as HTMLElement | null;
+          
+          if (container && logoZone) {
+            // Measure available height
+            const pageHeight = 11 * 96; // Letter height in pixels (11 inches at 96 DPI)
+            const margins = 0.7 * 96; // Bottom margin in pixels
+            const availableHeight = pageHeight - margins;
+            
+            // If content is shorter than page, position footer at bottom
+            if (container.scrollHeight < availableHeight - 40) { // 40px for footer
+              const footerContainer = document.createElement('div');
+              footerContainer.style.height = (availableHeight - container.scrollHeight - 40) + 'px';
+              
+              // Add the spacer element before the logo zone
+              container.insertBefore(footerContainer, logoZone);
+            }
+          }
+        });
+        
+        // Now measure content height for scaling
         const contentHeight = await page.evaluate(() => {
           return document.body.scrollHeight;
         });
         
-        // Calculate scale to fit on one page
+        // Calculate scale to fit on one page, with more conservative scaling for short content
         const pageHeight = 11 * 96; // Letter height in pixels (11 inches at 96 DPI)
-        const availableHeight = pageHeight - 96; // Account for margins
+        const availableHeight = pageHeight - 120; // More conservative margin accounting
         const scale = contentHeight > availableHeight ? 
-                       Math.min(0.95, (availableHeight / contentHeight) * 0.98) : 
-                       0.98;
+                       Math.min(0.98, (availableHeight / contentHeight) * 0.99) : 
+                       1.0; // No scaling needed if content fits
         
         console.log(`Content height: ${contentHeight}px, using scale factor: ${scale}`);
         
         await page.pdf({
           ...pdfOptions,
           scale: scale,
+          margin: defaultPdfMargins // Ensure margins are applied consistently
         });
       }
       

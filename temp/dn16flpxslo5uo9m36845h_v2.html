@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="author" content="Near Resume Engine">
-  <title>Résumé – {{header.firstName}}</title>
+  <title>Résumé – Luis</title>
   <style>
     /* Base page setup with precise margins */
     @page {
@@ -237,11 +237,9 @@
       width: 100%;
       clear: both;
       display: block;
-      margin-top: auto; /* Push to bottom of available space */
+      margin-top: 30px; /* Space between content and footer */
       margin-bottom: 0; /* No margin at bottom */
       page-break-inside: avoid; /* Keep footer on same page */
-      position: relative; /* For absolute positioning of branding-footer */
-      min-height: 40px; /* Minimum height to ensure visibility */
     }
     
     .branding-footer {
@@ -252,51 +250,31 @@
       font-family: 'Inter', 'Helvetica', sans-serif;
       font-size: 10px;
       width: 100%;
-      padding-top: 10px; /* Space above the logo */
+      border-top: 1px solid #f0f0f0; /* Light separator line */
+      padding-top: 10px; /* Space above the logo, after the line */
       padding-bottom: 0; /* No padding at bottom */
-      position: absolute; /* Absolute position within logo-zone */
-      bottom: 0; /* Position at bottom of logo-zone */
     }
     
     .branding-footer img {
       height: 25px;
       width: auto;
     }
-    
-    /* Single page format specific styles */
-    .single-page-format .resume-container {
-      display: flex;
-      flex-direction: column;
-      min-height: calc(11in - 1.2in); /* Page height minus margins */
-    }
-    
-    .single-page-format .logo-zone {
-      margin-top: auto; /* Push to bottom of flex container */
-    }
-    
-    /* Detailed format specific styles */
-    .detailed-format .logo-zone {
-      margin-top: 15px; /* Standard spacing */
-    }
   </style>
 </head>
-<body class="{{#if detailedFormat}}detailed-format{{else}}single-page-format{{/if}}">
-  <!-- Page structure with flex layout to push footer to bottom -->
+<body>
   <div class="resume-container">
     <!-- HEADER -->
     <div class="header">
-      <h1>{{header.firstName}}</h1>
-      <p><strong>{{header.tagline}}</strong></p>
-      <p>{{header.location}}</p>
+      <h1>Luis</h1>
+      <p><strong>Senior Business Development Leader – LATAM &amp; US Sales</strong></p>
+      <p>Colombia</p>
     </div>
     
     <hr class="section-rule">
     
     <!-- SUMMARY -->
     <div class="summary">
-      {{#if summary}}
-        {{summary}}{{#unless (endsWith summary ".")}}{{#unless (endsWith summary "?")}}{{#unless (endsWith summary "!")}}{{#unless (endsWith summary ":")}}{{#unless (endsWith summary ";")}}{{#unless (endsWith summary "...")}}{{#unless (endsWith summary "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}
-      {{/if}}
+        Senior Business Development Leader with over 10 years of experience in LATAM and US markets, specializing in strategic partnerships and achieving $1.2M deals with 120% quota attainment. Proven track record in CRM systems and team leadership.
     </div>
     
     <!-- SKILLS AND LANGUAGES SECTION -->
@@ -305,36 +283,17 @@
       <hr class="section-rule"/>
       <div class="skills">
         <!-- First display skills -->
-        {{#each skills}}
-          {{#if (eq category "Skills")}}
             <div style="margin-bottom: 4px; width: 100%;">
-              <b style="font-weight: bold !important;">Skills:</b> {{this.items.[0]}}{{#each (slice this.items 1 15)}} • {{this}}{{/each}}
+              <b style="font-weight: bold !important;">Skills:</b> Sales Development • Business Development • Pipeline Management • Performance Tracking • Lead Qualification • Outbound Sales Strategies • B2B Sales • Account Management • CRM Systems • Salesforce • Negotiation • Market Analysis • Strategic Planning • Customer Relationship Management • Sales Forecasting
             </div>
-          {{/if}}
-        {{/each}}
         
         <!-- Display any other categories except Languages -->
-        {{#each skills}}
-          {{#if (and (not (eq category "Skills")) (not (eq category "Languages")))}}
-            <div style="margin-bottom: 4px; width: 100%;">
-              <b style="font-weight: bold !important;">{{this.category}}:</b> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
-            </div>
-          {{/if}}
-        {{/each}}
         
         <!-- Display Languages within the same section -->
         <div style="margin-top: 10px;">
           <b style="font-weight: bold !important;">Languages:</b> 
-          {{#each skills}}
-            {{#if (eq category "Languages")}}
-              {{#each this.items}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}
-            {{/if}}
-          {{/each}}
+              Spanish (Native); English (Fluent)
           
-          {{! Safety Check - Add default if no Languages category is found }}
-          {{#unless (some skills 'category' 'Languages')}}
-            English (Fluent)
-          {{/unless}}
         </div>
       </div>
     </section>
@@ -344,44 +303,125 @@
       <h2 class="section-title">Professional Experience</h2>
       <hr class="section-rule"/>
       <div class="experience-container">
-        {{#each experience}}
           <div class="experience">
             <div class="experience-header">
               <div>
-                <span class="company">{{company}}</span>
+                <span class="company">Toshiba Global Commerce Solutions</span>
                 <span> — </span>
-                <span class="location">{{location}}</span>
+                <span class="location">Colombia</span>
               </div>
-              <div class="dates">{{startDate}} – {{formatEndDate endDate}}</div>
+              <div class="dates">Oct 2023 – Present</div>
             </div>
-            <div class="title">{{title}}</div>
+            <div class="title">Business Development Manager</div>
             <ul>
-              {{#if ../detailedFormat}}
-                <!-- Show all bullet points for detailed format -->
-                {{#each bullets}}
-                  <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
-                    {{#if metrics.length}}
-                      {{#unless (containsAny text metrics)}}
-                        <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
-                      {{/unless}}
-                    {{/if}}
-                  </li>
-                {{/each}}
-              {{else}}
                 <!-- Limit to 7 bullet points for standard format -->
-                {{#each (slice bullets 0 7)}}
-                  <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
-                    {{#if metrics.length}}
-                      {{#unless (containsAny text metrics)}}
-                        <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
-                      {{/unless}}
-                    {{/if}}
+                  <li><span>Conducted quantitative and qualitative analysis for new business opportunities in LATAM.</span>
+                        <span class="metrics">$200K deal for a cosmetic brand</span>
                   </li>
-                {{/each}}
-              {{/if}}
+                  <li><span>Identified and cultivated new customer relationships aligning with Toshiba&#x27;s strategy.</span>
+                        <span class="metrics">Led team of 3 BDRs</span>
+                  </li>
+                  <li><span>Represented Toshiba as an expert at industry events.</span>
+                        <span class="metrics">Sourced $200K deal | Optimized pipeline growth</span>
+                  </li>
             </ul>
           </div>
-        {{/each}}
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Incode Technologies</span>
+                <span> — </span>
+                <span class="location">Colombia</span>
+              </div>
+              <div class="dates">Jul 2021 – Jan 2022</div>
+            </div>
+            <div class="title">Senior Business Developer</div>
+            <ul>
+                <!-- Limit to 7 bullet points for standard format -->
+                  <li><span>Initiated sales opportunities through outbound prospecting and lead qualification.</span>
+                        <span class="metrics">$1.2M deal with U.S. rental car company</span>
+                  </li>
+                  <li><span>Collaborated to optimize lead qualification processes.</span>
+                        <span class="metrics">Achieved quota for 5 consecutive quarters</span>
+                  </li>
+                  <li><span>Led team of SDRs to open 50 new opportunities for AEs, resulting in a 20% increase in pipeline conversion rate.</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">AltiSales</span>
+                <span> — </span>
+                <span class="location">Colombia</span>
+              </div>
+              <div class="dates">Aug 2020 – Jun 2021</div>
+            </div>
+            <div class="title">Senior Sales Development Representative</div>
+            <ul>
+                <!-- Limit to 7 bullet points for standard format -->
+                  <li><span>Generated and qualified corporate leads through phone calls and digital channels.</span>
+                        <span class="metrics">Average quota attainment of 98% across team</span>
+                  </li>
+                  <li><span>Developed lead qualification criteria and call scripts.</span>
+                        <span class="metrics">$880K deal with U.S. stadium</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">ProspectHunter</span>
+                <span> — </span>
+                <span class="location">Colombia</span>
+              </div>
+              <div class="dates">Feb 2018 – Dec 2018</div>
+            </div>
+            <div class="title">Business Development Representative</div>
+            <ul>
+                <!-- Limit to 7 bullet points for standard format -->
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Strategic Properties</span>
+                <span> — </span>
+                <span class="location">Colombia</span>
+              </div>
+              <div class="dates">Mar 2014 – Sep 2017</div>
+            </div>
+            <div class="title">Account Executive</div>
+            <ul>
+                <!-- Limit to 7 bullet points for standard format -->
+                  <li><span>Prepared reports and presentations supporting commercial actions.</span>
+                        <span class="metrics">120% of quota attained | President’s Club award</span>
+                  </li>
+                  <li><span>Participated in marketing initiatives, boosting engagement.</span>
+                        <span class="metrics">95-105% quota attainment in U.S. market</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Veridas</span>
+                <span> — </span>
+                <span class="location">Colombia</span>
+              </div>
+              <div class="dates">Jan 2022 – Jul 2023</div>
+            </div>
+            <div class="title">Sales Development Manager</div>
+            <ul>
+                <!-- Limit to 7 bullet points for standard format -->
+                  <li><span>Led and coached a team of 8 SDRs covering LATAM and U.S. markets.</span>
+                  </li>
+                  <li><span>Designed outbound sales strategies and optimized workflows for efficiency.</span>
+                  </li>
+                  <li><span>Developed sales playbooks, performance tracking systems, and training programs.</span>
+                  </li>
+            </ul>
+          </div>
       </div>
     </section>
     
@@ -390,52 +430,18 @@
       <h2 class="section-title">Education</h2>
       <hr class="section-rule"/>
       <div class="education">
-        {{#each education}}
-          <div class="education-institution"><strong>{{institution}}</strong>{{#if location}} — {{location}}{{/if}}</div>
-          <div class="education-degree">{{degree}}{{#if (and degree year)}}, {{/if}}{{year}}</div>
-          {{#if additionalInfo}}
-            {{#if (contains additionalInfo "CAU BR")}}
-              <!-- Don't show CAU BR here, it will be in PROFESSIONAL MEMBERSHIPS section -->
-            {{else}}
-              <div class="education-details">{{additionalInfo}}</div>
-            {{/if}}
-          {{/if}}
-        {{/each}}
+          <div class="education-institution"><strong>Universidad Sergio Arboleda</strong> — Colombia</div>
+          <div class="education-degree">Business Administration, 2020</div>
       </div>
     </section>
     
-    {{#if additionalExperience}}
-      <section>
-        <h2 class="section-title">Additional Experience</h2>
-        <hr class="section-rule"/>
-        <ul class="additional" style="margin-top: 2px; margin-bottom: 2px; padding-left: 16px;">
-          {{#each (splitLines additionalExperience)}}
-            <li>{{this}}{{#unless (endsWith this ".")}}{{#unless (endsWith this "?")}}{{#unless (endsWith this "!")}}{{#unless (endsWith this ":")}}{{#unless (endsWith this ";")}}{{#unless (endsWith this "...")}}{{#unless (endsWith this "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</li>
-          {{/each}}
-        </ul>
-      </section>
-    {{else}}
       <!-- If additionalExperience is missing but we have CAU BR, create a special PROFESSIONAL MEMBERSHIPS section -->
-      {{#each education}}
-        {{#if (contains additionalInfo "CAU BR")}}
-          {{#unless @index}}
-            <section>
-              <h2 class="section-title">Professional Memberships</h2>
-              <hr class="section-rule"/>
-              <ul class="additional" style="margin-top: 2px; margin-bottom: 2px; padding-left: 16px;">
-                <li>CAU BR Certified Architect — Since 2011.</li>
-              </ul>
-            </section>
-          {{/unless}}
-        {{/if}}
-      {{/each}}
-    {{/if}}
     
     <!-- Footer with the logo at the bottom of the content -->
     <div class="logo-zone">
       <div class="branding-footer">
         <span><strong>Presented by</strong></span>
-        <img src="file://{{logoPath}}" alt="Near logo"/>
+        <img src="file:///home/runner/workspace/public/images/near_logo.png" alt="Near logo"/>
       </div>
     </div>
   </div>
