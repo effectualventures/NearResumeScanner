@@ -371,8 +371,8 @@ Your response must be a valid JSON object representing the processed resume with
       // Remove repetitive starts in bullet points (e.g. "Developed... Developed... Developed...")
       finalResume = removeBulletRepetition(finalResume);
       
-      // Remove duplicate metrics that already appear in the bullet text
-      finalResume = dedupeMetricEcho(finalResume);
+      // Note: Duplicate metrics removal is now handled in text-processor-v2.ts
+      // with a more sophisticated implementation
       
       // Apply bullet point limitation (max 7 bullets per role)
       // For detailed format, still limit to 7 bullets per stakeholder feedback

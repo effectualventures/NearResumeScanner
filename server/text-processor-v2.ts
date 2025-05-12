@@ -484,12 +484,33 @@ function dedupeMetricEcho(resume: Resume): Resume {
             bullet.metrics = bullet.metrics.filter((metric: string) => {
               if (!metric) return false;
               
-              // Remove currency symbols and formatting for comparison
-              const plainMetric = metric.replace(/[$€£¥.,]/g, '').trim().toLowerCase();
+              // Extract numerical values from the metric
+              const metricNumbers = extractNumbers(metric);
+              if (metricNumbers.length === 0) return true; // Keep metrics with no numbers
+              
               const bulletText = bullet.text.toLowerCase();
               
-              // Keep metric if it's not already in the bullet text
-              return !bulletText.includes(plainMetric);
+              // For each number in the metric, check if it appears in the bullet text
+              for (const num of metricNumbers) {
+                // If the number appears in the bullet text along with similar contextual words, 
+                // consider it a duplicate
+                if (bulletText.includes(num)) {
+                  // Check for contextual words - get words from metric (minus stop words)
+                  const metricWords = getSignificantWords(metric.toLowerCase());
+                  
+                  // Check if any significant word from the metric appears near the number in the bullet
+                  for (const word of metricWords) {
+                    if (bulletText.includes(word) && 
+                        Math.abs(bulletText.indexOf(word) - bulletText.indexOf(num)) < 30) {
+                      // We found the number and a significant word from the metric near each other
+                      // This is likely a duplicate
+                      return false; 
+                    }
+                  }
+                }
+              }
+              
+              return true; // Keep this metric if no matching pattern was found
             });
             
             if (originalMetricsCount !== bullet.metrics.length) {
@@ -506,4 +527,37 @@ function dedupeMetricEcho(resume: Resume): Resume {
     console.error('Error removing duplicate metrics:', error);
     return resume;
   }
+}
+
+/**
+ * Extract all numbers from a string, preserving decimals and percentages
+ */
+function extractNumbers(text: string): string[] {
+  if (!text) return [];
+  
+  // Find all numbers including those with decimals, percentages, and with commas
+  const matches = text.match(/\d+(?:[,.]\d+)*%?|\d+%?/g);
+  if (!matches) return [];
+  
+  // Clean up and normalize the matches
+  return matches.map(m => m.replace(/,/g, ''));
+}
+
+/**
+ * Get significant words from text (excluding common stop words)
+ */
+function getSignificantWords(text: string): string[] {
+  if (!text) return [];
+  
+  // Remove currency symbols and special characters
+  const cleanText = text.replace(/[$€£¥.,()%]/g, ' ').toLowerCase();
+  
+  // Split into words and filter out short words and common stop words
+  const stopWords = ['and', 'the', 'in', 'of', 'to', 'for', 'with', 'by', 'at', 'from', 'on', 'an', 'a'];
+  const words = cleanText.split(/\s+/).filter(word => 
+    word.length > 2 && !stopWords.includes(word)
+  );
+  
+  // Remove duplicates using filter instead of Set
+  return words.filter((word, index) => words.indexOf(word) === index);
 }
