@@ -48,7 +48,7 @@ export async function registerV2Routes(app: Express): Promise<void> {
       
       // First, extract text from the uploaded file
       console.log(`Processing file: ${resumeFile.name} (${resumeFile.size} bytes)`);
-      const resumeText = await parseResumeFile(resumeFile.data, resumeFile.name);
+      const resumeText = await parseResumeFile(resumeFile.data as Buffer, resumeFile.name);
       
       // Then, transform the resume using OpenAI
       console.log("Calling OpenAI to transform resume...");
@@ -124,7 +124,7 @@ export async function registerV2Routes(app: Express): Promise<void> {
       sessionData.feedbackChat.push(`User: ${message}`);
       
       // Process the chat message
-      const response = await processChat(message, currentResume, sessionData.feedbackChat);
+      const response = await processChat(message, currentResume as unknown as Resume, sessionData.feedbackChat);
       
       // Add assistant response to chat history
       sessionData.feedbackChat.push(`Assistant: ${response}`);
@@ -247,7 +247,7 @@ export async function registerV2Routes(app: Express): Promise<void> {
           sessionId
         }
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error generating auto-feedback:", error);
       return res.status(500).json({
         success: false,
@@ -298,7 +298,7 @@ export async function registerV2Routes(app: Express): Promise<void> {
         success: true,
         data: result
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error implementing feedback:", error);
       return res.status(500).json({
         success: false,
