@@ -9,6 +9,8 @@
     @page {
       size: letter;
       margin: 0.5in 0.5in 0.7in 0.5in; /* top, right, bottom, left */
+      orphans: 3; /* Minimum number of lines at the top of a page */
+      widows: 3; /* Minimum number of lines at the bottom of a page */
     }
     
     /* Reset CSS to ensure consistent rendering */
@@ -135,17 +137,26 @@
     .experience {
       margin-bottom: 15px;
       break-inside: auto; /* Modern property to allow breaks within experiences */
+      page-break-inside: auto; /* Allow page breaks within experience items */
     }
     
-    /* Use CSS Grid for better layout control */
+    /* Keep headers with at least some content */
     section h2.section-title {
       page-break-after: avoid; /* Keep section headings with their content */
+    }
+    
+    /* Keep company and title headings with at least 2 lines of content */
+    .company, .title {
+      page-break-after: avoid;
     }
     
     .experience-header {
       display: flex;
       justify-content: space-between;
       margin-bottom: 1px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      page-break-after: avoid;
     }
     
     .company {
@@ -161,12 +172,15 @@
       padding-left: 16px;
       margin-top: 2px;
       margin-bottom: 10px;
+      page-break-before: avoid; /* Prevent break before the bullet list */
     }
     
     li {
       margin-bottom: 2px;
       font-weight: normal;
       font-size: 10.5pt;
+      break-inside: avoid-column;
+      page-break-inside: auto; /* Allow bullets to break across pages */
     }
     
     /* Metric emphasis but not whole bullet */
