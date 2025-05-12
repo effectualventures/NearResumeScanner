@@ -2048,7 +2048,8 @@ function dedupeMetricEcho(r: Resume): Resume {
         if (!m) return; // Skip null/undefined metrics
         
         const plain = m.replace(/[.$]/g,'').trim();
-        if (b.text.toLowerCase().includes(plain.toLowerCase())) {
+        if (b.text.toLowerCase().includes(plain.toLowerCase()) && b.metrics) {
+          // Ensure metrics exists before filtering
           // remove metric that simply repeats what text already contains
           b.metrics = b.metrics.filter(x => x !== m);
         }

@@ -507,6 +507,84 @@ export async function registerV2Routes(app: Express): Promise<void> {
     }
   });
   
+  // Add a debug endpoint for testing the OpenAI transformation process
+  app.get('/api/v2/debug/transform', async (req: Request, res: Response) => {
+    try {
+      // Sample resume text for testing
+      const sampleText = `John Smith
+Senior Software Engineer
+
+SUMMARY
+Experienced software engineer with 8 years of experience in full-stack development. 
+Proficient in JavaScript, TypeScript, React, and Node.js.
+
+EXPERIENCE
+ABC Technologies, Senior Software Engineer
+Jan 2020 - Present, San Francisco, CA
+• Developed and maintained multiple web applications using React and Node.js
+• Led a team of 5 developers, increasing productivity by 30%
+• Implemented CI/CD pipelines reducing deployment time by 50%
+
+XYZ Corp, Software Engineer
+Mar 2017 - Dec 2019, Seattle, WA
+• Built RESTful APIs using Express.js and MongoDB
+• Collaborated with product managers to define feature requirements
+• Refactored legacy codebase improving performance by 40%
+
+EDUCATION
+University of Washington, Computer Science
+2016, Seattle, WA
+Bachelor of Science, Computer Science
+
+SKILLS
+JavaScript, TypeScript, React, Node.js, Express, MongoDB, Git, CI/CD, Agile
+LANGUAGES
+English (Fluent), Spanish (Intermediate)`;
+
+      // Generate a unique test session ID
+      const testSessionId = 'debug-transform-' + generateSessionId();
+      console.log('Debug transform: Starting OpenAI transformation process with session ID:', testSessionId);
+      
+      // Call the transform resume function with all required parameters
+      const transformResult = await transformResume(
+        sampleText,
+        testSessionId,
+        false, // standard one-page format
+        true   // use OpenAI validation
+      );
+      
+      if (!transformResult.success || !transformResult.resume) {
+        throw new Error('Resume transformation failed: ' + transformResult.error);
+      }
+      
+      // Save the processed data for inspection
+      const debugPath = path.resolve(process.cwd(), 'temp/transform_data_debug.json');
+      fs.writeFileSync(debugPath, JSON.stringify(transformResult.resume, null, 2));
+      
+      console.log('Debug transform: Resume transformation complete, saved to', debugPath);
+      
+      // Now use this data to generate a PDF
+      const pdfPath = await generatePDFv2(transformResult.resume, testSessionId, false);
+      
+      console.log('Debug transform: PDF generation complete, path:', pdfPath);
+      
+      // Send the processed data as JSON with PDF URL
+      res.json({
+        success: true,
+        message: 'Resume transformation and PDF generation successful',
+        pdfUrl: `/api/v2/download/${testSessionId}`,
+        resumeData: transformResult.resume
+      });
+    } catch (error: any) {
+      console.error('Error testing resume transformation:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: 'Error testing resume transformation',
+        message: error instanceof Error ? error.message : 'Unknown error occurred'
+      });
+    }
+  });
+
   console.log("Enhanced v2 routes registered");
 }
 
