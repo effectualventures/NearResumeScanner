@@ -52,7 +52,8 @@ export async function registerV2Routes(app: Express): Promise<void> {
       
       // Then, transform the resume using OpenAI
       console.log("Calling OpenAI to transform resume...");
-      const processedResume = await transformResume(resumeText as string, enhancedFormat) as unknown as Resume;
+      // The transformResume function requires sessionId as the second parameter, not enhancedFormat
+      const processedResume = await transformResume(resumeText as string, sessionId, enhancedFormat) as unknown as Resume;
       
       // Apply enhanced text processing
       console.log("Applying enhanced text processing (v2)...");
@@ -60,7 +61,7 @@ export async function registerV2Routes(app: Express): Promise<void> {
       
       // Store session data
       sessions[sessionId] = {
-        originalText: resumeText,
+        originalText: typeof resumeText === 'string' ? resumeText : JSON.stringify(resumeText),
         processedJson: JSON.stringify(enhancedResume),
         enhancedFormat
       };
@@ -124,7 +125,8 @@ export async function registerV2Routes(app: Express): Promise<void> {
       sessionData.feedbackChat.push(`User: ${message}`);
       
       // Process the chat message
-      const response = await processChat(message, currentResume as unknown as Resume, sessionData.feedbackChat);
+      // The correct parameter order for processChat is: sessionId, message, currentResume
+      const response = await processChat(sessionId, message, currentResume as unknown as Resume);
       
       // Add assistant response to chat history
       sessionData.feedbackChat.push(`Assistant: ${response}`);

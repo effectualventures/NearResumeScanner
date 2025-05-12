@@ -99,9 +99,29 @@ export async function generatePDFv2(resume: Resume, sessionId: string, detailedF
     // Compile the template
     const template = Handlebars.compile(templateSource);
     
+    // Verify and validate resume structure before passing to template
+    if (!resume || typeof resume !== 'object') {
+      console.error('ERROR: Invalid resume data received:', resume);
+      throw new Error('Invalid resume data format');
+    }
+
+    // Ensure all required fields exist
+    const validatedResume = {
+      header: resume.header || { 
+        firstName: 'Professional',
+        tagline: 'Resume',
+        location: 'United States'
+      },
+      summary: resume.summary || 'Experienced professional with a track record of success.',
+      skills: Array.isArray(resume.skills) ? resume.skills : [],
+      experience: Array.isArray(resume.experience) ? resume.experience : [],
+      education: Array.isArray(resume.education) ? resume.education : [],
+      additionalExperience: resume.additionalExperience || ''
+    };
+    
     // Prepare data for template with detailed format flag
     const data = {
-      ...resume,
+      ...validatedResume,
       detailedFormat,
       logoPath: path.resolve(process.cwd(), 'public/images/near_logo.png')
     };

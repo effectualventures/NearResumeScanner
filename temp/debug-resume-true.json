@@ -1,25 +1,31 @@
 {
   "header": {
     "firstName": "Juan",
-    "tagline": "Senior Business Developer – SaaS & FinTech",
+    "tagline": "Senior Sales Engineer - Construction Tech",
     "location": "Mexico",
     "city": "Mexico City",
     "country": "Mexico"
   },
-  "summary": "SaaS and FinTech professional with over 5 years of experience, achieving a 42% lead increase and $1.5M pipeline growth. Expert in market analysis and strategic partnerships.",
+  "summary": "Proven sales engineer with 6+ years in construction tech, achieving $5M sales and 40% territory growth.",
   "skills": [
     {
       "category": "Skills",
       "items": [
-        "Sales Strategy",
-        "Market Analysis",
-        "Strategic Partnerships",
-        "Lead Generation",
-        "Negotiation",
-        "CRM Systems",
-        "Pipeline Management",
-        "Customer Relationship Management",
-        "Leadership"
+        "First Principle Estimating",
+        "Bill of Quantities (BOQ)",
+        "Tender Documents",
+        "Quantity Take-Off",
+        "AutoCAD",
+        "Civil Construction",
+        "Infrastructure Projects",
+        "Cost Estimating",
+        "Cost Consulting",
+        "Project Management",
+        "Budget Management",
+        "Tender Document Preparation",
+        "Project Documentation",
+        "Quantity Take-off",
+        "Bill of Quantities (BOQ) Preparation"
       ]
     },
     {
@@ -32,60 +38,51 @@
   ],
   "experience": [
     {
-      "company": "AltiSales",
+      "company": "ConstructTech Solutions",
       "location": "Mexico",
-      "title": "Business Development Manager",
-      "startDate": "Jan 2020",
+      "title": "Sales Engineer",
+      "startDate": "Jan 2019",
       "endDate": "Present",
       "bullets": [
         {
-          "text": "Identified and qualified $4.2M in untapped opportunities across 5 key LATAM markets.",
+          "text": "Increased regional sales by 33% YoY, contributing $5M USD in revenue.",
+          "metrics": []
+        },
+        {
+          "text": "Closed contracts with 12 key clients, enhancing market presence, resulting in a 15% increase in market share.",
           "metrics": [
-            "$4.2M in opportunities",
-            "5 key markets"
+            "15% market share increase"
           ]
         },
         {
-          "text": "Established 3 strategic partnerships yielding $1.5M in new pipeline within 6 months.",
+          "text": "Reduced proposal turnaround time by 28% through workflow automation.",
           "metrics": [
-            "3 partnerships",
-            "$1.5M new pipeline"
-          ]
-        },
-        {
-          "text": "Conducted comprehensive market analysis resulting in 42% increase in qualified leads.",
-          "metrics": [
-            "42% increase in leads"
+            "28% reduction"
           ]
         }
       ]
     },
     {
-      "company": "Tech Corp",
+      "company": "BuildSmart Ltd.",
       "location": "Mexico",
-      "title": "Sales Development Representative",
-      "startDate": "Aug 2017",
-      "endDate": "Dec 2019",
+      "title": "Technical Estimator",
+      "startDate": "Mar 2015",
+      "endDate": "Dec 2018",
       "bullets": [
         {
-          "text": "Generated $3.2M in qualified pipeline, exceeding target by 28%.",
+          "text": "Prepared accurate cost estimates for 25+ projects annually, valued at $30M+ USD total.",
+          "metrics": []
+        },
+        {
+          "text": "Collaborated with cross-functional teams to optimize project costs, saving 17%.",
           "metrics": [
-            "$3.2M pipeline",
-            "28% over target"
+            "17% savings"
           ]
         },
         {
-          "text": "Achieved 37% connect-to-meeting conversion rate, 15% above team average.",
+          "text": "Developed comprehensive BOQ for infrastructure projects, improving accuracy by 22%.",
           "metrics": [
-            "37% conversion rate",
-            "15% above average"
-          ]
-        },
-        {
-          "text": "Consistently achieved 132% of quota for 5 consecutive quarters.",
-          "metrics": [
-            "132% quota",
-            "5 quarters"
+            "22% accuracy improvement"
           ]
         }
       ]
@@ -93,12 +90,12 @@
   ],
   "education": [
     {
-      "institution": "Monterrey Institute of Technology",
-      "degree": "International Business",
+      "institution": "National Autonomous University of Mexico",
+      "degree": "Civil Engineering",
       "location": "Mexico",
-      "year": "2017",
-      "additionalInfo": "GPA: 3.8/4.0"
+      "year": "2014",
+      "additionalInfo": "Graduated with Honors"
     }
   ],
-  "additionalExperience": "Volunteered as a mentor for the 'Youth Entrepreneurial Program' aiding young talents in developing business skills."
+  "additionalExperience": ""
 }
