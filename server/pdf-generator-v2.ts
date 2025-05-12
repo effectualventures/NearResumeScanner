@@ -104,6 +104,20 @@ export async function generatePDFv2(resume: Resume, sessionId: string, detailedF
       console.error('ERROR: Invalid resume data received:', resume);
       throw new Error('Invalid resume data format');
     }
+    
+    // Log the resume structure for debugging
+    console.log('PDF Generator received resume type:', typeof resume);
+    const resumeKeys = Object.keys(resume);
+    console.log('PDF Generator received resume keys:', resumeKeys.join(', '));
+    
+    // Additional check to see if we have all required properties
+    const requiredKeys = ['header', 'summary', 'skills', 'experience', 'education'];
+    const missingKeys = requiredKeys.filter(key => !resumeKeys.includes(key));
+    
+    if (missingKeys.length > 0) {
+      console.warn('WARNING: Resume data is missing required keys:', missingKeys.join(', '));
+      console.log('Raw resume data:', JSON.stringify(resume).substring(0, 500) + '...');
+    }
 
     // Ensure all required fields exist
     const validatedResume = {

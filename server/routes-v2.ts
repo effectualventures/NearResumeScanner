@@ -79,9 +79,20 @@ export async function registerV2Routes(app: Express): Promise<void> {
       
       // Extract the resume data from the transformation result
       // The transformResume function returns an object with { success, resume } structure
-      const processedResume = resumeTransformationResult.resume as Resume;
+      console.log("Resume transformation result type:", typeof resumeTransformationResult);
+      console.log("Resume transformation result keys:", Object.keys(resumeTransformationResult).join(', '));
+      
+      // Getting the actual resume data
+      const processedResume = resumeTransformationResult.resume;
+      
+      // Extensive logging for debugging
       console.log("Resume data structure validation:", 
-                  processedResume && typeof processedResume === 'object' ? 'Valid object' : 'Invalid structure');
+                 processedResume && typeof processedResume === 'object' ? 'Valid object' : 'Invalid structure');
+                 
+      // Write the resume data to a debug file for inspection
+      const debugFilePath = path.resolve(process.cwd(), 'temp', `processed-resume-debug-${sessionId}.json`);
+      fs.writeFileSync(debugFilePath, JSON.stringify(processedResume, null, 2));
+      console.log(`Debug file written: ${debugFilePath}`);
       
       // Debug the extracted resume data
       console.log("Processed resume structure:", 
@@ -348,6 +359,77 @@ export async function registerV2Routes(app: Express): Promise<void> {
         success: false,
         error: error.message || "An unknown error occurred"
       });
+    }
+  });
+  
+  // Debug endpoint to test PDF generation with sample data
+  app.get('/api/v2/debug/pdf', async (req: Request, res: Response) => {
+    try {
+      // Sample session ID for testing
+      const testSessionId = 'debug-test-' + Date.now();
+      
+      // Create a sample template data structure (same as template debug)
+      const sampleData = {
+        header: {
+          firstName: "Sample Name",
+          tagline: "Senior Professional",
+          location: "United States"
+        },
+        summary: "Experienced professional with a proven track record of success.",
+        skills: [
+          {
+            category: "Skills",
+            items: ["Project Management", "Leadership", "Strategy"]
+          },
+          {
+            category: "Languages",
+            items: ["English (Fluent)", "Spanish (Intermediate)"]
+          }
+        ],
+        experience: [
+          {
+            company: "Sample Company",
+            title: "Senior Manager",
+            location: "New York",
+            startDate: "Jan 2020",
+            endDate: "Present",
+            bullets: [
+              {
+                text: "Led team of 10 professionals to deliver key projects.",
+                metrics: ["Increased revenue by 30%", "$5M in cost savings"]
+              },
+              {
+                text: "Implemented new processes that improved efficiency.",
+                metrics: ["Reduced cycle time by 25%"]
+              }
+            ]
+          }
+        ],
+        education: [
+          {
+            institution: "Sample University",
+            degree: "Bachelor of Science",
+            location: "California",
+            year: "2015"
+          }
+        ],
+        additionalExperience: "Volunteer work with local community organizations."
+      };
+      
+      // Generate a PDF with our sample data
+      console.log('Testing PDF generation with sample data');
+      const pdfPath = await generatePDFv2(sampleData as Resume, testSessionId, false);
+      
+      // Send PDF as download
+      res.download(pdfPath, 'sample-resume.pdf', (err) => {
+        if (err) {
+          console.error('Error sending PDF:', err);
+          res.status(500).json({success: false, error: 'Failed to generate PDF'});
+        }
+      });
+    } catch (error) {
+      console.error('Error in debug PDF endpoint:', error);
+      res.status(500).json({success: false, error: 'Failed to generate PDF'});
     }
   });
   

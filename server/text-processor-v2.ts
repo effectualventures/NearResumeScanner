@@ -5,7 +5,14 @@ import { Resume } from '../shared/schema';
  * Applies multiple transformations to improve resume text quality
  */
 export function enhanceResumeText(resume: Resume): Resume {
-  if (!resume) return resume;
+  if (!resume) {
+    console.error('ERROR: enhanceResumeText received null or undefined resume');
+    return resume;
+  }
+  
+  // Log the resume structure before processing
+  console.log('BEFORE Text processing, resume type:', typeof resume);
+  console.log('BEFORE Text processing, resume keys:', resume ? Object.keys(resume).join(', ') : 'none');
   
   try {
     // Create a deep copy to avoid modifying the original
@@ -19,6 +26,10 @@ export function enhanceResumeText(resume: Resume): Resume {
     processedResume = dedupeMetricEcho(processedResume);
     processedResume = cleanEducationFormat(processedResume);
     processedResume = limitBulletPoints(processedResume);
+    
+    // Log the resume structure after processing
+    console.log('AFTER Text processing, resume keys:', 
+      processedResume ? Object.keys(processedResume).join(', ') : 'none');
     
     return processedResume;
   } catch (error) {

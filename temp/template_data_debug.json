@@ -1,0 +1,60 @@
+{
+  "header": {
+    "firstName": "Sample Name",
+    "tagline": "Senior Professional",
+    "location": "United States"
+  },
+  "summary": "Experienced professional with a proven track record of success.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Project Management",
+        "Leadership",
+        "Strategy"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Fluent)",
+        "Spanish (Intermediate)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Sample Company",
+      "title": "Senior Manager",
+      "location": "New York",
+      "startDate": "Jan 2020",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Led team of 10 professionals to deliver key projects.",
+          "metrics": [
+            "Increased revenue by 30%",
+            "$5M in cost savings"
+          ]
+        },
+        {
+          "text": "Implemented new processes that improved efficiency.",
+          "metrics": [
+            "Reduced cycle time by 25%"
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Sample University",
+      "degree": "Bachelor of Science",
+      "location": "California",
+      "year": "2015"
+    }
+  ],
+  "additionalExperience": "Volunteer work with local community organizations.",
+  "detailedFormat": false,
+  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+}
