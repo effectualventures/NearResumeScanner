@@ -48,12 +48,53 @@ export async function registerV2Routes(app: Express): Promise<void> {
       
       // First, extract text from the uploaded file
       console.log(`Processing file: ${resumeFile.name} (${resumeFile.size} bytes)`);
-      const resumeText = await parseResumeFile(resumeFile.data as Buffer, resumeFile.name);
+      // Cast to unknown first for type safety
+      const resumeTextResult = await parseResumeFile(resumeFile.data as Buffer, resumeFile.name);
       
       // Then, transform the resume using OpenAI
       console.log("Calling OpenAI to transform resume...");
+      
+      // Make sure resumeText is properly converted to string before passing to transformResume
+      const textContent = typeof resumeText === 'string' 
+          ? resumeText 
+          : (resumeText as any).text || JSON.stringify(resumeText);
+          
+      console.log(`Resume text type: ${typeof textContent}, length: ${textContent.length} chars`);
+          
       // The transformResume function requires sessionId as the second parameter, not enhancedFormat
-      const processedResume = await transformResume(resumeText as string, sessionId, enhancedFormat) as unknown as Resume;
+      const resumeTransformationResult = await transformResume(textContent, sessionId, enhancedFormat);
+      
+      // Debug resume transformation result
+      console.log("Resume transformation result structure:", Object.keys(resumeTransformationResult));
+      console.log("Resume transformation success:", resumeTransformationResult.success);
+      
+      if (!resumeTransformationResult.success) {
+        console.error("Resume transformation failed:", resumeTransformationResult.error);
+        return res.status(500).json({
+          success: false,
+          error: resumeTransformationResult.error || "Failed to transform resume"
+        });
+      }
+      
+      // Extract the resume data from the transformation result
+      // The transformResume function returns an object with { success, resume } structure
+      const processedResume = resumeTransformationResult.resume as Resume;
+      console.log("Resume data structure validation:", 
+                  processedResume && typeof processedResume === 'object' ? 'Valid object' : 'Invalid structure');
+      
+      // Debug the extracted resume data
+      console.log("Processed resume structure:", 
+        processedResume ? 
+        `Object with properties: ${Object.keys(processedResume).join(", ")}` : 
+        "No resume data found");
+      
+      if (!processedResume || !processedResume.header) {
+        console.error("Invalid resume data structure after transformation");
+        return res.status(500).json({
+          success: false,
+          error: "Invalid resume data structure generated"
+        });
+      }
       
       // Apply enhanced text processing
       console.log("Applying enhanced text processing (v2)...");

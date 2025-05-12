@@ -131,14 +131,33 @@ export async function generatePDFv2(resume: Resume, sessionId: string, detailedF
     console.log('DEBUG: Resume skills in template data:', JSON.stringify(data.skills, null, 2));
     console.log('DEBUG: Resume experience count:', data.experience ? data.experience.length : 0);
     
-    // Generate HTML from template
-    let html = template(data);
+    // More detailed debugging of experience section
+    if (data.experience && data.experience.length > 0) {
+      console.log('DEBUG: First experience item structure:', 
+        JSON.stringify(data.experience[0], null, 2));
+    } else {
+      console.log('DEBUG: Experience array is empty or invalid');
+    }
     
-    // Ensure temp directory exists
+    // Debug template helper registration
+    console.log('DEBUG: Handlebars helpers registered:', 
+      Object.keys(Handlebars.helpers).join(', '));
+    
+    // Debug template data that will be passed to Handlebars
+    console.log('DEBUG: Full template data keys:', Object.keys(data).join(', '));
+    
+    // Write complete debug data to file for inspection
     const tempDir = path.resolve(process.cwd(), 'temp');
     if (!fs.existsSync(tempDir)) {
       fs.mkdirSync(tempDir, { recursive: true });
     }
+    
+    const debugDataPath = path.join(tempDir, 'template_data_debug.json');
+    fs.writeFileSync(debugDataPath, JSON.stringify(data, null, 2));
+    console.log(`DEBUG: Complete template data written to ${debugDataPath}`);
+    
+    // Generate HTML from template
+    let html = template(data);
     
     // Save HTML file first (needed for PDF generation and as a fallback)
     const htmlOutputPath = path.join(tempDir, `${sessionId}_v2.html`);
