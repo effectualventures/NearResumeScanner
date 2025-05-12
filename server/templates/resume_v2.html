@@ -274,14 +274,14 @@
     
     <!-- SKILLS AND LANGUAGES SECTION -->
     <section>
-      <h2 class="section-title">Skills</h2>
+      <h2 class="section-title">SKILLS</h2>
       <hr class="section-rule"/>
       <div class="skills">
         <!-- First display skills -->
         {{#each skills}}
           {{#if (eq category "Skills")}}
             <div style="margin-bottom: 4px; width: 100%;">
-              <span class="skill-category"><strong>Skills:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1 15)}} • {{this}}{{/each}}
+              <strong>Skills:</strong> {{this.items.[0]}}{{#each (slice this.items 1 15)}} • {{this}}{{/each}}
             </div>
           {{/if}}
         {{/each}}
@@ -290,14 +290,14 @@
         {{#each skills}}
           {{#if (and (not (eq category "Skills")) (not (eq category "Languages")))}}
             <div style="margin-bottom: 4px; width: 100%;">
-              <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
+              <strong>{{this.category}}:</strong> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
             </div>
           {{/if}}
         {{/each}}
         
         <!-- Display Languages within the same section -->
         <div style="margin-top: 10px;">
-          <span class="skill-category"><strong>Languages:</strong></span>
+          <strong>Languages:</strong> 
           {{#each skills}}
             {{#if (eq category "Languages")}}
               {{#each this.items}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}
@@ -314,7 +314,7 @@
     
     <!-- PROFESSIONAL EXPERIENCE -->
     <section class="professional-experience">
-      <h2 class="section-title">Professional Experience</h2>
+      <h2 class="section-title">PROFESSIONAL EXPERIENCE</h2>
       <hr class="section-rule"/>
       <div class="experience-container">
         {{#each experience}}
@@ -360,7 +360,7 @@
     
     <!-- EDUCATION -->
     <section>
-      <h2 class="section-title">Education</h2>
+      <h2 class="section-title">EDUCATION</h2>
       <hr class="section-rule"/>
       <div class="education">
         {{#each education}}
@@ -379,7 +379,7 @@
     
     {{#if additionalExperience}}
       <section>
-        <h2 class="section-title">Additional Experience</h2>
+        <h2 class="section-title">ADDITIONAL EXPERIENCE</h2>
         <hr class="section-rule"/>
         <ul class="additional" style="margin-top: 2px; margin-bottom: 2px; padding-left: 16px;">
           {{#each (splitLines additionalExperience)}}
