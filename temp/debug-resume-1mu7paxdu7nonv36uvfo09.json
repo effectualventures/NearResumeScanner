@@ -84,7 +84,7 @@
     },
     {
       "company": "Civil Infrastructure Group",
-      "location": "Australia",
+      "location": "VIC, Australia",
       "title": "Senior Estimator / Quantity Surveyor",
       "startDate": "Mar 2021",
       "endDate": "May 2024",
@@ -253,27 +253,25 @@
   "education": [
     {
       "institution": "Orange International College",
-      "degree": "DiploMaster of Arts of Building and Construction",
+      "degree": "Diploma of Building and Construction",
       "location": "VIC, Australia",
       "year": "2021",
       "additionalInfo": ""
     },
     {
       "institution": "Mackenzie Presbyterian University",
-      "degree": "Architecture and UrBachelor of Artsnism",
+      "degree": "Architecture and Urbanism",
       "location": "SP, Brazil",
       "year": "2009",
       "additionalInfo": "CAU BR - Brazilian Council of Architecture and Urbanism"
     },
     {
       "institution": "Columbia University",
-      "degree": "Construction Master of Artsnagement Specialization",
+      "degree": "Construction Management Specialization",
       "location": "Online - Coursera",
       "year": "2025",
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "Member of AIQS. Courses in Autodesk Revit Architecture and MEP.",
-  "detailedFormat": true,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": "Member of AIQS. Courses in Autodesk Revit Architecture and MEP."
 }

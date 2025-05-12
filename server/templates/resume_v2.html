@@ -85,9 +85,33 @@
       clear: both;
     }
     
-    /* Use page-break-inside: avoid only for experience items */
-    .experience {
+    /* More granular page break control */
+    .experience-header, .title {
       page-break-inside: avoid;
+      page-break-after: avoid;
+    }
+    
+    /* Allow page breaks inside experience bullet lists if necessary */
+    .experience ul {
+      page-break-inside: auto;
+    }
+    
+    /* New container for experiences to better handle page breaks */
+    .experience-container {
+      display: block;
+      break-inside: auto;
+    }
+    
+    /* More specific rules for page breaks in experiences */
+    .professional-experience {
+      break-inside: auto;
+      page-break-inside: auto;
+    }
+    
+    /* Ensure at least 2 lines of content appear when page breaks happen inside lists */
+    ul li {
+      orphans: 2;
+      widows: 2;
     }
     
     /* Summary section */
@@ -110,6 +134,12 @@
     /* Professional Experience */
     .experience {
       margin-bottom: 15px;
+      break-inside: auto; /* Modern property to allow breaks within experiences */
+    }
+    
+    /* Use CSS Grid for better layout control */
+    section h2.section-title {
+      page-break-after: avoid; /* Keep section headings with their content */
     }
     
     .experience-header {
@@ -269,47 +299,49 @@
     </section>
     
     <!-- PROFESSIONAL EXPERIENCE -->
-    <section>
+    <section class="professional-experience">
       <h2 class="section-title">Professional Experience</h2>
       <hr class="section-rule"/>
-      {{#each experience}}
-        <div class="experience">
-          <div class="experience-header">
-            <div>
-              <span class="company">{{company}}</span>
-              <span> — </span>
-              <span class="location">{{location}}</span>
+      <div class="experience-container">
+        {{#each experience}}
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">{{company}}</span>
+                <span> — </span>
+                <span class="location">{{location}}</span>
+              </div>
+              <div class="dates">{{startDate}} – {{formatEndDate endDate}}</div>
             </div>
-            <div class="dates">{{startDate}} – {{formatEndDate endDate}}</div>
+            <div class="title">{{title}}</div>
+            <ul>
+              {{#if ../detailedFormat}}
+                <!-- Show all bullet points for detailed format -->
+                {{#each bullets}}
+                  <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
+                    {{#if metrics.length}}
+                      {{#unless (containsAny text metrics)}}
+                        <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
+                      {{/unless}}
+                    {{/if}}
+                  </li>
+                {{/each}}
+              {{else}}
+                <!-- Limit to 7 bullet points for standard format -->
+                {{#each (slice bullets 0 7)}}
+                  <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
+                    {{#if metrics.length}}
+                      {{#unless (containsAny text metrics)}}
+                        <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
+                      {{/unless}}
+                    {{/if}}
+                  </li>
+                {{/each}}
+              {{/if}}
+            </ul>
           </div>
-          <div class="title">{{title}}</div>
-          <ul>
-            {{#if ../detailedFormat}}
-              <!-- Show all bullet points for detailed format -->
-              {{#each bullets}}
-                <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
-                  {{#if metrics.length}}
-                    {{#unless (containsAny text metrics)}}
-                      <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
-                    {{/unless}}
-                  {{/if}}
-                </li>
-              {{/each}}
-            {{else}}
-              <!-- Limit to 7 bullet points for standard format -->
-              {{#each (slice bullets 0 7)}}
-                <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
-                  {{#if metrics.length}}
-                    {{#unless (containsAny text metrics)}}
-                      <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
-                    {{/unless}}
-                  {{/if}}
-                </li>
-              {{/each}}
-            {{/if}}
-          </ul>
-        </div>
-      {{/each}}
+        {{/each}}
+      </div>
     </section>
     
     <!-- EDUCATION -->
