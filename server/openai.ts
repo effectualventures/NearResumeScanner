@@ -200,7 +200,46 @@ Your response must be a valid JSON object representing the processed resume with
       
       // Parse the response JSON, ensuring we have a string
       const responseContent = response.choices[0].message.content || '';
-      let resumeData: Resume = JSON.parse(responseContent);
+      console.log('OpenAI API response length:', responseContent.length);
+      console.log('OpenAI API response preview:', responseContent.substring(0, 300) + '...');
+      
+      // Parse the JSON response
+      let resumeData: Resume;
+      try {
+        resumeData = JSON.parse(responseContent);
+        
+        // Validate the parsed data has the expected structure
+        if (!resumeData || typeof resumeData !== 'object') {
+          console.error('ERROR: OpenAI returned invalid JSON structure');
+          throw new Error('Invalid JSON structure in API response');
+        }
+        
+        console.log('Parsed resume data structure - keys:', Object.keys(resumeData).join(', '));
+        
+        // Validate critical resume sections
+        if (!resumeData.header || typeof resumeData.header !== 'object') {
+          console.error('ERROR: Missing or invalid header section in resume data');
+          resumeData.header = { 
+            firstName: 'Professional',
+            tagline: 'Resume',
+            location: 'United States'
+          };
+        }
+        
+        if (!resumeData.skills || !Array.isArray(resumeData.skills)) {
+          console.error('ERROR: Missing or invalid skills section in resume data');
+          resumeData.skills = [];
+        }
+        
+        if (!resumeData.experience || !Array.isArray(resumeData.experience)) {
+          console.error('ERROR: Missing or invalid experience section in resume data');
+          resumeData.experience = [];
+        }
+      } catch (parseError) {
+        console.error('Error parsing OpenAI response:', parseError);
+        console.error('Invalid JSON response from OpenAI API');
+        throw new Error('Failed to parse resume data from API response');
+      }
       
       // Consolidate skills into just Skills and Languages per user requirement
       const languageItems: string[] = [];
@@ -1994,6 +2033,12 @@ function dedupeMetricEcho(r: Resume): Resume {
         // Initialize metrics array if missing
         b.metrics = [];
         return;
+      }
+      
+      // Ensure metrics exists and is an array
+      if (!b.metrics) {
+        b.metrics = [];
+        return; // No metrics to process
       }
       
       // Create a safe copy of metrics to work with
