@@ -1,0 +1,104 @@
+{
+  "header": {
+    "firstName": "Juan",
+    "tagline": "Senior Business Developer – SaaS & FinTech",
+    "location": "Mexico",
+    "city": "Mexico City",
+    "country": "Mexico"
+  },
+  "summary": "SaaS and FinTech professional with over 5 years of experience, achieving a 42% lead increase and $1.5M pipeline growth. Expert in market analysis and strategic partnerships.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Sales Strategy",
+        "Market Analysis",
+        "Strategic Partnerships",
+        "Lead Generation",
+        "Negotiation",
+        "CRM Systems",
+        "Pipeline Management",
+        "Customer Relationship Management",
+        "Leadership"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Professional)",
+        "Spanish (Native)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "AltiSales",
+      "location": "Mexico",
+      "title": "Business Development Manager",
+      "startDate": "Jan 2020",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Identified and qualified $4.2M in untapped opportunities across 5 key LATAM markets.",
+          "metrics": [
+            "$4.2M in opportunities",
+            "5 key markets"
+          ]
+        },
+        {
+          "text": "Established 3 strategic partnerships yielding $1.5M in new pipeline within 6 months.",
+          "metrics": [
+            "3 partnerships",
+            "$1.5M new pipeline"
+          ]
+        },
+        {
+          "text": "Conducted comprehensive market analysis resulting in 42% increase in qualified leads.",
+          "metrics": [
+            "42% increase in leads"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Tech Corp",
+      "location": "Mexico",
+      "title": "Sales Development Representative",
+      "startDate": "Aug 2017",
+      "endDate": "Dec 2019",
+      "bullets": [
+        {
+          "text": "Generated $3.2M in qualified pipeline, exceeding target by 28%.",
+          "metrics": [
+            "$3.2M pipeline",
+            "28% over target"
+          ]
+        },
+        {
+          "text": "Achieved 37% connect-to-meeting conversion rate, 15% above team average.",
+          "metrics": [
+            "37% conversion rate",
+            "15% above average"
+          ]
+        },
+        {
+          "text": "Consistently achieved 132% of quota for 5 consecutive quarters.",
+          "metrics": [
+            "132% quota",
+            "5 quarters"
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Monterrey Institute of Technology",
+      "degree": "International Business",
+      "location": "Mexico",
+      "year": "2017",
+      "additionalInfo": "GPA: 3.8/4.0"
+    }
+  ],
+  "additionalExperience": "Volunteered as a mentor for the 'Youth Entrepreneurial Program' aiding young talents in developing business skills."
+}

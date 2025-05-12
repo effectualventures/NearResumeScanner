@@ -106,6 +106,11 @@ export async function generatePDFv2(resume: Resume, sessionId: string, detailedF
       logoPath: path.resolve(process.cwd(), 'public/images/near_logo.png')
     };
     
+    // Debug the data being passed to template
+    console.log('DEBUG: Resume header in template data:', JSON.stringify(data.header, null, 2));
+    console.log('DEBUG: Resume skills in template data:', JSON.stringify(data.skills, null, 2));
+    console.log('DEBUG: Resume experience count:', data.experience ? data.experience.length : 0);
+    
     // Generate HTML from template
     let html = template(data);
     
