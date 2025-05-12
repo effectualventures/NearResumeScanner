@@ -2,7 +2,8 @@ import express, { Request, Response, NextFunction, Express } from 'express';
 import { parseResumeFile } from './parser';
 import { transformResume, generateFeedback, processDirectFeedback, processChat } from './openai';
 import { enhanceResumeText } from './text-processor-v2';
-import { generatePDFv2 } from './pdf-generator-v2';
+import { generatePDFv2, registerHandlebarsHelpers } from './pdf-generator-v2';
+import Handlebars from 'handlebars';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Server } from 'http';
@@ -347,6 +348,80 @@ export async function registerV2Routes(app: Express): Promise<void> {
         success: false,
         error: error.message || "An unknown error occurred"
       });
+    }
+  });
+  
+  // Debug endpoint to check template data structure
+  app.get('/api/v2/debug/template', (req: Request, res: Response) => {
+    try {
+      // Create a sample template data structure
+      const sampleData = {
+        header: {
+          firstName: "Sample Name",
+          tagline: "Senior Professional",
+          location: "United States"
+        },
+        summary: "Experienced professional with a proven track record of success.",
+        skills: [
+          {
+            category: "Skills",
+            items: ["Project Management", "Leadership", "Strategy"]
+          },
+          {
+            category: "Languages",
+            items: ["English (Fluent)", "Spanish (Intermediate)"]
+          }
+        ],
+        experience: [
+          {
+            company: "Sample Company",
+            title: "Senior Manager",
+            location: "New York",
+            startDate: "Jan 2020",
+            endDate: "Present",
+            bullets: [
+              {
+                text: "Led team of 10 professionals to deliver key projects.",
+                metrics: ["Increased revenue by 30%", "$5M in cost savings"]
+              },
+              {
+                text: "Implemented new processes that improved efficiency.",
+                metrics: ["Reduced cycle time by 25%"]
+              }
+            ]
+          }
+        ],
+        education: [
+          {
+            institution: "Sample University",
+            degree: "Bachelor of Science",
+            location: "California",
+            year: "2015"
+          }
+        ],
+        additionalExperience: "Volunteer work with local community organizations.",
+        detailedFormat: false,
+        logoPath: path.resolve(process.cwd(), 'public/images/near_logo.png')
+      };
+      
+      // Render the template using the imports at the top of this file
+      // Register all Handlebars helpers
+      registerHandlebarsHelpers();
+      
+      // Read template
+      const templatePath = path.resolve(process.cwd(), 'server/templates/resume_v2.html');
+      const templateSource = fs.readFileSync(templatePath, 'utf8');
+      
+      // Compile template with sample data
+      const template = Handlebars.compile(templateSource);
+      const html = template(sampleData);
+      
+      // Send HTML response
+      res.setHeader('Content-Type', 'text/html');
+      res.send(html);
+    } catch (error) {
+      console.error('Error in debug template endpoint:', error);
+      res.status(500).json({ success: false, error: 'Failed to render template' });
     }
   });
   

@@ -9,8 +9,8 @@ type PDFOptions = Omit<PuppeteerPDFOptions, 'format'> & {
   format?: string | any; // Allow any type to avoid type issues
 };
 
-// Register Handlebars helpers
-function registerHandlebarsHelpers() {
+// Register Handlebars helpers (exported for use in debug endpoints)
+export function registerHandlebarsHelpers() {
   // Format end date helper (replaces "Current" with "Present")
   Handlebars.registerHelper('formatEndDate', function(endDate: string) {
     if (!endDate) return '';
