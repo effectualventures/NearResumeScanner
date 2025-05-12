@@ -163,7 +163,7 @@
           ]
         },
         {
-          "text": "Built and interpreted infrastructure BOQs and tender documents for projects including renewable energy substations, enhancing resource efficiency by 25%.",
+          "text": "Optimized and interpreted infrastructure BOQs and tender documents for projects including renewable energy substations, enhancing resource efficiency by 25%.",
           "metrics": [
             "25% increased efficiency"
           ]
@@ -203,20 +203,18 @@
   "education": [
     {
       "institution": "Orange International College",
-      "degree": "DiploMaster of Arts of Building and Construction",
+      "degree": "Diploma of Building and Construction",
       "location": "Australia",
       "year": "2021",
       "additionalInfo": "Specialized in Construction Methodologies"
     },
     {
       "institution": "Mackenzie Presbyterian University",
-      "degree": "Architecture and UrBachelor of Artsnism",
+      "degree": "Architecture and Urbanism",
       "location": "Brazil",
       "year": "2009",
       "additionalInfo": "Focus on Civil Infrastructure"
     }
   ],
-  "additionalExperience": "Member of AIQS since Dec 2023; Engagement in collaborative construction management projects enhancing inter-team communication and project delivery efficiency.",
-  "detailedFormat": true,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": "Member of AIQS since Dec 2023; Engagement in collaborative construction management projects enhancing inter-team communication and project delivery efficiency."
 }
