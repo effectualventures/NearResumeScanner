@@ -7,6 +7,8 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import FeedbackAutomation from "@/pages/FeedbackAutomation";
 import AutomatedFeedback from "@/pages/AutomatedFeedback";
+import UploadResume from "@/pages/v2/UploadResume";
+import ResumeFeedback from "@/pages/v2/ResumeFeedback";
 
 // Simple navigation bar
 function Navbar() {
@@ -18,6 +20,7 @@ function Navbar() {
           <Link href="/" className="hover:underline">Home</Link>
           <Link href="/feedback" className="hover:underline">Feedback Tool</Link>
           <Link href="/auto-feedback" className="hover:underline">Auto Feedback</Link>
+          <Link href="/v2/upload" className="hover:underline font-bold text-emerald-400">Enhanced (v2)</Link>
         </div>
       </div>
     </nav>
@@ -33,6 +36,8 @@ function Router() {
           <Route path="/" component={Home}/>
           <Route path="/feedback" component={FeedbackAutomation}/>
           <Route path="/auto-feedback" component={AutomatedFeedback}/>
+          <Route path="/v2/upload" component={UploadResume}/>
+          <Route path="/v2/feedback" component={ResumeFeedback}/>
           <Route component={NotFound} />
         </Switch>
       </div>
