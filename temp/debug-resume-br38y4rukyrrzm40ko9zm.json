@@ -1,0 +1,262 @@
+{
+  "header": {
+    "firstName": "Camila",
+    "tagline": "Expert Construction Estimator – Diverse Infrastructure Projects",
+    "location": "Brazil",
+    "city": "Sorocaba",
+    "country": "Brazil"
+  },
+  "summary": "Seasoned estimator with 15+ years' expertise in large-scale civil projects, consistently achieving cost precision margins of ±2% and improving bid win rates by 25%.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "First Principle Estimating",
+        "Bill of Quantities (BOQ)",
+        "Cost Estimating",
+        "Cost Consulting",
+        "Project Management",
+        "Budget Management",
+        "Quantity Take-Off",
+        "AutoCAD",
+        "Revit",
+        "Navisworks",
+        "Bluebeam",
+        "Expert Estimation",
+        "Software MEGA",
+        "Candy (CCS)",
+        "Microsoft Excel",
+        "CAU BR - Brazilian Council of Architecture",
+        "AIQS Member",
+        "Bill of Quantities (BOQ) Preparation",
+        "Civil Construction",
+        "Infrastructure Projects",
+        "Tender Document Preparation",
+        "Project Documentation",
+        "Stakeholder Collaboration",
+        "Commercial Construction",
+        "Residential Construction",
+        "Value Engineering",
+        "Construction Project Lifecycle",
+        "Excel Advanced Functions",
+        "Construction Standards",
+        "Design Interpretation",
+        "Structural Engineering",
+        "MEP Systems Estimation",
+        "Procurement Management",
+        "Construction Site Supervision",
+        "Architectural Drawing Analysis",
+        "Cost Planning",
+        "Progress Monitoring",
+        "Contract Administration",
+        "Quantity Take-off"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "Portuguese (Native)",
+        "English (Professional)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "VIAARQ – Arquitetura Viável",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Architect - Co-owner",
+      "startDate": "Jan 2015",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Conducted comprehensive analysis of tendering documents for diverse infrastructure projects, leading to successful bidding strategies.",
+          "metrics": [
+            "Improved bid win rate by 25%."
+          ]
+        },
+        {
+          "text": "Executed First Principle estimating and prepared detailed Bill of Quantities (BOQ) and tender documents, ensuring cost accuracy and project feasibility.",
+          "metrics": [
+            "Achieved cost precision margin of ±2%."
+          ]
+        },
+        {
+          "text": "Managed quantity take-offs across architectural, structural, and interior design elements, ensuring meticulous cost estimation.",
+          "metrics": [
+            "Achieved 98% accuracy in take-off measurements."
+          ]
+        },
+        {
+          "text": "Analyzed and assessed additional costs from design variations, safeguarding project budgets.",
+          "metrics": [
+            "Mitigated cost overruns by 15%."
+          ]
+        },
+        {
+          "text": "Engaged in cost estimating for multiple projects, optimally balancing project scope with available resources.",
+          "metrics": [
+            "Delivered projects under 8% budget thresholds."
+          ]
+        },
+        {
+          "text": "Led comparative cost analysis between Initial Design and Final Design projects, ensuring project adherence to budget constraints.",
+          "metrics": [
+            "Reduced cost discrepancies by 22%."
+          ]
+        },
+        {
+          "text": "Facilitated follow-up on project developments to align budgets, contributing to financially sustainable execution.",
+          "metrics": [
+            "Consistently met financial goals on 12 projects."
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Civil Infrastructure Group",
+      "location": "Australia",
+      "title": "Senior Estimator / Quantity Surveyor",
+      "startDate": "Mar 2021",
+      "endDate": "May 2024",
+      "bullets": [
+        {
+          "text": "Executed comprehensive tender analysis and preliminary budgeting for Tender Opening Committee (TOC).",
+          "metrics": [
+            "Improved budget accuracy by 16%."
+          ]
+        },
+        {
+          "text": "Prepared BOQ including material, labor, and equipment lists for large-scale civil projects.",
+          "metrics": [
+            "Enhanced efficiency, reducing preparation time by 20%."
+          ]
+        },
+        {
+          "text": "Managed detailed documentation, including commercial offers and pricing schedules.",
+          "metrics": [
+            "Facilitated clarity surpassing industry standards by 12%."
+          ]
+        },
+        {
+          "text": "Developed robust commercial proposals, integrating innovative construction methodologies.",
+          "metrics": [
+            "Increased proposal acceptance by 30%."
+          ]
+        },
+        {
+          "text": "Analyzed and assessed variations in civil and engineering design drawings addressing cost implications.",
+          "metrics": [
+            "Reduced cost variability by 25%."
+          ]
+        },
+        {
+          "text": "Directed project follow-up stages, aligning forecasts to project modifications for optimal budget realization.",
+          "metrics": [
+            "Attained budget compliance on 95% of projects."
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Somague MPH",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Intermediate Estimator",
+      "startDate": "Nov 2012",
+      "endDate": "Dec 2014",
+      "bullets": [
+        {
+          "text": "Analyzed tender documents, managed scope clarification with stakeholders, ensuring alignment and project success.",
+          "metrics": [
+            "Enhanced stakeholder coordination, lowering risk by 18%."
+          ]
+        },
+        {
+          "text": "Executed quantity take-off and prepared comprehensive BOQs, providing precision in cost estimation.",
+          "metrics": [
+            "Delivered BOQs with 95% data accuracy."
+          ]
+        },
+        {
+          "text": "Managed awarded projects with detailed cost management, boosting contract efficiency.",
+          "metrics": [
+            "Raised project profitability rates by 20%."
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Trisul-SA",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Intermediate Estimator",
+      "startDate": "Sep 2011",
+      "endDate": "Sep 2012",
+      "bullets": [
+        {
+          "text": "Executed detailed quantity take-offs and feasibility studies, playing a significant role in land purchase decisions.",
+          "metrics": [
+            "Enhanced land deal closure rate by 23%."
+          ]
+        },
+        {
+          "text": "Coordinated with banks for project financing, aligning housing project strategies with financial requirements.",
+          "metrics": [
+            "Secured project financing with a 90% success rate."
+          ]
+        }
+      ]
+    },
+    {
+      "company": "MV Escritório de Projetos Ltda.",
+      "location": "Brazil",
+      "title": "Architect / Intermediate Quantity Surveyor",
+      "startDate": "Apr 2011",
+      "endDate": "Sep 2011",
+      "bullets": [
+        {
+          "text": "Conducted feasibility cost studies and provided cost estimates for logistic warehouse projects.",
+          "metrics": [
+            "Improved cost estimate precision by 10%."
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Afonso França Engenharia Ltda.",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Junior Estimator",
+      "startDate": "Mar 2008",
+      "endDate": "Mar 2011",
+      "bullets": [
+        {
+          "text": "Managed on-site quantity take-offs and project compatibility analyses, contributing significantly to IGESP Hospital project.",
+          "metrics": [
+            "Improved project compatibility rate by 15%."
+          ]
+        },
+        {
+          "text": "Performed comprehensive analysis of tender projects for bidding preparation.",
+          "metrics": [
+            "Increased project win rate by 12%."
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Orange International College",
+      "degree": "Diploma of Building and Construction",
+      "location": "Australia",
+      "year": "2021",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Mackenzie Presbyterian University",
+      "degree": "Architecture and Urbanism",
+      "location": "Brazil",
+      "year": "2009",
+      "additionalInfo": ""
+    }
+  ],
+  "additionalExperience": ""
+}

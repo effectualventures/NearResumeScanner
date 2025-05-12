@@ -247,20 +247,18 @@
   "education": [
     {
       "institution": "Orange International College",
-      "degree": "DiploMaster of Arts of Building and Construction",
+      "degree": "Diploma of Building and Construction",
       "location": "Australia",
       "year": "2021",
       "additionalInfo": "Specialized coursework completed"
     },
     {
       "institution": "Mackenzie Presbyterian University",
-      "degree": "Architecture and UrBachelor of Artsnism",
+      "degree": "Architecture and Urbanism",
       "location": "Brazil",
       "year": "2009",
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "Certified member of the Brazilian Council of Architecture and Urbanism and AIQS. Completed advanced courses in Autodesk Revit Architecture, Revit MEP, and Navisworks Manage.",
-  "detailedFormat": true,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": "Certified member of the Brazilian Council of Architecture and Urbanism and AIQS. Completed advanced courses in Autodesk Revit Architecture, Revit MEP, and Navisworks Manage."
 }

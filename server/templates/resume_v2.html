@@ -227,6 +227,11 @@
       margin-bottom: 3px;
     }
     
+    /* Ensure Skills and Languages labels are bold */
+    .skills strong {
+      font-weight: bold !important;
+    }
+    
     /* Footer positioning */
     .logo-zone {
       height: 0.3in;
@@ -281,7 +286,7 @@
         {{#each skills}}
           {{#if (eq category "Skills")}}
             <div style="margin-bottom: 4px; width: 100%;">
-              <strong>Skills:</strong> {{this.items.[0]}}{{#each (slice this.items 1 15)}} • {{this}}{{/each}}
+              <b style="font-weight: bold !important;">Skills:</b> {{this.items.[0]}}{{#each (slice this.items 1 15)}} • {{this}}{{/each}}
             </div>
           {{/if}}
         {{/each}}
@@ -290,14 +295,14 @@
         {{#each skills}}
           {{#if (and (not (eq category "Skills")) (not (eq category "Languages")))}}
             <div style="margin-bottom: 4px; width: 100%;">
-              <strong>{{this.category}}:</strong> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
+              <b style="font-weight: bold !important;">{{this.category}}:</b> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
             </div>
           {{/if}}
         {{/each}}
         
         <!-- Display Languages within the same section -->
         <div style="margin-top: 10px;">
-          <strong>Languages:</strong> 
+          <b style="font-weight: bold !important;">Languages:</b> 
           {{#each skills}}
             {{#if (eq category "Languages")}}
               {{#each this.items}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}
