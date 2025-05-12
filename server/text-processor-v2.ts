@@ -382,34 +382,40 @@ function cleanEducationFormat(resume: Resume): Resume {
     if (processedResume.education && Array.isArray(processedResume.education)) {
       processedResume.education.forEach((edu: any) => {
         if (edu.degree) {
-          // Standardize common degree abbreviations
-          let degree = edu.degree;
+          // IMPORTANT: We're skipping degree standardization as it's causing issues
+          // like "Diploma of Building and Construction" becoming "DiploMaster of Arts of Building and Construction"
+          // because "BA" in "Building And" gets replaced with "Bachelor of Arts"
           
-          // Bachelor's degree formats
-          degree = degree.replace(/B\.S\.|BS|Bachelor of Science/i, 'Bachelor of Science');
-          degree = degree.replace(/B\.A\.|BA|Bachelor of Arts/i, 'Bachelor of Arts');
-          degree = degree.replace(/B\.Eng\.|BEng|Bachelor of Engineering/i, 'Bachelor of Engineering');
-          degree = degree.replace(/B\.Arch\.|BArch|Bachelor of Architecture/i, 'Bachelor of Architecture');
+          // Just ensure consistent spacing and remove any extraneous whitespace
+          let degree = edu.degree.replace(/\s+/g, ' ').trim();
           
-          // Master's degree formats
-          degree = degree.replace(/M\.S\.|MS|Master of Science/i, 'Master of Science');
-          degree = degree.replace(/M\.A\.|MA|Master of Arts/i, 'Master of Arts');
-          degree = degree.replace(/M\.Eng\.|MEng|Master of Engineering/i, 'Master of Engineering');
-          degree = degree.replace(/M\.Arch\.|MArch|Master of Architecture/i, 'Master of Architecture');
-          degree = degree.replace(/MBA|Master of Business Administration/i, 'Master of Business Administration');
+          // Make sure full degree titles like "Bachelor of Arts" or "Master of Science" are properly cased
+          // but only if they're the complete degree title (using word boundaries \b)
+          if (/\bbachelor['']s\s+degree/i.test(degree)) {
+            degree = degree.replace(/\bbachelor['']s\s+degree\b/i, "Bachelor's Degree");
+          }
           
-          // Ph.D. formats
-          degree = degree.replace(/Ph\.D\.|PhD|Doctorate/i, 'Ph.D.');
+          if (/\bmaster['']s\s+degree/i.test(degree)) {
+            degree = degree.replace(/\bmaster['']s\s+degree\b/i, "Master's Degree");
+          }
           
-          // Ensure consistent formatting
-          degree = degree.replace(/\s+/g, ' ').trim();
+          // Fix any degree abbreviations that are standalone terms (using word boundaries)
+          degree = degree.replace(/\bb\.s\.\b|\bbs\b/i, 'B.S.');
+          degree = degree.replace(/\bb\.a\.\b|\bba\b/i, 'B.A.');
+          degree = degree.replace(/\bph\.d\.\b|\bphd\b/i, 'Ph.D.');
+          
+          // If the degree is just Architecture, add Bachelor's prefix for clarity
+          if (degree.trim().toLowerCase() === 'architecture' || 
+              degree.trim().toLowerCase() === 'architecture and urbanism') {
+            degree = "Bachelor's Degree in " + degree;
+          }
           
           edu.degree = degree;
         }
       });
     }
     
-    console.log('Education format cleaned up');
+    console.log('Education format cleaned up - safer version');
     return processedResume;
   } catch (error) {
     console.error('Error cleaning education format:', error);

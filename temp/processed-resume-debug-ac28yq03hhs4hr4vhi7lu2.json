@@ -104,7 +104,7 @@
     },
     {
       "company": "Civil Infrastructure Group",
-      "location": "Australia",
+      "location": "VIC, Australia",
       "title": "Senior Estimator / Quantity Surveyor",
       "startDate": "Mar 2021",
       "endDate": "May 2024",
@@ -180,20 +180,18 @@
   "education": [
     {
       "institution": "Orange International College",
-      "degree": "DiploMaster of Arts of Building and Construction",
+      "degree": "Diploma of Building and Construction",
       "location": "VIC, Australia",
       "year": "2021",
       "additionalInfo": ""
     },
     {
       "institution": "Mackenzie Presbyterian University",
-      "degree": "Architecture and UrBachelor of Artsnism",
+      "degree": "Architecture and Urbanism",
       "location": "Brazil",
       "year": "2009",
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "Member of AIQS – December 2023. CAU BR - Brazilian Council of Architecture and Urbanism – 2011.",
-  "detailedFormat": true,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": "Member of AIQS – December 2023. CAU BR - Brazilian Council of Architecture and Urbanism – 2011."
 }

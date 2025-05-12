@@ -39,7 +39,7 @@ export function registerHandlebarsHelpers() {
     // Special cases that are common metrics patterns
     const findMetricPatterns = [
       // Check for percentage patterns - number + % in the text
-      (text, metric) => {
+      (text: string, metric: string): boolean => {
         const percentMatch = metric.match(/(\d+(?:\.\d+)?)%/);
         if (percentMatch && percentMatch[1]) {
           const percentValue = percentMatch[1];
@@ -53,7 +53,7 @@ export function registerHandlebarsHelpers() {
       },
       
       // Check for currency values - dollar amounts
-      (text, metric) => {
+      (text: string, metric: string): boolean => {
         const dollarMatch = metric.match(/\$(\d+(?:[\.,]\d+)?(?:[KkMmBb])?)/);
         if (dollarMatch && dollarMatch[1]) {
           return text.includes('$' + dollarMatch[1]) || 
@@ -65,7 +65,7 @@ export function registerHandlebarsHelpers() {
       },
       
       // Check for numbers with K, M, B suffixes
-      (text, metric) => {
+      (text: string, metric: string): boolean => {
         const suffixMatch = metric.match(/(\d+(?:[\.,]\d+)?)\s*([KkMmBb])/);
         if (suffixMatch && suffixMatch[1] && suffixMatch[2]) {
           const num = suffixMatch[1];
