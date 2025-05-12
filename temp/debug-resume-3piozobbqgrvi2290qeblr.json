@@ -237,27 +237,25 @@
   "education": [
     {
       "institution": "Orange International College",
-      "degree": "DiploMaster of Arts of Building and Construction",
+      "degree": "Diploma of Building and Construction",
       "location": "Australia",
       "year": "2021",
       "additionalInfo": ""
     },
     {
       "institution": "Mackenzie Presbyterian University",
-      "degree": "Architecture and UrBachelor of Artsnism",
+      "degree": "Architecture and Urbanism",
       "location": "Brazil",
       "year": "2009",
       "additionalInfo": ""
     },
     {
       "institution": "Columbia University (Coursera)",
-      "degree": "Specialization in Construction Master of Artsnagement",
+      "degree": "Specialization in Construction Management",
       "location": "Online",
       "year": "2025",
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "",
-  "detailedFormat": true,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": ""
 }
