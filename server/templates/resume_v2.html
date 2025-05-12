@@ -232,25 +232,27 @@
       font-weight: bold !important;
     }
     
-    /* Footer positioning */
+    /* Footer positioning - completely revised approach */
     .logo-zone {
-      height: 0.3in;
       width: 100%;
       clear: both;
       display: block;
-      visibility: hidden;
+      margin-top: 30px; /* Space between content and footer */
+      margin-bottom: 0; /* No margin at bottom */
+      page-break-inside: avoid; /* Keep footer on same page */
     }
     
     .branding-footer {
-      position: fixed;
-      bottom: 0.01in; /* Positioned very close to the bottom edge of the page */
-      right: 0.5in;   /* Align with right margin */
       display: flex;
       align-items: center;
+      justify-content: flex-end; /* Right-align content */
       gap: 6px;
       font-family: 'Inter', 'Helvetica', sans-serif;
       font-size: 10px;
-      z-index: 1000;
+      width: 100%;
+      border-top: 1px solid #f0f0f0; /* Light separator line */
+      padding-top: 10px; /* Space above the logo, after the line */
+      padding-bottom: 0; /* No padding at bottom */
     }
     
     .branding-footer img {
@@ -409,14 +411,13 @@
       {{/each}}
     {{/if}}
     
-    <!-- Logo zone spacer -->
-    <div class="logo-zone"></div>
+    <!-- Footer with the logo at the bottom of the content -->
+    <div class="logo-zone">
+      <div class="branding-footer">
+        <span><strong>Presented by</strong></span>
+        <img src="file://{{logoPath}}" alt="Near logo"/>
+      </div>
+    </div>
   </div>
-  
-  <!-- Branding footer with "Presented by" -->
-  <footer class="branding-footer">
-    <span><strong>Presented by</strong></span>
-    <img src="file://{{logoPath}}" alt="Near logo"/>
-  </footer>
 </body>
 </html>

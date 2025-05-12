@@ -78,7 +78,9 @@
         },
         {
           "text": "Executed comprehensive quantity take-offs for multi-faceted projects, covering architectural, structural, and MEP aspects, minimizing material wastage by 22%.",
-          "metrics": []
+          "metrics": [
+            "22% reduction in material wastage"
+          ]
         },
         {
           "text": "Critically assessed additional costs corresponding to design variations, coordinating with stakeholders for optimal project alignment and budget compliance.",
@@ -90,7 +92,9 @@
         },
         {
           "text": "Advanced initial program of works for assorted projects, establishing timelines that were exceeded by 12% in efficiency during execution phases.",
-          "metrics": []
+          "metrics": [
+            "12% efficiency improvement"
+          ]
         },
         {
           "text": "Managed awarded project scopes including detailed take-offs for Fortaleza, Rio, and Belém Temple Complexes, supporting successful project executions.",
@@ -115,7 +119,9 @@
         },
         {
           "text": "Orchestrated preliminary budgeting for expansive projects, collaborating with TOC to ensure financial viability and project execution below projected cost by 18%.",
-          "metrics": []
+          "metrics": [
+            "18% cost reduction"
+          ]
         },
         {
           "text": "Crafted exhaustive Bill of Quantities encompassing material, labor, and equipment, enhancing clarity and facilitating robust project planning.",
@@ -127,7 +133,9 @@
         },
         {
           "text": "Performed meticulous take-offs for all project drawings, optimizing material use and contributing to an 18% reduction in environmental impact.",
-          "metrics": []
+          "metrics": [
+            "18% reduction in environmental impact"
+          ]
         },
         {
           "text": "Directed final detailed BOQ preparation, ensuring validity and accuracy for climactic tender stages, thereby enhancing bid competitiveness.",
@@ -135,7 +143,9 @@
         },
         {
           "text": "Proposed refined construction methods, optimizing project workflows and surpassing budget expectations by 13%.",
-          "metrics": []
+          "metrics": [
+            "13% budget optimization"
+          ]
         }
       ]
     },
@@ -242,13 +252,11 @@
     },
     {
       "institution": "Mackenzie Presbyterian University",
-      "degree": "Bachelor's Degree in Architecture and Urbanism",
+      "degree": "Architecture and Urbanism",
       "location": "Brazil",
       "year": "2009",
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "Member of AIQS – Dec 2023. Completed construction management, Revit, and Navisworks courses. Construction Management Specialization from Columbia University (Oct 2024 – Jan 2025).",
-  "detailedFormat": true,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": "Member of AIQS – Dec 2023. Completed construction management, Revit, and Navisworks courses. Construction Management Specialization from Columbia University (Oct 2024 – Jan 2025)."
 }
