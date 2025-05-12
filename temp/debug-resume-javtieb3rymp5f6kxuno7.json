@@ -98,7 +98,9 @@
         },
         {
           "text": "Developed and presented detailed account finalizations with 100% clarity, aiding in financial closure of multiple large-scale projects.",
-          "metrics": []
+          "metrics": [
+            "100%"
+          ]
         },
         {
           "text": "Directed post-design assessments, which improved budget proposals' adherence rate by 25%.",
@@ -116,7 +118,7 @@
     },
     {
       "company": "Civil Infrastructure Group",
-      "location": "Australia",
+      "location": "VIC, Australia",
       "title": "Senior Estimator / Quantity Surveyor",
       "startDate": "Mar 2021",
       "endDate": "May 2024",
@@ -143,7 +145,9 @@
         },
         {
           "text": "Managed documentation sets and delivery of construction tender packages, achieving a 100% on-time submission rate.",
-          "metrics": []
+          "metrics": [
+            "100%"
+          ]
         },
         {
           "text": "Orchestrated the quantity take-off of complex infrastructure projects, improving estimation timelines by 30%.",
@@ -274,13 +278,11 @@
     },
     {
       "institution": "Mackenzie Presbyterian University",
-      "degree": "Bachelor's Degree in Architecture and Urbanism",
+      "degree": "Architecture and Urbanism",
       "location": "Brazil",
       "year": "2009",
       "additionalInfo": "CAU BR Member"
     }
   ],
-  "additionalExperience": "Member of AIQS since December 2023.",
-  "detailedFormat": true,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": "Member of AIQS since December 2023."
 }
