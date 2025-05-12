@@ -8,7 +8,7 @@
     /* Base page setup with precise margins */
     @page {
       size: letter;
-      margin: 0.5in 0.5in 0.7in 0.5in; /* top, right, bottom, left */
+      margin: 0.5in 0.5in 0.75in 0.5in; /* top, right, bottom, left - increased bottom margin */
       orphans: 3; /* Minimum number of lines at the top of a page */
       widows: 3; /* Minimum number of lines at the bottom of a page */
     }
@@ -234,7 +234,7 @@
     
     /* Footer positioning */
     .logo-zone {
-      height: 0.3in;
+      height: 0.4in; /* Increased spacing at the bottom of the page */
       width: 100%;
       clear: both;
       display: block;
@@ -243,7 +243,7 @@
     
     .branding-footer {
       position: fixed;
-      bottom: 0.05in; /* Exact positioning from bottom */
+      bottom: 0.02in; /* Moved closer to bottom edge (was 0.05in) */
       right: 0.5in;   /* Align with right margin */
       display: flex;
       align-items: center;

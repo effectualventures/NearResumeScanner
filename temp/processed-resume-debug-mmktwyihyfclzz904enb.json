@@ -146,8 +146,7 @@
           "metrics": []
         },
         {
-          "text": "Implemented innovative estimating techniques, securing projects up to $12.66M AUD with competitive advantage.",
-          "metrics": []
+          "text": "Implemented innovative estimating techniques, securing projects up to $12.66M AUD with competitive advantage."
         }
       ]
     },
@@ -167,8 +166,7 @@
           "metrics": []
         },
         {
-          "text": "Engaged in strategic supplier and subcontractor negotiations, cutting initial costs by 10% through precise cost consulting.",
-          "metrics": []
+          "text": "Engaged in strategic supplier and subcontractor negotiations, cutting initial costs by 10% through precise cost consulting."
         },
         {
           "text": "Drafted detailed construction proposals, improving project estimates accuracy and client satisfaction by over 25%.",
@@ -254,13 +252,11 @@
     },
     {
       "institution": "Mackenzie Presbyterian University",
-      "degree": "Bachelor's Degree in Architecture and Urbanism",
+      "degree": "Architecture and Urbanism",
       "location": "Brazil",
       "year": "2009",
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "",
-  "detailedFormat": true,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": ""
 }
