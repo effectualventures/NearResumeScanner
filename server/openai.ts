@@ -254,17 +254,18 @@ Your response must be a valid JSON object representing the processed resume with
         }
       });
       
-      // If skills list is suspiciously short for a construction estimator, add critical ones
-      if (skillItems.length < 5 && 
-          (resumeData.header.tagline.toLowerCase().includes('estimator') || 
-           resumeData.header.tagline.toLowerCase().includes('quant'))) {
+      // For construction estimator roles, always ensure a comprehensive set of skills
+      if (resumeData.header.tagline.toLowerCase().includes('estimator') || 
+          resumeData.header.tagline.toLowerCase().includes('quant') ||
+          resumeData.header.tagline.toLowerCase().includes('construction')) {
         
-        // Add default estimator skills based on original resume
-        const defaultEstimatorSkills = [
+        // Add comprehensive estimator skills based on original resume
+        const comprehensiveEstimatorSkills = [
           "First Principle Estimating",
           "Bill of Quantities (BOQ) Preparation",
           "Quantity Take-off",
           "AutoCAD",
+          "Revit",
           "Civil Construction",
           "Infrastructure Projects",
           "Cost Estimating",
@@ -273,17 +274,33 @@ Your response must be a valid JSON object representing the processed resume with
           "Project Management",
           "Budget Management",
           "Project Documentation",
-          "Stakeholder Collaboration"
+          "Stakeholder Collaboration",
+          "Commercial Construction",
+          "Residential Construction",
+          "Value Engineering",
+          "Construction Project Lifecycle",
+          "Bluebeam",
+          "Excel Advanced Functions",
+          "Construction Standards",
+          "Design Interpretation",
+          "Structural Engineering",
+          "MEP Systems Estimation",
+          "Procurement Management",
+          "Construction Site Supervision",
+          "Architectural Drawing Analysis",
+          "Cost Planning",
+          "Progress Monitoring",
+          "Contract Administration"
         ];
         
         // Add only skills that aren't already present
-        defaultEstimatorSkills.forEach(skill => {
+        comprehensiveEstimatorSkills.forEach(skill => {
           if (!skillItems.some(item => item.toLowerCase().includes(skill.toLowerCase()))) {
             skillItems.push(skill);
           }
         });
         
-        console.log("Added default estimator skills since the extracted list was too short");
+        console.log("Enhanced estimator skills with comprehensive industry-specific capabilities");
       }
       
       // If no languages found, add English with reasonable assumption

@@ -281,7 +281,7 @@
         {{#each skills}}
           {{#if (eq category "Skills")}}
             <div style="margin-bottom: 4px; width: 100%;">
-              <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
+              <span class="skill-category"><strong>Skills:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1 15)}} • {{this}}{{/each}}
             </div>
           {{/if}}
         {{/each}}
