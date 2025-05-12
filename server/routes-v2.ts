@@ -54,10 +54,10 @@ export async function registerV2Routes(app: Express): Promise<void> {
       // Then, transform the resume using OpenAI
       console.log("Calling OpenAI to transform resume...");
       
-      // Make sure resumeText is properly converted to string before passing to transformResume
-      const textContent = typeof resumeText === 'string' 
-          ? resumeText 
-          : (resumeText as any).text || JSON.stringify(resumeText);
+      // Make sure resumeTextResult is properly converted to string before passing to transformResume
+      const textContent = typeof resumeTextResult === 'string' 
+          ? resumeTextResult 
+          : (resumeTextResult as any).text || JSON.stringify(resumeTextResult);
           
       console.log(`Resume text type: ${typeof textContent}, length: ${textContent.length} chars`);
           
@@ -102,7 +102,7 @@ export async function registerV2Routes(app: Express): Promise<void> {
       
       // Store session data
       sessions[sessionId] = {
-        originalText: typeof resumeText === 'string' ? resumeText : JSON.stringify(resumeText),
+        originalText: textContent, // Already sanitized the text above
         processedJson: JSON.stringify(enhancedResume),
         enhancedFormat
       };
