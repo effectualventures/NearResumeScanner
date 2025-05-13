@@ -356,7 +356,7 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
           /* Branding footer override - make sure it shows in right position */
           .branding-footer {
             position: fixed !important;
-            bottom: 0.05in !important; /* Position exactly 0.05in from bottom as required */
+            bottom: 0.35in !important; /* Position much further down the page (adjusted from 0.05in) */
             right: 0.5in !important;   /* Align with right margin */
             left: 0 !important;
             display: flex !important;
