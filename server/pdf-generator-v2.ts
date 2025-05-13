@@ -330,80 +330,56 @@ export async function generatePDFv2(resume: Resume, sessionId: string, detailedF
         margin: defaultPdfMargins
       };
       
-      // Set specific PDF margins based on format
-      const pdfMarginsToUse = {
-        ...defaultPdfMargins
-      };
-      
       if (detailedFormat) {
         // For detailed format, allow content to flow to second page
         console.log('Using detailed format: allowing multi-page layout');
-        await page.pdf({
-          ...pdfOptions,
-          scale: 1.0, // Full scale for detailed format
-          margin: pdfMarginsToUse
-        });
-      } else {
-        // For standard format, adjust content to fit on one page
-        console.log('Using standard format: optimizing for single page');
         
-        // Mark document as single page format and apply special handling for logo positioning
+        // Position the footer at the bottom of the page
         await page.evaluate(() => {
-          document.body.classList.add('force-single-page');
-          
-          // Find main content container
-          const container = document.querySelector('.resume-container') as HTMLElement | null;
-          const logoZone = document.querySelector('.logo-zone') as HTMLElement | null;
-          const branding = document.querySelector('.branding-footer') as HTMLElement | null;
-          
-          if (container && logoZone && branding) {
-            // Calculate the available height
-            const viewportHeight = 11 * 96; // Letter height in pixels
-            const topMargin = 0.5 * 96; // Top margin
-            const bottomMargin = 0.7 * 96; // Bottom margin
-            const availableHeight = viewportHeight - topMargin - bottomMargin;
-            
-            // Set container to take appropriate height
-            container.style.minHeight = `${availableHeight}px`;
-            container.style.display = 'flex';
-            container.style.flexDirection = 'column';
-            
-            // Set specific padding for the branding
-            branding.style.paddingBottom = '5px';
-            
-            // Calculate content height and determine if we need spacer
-            const contentHeight = Array.from(container.children)
-                .filter(el => el !== logoZone)
-                .reduce((sum, el) => sum + (el as HTMLElement).offsetHeight, 0);
-                
-            // If there's space at the bottom, ensure logo is positioned properly
-            if (contentHeight < availableHeight - 40) {
-              // Add empty space to push logo to bottom
-              logoZone.style.marginTop = 'auto'; 
-            }
+          // Set the position of the branding footer
+          const footer = document.querySelector('.branding-footer') as HTMLElement | null;
+          if (footer) {
+            footer.style.bottom = '0.05in';
+            footer.style.position = 'fixed';
           }
         });
         
-        // Now measure content height for scaling determination
+        await page.pdf({
+          ...pdfOptions,
+          scale: 1.0 // Full scale for detailed format
+        });
+      } else {
+        // For standard format, we'll use the SAME approach as detailed format 
+        // but with scaling to fit on one page if needed
+        console.log('Using standard format: optimizing for single page');
+        
+        // Adjust the footer position to match the detailed format 
+        await page.evaluate(() => {
+          // Set the position of the branding footer
+          const footer = document.querySelector('.branding-footer') as HTMLElement | null;
+          if (footer) {
+            footer.style.bottom = '0.05in';
+            footer.style.position = 'fixed';
+          }
+        });
+        
+        // Measure content height for scaling
         const contentHeight = await page.evaluate(() => {
           return document.body.scrollHeight;
         });
         
-        // Calculate how much to scale content to fit on one page
+        // Calculate scale to fit on one page
         const pageHeight = 11 * 96; // Letter height in pixels (11 inches at 96 DPI)
         const availableHeight = pageHeight - 96; // Account for margins
-        
-        // Only scale down if content is too large, never scale up
         const scale = contentHeight > availableHeight ? 
-                     Math.min(0.99, (availableHeight / contentHeight)) : 
-                     1.0;
+                     Math.min(0.98, (availableHeight / contentHeight)) : 
+                     1.0; // No scaling if content already fits
         
-        console.log(`Single-page format - Content height: ${contentHeight}px, Scale: ${scale}`);
+        console.log(`Content height: ${contentHeight}px, using scale factor: ${scale}`);
         
         await page.pdf({
           ...pdfOptions,
-          scale: scale,
-          margin: pdfMarginsToUse
+          scale: scale, // Scale content to fit on single page
         });
       }
       

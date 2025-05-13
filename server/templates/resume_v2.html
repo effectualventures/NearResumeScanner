@@ -33,13 +33,6 @@
       position: relative;
     }
     
-    /* Special case for single page format */
-    body.force-single-page {
-      width: 7.5in; /* Exact content width */
-      padding: 0;
-      margin: 0 auto;
-    }
-    
     /* Core container for all content */
     .resume-container {
       width: 100%;
@@ -239,82 +232,35 @@
       font-weight: bold !important;
     }
     
-    /* Footer positioning - completely revised approach */
+    /* Footer positioning with fixed positioning */
     .logo-zone {
+      height: 0.3in;
       width: 100%;
       clear: both;
       display: block;
-      margin-top: 30px; /* Default margin */
-      margin-bottom: 0;
-      page-break-inside: avoid; /* Keep footer on same page */
-      position: relative;
-      height: 40px; /* Fixed height for logo */
+      visibility: hidden;
     }
     
     .branding-footer {
+      position: fixed;
+      bottom: 0.05in; /* Exact positioning from bottom */
+      right: 0.5in;   /* Align with right margin */
       display: flex;
       align-items: center;
-      justify-content: flex-end; /* Right-align content */
       gap: 6px;
       font-family: 'Inter', 'Helvetica', sans-serif;
       font-size: 10px;
-      width: 100%;
-      padding-top: 5px; /* Reduced space above logo */
-      padding-bottom: 0; /* No padding at bottom */
+      z-index: 1000;
     }
     
     .branding-footer img {
       height: 25px;
       width: auto;
     }
-    
-    /* Force single page format styles (applied via JavaScript) */
-    .force-single-page .resume-container {
-      display: flex !important;
-      flex-direction: column !important;
-      min-height: 9.8in !important; /* Precisely calculated page height minus margins */
-      position: relative !important;
-    }
-    
-    .force-single-page .logo-zone {
-      margin-top: auto !important; /* Push to bottom of container */
-      height: 40px !important;
-      padding-top: 0 !important;
-      padding-bottom: 0 !important;
-      position: relative !important;
-      bottom: 0 !important;
-    }
-    
-    /* Create consistent vertical spacing in single-page format */
-    .force-single-page section,
-    .force-single-page .section-title,
-    .force-single-page .section-rule,
-    .force-single-page .experience,
-    .force-single-page .education {
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-      width: 100% !important;
-    }
-    
-    /* Regular single page format styling */
-    .single-page-format .resume-container {
-      display: flex;
-      flex-direction: column;
-      min-height: calc(11in - 1.2in); /* Page height minus margins */
-    }
-    
-    .single-page-format .logo-zone {
-      margin-top: auto; /* Push to bottom of flex container */
-    }
-    
-    /* Detailed format specific styles - keeping this unchanged */
-    .detailed-format .logo-zone {
-      margin-top: 15px; /* Standard spacing for multi-page */
-    }
   </style>
 </head>
-<body class="{{#if detailedFormat}}detailed-format{{else}}single-page-format{{/if}}">
-  <!-- Page structure with flex layout to push footer to bottom -->
+<body>
+  <!-- Resume content container -->
   <div class="resume-container">
     <!-- HEADER -->
     <div class="header">
@@ -464,13 +410,14 @@
       {{/each}}
     {{/if}}
     
-    <!-- Footer with the logo at the bottom of the content -->
-    <div class="logo-zone">
-      <div class="branding-footer">
-        <span><strong>Presented by</strong></span>
-        <img src="file://{{logoPath}}" alt="Near logo"/>
-      </div>
-    </div>
+    <!-- Logo zone spacer -->
+    <div class="logo-zone"></div>
   </div>
+  
+  <!-- Branding footer with "Presented by" -->
+  <footer class="branding-footer">
+    <span><strong>Presented by</strong></span>
+    <img src="file://{{logoPath}}" alt="Near logo"/>
+  </footer>
 </body>
 </html>
