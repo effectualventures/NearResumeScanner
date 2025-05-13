@@ -346,7 +346,7 @@ export async function generatePDFv2(
           // Set the position of the branding footer
           const footer = document.querySelector('.branding-footer') as HTMLElement | null;
           if (footer) {
-            footer.style.bottom = '0.05in';
+            footer.style.bottom = '0.35in'; // Position much further down the page (adjusted from 0.05in)
             footer.style.position = 'fixed';
           }
         });
