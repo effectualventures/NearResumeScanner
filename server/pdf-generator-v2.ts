@@ -341,13 +341,13 @@ export async function generatePDFv2(
         // For detailed format, allow content to flow to second page
         console.log('Using detailed format: allowing multi-page layout');
         
-        // Position the footer at the bottom of the page with absolute positioning
+        // Position the footer at the bottom of the page
         await page.evaluate(() => {
           // Set the position of the branding footer
           const footer = document.querySelector('.branding-footer') as HTMLElement | null;
           if (footer) {
-            footer.style.bottom = '0.35in'; // Position exactly 0.35in from bottom
-            footer.style.position = 'absolute'; // Use absolute positioning for better control
+            footer.style.bottom = '0.05in';
+            footer.style.position = 'fixed';
           }
         });
         
@@ -365,8 +365,8 @@ export async function generatePDFv2(
           // Set the position of the branding footer
           const footer = document.querySelector('.branding-footer') as HTMLElement | null;
           if (footer) {
-            footer.style.bottom = '0.35in'; // Position exactly 0.35in from bottom
-            footer.style.position = 'absolute'; // Use absolute positioning for better control
+            footer.style.bottom = '0.05in';
+            footer.style.position = 'fixed';
           }
         });
         
@@ -384,28 +384,19 @@ export async function generatePDFv2(
               overflow: hidden !important; 
             }
             .branding-footer {
-              position: absolute !important; /* Absolute instead of fixed for better control */
-              bottom: 0.35in !important; /* Position exactly 0.35in from bottom */
+              position: fixed !important;
+              bottom: 0.05in !important;
               right: 0.5in !important;
-              z-index: 9999 !important; /* Ensure it stays on top */
             }
             
             /* Ensure extra space above footer */
             .logo-zone {
-              height: 0.6in !important; /* Reduced height to save space */
-              margin-top: 0.2in !important; /* Further reduced margin for single-page format */
+              height: 0.7in !important;
+              margin-top: 0.5in !important;
               width: 100% !important;
               clear: both !important;
               display: block !important;
             }
-            
-            /* Optimize spacing for single-page format */
-            .section { margin-bottom: 5px !important; }
-            .section-title { margin-top: 10px !important; margin-bottom: 2px !important; }
-            section { margin-bottom: 5px !important; }
-            .education { margin-bottom: 5px !important; }
-            .experience { margin-bottom: 8px !important; }
-            li { margin-bottom: 1px !important; line-height: 1.2 !important; }
           `;
           document.head.appendChild(style);
           

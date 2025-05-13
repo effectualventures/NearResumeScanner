@@ -257,19 +257,18 @@
       font-weight: bold !important;
     }
     
-    /* Footer positioning with absolute positioning to provide better control */
+    /* Footer positioning with fixed positioning */
     .logo-zone {
-      height: 0.7in; /* Increased height for more spacing before footer */
+      height: 0.3in;
       width: 100%;
       clear: both;
       display: block;
-      margin-top: 0.3in; /* Reduced margin to save space in single-page format */
       visibility: hidden;
     }
     
     .branding-footer {
-      position: absolute; /* Use absolute positioning */
-      bottom: 0.35in; /* Position exactly 0.35in from bottom as specified */
+      position: fixed;
+      bottom: 0.05in; /* Position at 0.05in from bottom of page */
       right: 0.5in;   /* Align with right margin */
       display: flex;
       align-items: center;
@@ -317,7 +316,7 @@
               {{#if ../detailedFormat}}
                 {{#each (slice this.items 1 15)}} • {{this}}{{/each}}
               {{else}}
-                {{#each (slice this.items 1 7)}} • {{this}}{{/each}}
+                {{#each (slice this.items 1 6)}} • {{this}}{{/each}}
               {{/if}}
             </div>
           {{/if}}
@@ -327,7 +326,12 @@
         {{#each skills}}
           {{#if (and (not (eq category "Skills")) (not (eq category "Languages")))}}
             <div style="margin-bottom: 4px; width: 100%;">
-              <b style="font-weight: bold !important;">{{this.category}}:</b> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
+              <b style="font-weight: bold !important;">{{this.category}}:</b> {{this.items.[0]}}
+              {{#if ../detailedFormat}}
+                {{#each (slice this.items 1)}} • {{this}}{{/each}}
+              {{else}}
+                {{#each (slice this.items 1 5)}} • {{this}}{{/each}}
+              {{/if}}
             </div>
           {{/if}}
         {{/each}}
@@ -378,63 +382,16 @@
                   </li>
                 {{/each}}
               {{else}}
-                <!-- Progressive bullet point reduction for standard format based on experience position -->
-                {{#if (eq @index 0)}}
-                  <!-- Most recent role: up to 5 bullets -->
-                  {{#each (slice bullets 0 5)}}
-                    <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
-                      {{#if metrics.length}}
-                        {{#unless (containsAny text metrics)}}
-                          <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
-                        {{/unless}}
-                      {{/if}}
-                    </li>
-                  {{/each}}
-                {{else if (eq @index 1)}}
-                  <!-- Second most recent role: up to 4 bullets -->
-                  {{#each (slice bullets 0 4)}}
-                    <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
-                      {{#if metrics.length}}
-                        {{#unless (containsAny text metrics)}}
-                          <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
-                        {{/unless}}
-                      {{/if}}
-                    </li>
-                  {{/each}}
-                {{else if (eq @index 2)}}
-                  <!-- Third most recent role: up to 3 bullets -->
-                  {{#each (slice bullets 0 3)}}
-                    <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
-                      {{#if metrics.length}}
-                        {{#unless (containsAny text metrics)}}
-                          <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
-                        {{/unless}}
-                      {{/if}}
-                    </li>
-                  {{/each}}
-                {{else if (eq @index 3)}}
-                  <!-- Fourth most recent role: up to 2 bullets -->
-                  {{#each (slice bullets 0 2)}}
-                    <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
-                      {{#if metrics.length}}
-                        {{#unless (containsAny text metrics)}}
-                          <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
-                        {{/unless}}
-                      {{/if}}
-                    </li>
-                  {{/each}}
-                {{else}}
-                  <!-- All older roles: just 1 bullet -->
-                  {{#each (slice bullets 0 1)}}
-                    <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
-                      {{#if metrics.length}}
-                        {{#unless (containsAny text metrics)}}
-                          <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
-                        {{/unless}}
-                      {{/if}}
-                    </li>
-                  {{/each}}
-                {{/if}}
+                <!-- Limit to 7 bullet points for standard format -->
+                {{#each (slice bullets 0 7)}}
+                  <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
+                    {{#if metrics.length}}
+                      {{#unless (containsAny text metrics)}}
+                        <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
+                      {{/unless}}
+                    {{/if}}
+                  </li>
+                {{/each}}
               {{/if}}
             </ul>
           </div>

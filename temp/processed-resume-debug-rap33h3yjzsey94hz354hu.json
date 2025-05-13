@@ -193,7 +193,7 @@
     },
     {
       "institution": "Mackenzie Presbyterian University",
-      "degree": "Bachelor's Degree in Architecture and Urbanism",
+      "degree": "Architecture and Urbanism",
       "location": "SP, Brazil",
       "year": "2009",
       "additionalInfo": ""
@@ -206,8 +206,5 @@
       "additionalInfo": "Completed Oct 2024 – Jan 2025"
     }
   ],
-  "additionalExperience": "",
-  "detailedFormat": false,
-  "includeAdditionalExp": false,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": ""
 }
