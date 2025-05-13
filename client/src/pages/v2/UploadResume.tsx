@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 export function UploadResume() {
   const [file, setFile] = useState<File | null>(null);
   const [enhancedFormat, setEnhancedFormat] = useState(false);
+  const [includeAdditionalExp, setIncludeAdditionalExp] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [processingStatus, setProcessingStatus] = useState("");
   const [resumeUrl, setResumeUrl] = useState("");
@@ -40,6 +41,7 @@ export function UploadResume() {
       const formData = new FormData();
       formData.append("resume", file);
       formData.append("enhancedFormat", enhancedFormat.toString());
+      formData.append("includeAdditionalExp", includeAdditionalExp.toString());
       
       // Call our enhanced v2 API endpoint
       const response = await fetch("/api/v2/convert", {
@@ -100,14 +102,26 @@ export function UploadResume() {
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 />
               </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox 
-                  id="enhanced" 
-                  checked={enhancedFormat}
-                  onCheckedChange={(checked) => setEnhancedFormat(checked === true)} 
-                  disabled={isLoading}
-                />
-                <Label htmlFor="enhanced">Use enhanced 2-page format (for 10+ years of experience)</Label>
+              <div className="flex flex-col space-y-3">
+                <div className="flex items-center space-x-2">
+                  <Checkbox 
+                    id="enhanced" 
+                    checked={enhancedFormat}
+                    onCheckedChange={(checked) => setEnhancedFormat(checked === true)} 
+                    disabled={isLoading}
+                  />
+                  <Label htmlFor="enhanced">Use enhanced 2-page format (for 10+ years of experience)</Label>
+                </div>
+                
+                <div className="flex items-center space-x-2">
+                  <Checkbox 
+                    id="additional-exp" 
+                    checked={includeAdditionalExp}
+                    onCheckedChange={(checked) => setIncludeAdditionalExp(checked === true)} 
+                    disabled={isLoading}
+                  />
+                  <Label htmlFor="additional-exp">Include "Additional Experience" section (volunteer work, etc.)</Label>
+                </div>
               </div>
             </div>
             

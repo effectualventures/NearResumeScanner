@@ -18,6 +18,7 @@ interface SessionData {
   processedJson: string;
   feedbackChat?: string[];
   enhancedFormat?: boolean;
+  includeAdditionalExp?: boolean;
 }
 
 // Session storage
@@ -43,6 +44,7 @@ export async function registerV2Routes(app: Express): Promise<void> {
         : req.files.resume as UploadedFile;
         
       const enhancedFormat = req.body.enhancedFormat === 'true';
+      const includeAdditionalExp = req.body.includeAdditionalExp === 'true';
       
       // Generate a unique session ID
       const sessionId = generateSessionId();
@@ -116,12 +118,13 @@ export async function registerV2Routes(app: Express): Promise<void> {
       sessions[sessionId] = {
         originalText: textContent, // Already sanitized the text above
         processedJson: JSON.stringify(enhancedResume),
-        enhancedFormat
+        enhancedFormat,
+        includeAdditionalExp
       };
       
       // Generate PDF using the improved generator
       console.log("Generating enhanced PDF (v2)...");
-      const pdfPath = await generatePDFv2(enhancedResume, sessionId, enhancedFormat);
+      const pdfPath = await generatePDFv2(enhancedResume, sessionId, enhancedFormat, includeAdditionalExp);
       
       // Determine if we have HTML or PDF
       const isPdf = pdfPath.endsWith('.pdf');

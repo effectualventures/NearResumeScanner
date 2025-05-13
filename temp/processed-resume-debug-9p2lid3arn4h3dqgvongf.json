@@ -52,15 +52,21 @@
       "bullets": [
         {
           "text": "Conducted comprehensive market analysis for new business opportunities across 3 key regions, resulting in a 42% increase in qualified leads.",
-          "metrics": []
+          "metrics": [
+            "42% increase in qualified leads"
+          ]
         },
         {
           "text": "Identified and cultivated new customer relationships in LATAM, contributing to $200K in new deals within 4 months.",
-          "metrics": []
+          "metrics": [
+            "$200K in new deals"
+          ]
         },
         {
           "text": "Led team of 3 BDRs to double prospecting efficiency, generating $300K in qualified pipeline within 6 months.",
-          "metrics": []
+          "metrics": [
+            "$300K in qualified pipeline"
+          ]
         }
       ]
     },
@@ -73,15 +79,23 @@
       "bullets": [
         {
           "text": "Sourced $1.2M deal with a U.S. rental car company, achieving 112% of quota.",
-          "metrics": []
+          "metrics": [
+            "$1.2M deal",
+            "112% of quota"
+          ]
         },
         {
           "text": "Collaborated with marketing to enhance lead qualification, improving conversion rates by 35%.",
-          "metrics": []
+          "metrics": [
+            "35% improved conversion rate"
+          ]
         },
         {
           "text": "Led team of SDRs to initiate 50 new opportunities, achieving 130% of team quota.",
-          "metrics": []
+          "metrics": [
+            "50 new opportunities",
+            "130% of team quota"
+          ]
         }
       ]
     },
@@ -94,15 +108,21 @@
       "bullets": [
         {
           "text": "Generated and qualified leads through strategic outreach, securing an $880K deal with a U.S. stadium.",
-          "metrics": []
+          "metrics": [
+            "$880K deal"
+          ]
         },
         {
           "text": "Maintained team quota attainment of 98%, surpassing company expectations consistently.",
-          "metrics": []
+          "metrics": [
+            "98% quota attainment"
+          ]
         },
         {
           "text": "Enhanced call scripts and engagement material, boosting prospect meetings by 28%.",
-          "metrics": []
+          "metrics": [
+            "28% increase in meetings"
+          ]
         }
       ]
     }
@@ -116,7 +136,5 @@
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "Led a team of SDRs at ProspectHunter to achieve 95-105% quota attainment consistently in the U.S. market.",
-  "detailedFormat": false,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": "Led a team of SDRs at ProspectHunter to achieve 95-105% quota attainment consistently in the U.S. market."
 }
