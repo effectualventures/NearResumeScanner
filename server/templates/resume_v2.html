@@ -524,10 +524,12 @@
     <div class="logo-zone"></div>
   </div>
   
-  <!-- Branding footer with "Presented by" -->
-  <footer id="main-footer" class="branding-footer" style="display: flex; align-items: center; gap: 6px; position: fixed; bottom: 0.35in; right: 0.5in; z-index: 9999;">
-    <span><strong>Presented by</strong></span>
-    <img src="file://{{logoPath}}" alt="Near logo" style="height: 25px; width: auto;"/>
-  </footer>
+  <!-- Only include the footer HTML but no styling - styling will be added by JavaScript -->
+  <div id="footer-container" style="display: none;">
+    <footer id="main-footer" class="branding-footer">
+      <span><strong>Presented by</strong></span>
+      <img src="file://{{logoPath}}" alt="Near logo" style="height: 25px; width: auto;"/>
+    </footer>
+  </div>
 </body>
 </html>

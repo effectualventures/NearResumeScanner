@@ -387,14 +387,24 @@ export async function generatePDFv2(
               margin-bottom: 0.8in !important;
             }
             
-            /* Hide ALL footers by default */
-            .branding-footer,
-            #main-footer,
-            #footer-container {
-              display: none !important;
+            /* Style for our main footer */
+            #main-footer {
+              position: fixed !important;
+              bottom: 0.35in !important;
+              right: 0.5in !important;
+              display: flex !important;
+              z-index: 9999 !important;
+              page-break-inside: avoid !important;
+              page-break-before: avoid !important;
             }
             
-            /* The real footer will be injected by JavaScript */
+            /* Special rule for multi-page PDFs */
+            @media print {
+              /* Hide footer on all but last page */
+              @page:not(:last-of-type) #main-footer {
+                display: none !important;
+              }
+            }
             
             /* Hide any footer inside the content area */
             .resume-container .branding-footer {
