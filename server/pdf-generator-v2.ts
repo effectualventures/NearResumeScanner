@@ -398,11 +398,9 @@ export async function generatePDFv2(
               page-break-before: avoid !important;
             }
             
-            /* Only print footer on the last page */
-            @media print {
-              @page:not(:last-of-type) .branding-footer {
-                display: none !important;
-              }
+            /* Hide all footers by default - we'll control this with JavaScript */
+            .branding-footer {
+              display: none !important;
             }
             
             /* Hide any logos in the content that aren't in the footer */
@@ -420,6 +418,42 @@ export async function generatePDFv2(
           `
         }).catch(err => {
           console.log('Non-critical error adding styles:', err);
+        });
+        
+        // Position the footer correctly using JavaScript
+        await page.evaluate(() => {
+          // 1. Find the resume container and the branding footer
+          const container = document.querySelector('.resume-container');
+          const footer = document.querySelector('.branding-footer');
+          
+          if (container && footer) {
+            // 2. Create a duplicate of the footer that will only show on the last page
+            const lastPageFooter = footer.cloneNode(true) as HTMLElement;
+            
+            // 3. Add a special class to identify it
+            lastPageFooter.classList.add('last-page-only-footer');
+            
+            // 4. Style this footer to ensure it appears at the end of the document
+            lastPageFooter.style.display = 'flex';
+            lastPageFooter.style.position = 'absolute';
+            lastPageFooter.style.bottom = '0.35in';
+            lastPageFooter.style.right = '0.5in';
+            
+            // 5. Append it to the end of the document
+            document.body.appendChild(lastPageFooter);
+            
+            // 6. Hide the original footer
+            (footer as HTMLElement).style.display = 'none';
+            
+            // 7. Add extra space at the bottom of the content to ensure footer doesn't overlap
+            const spacer = document.createElement('div');
+            spacer.style.height = '0.7in';
+            spacer.style.width = '100%';
+            spacer.style.visibility = 'hidden';
+            container.appendChild(spacer);
+          }
+        }).catch(err => {
+          console.log('Non-critical error positioning footer:', err);
         });
         
         // Generate the PDF
@@ -456,16 +490,22 @@ export async function generatePDFv2(
               overflow: hidden !important; 
             }
             
-            /* Position footer */
+            /* Hide all footers by default - we'll control via JS */
             .branding-footer {
-              position: fixed !important;
+              display: none !important;
+            }
+            
+            /* But show our special last-page-only footer */
+            .last-page-only-footer {
+              display: flex !important;
+              position: absolute !important;
               bottom: 0.35in !important;
               right: 0.5in !important;
             }
             
             /* Hide any logos in the content that aren't in the footer */
-            img[src*="logo"]:not(.branding-footer img),
-            img[src*="near"]:not(.branding-footer img) {
+            img[src*="logo"]:not(.last-page-only-footer img),
+            img[src*="near"]:not(.last-page-only-footer img) {
               display: none !important;
             }
             
@@ -490,6 +530,42 @@ export async function generatePDFv2(
           });
         }).catch(err => {
           console.log('Non-critical error removing empty elements:', err);
+        });
+        
+        // Position the footer correctly using JavaScript
+        await page.evaluate(() => {
+          // 1. Find the resume container and the branding footer
+          const container = document.querySelector('.resume-container');
+          const footer = document.querySelector('.branding-footer');
+          
+          if (container && footer) {
+            // 2. Create a duplicate of the footer that will only show on the last page
+            const lastPageFooter = footer.cloneNode(true) as HTMLElement;
+            
+            // 3. Add a special class to identify it
+            lastPageFooter.classList.add('last-page-only-footer');
+            
+            // 4. Style this footer to ensure it appears at the end of the document
+            lastPageFooter.style.display = 'flex';
+            lastPageFooter.style.position = 'absolute';
+            lastPageFooter.style.bottom = '0.35in';
+            lastPageFooter.style.right = '0.5in';
+            
+            // 5. Append it to the end of the document
+            document.body.appendChild(lastPageFooter);
+            
+            // 6. Hide the original footer
+            (footer as HTMLElement).style.display = 'none';
+            
+            // 7. Add extra space at the bottom of the content to ensure footer doesn't overlap
+            const spacer = document.createElement('div');
+            spacer.style.height = '0.7in';
+            spacer.style.width = '100%';
+            spacer.style.visibility = 'hidden';
+            container.appendChild(spacer);
+          }
+        }).catch(err => {
+          console.log('Non-critical error positioning footer:', err);
         });
         
         // Check if education section is visible
