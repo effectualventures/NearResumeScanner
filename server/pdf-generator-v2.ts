@@ -346,7 +346,7 @@ export async function generatePDFv2(
           // Set the position of the branding footer
           const footer = document.querySelector('.branding-footer') as HTMLElement | null;
           if (footer) {
-            footer.style.bottom = '0.05in';
+            footer.style.bottom = '0.35in';
             footer.style.position = 'fixed';
           }
         });
@@ -365,7 +365,7 @@ export async function generatePDFv2(
           // Set the position of the branding footer
           const footer = document.querySelector('.branding-footer') as HTMLElement | null;
           if (footer) {
-            footer.style.bottom = '0.05in';
+            footer.style.bottom = '0.35in';
             footer.style.position = 'fixed';
           }
         });

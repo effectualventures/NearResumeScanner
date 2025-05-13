@@ -259,11 +259,22 @@
     
     /* Additional space control for single-page format */
     .single-page .skill-section {
-      margin-bottom: 4px !important; /* Reduce spacing after skills in single-page */
+      margin-bottom: 2px !important; /* Reduce spacing after skills in single-page */
     }
     
     .single-page .education-section {
-      margin-top: 2px !important; /* Ensure education is visible */
+      margin-top: 0 !important; /* Ensure education is visible */
+      padding-top: 2px !important;
+    }
+    
+    .single-page .section-title {
+      margin-top: 10px !important; /* Reduce section title spacing */
+      margin-bottom: 3px !important;
+    }
+    
+    .single-page .section-rule {
+      margin-top: 2px !important;
+      margin-bottom: 5px !important;
     }
     
     /* Footer positioning with fixed positioning */
@@ -277,7 +288,7 @@
     
     .branding-footer {
       position: fixed;
-      bottom: 0.05in; /* Position at 0.05in from bottom of page */
+      bottom: 0.35in; /* Position exactly 0.35in from bottom as specified */
       right: 0.5in;   /* Align with right margin */
       display: flex;
       align-items: center;
