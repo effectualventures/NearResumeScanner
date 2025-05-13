@@ -22,9 +22,23 @@ async function uploadAndProcessResume() {
   try {
     console.log('Step 1: Uploading and processing resume...');
     
+    // First verify the file exists
+    if (!fs.existsSync(PDF_FILE_PATH)) {
+      throw new Error(`Resume file not found at path: ${PDF_FILE_PATH}`);
+    }
+    
+    console.log('Using resume file:', PDF_FILE_PATH);
+    
     // Create form data with file
     const formData = new FormData();
-    formData.append('file', fs.createReadStream(PDF_FILE_PATH));
+    
+    // Add the resume file with explicit filename
+    const fileStream = fs.createReadStream(PDF_FILE_PATH);
+    formData.append('resume', fileStream, {
+      filename: 'resume.pdf',
+      contentType: 'application/pdf',
+    });
+    
     formData.append('skipValidation', 'true'); // Skip OpenAI validation for faster processing
     formData.append('detailedFormat', 'false'); // Use standard format, not detailed
 
