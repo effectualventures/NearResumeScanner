@@ -425,82 +425,33 @@ export async function generatePDFv2(
           console.log('Non-critical error adding styles:', err);
         });
         
-        // Position the footer correctly using JavaScript
-        await page.evaluate(() => {
-          // 1. Find the resume container and the branding footer
-          const container = document.querySelector('.resume-container');
-          const footer = document.querySelector('.branding-footer');
-          
-          if (container && footer) {
-            // 2. Create a duplicate of the footer that will only show on the last page
-            const lastPageFooter = footer.cloneNode(true) as HTMLElement;
-            
-            // 3. Add a special class to identify it
-            lastPageFooter.classList.add('last-page-only-footer');
-            
-            // 4. Style this footer to ensure it appears at the end of the document
-            lastPageFooter.style.display = 'flex';
-            lastPageFooter.style.position = 'absolute';
-            lastPageFooter.style.bottom = '0.35in';
-            lastPageFooter.style.right = '0.5in';
-            
-            // 5. Append it to the end of the document
-            document.body.appendChild(lastPageFooter);
-            
-            // 6. Hide the original footer
-            (footer as HTMLElement).style.display = 'none';
-            
-            // 7. Add extra space at the bottom of the content to ensure footer doesn't overlap
-            const spacer = document.createElement('div');
-            spacer.style.height = '0.7in';
-            spacer.style.width = '100%';
-            spacer.style.visibility = 'hidden';
-            container.appendChild(spacer);
-          }
-        }).catch(err => {
-          console.log('Non-critical error positioning footer:', err);
-        });
-        
-        // Before generating PDF, add a custom footer at the bottom of the document
+        // Position the footer using a clean, unified approach
         await page.evaluate(() => {
           try {
-            // Get the footer content from the template
-            const footerContent = document.querySelector('#main-footer')?.innerHTML;
-            
-            // Create a new footer element that will be positioned manually
-            const customFooter = document.createElement('div');
-            customFooter.id = 'custom-page-footer';
-            customFooter.style.position = 'absolute';  // absolute instead of fixed
-            customFooter.style.display = 'flex';
-            customFooter.style.alignItems = 'center';
-            customFooter.style.gap = '6px';
-            customFooter.style.fontFamily = "'Inter', sans-serif";
-            customFooter.style.fontSize = '10px';
-            customFooter.style.bottom = '0.35in';
-            customFooter.style.right = '0.5in';
-            customFooter.style.zIndex = '9999';
-            
-            if (footerContent) {
-              customFooter.innerHTML = footerContent;
-            } else {
-              // Fallback if footer content not found
-              customFooter.innerHTML = `
-                <span><strong>Presented by</strong></span>
-                <img src="file:///home/runner/workspace/public/images/near_logo.png" alt="Near logo" style="height: 25px; width: auto;"/>
-              `;
-            }
-            
-            // Get the resume container
+            // Get the template footer and resume container
+            const templateFooter = document.querySelector('#main-footer');
             const resumeContainer = document.querySelector('.resume-container');
-            if (resumeContainer) {
-              // Add spacing at the end of content to make room for footer
+            
+            if (templateFooter && resumeContainer) {
+              // Create a properly positioned footer that will appear at the end
+              const positionedFooter = document.createElement('div');
+              positionedFooter.id = 'positioned-footer';
+              positionedFooter.className = 'branding-footer';
+              
+              // Copy the HTML content directly from the template footer
+              positionedFooter.innerHTML = templateFooter.innerHTML;
+              
+              // Add it to the document body
+              document.body.appendChild(positionedFooter);
+              
+              // Add spacing at the end of content to prevent footer from overlapping content
               const spacer = document.createElement('div');
               spacer.style.height = '0.8in';
               spacer.style.width = '100%';
+              spacer.style.visibility = 'hidden';
               resumeContainer.appendChild(spacer);
-              
-              // Add footer after the last element
-              document.body.appendChild(customFooter);
+            } else {
+              console.log('Could not find template footer or container');
             }
             
             // Only hide logos that are WITHIN the resume content
@@ -560,7 +511,21 @@ export async function generatePDFv2(
               overflow: hidden !important; 
             }
             
-            /* Only hide footers that are inside the content container */
+            /* Style for the main footer that will appear at the end */
+            #positioned-footer {
+              position: fixed;
+              bottom: 0.35in;
+              right: 0.5in;
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              font-family: 'Inter', sans-serif;
+              font-size: 10px;
+              z-index: 9999;
+            }
+            
+            /* Hide all other footers/logos in the document */
+            .branding-footer:not(#positioned-footer),
             .resume-container footer,
             .resume-container .branding-footer,
             .page-content footer {
