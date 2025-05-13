@@ -460,7 +460,7 @@ export async function generatePDFv2(
               const img = contentImages[i] as HTMLImageElement;
               const src = img.getAttribute('src');
               // Skip images in our custom footer
-              if (img.closest('#custom-page-footer')) {
+              if (img.closest('#positioned-footer')) {
                 continue;
               }
               if (src && (src.includes('logo') || src.includes('near'))) {
@@ -468,10 +468,8 @@ export async function generatePDFv2(
               }
             }
             
-            // Ensure our custom footer's logo is always visible
-            (document.querySelector("#custom-page-footer img") as HTMLElement).style.display = "inline-block";
             
-            console.log('Custom footer added for multi-page PDF');
+            console.log('Footer positioned correctly for PDF output');
           } catch (err) {
             console.log('Error adding custom footer:', err);
           }
@@ -605,7 +603,7 @@ export async function generatePDFv2(
             
             // Create a new footer element that will be positioned manually
             const customFooter = document.createElement('div');
-            customFooter.id = 'custom-page-footer';
+            customFooter.id = 'positioned-footer';
             customFooter.style.position = 'fixed';  // fixed for single-page
             customFooter.style.display = 'flex';
             customFooter.style.alignItems = 'center';
@@ -635,7 +633,7 @@ export async function generatePDFv2(
               const img = contentImages[i] as HTMLImageElement;
               const src = img.getAttribute('src');
               // Skip images in our custom footer
-              if (img.closest('#custom-page-footer')) {
+              if (img.closest('#positioned-footer')) {
                 continue;
               }
               if (src && (src.includes('logo') || src.includes('near'))) {
@@ -644,7 +642,7 @@ export async function generatePDFv2(
             }
             
             // Ensure our custom footer's logo is always visible
-            (document.querySelector("#custom-page-footer img") as HTMLElement).style.display = "inline-block";
+            (document.querySelector("#positioned-footer img") as HTMLElement).style.display = "inline-block";
             
             console.log('Custom footer added for single-page PDF');
           } catch (err) {
