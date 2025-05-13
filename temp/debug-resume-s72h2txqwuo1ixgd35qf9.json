@@ -72,32 +72,46 @@
         {
           "text": "Led a team in the analysis of tender documents, achieving 100% compliance with project specifications across 15 projects for diverse sectors including residential and commercial buildings.",
           "metrics": [
+            "100% compliance",
             "multiple sectors"
           ]
         },
         {
           "text": "Utilized first principle estimating to achieve an average accuracy rate of 95%, reducing budget overruns by 20% across 30+ projects.",
-          "metrics": []
+          "metrics": [
+            "95% accuracy rate",
+            "reduced overruns by 20%"
+          ]
         },
         {
           "text": "Prepared Bill of Quantities (BOQ) for high-value projects, contributing to a 12% increase in successful bids by improving tender documentation quality.",
-          "metrics": []
+          "metrics": [
+            "12% increase in successful bids"
+          ]
         },
         {
           "text": "Streamlined the cost estimating process, which resulted in a 30% reduction of estimation time, enhancing departmental productivity.",
-          "metrics": []
+          "metrics": [
+            "30% reduction in time"
+          ]
         },
         {
           "text": "Created detailed BOQ and final account for projects such as Cultura Inglesa English Schools, valued at over $1.4M each, ensuring budget adherence.",
-          "metrics": []
+          "metrics": [
+            "Projects valued $1.4M each"
+          ]
         },
         {
           "text": "Developed and implemented initial programs of works for multiple large-scale buildings, achieving 100% on-time project delivery.",
-          "metrics": []
+          "metrics": [
+            "100% on-time delivery"
+          ]
         },
         {
           "text": "Led documentation for approval and regularization of residential projects, accelerating approval times by 15%.",
-          "metrics": []
+          "metrics": [
+            "Reduced approval times by 15%"
+          ]
         }
       ]
     },
@@ -110,31 +124,45 @@
       "bullets": [
         {
           "text": "Led tender analysis to ensure comprehensive understanding of scope, improving cost estimate accuracy by 25% for major infrastructure projects.",
-          "metrics": []
+          "metrics": [
+            "25% accuracy improvement"
+          ]
         },
         {
           "text": "Prepared BOQ for high-profile projects including the South Morang Terminal Station, valued at $3.5Million, streamlining the costing process.",
-          "metrics": []
+          "metrics": [
+            "$3.5Million"
+          ]
         },
         {
           "text": "Coordinated cost consulting sessions with suppliers, reducing material costs by 10% across 15 projects.",
-          "metrics": []
+          "metrics": [
+            "10% reduction in costs"
+          ]
         },
         {
           "text": "Assessed additional costs of design variations, optimizing budgets and minimizing client financial risk by 20%.",
-          "metrics": []
+          "metrics": [
+            "20% risk minimization"
+          ]
         },
         {
           "text": "Implemented project tracking methods that improved budget accuracy by 35%, ensuring financial alignment from conception to completion.",
-          "metrics": []
+          "metrics": [
+            "35% accuracy improvement"
+          ]
         },
         {
           "text": "Managed the civil and engineering drawings cost analysis, proposing construction method changes that saved $500.0K/year.",
-          "metrics": []
+          "metrics": [
+            "$500.0K savings annually"
+          ]
         },
         {
           "text": "Secured project assignments by preparing comprehensive detailed BOQs, leading to a 12% increase in contract value.",
-          "metrics": []
+          "metrics": [
+            "12% increase in contract value"
+          ]
         }
       ]
     },
@@ -153,15 +181,21 @@
         },
         {
           "text": "Prepared detailed BOQs for diverse projects, resulting in a 15% improvement in cost-consulting outcomes.",
-          "metrics": []
+          "metrics": [
+            "15% improvement"
+          ]
         },
         {
           "text": "Led feasibility studies for high-profile projects, successfully influencing $12.0M funding decisions.",
-          "metrics": []
+          "metrics": [
+            "$12.0M funding influenced"
+          ]
         },
         {
           "text": "Coordinated with legal and project teams, achieving 100% alignment on contract terms for construction projects.",
-          "metrics": []
+          "metrics": [
+            "100% contract alignment"
+          ]
         },
         {
           "text": "Implemented dispute resolution strategies, resulting in successful cost negotiations and timely project completions.",
@@ -194,14 +228,11 @@
     },
     {
       "institution": "Mackenzie Presbyterian University",
-      "degree": "Bachelor's Degree in Architecture and Urbanism",
+      "degree": "Architecture and Urbanism",
       "location": "Brazil",
       "year": "2009",
       "additionalInfo": "Member of AIQS"
     }
   ],
-  "additionalExperience": "Volunteered in local community projects to enhance understanding of sustainable building practices; active member of the CAU BR and AIQS.",
-  "detailedFormat": true,
-  "includeAdditionalExp": true,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": "Volunteered in local community projects to enhance understanding of sustainable building practices; active member of the CAU BR and AIQS."
 }
