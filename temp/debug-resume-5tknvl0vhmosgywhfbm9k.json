@@ -65,11 +65,15 @@
       "bullets": [
         {
           "text": "Provided comprehensive quantity surveying services to civil construction and real estate companies, increasing project efficiency by 18%.",
-          "metrics": []
+          "metrics": [
+            "18% project efficiency"
+          ]
         },
         {
           "text": "Performed detailed analysis of tendering documents to align project estimates with budgetary constraints, enhancing project efficiency by 18%.",
-          "metrics": []
+          "metrics": [
+            "18% project efficiency"
+          ]
         },
         {
           "text": "Prepared accurate Bill of Quantities (BOQ) for various high-value projects including residential and commercial properties.",
@@ -79,11 +83,15 @@
         },
         {
           "text": "Managed cost estimating for design variations, consistently limiting budget overruns to less than 5%.",
-          "metrics": []
+          "metrics": [
+            "<5% budget overruns"
+          ]
         },
         {
           "text": "Generated commercial offers and tender documents that resulted in a 30% increase in successful bids.",
-          "metrics": []
+          "metrics": [
+            "30% successful bids"
+          ]
         },
         {
           "text": "Executed quantity take-off for comprehensive project domains: architectural, structural, interior design, earthworks, and more.",
@@ -108,7 +116,9 @@
       "bullets": [
         {
           "text": "Conducted rigorous tender analysis for major infrastructure projects, streamlining project initiation by 25%.",
-          "metrics": []
+          "metrics": [
+            "25% project initiation efficiency"
+          ]
         },
         {
           "text": "Delivered precise BOQs including material, labor, and equipment lists, optimizing resource allocation.",
@@ -118,15 +128,21 @@
         },
         {
           "text": "Collaborated with clients like Zinfra Pty Ltd, resulting in over $3.5M in project awards.",
-          "metrics": []
+          "metrics": [
+            "$3.5M project awards"
+          ]
         },
         {
           "text": "Streamlined cost consulting, achieving a cost-saving of 12% in material procurement.",
-          "metrics": []
+          "metrics": [
+            "12% cost-saving"
+          ]
         },
         {
           "text": "Initiated program schedules reducing project completion time by 15%.",
-          "metrics": []
+          "metrics": [
+            "15% reduced time"
+          ]
         },
         {
           "text": "Innovated construction methods to meet budget goals, improving contractor relations.",
@@ -145,15 +161,21 @@
       "bullets": [
         {
           "text": "Responsible for detailed analysis of tender documents, increasing accuracy of project cost foresight by 20%.",
-          "metrics": []
+          "metrics": [
+            "20% cost accuracy"
+          ]
         },
         {
           "text": "Executed final BOQs for major commercial projects valued at over $24.0M.",
-          "metrics": []
+          "metrics": [
+            "$24.0M project value"
+          ]
         },
         {
           "text": "Facilitated team meetings clarifying project scopes, reducing project blockers by 30%.",
-          "metrics": []
+          "metrics": [
+            "30% fewer blockers"
+          ]
         }
       ]
     }
@@ -168,13 +190,11 @@
     },
     {
       "institution": "Mackenzie Presbyterian University",
-      "degree": "Bachelor's Degree in Architecture and Urbanism",
+      "degree": "Architecture and Urbanism",
       "location": "Brazil",
       "year": "2009",
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "Includes membership with CAU BR Council of Architecture and ongoing specializations on construction management.",
-  "detailedFormat": true,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": "Includes membership with CAU BR Council of Architecture and ongoing specializations on construction management."
 }

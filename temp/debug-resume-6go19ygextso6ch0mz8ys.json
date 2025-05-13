@@ -1,0 +1,153 @@
+{
+  "header": {
+    "firstName": "Luis",
+    "tagline": "Senior Business Development Expert – SaaS & LATAM",
+    "location": "Colombia",
+    "city": "Bogotá",
+    "country": "Colombia"
+  },
+  "summary": "Accomplished business developer with over 5 years of experience in SaaS and LATAM markets. Consistent performer with $1.2M deal closure and a track record of increasing regional revenue by 30%.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Business Development",
+        "Sales Strategies",
+        "Outbound Sales",
+        "Pipeline Management",
+        "Lead Qualification",
+        "Partnership Cultivation",
+        "Market Analysis",
+        "CRM Systems",
+        "Salesforce",
+        "Negotiation",
+        "Customer Relationship Management",
+        "Market Research",
+        "Strategic Planning",
+        "Competitive Analysis",
+        "Networking"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Fluent)",
+        "Spanish (Native)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Toshiba Global Commerce Solutions",
+      "location": "Colombia",
+      "title": "Business Development",
+      "startDate": "Oct 2023",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Conducted quantitative and qualitative analysis to evaluate new business opportunities, resulting in a 15% increase in lead conversion rates.",
+          "metrics": [
+            "15%"
+          ]
+        },
+        {
+          "text": "Cultivated new customer relationships in LATAM, aligning with corporate strategies, leading to a 20% increase in customer retention.",
+          "metrics": [
+            "20%"
+          ]
+        },
+        {
+          "text": "Sourced a $200K deal for a major cosmetic brand, driving regional revenue growth.",
+          "metrics": [
+            "$200K"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Veridas",
+      "location": "Colombia",
+      "title": "Sales Development Manager",
+      "startDate": "Jan 2022",
+      "endDate": "Jul 2023",
+      "bullets": [
+        {
+          "text": "Led and coached a team of 8 SDRs, increasing team quota attainment by 30%.",
+          "metrics": [
+            "30%"
+          ]
+        },
+        {
+          "text": "Developed sales playbooks and training, enhancing SDR performance and efficiency.",
+          "metrics": []
+        },
+        {
+          "text": "Optimized outbound sales strategies, boosting pipeline generation by 40%.",
+          "metrics": [
+            "40%"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Incode Technologies",
+      "location": "Colombia",
+      "title": "Senior Business Developer",
+      "startDate": "Jul 2021",
+      "endDate": "Jan 2022",
+      "bullets": [
+        {
+          "text": "Delivered a $1.2M deal with a U.S. rental car company, exceeding sales targets.",
+          "metrics": [
+            "$1.2M"
+          ]
+        },
+        {
+          "text": "Achieved quota attainment for 5 consecutive quarters, driving consistent revenue.",
+          "metrics": []
+        },
+        {
+          "text": "Led a team of SDRs, opening 50 new opportunities for AEs.",
+          "metrics": [
+            "50"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "AltiSales",
+      "location": "Colombia",
+      "title": "SR SDR",
+      "startDate": "Aug 2020",
+      "endDate": "Jun 2021",
+      "bullets": [
+        {
+          "text": "Sourced an $880K deal with a U.S. stadium, significantly contributing to team goals.",
+          "metrics": [
+            "$880K"
+          ]
+        },
+        {
+          "text": "Maintained an average quota attainment of 98% across the team.",
+          "metrics": [
+            "98%"
+          ]
+        },
+        {
+          "text": "Managed performance metrics to ensure high SDR productivity.",
+          "metrics": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad Sergio Arboleda",
+      "degree": "Business Administration",
+      "location": "Colombia",
+      "year": "2020",
+      "additionalInfo": ""
+    }
+  ],
+  "additionalExperience": ""
+}

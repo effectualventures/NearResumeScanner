@@ -408,7 +408,8 @@
       </div>
     </section>
     
-    {{#if (and additionalExperience includeAdditionalExp)}}
+    {{#if additionalExperience}}
+      {{#if includeAdditionalExp}}
       <section>
         <h2 class="section-title">Additional Experience</h2>
         <hr class="section-rule"/>
@@ -418,6 +419,7 @@
           {{/each}}
         </ul>
       </section>
+      {{/if}}
     {{else}}
       <!-- If additionalExperience is missing but we have CAU BR, create a special PROFESSIONAL MEMBERSHIPS section -->
       {{#each education}}

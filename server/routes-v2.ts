@@ -64,8 +64,13 @@ export async function registerV2Routes(app: Express): Promise<void> {
           
       console.log(`Resume text type: ${typeof textContent}, length: ${textContent.length} chars`);
           
-      // The transformResume function requires sessionId as the second parameter, not enhancedFormat
-      const resumeTransformationResult = await transformResume(textContent, sessionId, enhancedFormat);
+      // Pass all parameters to transformResume
+      const resumeTransformationResult = await transformResume(
+        textContent, 
+        sessionId, 
+        enhancedFormat,
+        includeAdditionalExp
+      );
       
       // Debug resume transformation result
       console.log("Resume transformation result structure:", Object.keys(resumeTransformationResult));

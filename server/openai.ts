@@ -17,6 +17,7 @@ export async function transformResume(
   resumeText: string,
   sessionId: string,
   detailedFormat: boolean = false,
+  includeAdditionalExp: boolean = true,
   useOpenAIValidation: boolean = true
 ): Promise<ResumeTransformationResponse> {
   try {
@@ -114,7 +115,7 @@ CRITICAL CONTENT SECTIONS (MUST INCLUDE ALL):
 - SKILLS & LANGUAGES: ABSOLUTELY CRITICAL: Extract and list EVERY SINGLE skill mentioned anywhere in the resume. For construction estimator roles, this MUST include First Principle Estimating, Bill of Quantities (BOQ), Tender Documents, Quantity Take-Off, AutoCAD, Civil Construction, Infrastructure Projects, Cost Estimating, Cost Consulting, Project Management, Budget Management, and any others found in the text. For languages, ALWAYS include both English (with reasonable proficiency level) AND the native language from the resume. DO NOT OMIT ANY SKILLS mentioned in the resume. This MUST be included.
 - PROFESSIONAL EXPERIENCE: Reverse chronological order with metrics. This MUST be included.
 - EDUCATION: Must include full degree with specific field of study (e.g., "Bachelor's Degree in International Business", NOT just "Bachelor's Degree"), institution, location, and graduation year. This MUST be included.
-- ADDITIONAL EXPERIENCE (if relevant): Optional, but if included, follow same formatting rules.
+- ADDITIONAL EXPERIENCE: ${includeAdditionalExp ? 'REQUIRED - must include this section with volunteer work, community contributions, or other activities' : 'DO NOT INCLUDE this section regardless of resume content'}.
 
 BULLET & FORMATTING RULES:
 1. Every bullet MUST end with a period and have a strong action verb.
