@@ -56,31 +56,47 @@
       "bullets": [
         {
           "text": "Conducted comprehensive geographical and market analysis to evaluate potential business and channel opportunities within LATAM, resulting in a 42% increase in lead qualifications.",
-          "metrics": []
+          "metrics": [
+            "42% increase in lead qualifications"
+          ]
         },
         {
           "text": "Successfully identified, engaged, and nurtured new customer relationships in alignment with Toshiba's strategic priorities, driving a 37% growth in the qualified sales pipeline.",
-          "metrics": []
+          "metrics": [
+            "37% growth in qualified sales pipeline"
+          ]
         },
         {
           "text": "Evaluated and prioritized over 50 partner requests, enhancing partnership quality by 28% through implementing a 5-point evaluation system.",
-          "metrics": []
+          "metrics": [
+            "28% enhancement in partnership quality"
+          ]
         },
         {
           "text": "Collaborated closely with cross-functional teams across marketing, sales, and product enhancement departments to meet and exceed channel revenue targets by 22%, resulting in a $500K increase in revenue.",
-          "metrics": []
+          "metrics": [
+            "22% exceedance of channel revenue targets",
+            "$500K increase in revenue"
+          ]
         },
         {
           "text": "Sourced a significant $200K deal with a major cosmetic brand, marking a 25% YOY increase in major account acquisitions.",
-          "metrics": []
+          "metrics": [
+            "$200K deal",
+            "25% YOY increase in major accounts"
+          ]
         },
         {
           "text": "Led a team of 3 BDRs, optimizing their daily workflows, thereby boosting the prospecting efficiency by 35% and enhancing individual pipeline growth rates.",
-          "metrics": []
+          "metrics": [
+            "35% increase in prospecting efficiency"
+          ]
         },
         {
           "text": "Demonstrated passion for enterprise sales and building new partnerships, contributing to a 25% increase in strategic alliances.",
-          "metrics": []
+          "metrics": [
+            "25% increase in strategic alliances"
+          ]
         }
       ]
     },
@@ -93,15 +109,21 @@
       "bullets": [
         {
           "text": "Guided a team of 8 SDRs towards achieving 115% of quota in the competitive LATAM and U.S. markets, driving exceptional team performance through strategic sales methodologies.",
-          "metrics": []
+          "metrics": [
+            "115% team quota achievement"
+          ]
         },
         {
           "text": "Pioneered the development of targeted outbound sales strategies and optimized existing workflows to enhance overall sales efficiency by 40%.",
-          "metrics": []
+          "metrics": [
+            "40% increase in sales efficiency"
+          ]
         },
         {
           "text": "Crafted comprehensive sales playbooks and designed customized training programs that elevated individual SDR productivity by 47%.",
-          "metrics": []
+          "metrics": [
+            "47% increase in SDR productivity"
+          ]
         }
       ]
     },
@@ -114,15 +136,22 @@
       "bullets": [
         {
           "text": "Initiated high-impact sales opportunities through a robust outbound prospecting strategy, contributing to a monthly average lead qualification rate increase by 32%.",
-          "metrics": []
+          "metrics": [
+            "32% increase in lead qualification rate"
+          ]
         },
         {
           "text": "Collaborated with marketing teams to refine lead qualification processes, increasing SQL conversion rates by 18% within 6 months.",
-          "metrics": []
+          "metrics": [
+            "18% increase in SQL conversions"
+          ]
         },
         {
           "text": "Sourced a $1.2M deal with a U.S. rental car giant, setting a benchmark for deal value within the company and bolstering revenue growth by 15%.",
-          "metrics": []
+          "metrics": [
+            "$1.2M deal",
+            "15% revenue growth"
+          ]
         }
       ]
     },
@@ -135,11 +164,16 @@
       "bullets": [
         {
           "text": "Drove lead generation and qualification via diligent phone outreach and sophisticated digital channels, enhancing connect-to-meeting rates by 27%.",
-          "metrics": []
+          "metrics": [
+            "27% increase in connect-to-meeting rates"
+          ]
         },
         {
           "text": "Sourced a pivotal $880K deal with a leading U.S. stadium, significantly contributing to region's revenue growth by 18%.",
-          "metrics": []
+          "metrics": [
+            "$880K deal",
+            "18% regional revenue growth"
+          ]
         }
       ]
     },
@@ -152,11 +186,15 @@
       "bullets": [
         {
           "text": "Executed strategic outreach campaigns that consistently exceeded monthly appointment setting quotas by 25%.",
-          "metrics": []
+          "metrics": [
+            "25% excess in appointment setting"
+          ]
         },
         {
           "text": "Collaborated with high-performing sales teams to convert cold leads into warm prospects, resulting in a 30% boost in qualified opportunities.",
-          "metrics": []
+          "metrics": [
+            "30% boost in qualified opportunities"
+          ]
         }
       ]
     }
@@ -170,8 +208,5 @@
       "additionalInfo": "Graduated with honors"
     }
   ],
-  "additionalExperience": "Volunteers regularly with local business development groups, mentoring aspiring sales professionals. Led workshops on B2B sales strategies at industry conferences.",
-  "detailedFormat": true,
-  "includeAdditionalExp": true,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": "Volunteers regularly with local business development groups, mentoring aspiring sales professionals. Led workshops on B2B sales strategies at industry conferences."
 }

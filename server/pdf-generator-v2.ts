@@ -387,7 +387,21 @@ export async function generatePDFv2(
               margin-bottom: 0.8in !important;
             }
             
-            /* Only hide footers that are inside the content container */
+            /* Style for the main footer that will appear at the end */
+            #positioned-footer {
+              position: fixed;
+              bottom: 0.35in;
+              right: 0.5in;
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              font-family: 'Inter', sans-serif;
+              font-size: 10px;
+              z-index: 9999;
+            }
+            
+            /* Hide all other footers/logos in the document */
+            .branding-footer:not(#positioned-footer),
             .resume-container footer,
             .resume-container .branding-footer,
             .page-content footer {
