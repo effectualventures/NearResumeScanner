@@ -387,8 +387,8 @@ export async function generatePDFv2(
               margin-bottom: 0.8in !important;
             }
             
-            /* Move footer to the last page only */
-            .branding-footer {
+            /* Style for our main footer */
+            #main-footer {
               position: fixed !important;
               bottom: 0.35in !important;
               right: 0.5in !important;
@@ -398,14 +398,22 @@ export async function generatePDFv2(
               page-break-before: avoid !important;
             }
             
-            /* We'll control footers with JavaScript */
-            .duplicate-footer, .content-footer {
+            /* Special rule for multi-page PDFs */
+            @media print {
+              /* Hide footer on all but last page */
+              @page:not(:last-of-type) #main-footer {
+                display: none !important;
+              }
+            }
+            
+            /* Hide any footer inside the content area */
+            .resume-container .branding-footer {
               display: none !important;
             }
             
             /* Hide any logos in the content that aren't in the footer */
-            img[src*="logo"]:not(.branding-footer img),
-            img[src*="near"]:not(.branding-footer img) {
+            img[src*="logo"]:not(#main-footer img),
+            img[src*="near"]:not(#main-footer img) {
               display: none !important;
             }
             
@@ -490,22 +498,23 @@ export async function generatePDFv2(
               overflow: hidden !important; 
             }
             
-            /* Hide all footers by default - we'll control via JS */
-            .branding-footer {
+            /* Style our main footer */
+            #main-footer {
+              display: flex !important;
+              position: fixed !important;
+              bottom: 0.35in !important;
+              right: 0.5in !important;
+              z-index: 9999 !important;
+            }
+            
+            /* Hide any footer inside the content area */
+            .resume-container .branding-footer {
               display: none !important;
             }
             
-            /* But show our special last-page-only footer */
-            .last-page-only-footer {
-              display: flex !important;
-              position: absolute !important;
-              bottom: 0.35in !important;
-              right: 0.5in !important;
-            }
-            
             /* Hide any logos in the content that aren't in the footer */
-            img[src*="logo"]:not(.last-page-only-footer img),
-            img[src*="near"]:not(.last-page-only-footer img) {
+            img[src*="logo"]:not(#main-footer img),
+            img[src*="near"]:not(#main-footer img) {
               display: none !important;
             }
             
