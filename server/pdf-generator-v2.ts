@@ -164,6 +164,31 @@ export function registerHandlebarsHelpers() {
  * @param includeAdditionalExp Whether to include the additional experience section
  * @returns Path to the generated PDF file
  */
+/**
+ * Check if the education section is visible in the rendered page
+ * @param page Puppeteer page object
+ * @returns Boolean indicating if education section is fully visible
+ */
+async function isEducationSectionVisible(page: any): Promise<boolean> {
+  return await page.evaluate(() => {
+    const educationSection = document.querySelector('[data-section="education"]');
+    if (!educationSection) return false;
+    
+    // Get the bounding box of the education section
+    const rect = educationSection.getBoundingClientRect();
+    
+    // Check if it's within the viewport
+    const isVisible = (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+    
+    return isVisible;
+  });
+}
+
 export async function generatePDFv2(
   resume: Resume, 
   sessionId: string, 
@@ -408,6 +433,82 @@ export async function generatePDFv2(
             el.remove();
           });
         });
+        
+        // Check if education section is visible
+        const isEducationVisible = await isEducationSectionVisible(page);
+        
+        // If education section is not visible, we need to progressively remove older experiences
+        if (!isEducationVisible && validatedResume.experience.length > 4) {
+          console.log('⚠️ Education section is cut off, implementing progressive experience removal...');
+          
+          // Create a copy of the resume with sorted experiences (newest to oldest)
+          let currentExperiences = [...validatedResume.experience];
+          
+          // Sort experiences by date (assuming startDate or endDate exists)
+          // This is a safety precaution in case the experiences aren't already in chronological order
+          currentExperiences.sort((a, b) => {
+            // Use end date first (Present/Current comes last)
+            const aEndDate = a.endDate || '';
+            const bEndDate = b.endDate || '';
+            
+            // Special handling for "Present" or "Current" which should be considered newest
+            if (aEndDate.toLowerCase().includes('present') || aEndDate.toLowerCase().includes('current')) {
+              return -1; // a is newer
+            }
+            if (bEndDate.toLowerCase().includes('present') || bEndDate.toLowerCase().includes('current')) {
+              return 1; // b is newer
+            }
+            
+            // Otherwise sort by start date if available (newest first)
+            const aStartDate = a.startDate || '';
+            const bStartDate = b.startDate || '';
+            return bStartDate.localeCompare(aStartDate);
+          });
+          
+          let removedExperiences = 0;
+          const minExperiences = 4; // We want to keep at least 4 experiences
+          
+          // Keep removing oldest experiences one by one until education is visible or we reach minimum
+          while (currentExperiences.length > minExperiences) {
+            // Remove the oldest experience (last in the sorted array)
+            currentExperiences.pop();
+            removedExperiences++;
+            
+            // Regenerate HTML with reduced experiences
+            const updatedData = {
+              ...data,
+              experience: currentExperiences
+            };
+            
+            // Generate new HTML with reduced experiences
+            const updatedHtml = template(updatedData);
+            
+            // Update the page content
+            await page.setContent(updatedHtml, { waitUntil: 'networkidle0' });
+            
+            // Re-apply styling
+            await page.evaluate(() => {
+              document.body.classList.add('single-page');
+              
+              const footer = document.querySelector('.branding-footer') as HTMLElement | null;
+              if (footer) {
+                footer.style.bottom = '0.35in';
+                footer.style.position = 'fixed';
+              }
+            });
+            
+            // Check if education is now visible
+            const nowVisible = await isEducationSectionVisible(page);
+            if (nowVisible) {
+              console.log(`✅ Education section is now visible after removing ${removedExperiences} older experiences`);
+              break;
+            }
+          }
+          
+          if (removedExperiences > 0) {
+            console.log(`📝 Resume optimized by removing ${removedExperiences} older experiences`);
+          }
+        }
         
         // Measure content height for scaling
         const contentHeight = await page.evaluate(() => {
