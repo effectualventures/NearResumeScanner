@@ -387,16 +387,10 @@ export async function generatePDFv2(
               margin-bottom: 0.8in !important;
             }
             
-            /* For multi-page PDF generation: remove logo from all pages, will add via JavaScript */
-            .branding-footer,
-            #main-footer,
-            #footer-container,
-            footer {
-              display: none !important;
-            }
-            
-            /* Hide any footer inside the content area */
-            .resume-container .branding-footer {
+            /* Only hide footers that are inside the content container */
+            .resume-container footer,
+            .resume-container .branding-footer,
+            .page-content footer {
               display: none !important;
             }
             
