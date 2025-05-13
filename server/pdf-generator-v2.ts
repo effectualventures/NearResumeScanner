@@ -504,9 +504,8 @@ export async function generatePDFv2(
             }
             
             // Ensure our custom footer's logo is always visible
-            const customFooterImg = document.querySelector('#custom-page-footer img') as HTMLImageElement;
             if (customFooterImg) {
-              customFooterImg.style.display = 'inline-block';
+              (document.querySelector("#custom-page-footer img") as HTMLElement).style.display = 'inline-block';
             }
             
             console.log('Custom footer added for multi-page PDF');
@@ -668,9 +667,8 @@ export async function generatePDFv2(
             }
             
             // Ensure our custom footer's logo is always visible
-            const customFooterImg = document.querySelector('#custom-page-footer img');
             if (customFooterImg) {
-              customFooterImg.style.display = 'inline-block';
+              (document.querySelector("#custom-page-footer img") as HTMLElement).style.display = 'inline-block';
             }
             
             console.log('Custom footer added for single-page PDF');
