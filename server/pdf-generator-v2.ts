@@ -387,14 +387,13 @@ export async function generatePDFv2(
               margin-bottom: 0.8in !important;
             }
             
-            /* Hide ALL footers by default */
+            /* For multi-page PDF generation: remove logo from all pages, will add via JavaScript */
             .branding-footer,
             #main-footer,
-            #footer-container {
+            #footer-container,
+            footer {
               display: none !important;
             }
-            
-            /* The real footer will be injected by JavaScript */
             
             /* Hide any footer inside the content area */
             .resume-container .branding-footer {
@@ -454,6 +453,64 @@ export async function generatePDFv2(
           console.log('Non-critical error positioning footer:', err);
         });
         
+        // Before generating PDF, add a custom footer at the bottom of the document
+        await page.evaluate(() => {
+          try {
+            // Get the footer content from the template
+            const footerContent = document.querySelector('#main-footer')?.innerHTML;
+            
+            // Create a new footer element that will be positioned manually
+            const customFooter = document.createElement('div');
+            customFooter.id = 'custom-page-footer';
+            customFooter.style.position = 'absolute';  // absolute instead of fixed
+            customFooter.style.display = 'flex';
+            customFooter.style.alignItems = 'center';
+            customFooter.style.gap = '6px';
+            customFooter.style.fontFamily = "'Inter', sans-serif";
+            customFooter.style.fontSize = '10px';
+            customFooter.style.bottom = '0.35in';
+            customFooter.style.right = '0.5in';
+            customFooter.style.zIndex = '9999';
+            
+            if (footerContent) {
+              customFooter.innerHTML = footerContent;
+            } else {
+              // Fallback if footer content not found
+              customFooter.innerHTML = `
+                <span><strong>Presented by</strong></span>
+                <img src="file:///home/runner/workspace/public/images/near_logo.png" alt="Near logo" style="height: 25px; width: auto;"/>
+              `;
+            }
+            
+            // Get the resume container
+            const resumeContainer = document.querySelector('.resume-container');
+            if (resumeContainer) {
+              // Add spacing at the end of content to make room for footer
+              const spacer = document.createElement('div');
+              spacer.style.height = '0.8in';
+              spacer.style.width = '100%';
+              resumeContainer.appendChild(spacer);
+              
+              // Add footer after the last element
+              document.body.appendChild(customFooter);
+            }
+            
+            // Hide any possible logos within the content
+            const logoImages = document.querySelectorAll('.resume-container img');
+            for (let i = 0; i < logoImages.length; i++) {
+              const img = logoImages[i] as HTMLImageElement;
+              const src = img.getAttribute('src');
+              if (src && (src.includes('logo') || src.includes('near'))) {
+                img.style.display = 'none';
+              }
+            }
+            
+            console.log('Custom footer added for multi-page PDF');
+          } catch (err) {
+            console.log('Error adding custom footer:', err);
+          }
+        });
+        
         // Generate the PDF
         await page.pdf({
           ...pdfOptions,
@@ -488,13 +545,12 @@ export async function generatePDFv2(
               overflow: hidden !important; 
             }
             
-            /* Style our main footer */
-            #main-footer {
-              display: flex !important;
-              position: fixed !important;
-              bottom: 0.35in !important;
-              right: 0.5in !important;
-              z-index: 9999 !important;
+            /* Hide all footers in single-page mode too */
+            .branding-footer,
+            #main-footer,
+            #footer-container,
+            footer {
+              display: none !important;
             }
             
             /* Hide any footer inside the content area */
@@ -565,6 +621,54 @@ export async function generatePDFv2(
           }
         }).catch(err => {
           console.log('Non-critical error positioning footer:', err);
+        });
+        
+        // Add custom footer for single-page format
+        await page.evaluate(() => {
+          try {
+            // Get the footer content from the template
+            const footerContent = document.querySelector('#main-footer')?.innerHTML;
+            
+            // Create a new footer element that will be positioned manually
+            const customFooter = document.createElement('div');
+            customFooter.id = 'custom-page-footer';
+            customFooter.style.position = 'fixed';  // fixed for single-page
+            customFooter.style.display = 'flex';
+            customFooter.style.alignItems = 'center';
+            customFooter.style.gap = '6px';
+            customFooter.style.fontFamily = "'Inter', sans-serif";
+            customFooter.style.fontSize = '10px';
+            customFooter.style.bottom = '0.35in';
+            customFooter.style.right = '0.5in';
+            customFooter.style.zIndex = '9999';
+            
+            if (footerContent) {
+              customFooter.innerHTML = footerContent;
+            } else {
+              // Fallback if footer content not found
+              customFooter.innerHTML = `
+                <span><strong>Presented by</strong></span>
+                <img src="file:///home/runner/workspace/public/images/near_logo.png" alt="Near logo" style="height: 25px; width: auto;"/>
+              `;
+            }
+            
+            // Add footer to body
+            document.body.appendChild(customFooter);
+            
+            // Hide any possible logos within the content
+            const logoImages = document.querySelectorAll('.resume-container img');
+            for (let i = 0; i < logoImages.length; i++) {
+              const img = logoImages[i] as HTMLImageElement;
+              const src = img.getAttribute('src');
+              if (src && (src.includes('logo') || src.includes('near'))) {
+                img.style.display = 'none';
+              }
+            }
+            
+            console.log('Custom footer added for single-page PDF');
+          } catch (err) {
+            console.log('Error adding custom footer:', err);
+          }
         });
         
         // Check if education section is visible
