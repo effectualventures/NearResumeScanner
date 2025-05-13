@@ -366,71 +366,21 @@ export async function generatePDFv2(
         // For detailed format, allow content to flow to second page
         console.log('Using detailed format: allowing multi-page layout');
         
-        // Improve footer handling for multi-page format
-        await page.evaluate(() => {
-          // Remove single-page class if present
-          document.body.classList.remove('single-page');
-          
-          // Remove any inline "Presented by" that might appear in the content
-          // This is the key fix - manually find and remove any "Presented by" elements within the document
-          // We need to look through all elements since the :contains selector isn't standard
-          const allElements = document.querySelectorAll('*');
-          allElements.forEach(el => {
-            // Only process text nodes and elements with text content
-            const textContent = el.textContent || '';
-            if (textContent && textContent.includes('Presented by')) {
-              // Don't remove the actual footer
-              const isFooter = el.classList?.contains('branding-footer') || false;
-              const isWithinFooter = el.closest?.('.branding-footer') || null;
-              
-              if (!isFooter && !isWithinFooter) {
-                // If we found a "Presented by" outside of the footer, remove it
-                console.log('Removing unexpected Presented by element', el.tagName);
-                el.remove();
-              }
-            }
-          });
-          
-          // First, check if there are any unexpected "Presented by" texts or logo copies in the content
-          // Must do this BEFORE adding the CSS styles
-          const contentDiv = document.querySelector('.resume-container');
-          if (contentDiv) {
-            const allContentElements = contentDiv.querySelectorAll('*');
-            allContentElements.forEach(el => {
-              const text = el.textContent || '';
-              if (text.includes('Presented by') && !el.closest('.branding-footer')) {
-                // This is an unexpected "Presented by" in the content - remove it
-                console.log('Found and removing unexpected Presented by in content');
-                el.innerHTML = el.innerHTML.replace('Presented by', '');
-                
-                // If this is an image next to "Presented by", remove it too
-                const nextSibling = el.nextElementSibling;
-                if (nextSibling && nextSibling.tagName === 'IMG') {
-                  nextSibling.remove();
-                }
-              }
-              
-              // Also check for logo images that aren't in the footer
-              if (el.tagName === 'IMG' && !el.closest('.branding-footer')) {
-                const src = el.getAttribute('src') || '';
-                if (src.includes('near_logo') || src.includes('logo.png')) {
-                  console.log('Found and removing unexpected logo in content');
-                  el.remove();
-                }
-              }
-            });
-          }
-          
-          // Add style to prevent unwanted page breaks and ensure footer is only at the end
-          const style = document.createElement('style');
-          style.textContent = `
-            @page {
-              margin-bottom: 0.8in !important; /* Ensure space for footer */
-            }
-            
-            /* Set up special styling for multi-page format */
+        // Simple method to improve footer handling for multi-page format
+        await page.addStyleTag({
+          content: `
+            /* Remove single-page class */
             body {
               position: relative;
+              page-break-inside: auto;
+            }
+            body.single-page {
+              overflow: visible !important;
+            }
+            
+            /* Ensure margin for footer */
+            @page {
+              margin-bottom: 0.8in !important;
             }
             
             /* Move footer to the last page only */
@@ -451,15 +401,20 @@ export async function generatePDFv2(
               }
             }
             
-            /* Extra protection against duplicate logos or presented by text */
-            .resume-container img[src*="logo"]:not(.branding-footer img),
-            .resume-container img[src*="near"]:not(.branding-footer img) {
+            /* Hide any logos in the content that aren't in the footer */
+            img[src*="logo"]:not(.branding-footer img),
+            img[src*="near"]:not(.branding-footer img) {
               display: none !important;
             }
-          `;
-          document.head.appendChild(style);
+          `
         });
         
+        // Remove single-page class
+        await page.evaluate(() => {
+          document.body.classList.remove('single-page');
+        });
+        
+        // Generate the PDF
         await page.pdf({
           ...pdfOptions,
           scale: 1.0, // Full scale for detailed format
