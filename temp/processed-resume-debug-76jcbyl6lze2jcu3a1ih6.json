@@ -1,0 +1,207 @@
+{
+  "header": {
+    "firstName": "Camila",
+    "tagline": "Senior Estimator – Civil & Infrastructure Projects",
+    "location": "Brazil",
+    "city": "Sorocaba",
+    "country": "Brazil"
+  },
+  "summary": "Accomplished estimator with 15+ years in civil/infrastructure projects, delivering $50M+ savings and improving project efficiency by 20%.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Quantity Take-off",
+        "Bill of Quantities (BOQ) Preparation",
+        "Cost Estimating",
+        "Cost Consulting",
+        "AutoCAD",
+        "Project Documentation",
+        "Civil Construction",
+        "Budget Management",
+        "Tender Document Preparation",
+        "Project Management",
+        "First Principle Estimating",
+        "Tender Documents",
+        "Revit",
+        "Expert Estimation",
+        "Bluebeam",
+        "Software MEGA",
+        "Candy (CCS)",
+        "Diploma of Building and Construction",
+        "Autodesk Revit Architecture",
+        "Autodesk Revit MEP",
+        "Autodesk Navisworks Manage",
+        "Construction Management Specialization",
+        "Excel Proficiency",
+        "Knowledge of NBR and AU NZS NCC",
+        "Infrastructure Projects",
+        "Residential Buildings",
+        "Commercial Properties",
+        "Hospitals",
+        "Educational Facilities",
+        "Logistics Centers",
+        "Retail Buildings",
+        "Roads & Bridges",
+        "Utilities & Power Stations",
+        "Stakeholder Collaboration",
+        "Commercial Construction",
+        "Residential Construction",
+        "Value Engineering",
+        "Construction Project Lifecycle",
+        "Excel Advanced Functions",
+        "Construction Standards",
+        "Design Interpretation",
+        "Structural Engineering",
+        "MEP Systems Estimation",
+        "Procurement Management",
+        "Construction Site Supervision",
+        "Architectural Drawing Analysis",
+        "Cost Planning",
+        "Progress Monitoring",
+        "Contract Administration"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "Portuguese (Native)",
+        "English (Professional)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "VIAARQ – Arquitetura Viável",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Architect - Co-owner",
+      "startDate": "Jan 2015",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Analyzed tendering documents and prepared comprehensive Bill of Quantities (BOQ) and tender documents for civil construction projects, ensuring precise cost estimations that aligned with project budgets and client objectives, resulting in a 10% reduction in project costs.",
+          "metrics": [
+            "10% reduction in project costs"
+          ]
+        },
+        {
+          "text": "Managed quantity take-offs for complex civil projects including foundations, architectural, structural, and MEP elements, resulting in accurate material procurement and reduced project delays by 15%.",
+          "metrics": [
+            "15% reduction in project delays"
+          ]
+        },
+        {
+          "text": "Developed and assessed cost implications for design variations, leading to optimized design choices by comparing tender drawings against issued for construction (IFC) drawings, achieving budgetary compliance.",
+          "metrics": []
+        },
+        {
+          "text": "Spearheaded the preparation of commercial offers, yielding a conversion rate of 45% in competitive bidding environments, enhancing client acquisition.",
+          "metrics": [
+            "45% conversion rate"
+          ]
+        },
+        {
+          "text": "Prepared and regularly adjusted project budgets, facilitating a 20% reduction in unforeseen cost escalations through proactive financial oversight and strategic planning.",
+          "metrics": [
+            "20% reduction in unforeseen costs"
+          ]
+        },
+        {
+          "text": "Led project scope clarifications across various sectors including residential buildings, commercial spaces, infrastructure, and more, ensuring seamless communication between contractors and stakeholders.",
+          "metrics": []
+        },
+        {
+          "text": "Utilized AutoCAD and Revit for detailed quantity take-offs, ensuring that technical drawings were accurately translated into financial projections, directly contributing to contract wins totaling over $15M.",
+          "metrics": [
+            "$15M contract wins"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Civil Infrastructure Group",
+      "location": "Australia",
+      "title": "Senior Estimator / Quantity Surveyor",
+      "startDate": "Mar 2021",
+      "endDate": "May 2024",
+      "bullets": [
+        {
+          "text": "Conducted thorough tender analysis and prepared preliminary budgets for civil and infrastructure projects, ensuring competitive and realistic financial proposals for clients.",
+          "metrics": []
+        },
+        {
+          "text": "Led quantity take-off efforts for earthworks, drainage, and foundational structures, resulting in detailed and accurate project cost estimates that supported successful project awards worth over $30.0M.",
+          "metrics": [
+            "$30.0M project awards"
+          ]
+        },
+        {
+          "text": "Collaborated with stakeholders to revise construction methods, achieving a 15% decrease in project costs through innovative approaches while maintaining quality standards.",
+          "metrics": [
+            "15% decrease in project costs"
+          ]
+        },
+        {
+          "text": "Provided cost consulting aligning supplier quotes with project objectives, resulting in a 10% reduction in overall procurement costs.",
+          "metrics": [
+            "10% reduction in procurement costs"
+          ]
+        },
+        {
+          "text": "Managed projects such as the South Morang Terminal Station with comprehensive BOQ preparation and submitted documentation, emphasizing cost-effectiveness and project viability.",
+          "metrics": []
+        },
+        {
+          "text": "Resolved cost escalations and discrepancies in project budgets via in-depth assessments and negotiations, boosting budget accuracy and client satisfaction by 25%.",
+          "metrics": [
+            "25% improvement in budget accuracy"
+          ]
+        },
+        {
+          "text": "Implemented strategic cost management processes across multiple projects, enhancing financial outcomes through improved cost forecasting and budget adherence.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Somague MPH",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Intermediate Estimator",
+      "startDate": "Nov 2012",
+      "endDate": "Dec 2014",
+      "bullets": [
+        {
+          "text": "Analyzed and interpreted bid documents for commercial, hospital, and logistics projects, accurately determining scope and financial requirements.",
+          "metrics": []
+        },
+        {
+          "text": "Handled detailed quantity take-off of architectural and engineering designs, optimizing resource allocation and procurement strategies.",
+          "metrics": []
+        },
+        {
+          "text": "Developed BOQs and comprehensive tender documents, resulting in successful bids leading to contracts valued at $30.0M.",
+          "metrics": [
+            "$30.0M contracts"
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Orange International College",
+      "degree": "Diploma of Building and Construction",
+      "location": "Australia",
+      "year": "2021",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Mackenzie Presbyterian University",
+      "degree": "Architecture and Urbanism",
+      "location": "Brazil",
+      "year": "2009",
+      "additionalInfo": ""
+    }
+  ],
+  "additionalExperience": "Member of AIQS since 2023, completed Construction Management Specialization at Columbia University."
+}

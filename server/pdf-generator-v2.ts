@@ -392,12 +392,20 @@ export async function generatePDFv2(
             
             /* Ensure extra space above footer */
             .logo-zone {
-              height: 0.7in !important;
-              margin-top: 0.5in !important;
+              height: 0.6in !important; /* Reduced height to save space */
+              margin-top: 0.2in !important; /* Further reduced margin for single-page format */
               width: 100% !important;
               clear: both !important;
               display: block !important;
             }
+            
+            /* Optimize spacing for single-page format */
+            .section { margin-bottom: 5px !important; }
+            .section-title { margin-top: 10px !important; margin-bottom: 2px !important; }
+            section { margin-bottom: 5px !important; }
+            .education { margin-bottom: 5px !important; }
+            .experience { margin-bottom: 8px !important; }
+            li { margin-bottom: 1px !important; line-height: 1.2 !important; }
           `;
           document.head.appendChild(style);
           
