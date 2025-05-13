@@ -33,6 +33,13 @@
       position: relative;
     }
     
+    /* Additional page-break controls to prevent unwanted blank pages */
+    @media print {
+      .resume-container {
+        page-break-after: avoid;
+      }
+    }
+    
     /* Core container for all content */
     .resume-container {
       width: 100%;

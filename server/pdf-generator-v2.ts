@@ -387,6 +387,7 @@ export async function generatePDFv2(
         await page.pdf({
           ...pdfOptions,
           scale: scale, // Scale content to fit on single page
+          pageRanges: '1' // Only output the first page for single-page format
         });
       }
       
