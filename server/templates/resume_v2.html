@@ -281,25 +281,42 @@
       margin-bottom: 5px !important;
     }
     
-    /* Footer positioning with fixed positioning */
+    /* Footer positioning */
     .logo-zone {
-      height: 0.3in;
+      height: 0.5in;
       width: 100%;
       clear: both;
       display: block;
       visibility: hidden;
+      page-break-before: avoid;
+      page-break-inside: avoid;
     }
     
+    /* Base styles for all footer instances */
     .branding-footer {
-      position: fixed;
-      bottom: 0.35in; /* Position exactly 0.35in from bottom as specified */
-      right: 0.5in;   /* Align with right margin */
       display: flex;
       align-items: center;
       gap: 6px;
       font-family: 'Inter', 'Helvetica', sans-serif;
       font-size: 10px;
       z-index: 1000;
+      right: 0.5in; /* Align with right margin */
+    }
+    
+    /* Single page format uses fixed positioning */
+    .single-page .branding-footer {
+      position: fixed;
+      bottom: 0.35in;
+    }
+    
+    /* Multi-page format uses special positioning */
+    body:not(.single-page) .branding-footer {
+      position: fixed;
+      bottom: 0.35in;
+      page-break-before: avoid;
+      break-before: avoid;
+      page-break-inside: avoid;
+      break-inside: avoid;
     }
     
     .branding-footer img {

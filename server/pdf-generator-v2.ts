@@ -366,27 +366,59 @@ export async function generatePDFv2(
         // For detailed format, allow content to flow to second page
         console.log('Using detailed format: allowing multi-page layout');
         
-        // Position the footer at the bottom of the page
+        // Improve footer handling for multi-page format
         await page.evaluate(() => {
-          // Set the position of the branding footer
-          const footer = document.querySelector('.branding-footer') as HTMLElement | null;
-          if (footer) {
-            footer.style.bottom = '0.35in';
-            footer.style.position = 'fixed';
-          }
+          // Remove single-page class if present
+          document.body.classList.remove('single-page');
+          
+          // Add style to prevent unwanted page breaks and ensure footer is only at the end
+          const style = document.createElement('style');
+          style.textContent = `
+            @page {
+              margin-bottom: 0.8in !important; /* Ensure space for footer */
+            }
+            
+            /* Set up special styling for multi-page format */
+            body {
+              position: relative;
+            }
+            
+            /* Move footer to the last page only */
+            .branding-footer {
+              position: fixed !important;
+              bottom: 0.35in !important;
+              right: 0.5in !important;
+              display: flex !important;
+              z-index: 9999 !important;
+              page-break-inside: avoid !important;
+              page-break-before: avoid !important;
+            }
+            
+            /* Only print footer on the last page */
+            @media print {
+              @page:not(:last-of-type) .branding-footer {
+                display: none !important;
+              }
+            }
+          `;
+          document.head.appendChild(style);
         });
         
         await page.pdf({
           ...pdfOptions,
-          scale: 1.0 // Full scale for detailed format
+          scale: 1.0, // Full scale for detailed format
+          printBackground: true
         });
       } else {
         // For standard format, we'll use the SAME approach as detailed format 
         // but with scaling to fit on one page if needed
         console.log('Using standard format: optimizing for single page');
         
-        // Adjust the footer position to match the detailed format 
+        // Set up single-page format and footer positioning
         await page.evaluate(() => {
+          // Add single-page class to body for conditional styling
+          document.body.classList.add('single-page');
+          
           // Set the position of the branding footer
           const footer = document.querySelector('.branding-footer') as HTMLElement | null;
           if (footer) {
@@ -397,8 +429,6 @@ export async function generatePDFv2(
         
         // Apply special handling to ensure single-page output
         await page.evaluate(() => {
-          // Add single-page class to body for conditional styling
-          document.body.classList.add('single-page');
           
           // Add a style to hide any potential overflow
           const style = document.createElement('style');
