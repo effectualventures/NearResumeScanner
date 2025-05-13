@@ -438,6 +438,17 @@ export async function generatePDFv2(
               positionedFooter.id = 'positioned-footer';
               positionedFooter.className = 'branding-footer';
               
+              // Position the footer precisely
+              positionedFooter.style.position = 'fixed';
+              positionedFooter.style.display = 'flex';
+              positionedFooter.style.alignItems = 'center';
+              positionedFooter.style.gap = '6px';
+              positionedFooter.style.fontFamily = "'Inter', sans-serif";
+              positionedFooter.style.fontSize = '10px';
+              positionedFooter.style.bottom = '0.35in';
+              positionedFooter.style.right = '0.5in';
+              positionedFooter.style.zIndex = '9999';
+              
               // Copy the HTML content directly from the template footer
               positionedFooter.innerHTML = templateFooter.innerHTML;
               
@@ -459,13 +470,21 @@ export async function generatePDFv2(
             for (let i = 0; i < contentImages.length; i++) {
               const img = contentImages[i] as HTMLImageElement;
               const src = img.getAttribute('src');
-              // Skip images in our custom footer
+              // Skip images in our positioned footer
               if (img.closest('#positioned-footer')) {
                 continue;
               }
               if (src && (src.includes('logo') || src.includes('near'))) {
                 img.style.display = 'none';
               }
+            }
+            
+            // Make sure our footer logo is always displayed correctly
+            const footerLogo = document.querySelector('#positioned-footer img');
+            if (footerLogo) {
+              (footerLogo as HTMLElement).style.display = 'inline-block';
+              (footerLogo as HTMLElement).style.height = '25px';
+              (footerLogo as HTMLElement).style.width = 'auto';
             }
             
             
@@ -595,44 +614,16 @@ export async function generatePDFv2(
           console.log('Non-critical error positioning footer:', err);
         });
         
-        // Add custom footer for single-page format
+        // The footer positioning has already been handled in the previous step
+        // Just ensure logos in the content are hidden
         await page.evaluate(() => {
           try {
-            // Get the footer content from the template
-            const footerContent = document.querySelector('#main-footer')?.innerHTML;
-            
-            // Create a new footer element that will be positioned manually
-            const customFooter = document.createElement('div');
-            customFooter.id = 'positioned-footer';
-            customFooter.style.position = 'fixed';  // fixed for single-page
-            customFooter.style.display = 'flex';
-            customFooter.style.alignItems = 'center';
-            customFooter.style.gap = '6px';
-            customFooter.style.fontFamily = "'Inter', sans-serif";
-            customFooter.style.fontSize = '10px';
-            customFooter.style.bottom = '0.35in';
-            customFooter.style.right = '0.5in';
-            customFooter.style.zIndex = '9999';
-            
-            if (footerContent) {
-              customFooter.innerHTML = footerContent;
-            } else {
-              // Fallback if footer content not found
-              customFooter.innerHTML = `
-                <span><strong>Presented by</strong></span>
-                <img src="file:///home/runner/workspace/public/images/near_logo.png" alt="Near logo" style="height: 25px; width: auto;"/>
-              `;
-            }
-            
-            // Add footer to body
-            document.body.appendChild(customFooter);
-            
             // Only hide logos that are WITHIN the resume content
             const contentImages = document.querySelectorAll('.resume-container img, .page-content img');
             for (let i = 0; i < contentImages.length; i++) {
               const img = contentImages[i] as HTMLImageElement;
               const src = img.getAttribute('src');
-              // Skip images in our custom footer
+              // Skip images in our positioned footer
               if (img.closest('#positioned-footer')) {
                 continue;
               }
@@ -641,12 +632,17 @@ export async function generatePDFv2(
               }
             }
             
-            // Ensure our custom footer's logo is always visible
-            (document.querySelector("#positioned-footer img") as HTMLElement).style.display = "inline-block";
+            // Make sure our footer logo is always displayed correctly
+            const footerLogo = document.querySelector('#positioned-footer img');
+            if (footerLogo) {
+              (footerLogo as HTMLElement).style.display = 'inline-block';
+              (footerLogo as HTMLElement).style.height = '25px';
+              (footerLogo as HTMLElement).style.width = 'auto';
+            }
             
-            console.log('Custom footer added for single-page PDF');
+            console.log('Logo visibility adjusted for single-page PDF');
           } catch (err) {
-            console.log('Error adding custom footer:', err);
+            console.log('Error adjusting logo visibility:', err);
           }
         });
         
