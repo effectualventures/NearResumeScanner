@@ -257,6 +257,15 @@
       font-weight: bold !important;
     }
     
+    /* Additional space control for single-page format */
+    .single-page .skill-section {
+      margin-bottom: 4px !important; /* Reduce spacing after skills in single-page */
+    }
+    
+    .single-page .education-section {
+      margin-top: 2px !important; /* Ensure education is visible */
+    }
+    
     /* Footer positioning with fixed positioning */
     .logo-zone {
       height: 0.3in;
@@ -304,7 +313,7 @@
     </div>
     
     <!-- SKILLS AND LANGUAGES SECTION -->
-    <section>
+    <section class="skill-section">
       <h2 class="section-title">Skills</h2>
       <hr class="section-rule"/>
       <div class="skills">
@@ -400,7 +409,7 @@
     </section>
     
     <!-- EDUCATION -->
-    <section>
+    <section class="education-section">
       <h2 class="section-title">Education</h2>
       <hr class="section-rule"/>
       <div class="education">

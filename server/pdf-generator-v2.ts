@@ -372,6 +372,9 @@ export async function generatePDFv2(
         
         // Apply special handling to ensure single-page output
         await page.evaluate(() => {
+          // Add single-page class to body for conditional styling
+          document.body.classList.add('single-page');
+          
           // Add a style to hide any potential overflow
           const style = document.createElement('style');
           style.textContent = `
