@@ -238,15 +238,15 @@
     
     /* Footer styling */
     .branding-footer{
-      position: fixed;
-      bottom: 0.05in; /* Position exactly 0.05in from bottom as required */
+      position: absolute; /* Use absolute instead of fixed for better control */
+      bottom: 0.35in; /* Position exactly 0.35in from bottom as specified */
       right: 0.5in;   /* Align with right margin */
       display: flex;
       gap: 6px;
       font-family: 'Inter','Helvetica',sans-serif;
       font-size: 10px;
       align-items: center;
-      z-index: 1000;
+      z-index: 9999; /* Ensure it's always on top */
       text-align: right;
       background-color: transparent;
     }
@@ -258,11 +258,11 @@
     
     /* Create a clear logo zone that nothing else should enter */
     .logo-zone {
-      height: 0.25in !important; /* Increased height for spacing */
+      height: 0.7in !important; /* Increased height for better spacing */
       width: 100% !important;
       clear: both !important;
       display: block !important;
-      margin: 0 !important;
+      margin-top: 0.5in !important; /* Push content away from footer */
       padding: 0 !important;
       position: relative !important;
       visibility: hidden !important;

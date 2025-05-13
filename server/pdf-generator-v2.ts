@@ -384,9 +384,19 @@ export async function generatePDFv2(
               overflow: hidden !important; 
             }
             .branding-footer {
-              position: fixed !important;
-              bottom: 0.05in !important;
+              position: absolute !important; /* Absolute instead of fixed for better control */
+              bottom: 0.35in !important; /* Position exactly 0.35in from bottom */
               right: 0.5in !important;
+              z-index: 9999 !important; /* Ensure it stays on top */
+            }
+            
+            /* Ensure extra space above footer */
+            .logo-zone {
+              height: 0.7in !important;
+              margin-top: 0.5in !important;
+              width: 100% !important;
+              clear: both !important;
+              display: block !important;
             }
           `;
           document.head.appendChild(style);

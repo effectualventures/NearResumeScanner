@@ -355,16 +355,25 @@ export async function generatePDF(resume: Resume, sessionId: string, detailedFor
           
           /* Branding footer override - make sure it shows in right position */
           .branding-footer {
-            position: fixed !important;
-            bottom: 0.35in !important; /* Position much further down the page (adjusted from 0.05in) */
+            position: absolute !important; /* Absolute instead of fixed for better control */
+            bottom: 0.35in !important; /* Position exactly 0.35in from bottom */
             right: 0.5in !important;   /* Align with right margin */
-            left: 0 !important;
+            left: auto !important;
             display: flex !important;
             gap: 6px !important;
             align-items: center !important;
-            z-index: 1000 !important;
+            z-index: 9999 !important; /* Ensure it's on top of all content */
             text-align: right !important;
             background-color: transparent !important;
+          }
+          
+          /* Ensure extra space for footer */
+          .logo-zone {
+            height: 0.7in !important;
+            margin-top: 0.5in !important;
+            width: 100% !important;
+            clear: both !important;
+            display: block !important;
           }
           
           .branding-footer img {
