@@ -220,8 +220,7 @@
       "endDate": "Dec 2018",
       "bullets": [
         {
-          "text": "Achieved 120% of quota and earned a President’s Club award.",
-          "metrics": []
+          "text": "Achieved 120% of quota and earned a President’s Club award."
         }
       ]
     }
@@ -235,8 +234,5 @@
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "Participated in multiple community sales boot camps, mentoring entry-level sales professionals. Active volunteer in local small business startup initiatives, providing strategic business development advice. Recognized for a leadership role in university sales championships, driving peer engagement and innovative sales interventions.",
-  "detailedFormat": true,
-  "includeAdditionalExp": true,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": "Participated in multiple community sales boot camps, mentoring entry-level sales professionals. Active volunteer in local small business startup initiatives, providing strategic business development advice. Recognized for a leadership role in university sales championships, driving peer engagement and innovative sales interventions."
 }

@@ -300,23 +300,17 @@
       font-family: 'Inter', 'Helvetica', sans-serif;
       font-size: 10px;
       z-index: 1000;
+      position: absolute; /* Changed from fixed to absolute */
+      bottom: 0.35in; /* Distance from bottom */
       right: 0.5in; /* Align with right margin */
-    }
-    
-    /* Single page format uses fixed positioning */
-    .single-page .branding-footer {
-      position: fixed;
-      bottom: 0.35in;
-    }
-    
-    /* Multi-page format uses special positioning */
-    body:not(.single-page) .branding-footer {
-      position: fixed;
-      bottom: 0.35in;
       page-break-before: avoid;
-      break-before: avoid;
+      page-break-after: avoid;
       page-break-inside: avoid;
-      break-inside: avoid;
+    }
+    
+    /* Hide footer except on the last page - will be enforced via JavaScript instead of CSS */
+    .temp-hidden-footer {
+      display: none !important;
     }
     
     .branding-footer img {
