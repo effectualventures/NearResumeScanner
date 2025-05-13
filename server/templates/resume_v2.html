@@ -146,6 +146,8 @@
       margin-bottom: 15px;
       font-size: 10pt;
       line-height: 1.3;
+      max-height: 2.6em; /* Limit to approximately 2 lines */
+      overflow: hidden;
     }
     
     /* Skills & Languages section */
@@ -428,16 +430,29 @@
                     </li>
                   {{/each}}
                 {{else}}
-                  <!-- All other roles: just 1-2 bullets -->
-                  {{#each (slice bullets 0 2)}}
-                    <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
-                      {{#if metrics.length}}
-                        {{#unless (containsAny text metrics)}}
-                          <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
-                        {{/unless}}
-                      {{/if}}
-                    </li>
-                  {{/each}}
+                  <!-- For 3rd job: just 2 bullets -->
+                  {{#if (eq @index 2)}}
+                    {{#each (slice bullets 0 2)}}
+                      <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
+                        {{#if metrics.length}}
+                          {{#unless (containsAny text metrics)}}
+                            <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
+                          {{/unless}}
+                        {{/if}}
+                      </li>
+                    {{/each}}
+                  <!-- 4th oldest and beyond: just 1 bullet -->
+                  {{else}}
+                    {{#each (slice bullets 0 1)}}
+                      <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
+                        {{#if metrics.length}}
+                          {{#unless (containsAny text metrics)}}
+                            <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
+                          {{/unless}}
+                        {{/if}}
+                      </li>
+                    {{/each}}
+                  {{/if}}
                 {{/if}}
               {{/if}}
             </ul>
