@@ -257,18 +257,19 @@
       font-weight: bold !important;
     }
     
-    /* Footer positioning with fixed positioning */
+    /* Footer positioning with absolute positioning to provide better control */
     .logo-zone {
-      height: 0.3in;
+      height: 0.7in; /* Increased height for more spacing before footer */
       width: 100%;
       clear: both;
       display: block;
+      margin-top: 0.5in; /* Add extra margin to push content up */
       visibility: hidden;
     }
     
     .branding-footer {
-      position: fixed;
-      bottom: 0.35in; /* Position much further down the page (adjusted from 0.05in) */
+      position: absolute; /* Use absolute positioning */
+      bottom: 0.35in; /* Position exactly 0.35in from bottom as specified */
       right: 0.5in;   /* Align with right margin */
       display: flex;
       align-items: center;
