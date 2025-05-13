@@ -49,15 +49,21 @@
       "bullets": [
         {
           "text": "Conducted quantitative and qualitative analysis to evaluate new business opportunities in LATAM, resulting in a 15% increase in market penetration.",
-          "metrics": []
+          "metrics": [
+            "15% increase in market penetration"
+          ]
         },
         {
           "text": "Identified and cultivated customer relationships, leading to a $200K deal for a major cosmetic brand.",
-          "metrics": []
+          "metrics": [
+            "$200K deal"
+          ]
         },
         {
           "text": "Collaborated with cross-functional teams achieving channel revenue targets, contributing to a 10% increase in annual revenue.",
-          "metrics": []
+          "metrics": [
+            "10% increase in annual revenue"
+          ]
         }
       ]
     },
@@ -70,7 +76,9 @@
       "bullets": [
         {
           "text": "Led a team of 8 SDRs across LATAM and U.S., resulting in optimized pipeline growth, achieving a 25% increase in qualified leads.",
-          "metrics": []
+          "metrics": [
+            "25% increase in qualified leads"
+          ]
         },
         {
           "text": "Designed outbound sales strategies improving workflow efficiency by 30%.",
@@ -93,15 +101,21 @@
       "bullets": [
         {
           "text": "Sourced a $1.2M deal with a U.S. rental car company, securing strategic growth.",
-          "metrics": []
+          "metrics": [
+            "$1.2M deal"
+          ]
         },
         {
           "text": "Achieved quota attainment for 5 consecutive quarters, leading a team to open 50 new opportunities.",
-          "metrics": []
+          "metrics": [
+            "50 new opportunities"
+          ]
         },
         {
           "text": "Provided strategic insights on pipeline management boosting conversion rates by 15%.",
-          "metrics": []
+          "metrics": [
+            "15% conversion boost"
+          ]
         }
       ]
     },
@@ -114,7 +128,10 @@
       "bullets": [
         {
           "text": "Maintained average quota attainment of 98% across team, sourcing an $880K deal with U.S. stadium.",
-          "metrics": []
+          "metrics": [
+            "98% quota attainment",
+            "$880K deal"
+          ]
         },
         {
           "text": "Cold called prospective clients, generating qualified leads through strategic campaigns.",
@@ -135,11 +152,15 @@
       "bullets": [
         {
           "text": "Reached 120% of quota, earning President’s Club award.",
-          "metrics": []
+          "metrics": [
+            "120% quota attainment"
+          ]
         },
         {
           "text": "Led team of SDRs achieving 95-105% quota attainment in U.S. market.",
-          "metrics": []
+          "metrics": [
+            "95-105% quota attainment"
+          ]
         }
       ]
     }
@@ -153,8 +174,5 @@
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "Account Executive at Strategic Properties, Mar 2014 – Sep 2017, led strategic initiatives and supported commercial actions.",
-  "detailedFormat": false,
-  "includeAdditionalExp": false,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": "Account Executive at Strategic Properties, Mar 2014 – Sep 2017, led strategic initiatives and supported commercial actions."
 }

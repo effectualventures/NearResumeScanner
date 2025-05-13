@@ -398,8 +398,8 @@ export async function generatePDFv2(
               page-break-before: avoid !important;
             }
             
-            /* Hide all footers by default - we'll control this with JavaScript */
-            .branding-footer {
+            /* We'll control footers with JavaScript */
+            .duplicate-footer, .content-footer {
               display: none !important;
             }
             
