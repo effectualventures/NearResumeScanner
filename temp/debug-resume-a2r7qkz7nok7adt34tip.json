@@ -53,15 +53,21 @@
       "bullets": [
         {
           "text": "Conducted quantitative and qualitative analysis to evaluate new business opportunities based on geographical factors, resulting in a 15% increase in market penetration.",
-          "metrics": []
+          "metrics": [
+            "15% market penetration increase"
+          ]
         },
         {
           "text": "Identified, reached out, and cultivated new customer relationships in LATAM, aligning with Toshiba's strategy, leading to a 20% increase in customer base.",
-          "metrics": []
+          "metrics": [
+            "20% customer base increase"
+          ]
         },
         {
           "text": "Sourced a $200K deal for a major cosmetic brand, leading BDRs in prospecting and pipeline growth.",
-          "metrics": []
+          "metrics": [
+            "$200K USD"
+          ]
         }
       ]
     },
@@ -74,15 +80,21 @@
       "bullets": [
         {
           "text": "Led and coached a team of 8 SDRs covering LATAM and U.S., achieving 115% average quota attainment.",
-          "metrics": []
+          "metrics": [
+            "115% quota attainment"
+          ]
         },
         {
           "text": "Designed outbound sales strategies and optimized workflows, boosting SDR efficiency by 35%.",
-          "metrics": []
+          "metrics": [
+            "35% efficiency improvement"
+          ]
         },
         {
           "text": "Developed sales playbooks, performance tracking systems, and training programs enhancing pipelines by 42%.",
-          "metrics": []
+          "metrics": [
+            "42% pipeline enhancement"
+          ]
         }
       ]
     },
@@ -102,7 +114,8 @@
         {
           "text": "Achieved quota attainment for 5 consecutive quarters, leading SDRs to open 50 new opportunities.",
           "metrics": [
-            "100% quota attainment"
+            "100% quota attainment",
+            "50 new opportunities"
           ]
         }
       ]
@@ -116,7 +129,10 @@
       "bullets": [
         {
           "text": "Maintained an average quota attainment of 98%, sourcing an $880K deal with a U.S. stadium.",
-          "metrics": []
+          "metrics": [
+            "98% quota attainment",
+            "$880K USD deal"
+          ]
         }
       ]
     },
@@ -129,11 +145,15 @@
       "bullets": [
         {
           "text": "Reached 120% of quota and received President’s Club award.",
-          "metrics": []
+          "metrics": [
+            "120% quota attainment"
+          ]
         },
         {
           "text": "Led SDR team consistently achieving 95-105% quota attainment in the U.S. market.",
-          "metrics": []
+          "metrics": [
+            "95-105% quota attainment"
+          ]
         }
       ]
     }
@@ -147,7 +167,5 @@
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "",
-  "detailedFormat": false,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": ""
 }

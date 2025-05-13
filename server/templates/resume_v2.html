@@ -13,6 +13,11 @@
       widows: 3; /* Minimum number of lines at the bottom of a page */
     }
     
+    /* For single-page format, add a special control to prevent blank pages */
+    @page :blank {
+      display: none;
+    }
+    
     /* Reset CSS to ensure consistent rendering */
     * {
       box-sizing: border-box;
@@ -33,10 +38,23 @@
       position: relative;
     }
     
-    /* Additional page-break controls to prevent unwanted blank pages */
+    /* Aggressive page-break controls to prevent any unwanted pages */
     @media print {
+      body, html {
+        height: auto !important;
+        overflow: hidden !important;
+      }
+      
       .resume-container {
-        page-break-after: avoid;
+        page-break-after: avoid !important;
+        page-break-before: avoid !important;
+        page-break-inside: avoid !important;
+      }
+      
+      /* Force break-after auto on all elements to prevent blank pages */
+      * {
+        break-after: auto !important;
+        break-before: auto !important;
       }
     }
     

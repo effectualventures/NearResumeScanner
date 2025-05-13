@@ -370,24 +370,54 @@ export async function generatePDFv2(
           }
         });
         
+        // Apply special handling to ensure single-page output
+        await page.evaluate(() => {
+          // Add a style to hide any potential overflow
+          const style = document.createElement('style');
+          style.textContent = `
+            @page { 
+              size: letter;
+              margin: 0.5in 0.5in 0.7in 0.5in;
+            }
+            body { 
+              max-height: 10in !important; /* Slightly less than page height */
+              overflow: hidden !important; 
+            }
+            .branding-footer {
+              position: fixed !important;
+              bottom: 0.05in !important;
+              right: 0.5in !important;
+            }
+          `;
+          document.head.appendChild(style);
+          
+          // Remove any elements that might cause unwanted page breaks
+          document.querySelectorAll('div:empty, p:empty').forEach(el => {
+            el.remove();
+          });
+        });
+        
         // Measure content height for scaling
         const contentHeight = await page.evaluate(() => {
           return document.body.scrollHeight;
         });
         
-        // Calculate scale to fit on one page
+        // Calculate scale to fit on one page - slightly more aggressive scaling
         const pageHeight = 11 * 96; // Letter height in pixels (11 inches at 96 DPI)
         const availableHeight = pageHeight - 96; // Account for margins
         const scale = contentHeight > availableHeight ? 
-                     Math.min(0.98, (availableHeight / contentHeight)) : 
+                     Math.min(0.97, (availableHeight / contentHeight)) : 
                      1.0; // No scaling if content already fits
         
         console.log(`Content height: ${contentHeight}px, using scale factor: ${scale}`);
         
+        // Use PDF options specifically designed to prevent multi-page output
         await page.pdf({
           ...pdfOptions,
           scale: scale, // Scale content to fit on single page
-          pageRanges: '1' // Only output the first page for single-page format
+          pageRanges: '1', // Only output the first page
+          printBackground: true,
+          preferCSSPageSize: false // Use our exact dimensions instead of CSS
         });
       }
       
