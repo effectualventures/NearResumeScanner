@@ -161,9 +161,15 @@ export function registerHandlebarsHelpers() {
  * @param resume The resume object to convert
  * @param sessionId Unique identifier for the session
  * @param detailedFormat Whether to generate a detailed 2-page format
+ * @param includeAdditionalExp Whether to include the additional experience section
  * @returns Path to the generated PDF file
  */
-export async function generatePDFv2(resume: Resume, sessionId: string, detailedFormat: boolean = false): Promise<string> {
+export async function generatePDFv2(
+  resume: Resume, 
+  sessionId: string, 
+  detailedFormat: boolean = false,
+  includeAdditionalExp: boolean = true
+): Promise<string> {
   try {
     // Register all required helpers
     registerHandlebarsHelpers();
@@ -209,10 +215,11 @@ export async function generatePDFv2(resume: Resume, sessionId: string, detailedF
       additionalExperience: resume.additionalExperience || ''
     };
     
-    // Prepare data for template with detailed format flag
+    // Prepare data for template with detailed format flag and additional experience preference
     const data = {
       ...validatedResume,
       detailedFormat,
+      includeAdditionalExp,
       logoPath: path.resolve(process.cwd(), 'public/images/near_logo.png')
     };
     

@@ -349,7 +349,8 @@ export async function registerV2Routes(app: Express): Promise<void> {
         // Generate enhanced PDF
         console.log("Generating enhanced PDF for feedback implementation...");
         const enhancedFormat = sessionData.enhancedFormat || false;
-        await generatePDFv2(enhancedResume, result.newSessionId, enhancedFormat);
+        const includeAdditionalExp = sessionData.includeAdditionalExp !== false; // Default to true if not specified
+        await generatePDFv2(enhancedResume, result.newSessionId, enhancedFormat, includeAdditionalExp);
       }
       
       return res.json({
@@ -421,7 +422,7 @@ export async function registerV2Routes(app: Express): Promise<void> {
       
       // Generate a PDF with our sample data
       console.log('Testing PDF generation with sample data');
-      const pdfPath = await generatePDFv2(sampleData as Resume, testSessionId, false);
+      const pdfPath = await generatePDFv2(sampleData as Resume, testSessionId, false, true);
       
       // Send PDF as download
       res.download(pdfPath, 'sample-resume.pdf', (err) => {
