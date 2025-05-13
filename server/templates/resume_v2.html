@@ -402,16 +402,41 @@
                   </li>
                 {{/each}}
               {{else}}
-                <!-- Limit to 7 bullet points for standard format -->
-                {{#each (slice bullets 0 7)}}
-                  <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
-                    {{#if metrics.length}}
-                      {{#unless (containsAny text metrics)}}
-                        <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
-                      {{/unless}}
-                    {{/if}}
-                  </li>
-                {{/each}}
+                <!-- Progressive bullet point reduction for standard format based on experience position -->
+                {{#if (eq @index 0)}}
+                  <!-- Most recent role: up to 5 bullets -->
+                  {{#each (slice bullets 0 5)}}
+                    <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
+                      {{#if metrics.length}}
+                        {{#unless (containsAny text metrics)}}
+                          <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
+                        {{/unless}}
+                      {{/if}}
+                    </li>
+                  {{/each}}
+                {{else if (eq @index 1)}}
+                  <!-- Second most recent role: up to 3 bullets -->
+                  {{#each (slice bullets 0 3)}}
+                    <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
+                      {{#if metrics.length}}
+                        {{#unless (containsAny text metrics)}}
+                          <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
+                        {{/unless}}
+                      {{/if}}
+                    </li>
+                  {{/each}}
+                {{else}}
+                  <!-- All other roles: just 1-2 bullets -->
+                  {{#each (slice bullets 0 2)}}
+                    <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
+                      {{#if metrics.length}}
+                        {{#unless (containsAny text metrics)}}
+                          <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
+                        {{/unless}}
+                      {{/if}}
+                    </li>
+                  {{/each}}
+                {{/if}}
               {{/if}}
             </ul>
           </div>

@@ -388,7 +388,7 @@ export async function generatePDFv2(
             }
             .branding-footer {
               position: fixed !important;
-              bottom: 0.05in !important;
+              bottom: 0.35in !important;
               right: 0.5in !important;
             }
             
