@@ -56,21 +56,27 @@
         {
           "text": "Conducted comprehensive quantitative and qualitative analysis to evaluate the potential of new business and channel opportunities based on geographical factors, leading to the identification of $4.5M in potential growth areas.",
           "metrics": [
+            "$4.5M growth potential",
             "comprehensive analysis"
           ]
         },
         {
           "text": "Initiated and cultivated high-value customer relationships across LATAM in alignment with Toshiba's strategic objectives, resulting in a 35% increase in regional market coverage.",
-          "metrics": []
+          "metrics": [
+            "35% increase in market coverage"
+          ]
         },
         {
           "text": "Evaluated and prioritized all incoming partner requests in the region, streamlining the partner onboarding process and improving response time by 40%.",
-          "metrics": []
+          "metrics": [
+            "40% faster response time"
+          ]
         },
         {
           "text": "Collaborated with cross-functional teams to drive key business objectives, consistently delivering channel revenue targets and supporting product enhancement initiatives, achieving a 15% increase in channel revenue.",
           "metrics": [
-            "consistent revenue target attainment"
+            "consistent revenue target attainment",
+            "15% increase in channel revenue"
           ]
         },
         {
@@ -81,11 +87,15 @@
         },
         {
           "text": "Successfully sourced a $200K deal for a major cosmetic brand, setting a precedent for strategic account wins.",
-          "metrics": []
+          "metrics": [
+            "$200K deal"
+          ]
         },
         {
           "text": "Led a team of 3 BDRs, optimizing prospecting processes and achieving a 120% increase in qualified leads.",
-          "metrics": []
+          "metrics": [
+            "120% increase in qualified leads"
+          ]
         }
       ]
     },
@@ -98,11 +108,15 @@
       "bullets": [
         {
           "text": "Initiated high-level sales opportunities through strategic outbound prospecting and meticulous qualification of inbound leads, facilitating a robust pipeline of $1.2M in potential deals.",
-          "metrics": []
+          "metrics": [
+            "$1.2M pipeline"
+          ]
         },
         {
           "text": "Worked closely with field sales teams to define and execute comprehensive account strategies, driving a 42% increase in close rate compared to prior periods.",
-          "metrics": []
+          "metrics": [
+            "42% increase in close rate"
+          ]
         },
         {
           "text": "Collaborated with marketing and sales to refine lead qualification processes, boosting conversion from MQL to SQL by 18%.",
@@ -112,15 +126,21 @@
         },
         {
           "text": "Developed and implemented innovative sales outreach sequences, resulting in enhanced prospect engagement and a 25% increase in response rate.",
-          "metrics": []
+          "metrics": [
+            "25% increase in response rate"
+          ]
         },
         {
           "text": "Provided strategic insights on pipeline management, enabling consistent achievement of quota for 5 consecutive quarters.",
-          "metrics": []
+          "metrics": [
+            "Quota achieved 5 quarters"
+          ]
         },
         {
           "text": "Led a team of SDRs who successfully opened 50 new high-value opportunities, directly contributing to the company's bottom line.",
-          "metrics": []
+          "metrics": [
+            "50 new opportunities"
+          ]
         }
       ]
     },
@@ -133,11 +153,15 @@
       "bullets": [
         {
           "text": "Generated and qualified corporate leads through strategic phone and digital communications, maintaining a high conversion rate of 15% from leads to meetings.",
-          "metrics": []
+          "metrics": [
+            "15% conversion rate"
+          ]
         },
         {
           "text": "Executed cold-calling campaigns targeting prospective clients, successfully scheduling meetings that led to $880K in new business opportunities.",
-          "metrics": []
+          "metrics": [
+            "$880K deal"
+          ]
         },
         {
           "text": "Collaborated with product, marketing, and sales to develop effective call scripts and lead qualification processes, resulting in comprehensive market coverage.",
@@ -162,7 +186,9 @@
       "bullets": [
         {
           "text": "Responsible for generating and developing new business opportunities, contributing to 120% of quota attainment and earning a President's Club award for exceptional performance.",
-          "metrics": []
+          "metrics": [
+            "120% quota attainment"
+          ]
         },
         {
           "text": "Played a critical role in marketing initiatives, both in-person and digital, enhancing brand engagement.",
@@ -181,7 +207,9 @@
       "bullets": [
         {
           "text": "Prepared detailed reports, bids, and presentations, significantly supporting commercial actions derived from client interactions, resulting in 105% of quota attainment.",
-          "metrics": []
+          "metrics": [
+            "105% quota attainment"
+          ]
         },
         {
           "text": "Led and motivated a team of SDRs who consistently achieved their Sales targets in the U.S. market, establishing new benchmarks for performance.",
@@ -200,15 +228,21 @@
       "bullets": [
         {
           "text": "Led and coached a team of 8 SDRs covering LATAM and U.S. markets, achieving a 20% increase in team productivity.",
-          "metrics": []
+          "metrics": [
+            "20% increase in team productivity"
+          ]
         },
         {
           "text": "Designed outbound sales strategies and optimized workflows, resulting in a 25% efficiency improvement.",
-          "metrics": []
+          "metrics": [
+            "25% efficiency improvement"
+          ]
         },
         {
           "text": "Developed sales playbooks and performance tracking systems, enhancing training programs and achieving a 30% increase in sales effectiveness.",
-          "metrics": []
+          "metrics": [
+            "30% increase in sales effectiveness"
+          ]
         }
       ]
     }
@@ -222,8 +256,5 @@
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "",
-  "detailedFormat": true,
-  "includeAdditionalExp": false,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": ""
 }
