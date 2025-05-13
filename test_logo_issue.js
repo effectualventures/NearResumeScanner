@@ -39,14 +39,27 @@ async function uploadAndProcessResume() {
       contentType: 'application/pdf',
     });
     
-    formData.append('skipValidation', 'true'); // Skip OpenAI validation for faster processing
-    formData.append('detailedFormat', 'false'); // Use standard format, not detailed
+    // Set options for faster processing, bypassing OpenAI validation where possible
+    formData.append('skipValidation', 'true'); 
+    formData.append('skipTransform', 'true');
+    formData.append('enhancedFormat', 'false');
+    formData.append('detailedFormat', 'false');
 
+    console.log('Sending request to API...');
+    
+    // Set longer timeout for fetch
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 60000); // 60-second timeout
+    
     // Upload the file using v2 API
     const response = await fetch(`${API_BASE_URL}/v2/convert`, {
       method: 'POST',
-      body: formData
+      body: formData,
+      signal: controller.signal
     });
+    
+    // Clear the timeout
+    clearTimeout(timeoutId);
 
     const result = await response.json();
     

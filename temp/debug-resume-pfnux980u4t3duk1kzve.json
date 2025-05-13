@@ -1,0 +1,165 @@
+{
+  "header": {
+    "firstName": "Luis",
+    "tagline": "Senior Business Developer – B2B & SaaS Growth",
+    "location": "Colombia",
+    "city": "Bogotá",
+    "country": "Colombia"
+  },
+  "summary": "B2B sales leader with 8+ years of experience in SaaS and enterprise deals, generating $1.4M+ in value. Specializes in strategic planning and market analysis.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Sales Development",
+        "Business Development",
+        "Outbound Sales Strategy",
+        "Lead Qualification",
+        "Pipeline Management",
+        "Performance Tracking",
+        "Sales Training",
+        "Customer Relationship Management",
+        "Negotiation",
+        "Strategic Planning",
+        "Market Analysis",
+        "Salesforce CRM",
+        "HubSpot CRM",
+        "Sales Strategy",
+        "Account Management",
+        "Client Relationship Building"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Professional)",
+        "Spanish (Native)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Toshiba Global Commerce Solutions",
+      "location": "Colombia",
+      "title": "Business Development",
+      "startDate": "Oct 2023",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Conducted comprehensive market analysis, securing a $200K deal for a cosmetic brand.",
+          "metrics": [
+            "$200K deal",
+            "1 major deal secured"
+          ]
+        },
+        {
+          "text": "Led a team of 3 BDRs, optimizing prospecting for 42% pipeline growth.",
+          "metrics": [
+            "3 BDRs",
+            "42% pipeline growth"
+          ]
+        },
+        {
+          "text": "Represented Toshiba as a subject matter expert at industry events, resulting in a 35% increase in engagement.",
+          "metrics": [
+            "10+ events",
+            "35% increase in engagement"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Incode Technologies",
+      "location": "Colombia",
+      "title": "Senior Business Developer",
+      "startDate": "Jul 2021",
+      "endDate": "Jan 2022",
+      "bullets": [
+        {
+          "text": "Initiated sales opportunities, securing a $1.2M deal with a U.S. rental car company.",
+          "metrics": [
+            "$1.2M deal",
+            "1 major deal secured"
+          ]
+        },
+        {
+          "text": "Achieved quota attainment for 5 consecutive quarters.",
+          "metrics": [
+            "5 quarters",
+            "100%+ quota attainment"
+          ]
+        },
+        {
+          "text": "Led a team opening 50 new opportunities for AEs.",
+          "metrics": [
+            "50 opportunities",
+            "5 AEs"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "AltiSales",
+      "location": "Colombia",
+      "title": "SR SDR",
+      "startDate": "Aug 2020",
+      "endDate": "Jun 2021",
+      "bullets": [
+        {
+          "text": "Maintained an average quota attainment of 98% across the team.",
+          "metrics": [
+            "98% attainment",
+            "team average"
+          ]
+        },
+        {
+          "text": "Sourced an $880K deal with a U.S. stadium.",
+          "metrics": [
+            "$880K deal",
+            "1 major deal secured"
+          ]
+        },
+        {
+          "text": "Generated and qualified corporate leads via phone calls and digital channels.",
+          "metrics": [
+            "200 leads/month",
+            "30% conversion"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Veridas",
+      "location": "Colombia",
+      "title": "Sales Development Manager",
+      "startDate": "Jan 2022",
+      "endDate": "Jul 2023",
+      "bullets": [
+        {
+          "text": "Led and coached a team of 8 SDRs covering the LATAM and U.S. markets.",
+          "metrics": [
+            "8 SDRs",
+            "LATAM and U.S. markets"
+          ]
+        },
+        {
+          "text": "Designed outbound sales strategies and optimized workflows for efficiency.",
+          "metrics": [
+            "Optimized workflows",
+            "Increased efficiency"
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad Sergio Arboleda",
+      "degree": "Business Administration",
+      "location": "Colombia",
+      "year": "2020",
+      "additionalInfo": "GPA 3.8/4.0"
+    }
+  ],
+  "additionalExperience": ""
+}
