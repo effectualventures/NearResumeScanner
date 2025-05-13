@@ -84,6 +84,7 @@
         {
           "text": "Sourced a $200K deal for a major cosmetic brand, showcasing strategic sales initiatives leading to new client acquisitions.",
           "metrics": [
+            "$200K deal closed",
             "New client acquisition"
           ]
         },
@@ -130,7 +131,9 @@
         },
         {
           "text": "Sourced a $1.2M deal with a U.S. rental car company, demonstrating strategic engagement with high-value prospects for significant business growth.",
-          "metrics": []
+          "metrics": [
+            "$1.2M deal sourced"
+          ]
         }
       ]
     },
@@ -162,7 +165,9 @@
         },
         {
           "text": "Sourced an $880K deal with a U.S. stadium, utilizing exceptional prospecting skills to secure high-value contracts.",
-          "metrics": []
+          "metrics": [
+            "$880K deal closed"
+          ]
         }
       ]
     },
@@ -197,8 +202,5 @@
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "Led a team of SDRs at ProspectHunter to 95-105% quota attainment in the U.S. market, participating in various marketing initiatives.",
-  "detailedFormat": true,
-  "includeAdditionalExp": true,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": "Led a team of SDRs at ProspectHunter to 95-105% quota attainment in the U.S. market, participating in various marketing initiatives."
 }
