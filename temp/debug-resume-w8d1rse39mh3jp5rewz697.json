@@ -50,11 +50,15 @@
       "bullets": [
         {
           "text": "Conducted comprehensive quantitative and qualitative analysis to evaluate new business potential across the LATAM region, incorporating geographical, economic, and competitive factors, resulting in a 15% increase in market penetration.",
-          "metrics": []
+          "metrics": [
+            "15% increase"
+          ]
         },
         {
           "text": "Identified and engaged with over 150 new customer prospects, optimizing aligned strategies within Toshiba's LATAM initiative, which increased lead pipeline by 34%.",
-          "metrics": []
+          "metrics": [
+            "34% increase"
+          ]
         },
         {
           "text": "Evaluated over 50 incoming partner requests, prioritizing strategic engagements and enhancing partner quality by 35%.",
@@ -64,19 +68,27 @@
         },
         {
           "text": "Collaborated with internal teams to achieve key business objectives, surpassing channel revenue targets by 12% and launching several product initiatives.",
-          "metrics": []
+          "metrics": [
+            "12% above target"
+          ]
         },
         {
           "text": "Represented Toshiba at 4 industry forums as a subject matter expert, enhancing brand visibility and trust, leading to a 10% increase in brand recognition.",
-          "metrics": []
+          "metrics": [
+            "10% increase"
+          ]
         },
         {
           "text": "Sourced a significant $200K contract for a major cosmetic brand, expanding client portfolio by $200K USD.",
-          "metrics": []
+          "metrics": [
+            "$200K USD"
+          ]
         },
         {
           "text": "Led a BDR team, implementing an optimized prospecting strategy that improved pipeline growth by 22%.",
-          "metrics": []
+          "metrics": [
+            "22% growth"
+          ]
         }
       ]
     },
@@ -89,11 +101,15 @@
       "bullets": [
         {
           "text": "Successfully managed and coached a team of 8 SDRs, achieving an average quota attainment of 115% across LATAM and U.S. markets.",
-          "metrics": []
+          "metrics": [
+            "115% quota"
+          ]
         },
         {
           "text": "Designed and implemented outbound sales strategies that led to a 28% increase in lead conversion rates.",
-          "metrics": []
+          "metrics": [
+            "28% increase"
+          ]
         },
         {
           "text": "Developed comprehensive sales playbooks and performance tracking systems, enhancing team efficiency by 30%.",
@@ -124,11 +140,15 @@
         },
         {
           "text": "Achieved quota attainment for 5 consecutive quarters, positioning the team as top performers in the region.",
-          "metrics": []
+          "metrics": [
+            "5 consecutive quarters"
+          ]
         },
         {
           "text": "Led a team that opened 50 new opportunities, developing strategies with AEs to streamline the sales funnel.",
-          "metrics": []
+          "metrics": [
+            "50 opportunities"
+          ]
         }
       ]
     },
@@ -159,7 +179,9 @@
         },
         {
           "text": "Closed an $880K deal with a U.S. stadium, reinforcing company presence in new markets.",
-          "metrics": []
+          "metrics": [
+            "$880K USD"
+          ]
         }
       ]
     }
@@ -173,8 +195,5 @@
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "Led a volunteer initiative at the local community center, coaching young adults in entrepreneurship and business strategies. BDR at ProspectHunter (Feb 2018 - Dec 2018) and Account Executive at Strategic Properties (Mar 2014 - Sep 2017).",
-  "detailedFormat": true,
-  "includeAdditionalExp": true,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": "Led a volunteer initiative at the local community center, coaching young adults in entrepreneurship and business strategies. BDR at ProspectHunter (Feb 2018 - Dec 2018) and Account Executive at Strategic Properties (Mar 2014 - Sep 2017)."
 }

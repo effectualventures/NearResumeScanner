@@ -371,6 +371,26 @@ export async function generatePDFv2(
           // Remove single-page class if present
           document.body.classList.remove('single-page');
           
+          // Remove any inline "Presented by" that might appear in the content
+          // This is the key fix - manually find and remove any "Presented by" elements within the document
+          // We need to look through all elements since the :contains selector isn't standard
+          const allElements = document.querySelectorAll('*');
+          allElements.forEach(el => {
+            // Only process text nodes and elements with text content
+            const textContent = el.textContent || '';
+            if (textContent && textContent.includes('Presented by')) {
+              // Don't remove the actual footer
+              const isFooter = el.classList?.contains('branding-footer') || false;
+              const isWithinFooter = el.closest?.('.branding-footer') || null;
+              
+              if (!isFooter && !isWithinFooter) {
+                // If we found a "Presented by" outside of the footer, remove it
+                console.log('Removing unexpected Presented by element', el.tagName);
+                el.remove();
+              }
+            }
+          });
+          
           // Add style to prevent unwanted page breaks and ensure footer is only at the end
           const style = document.createElement('style');
           style.textContent = `
