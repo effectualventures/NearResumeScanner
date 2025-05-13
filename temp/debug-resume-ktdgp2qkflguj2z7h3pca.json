@@ -1,0 +1,138 @@
+{
+  "header": {
+    "firstName": "Luis",
+    "tagline": "Senior Business Development Leader – SaaS & Retail Tech",
+    "location": "Colombia",
+    "city": "Bogotá",
+    "country": "Colombia"
+  },
+  "summary": "Accomplished business developer with over 5 years of experience in SaaS and retail tech, driving a $1.2M deal with a major U.S. company. Proven success in leading teams to consistent quota attainment in competitive markets.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Sales Development",
+        "Business Development",
+        "Lead Generation",
+        "Outbound Prospecting",
+        "Pipeline Management",
+        "Performance Coaching",
+        "Quantitative & Qualitative Analysis",
+        "Cross-Functional Collaboration",
+        "Customer Relationships",
+        "Sales Strategy",
+        "Digital Channels",
+        "Market Analysis",
+        "CRM | Salesforce, HubSpot",
+        "Sales Methodologies | SPIN Selling, Challenger Sale"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Professional)",
+        "Spanish (Native)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Toshiba Global Commerce Solutions",
+      "location": "Colombia",
+      "title": "Business Development Manager",
+      "startDate": "Oct 2023",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Conducted quantitative and qualitative analysis to identify $4.2M in business opportunities, resulting in a 15% increase in conversion rates.",
+          "metrics": []
+        },
+        {
+          "text": "Cultivated 12 new customer relationships with a 35% conversion rate to opportunities.",
+          "metrics": []
+        },
+        {
+          "text": "Led a team of 3 BDRs, optimizing prospecting efforts to enhance pipeline growth by 28%.",
+          "metrics": []
+        },
+        {
+          "text": "Sourced a $200K deal for a leading cosmetic brand, contributing to channel revenue goals.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Incode Technologies",
+      "location": "Colombia",
+      "title": "Senior Business Developer",
+      "startDate": "Jul 2021",
+      "endDate": "Jan 2022",
+      "bullets": [
+        {
+          "text": "Sourced a $1.2M deal with a U.S. rental car company, significantly exceeding sales targets.",
+          "metrics": []
+        },
+        {
+          "text": "Achieved 132% of quota for 5 consecutive quarters, maintaining top performance in the team.",
+          "metrics": []
+        },
+        {
+          "text": "Developed sales outreach sequences, resulting in a 42% increase in prospect engagement.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "AltiSales",
+      "location": "Colombia",
+      "title": "Senior Sales Development Rep",
+      "startDate": "Aug 2020",
+      "endDate": "Jun 2021",
+      "bullets": [
+        {
+          "text": "Generated and qualified corporate leads, achieving an average quota attainment of 98%.",
+          "metrics": []
+        },
+        {
+          "text": "Sourced an $880K deal with a U.S. stadium, surpassing quarterly goals.",
+          "metrics": []
+        },
+        {
+          "text": "Collaborated with product and marketing teams, enhancing lead qualification process by 35%.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Veridas",
+      "location": "Colombia",
+      "title": "Sales Development Manager",
+      "startDate": "Jan 2022",
+      "endDate": "Jul 2023",
+      "bullets": [
+        {
+          "text": "Led and coached a team of 8 SDRs covering the LATAM and U.S. markets, achieving a 20% increase in team productivity.",
+          "metrics": []
+        },
+        {
+          "text": "Designed outbound sales strategies and optimized workflows, resulting in a 25% efficiency gain.",
+          "metrics": []
+        },
+        {
+          "text": "Developed sales playbooks and training programs, enhancing SDR performance by 30%.",
+          "metrics": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad Sergio Arboleda",
+      "degree": "Business Administration",
+      "location": "Colombia",
+      "year": "2020",
+      "additionalInfo": ""
+    }
+  ],
+  "additionalExperience": ""
+}

@@ -56,7 +56,9 @@
       "bullets": [
         {
           "text": "Conducted comprehensive quantitative and qualitative analysis to evaluate potential business and channel opportunities, leveraging geographical data and market insights to inform strategic decisions, resulting in a 20% increase in market penetration.",
-          "metrics": []
+          "metrics": [
+            "20% increase in market penetration"
+          ]
         },
         {
           "text": "Successfully identified and engaged new customer relationships across LATAM, aligning with Toshiba's corporate strategy and expanding market footprint.",
@@ -64,7 +66,9 @@
         },
         {
           "text": "Evaluated and prioritized over 30 incoming partner requests, applying a rigorous scoring system to enhance partner selection quality by 42%.",
-          "metrics": []
+          "metrics": [
+            "42% improvement in partner selection quality"
+          ]
         },
         {
           "text": "Collaborated extensively with cross-functional teams to meet channel revenue targets and drive product enhancement initiatives.",
@@ -76,11 +80,15 @@
         },
         {
           "text": "Achieved a significant deal closure with a major cosmetic brand, generating $200K USD in new business revenue.",
-          "metrics": []
+          "metrics": [
+            "$200K USD"
+          ]
         },
         {
           "text": "Led a team of 3 Business Development Representatives, optimizing prospecting activities and achieving pipeline growth of 35%.",
-          "metrics": []
+          "metrics": [
+            "35% pipeline growth"
+          ]
         }
       ]
     },
@@ -97,11 +105,15 @@
         },
         {
           "text": "Implemented efficient outbound sales strategies and optimized workflow processes, increasing SDR productivity by 28%.",
-          "metrics": []
+          "metrics": [
+            "28% increase in SDR productivity"
+          ]
         },
         {
           "text": "Developed comprehensive sales playbooks, performance tracking systems, and impactful training programs, resulting in a 40% increase in team quota attainment.",
-          "metrics": []
+          "metrics": [
+            "40% increase in team quota attainment"
+          ]
         }
       ]
     },
@@ -122,11 +134,15 @@
         },
         {
           "text": "Led a team of SDRs responsible for sourcing 50 new opportunities for Account Executives, significantly boosting potential revenue streams.",
-          "metrics": []
+          "metrics": [
+            "50 opportunities sourced"
+          ]
         },
         {
           "text": "Sourced high-value deals, including a notable $1.2M USD transaction with a U.S. rental car company, strengthening Incode Technologies' market position.",
-          "metrics": []
+          "metrics": [
+            "$1.2M USD"
+          ]
         },
         {
           "text": "Achieved quota attainment for 5 consecutive quarters, maintaining top-tier performance among peers.",
@@ -147,15 +163,21 @@
         },
         {
           "text": "Collaborated with product, marketing, and sales teams to create effective call scripts and refine lead qualification criteria, improving engagement rates by 15%.",
-          "metrics": []
+          "metrics": [
+            "15% improvement in engagement rates"
+          ]
         },
         {
           "text": "Sourced an $880K USD deal with a U.S. stadium, underscoring exceptional salesmanship and market understanding.",
-          "metrics": []
+          "metrics": [
+            "$880K USD"
+          ]
         },
         {
           "text": "Maintained an average quota attainment of 98%, consistently exceeding target expectations.",
-          "metrics": []
+          "metrics": [
+            "98% quota attainment"
+          ]
         }
       ]
     }
@@ -169,7 +191,5 @@
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "Worked in various sales roles at ProspectHunter and Strategic Properties, leading teams to surpass quotas and receiving the President’s Club award for outstanding performance.",
-  "detailedFormat": true,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": "Worked in various sales roles at ProspectHunter and Strategic Properties, leading teams to surpass quotas and receiving the President’s Club award for outstanding performance."
 }
