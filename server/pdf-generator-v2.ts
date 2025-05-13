@@ -489,14 +489,24 @@ export async function generatePDFv2(
               document.body.appendChild(customFooter);
             }
             
-            // Hide any possible logos within the content
-            const logoImages = document.querySelectorAll('.resume-container img');
-            for (let i = 0; i < logoImages.length; i++) {
-              const img = logoImages[i] as HTMLImageElement;
+            // Only hide logos that are WITHIN the resume content
+            const contentImages = document.querySelectorAll('.resume-container img, .page-content img');
+            for (let i = 0; i < contentImages.length; i++) {
+              const img = contentImages[i] as HTMLImageElement;
               const src = img.getAttribute('src');
+              // Skip images in our custom footer
+              if (img.closest('#custom-page-footer')) {
+                continue;
+              }
               if (src && (src.includes('logo') || src.includes('near'))) {
                 img.style.display = 'none';
               }
+            }
+            
+            // Ensure our custom footer's logo is always visible
+            const customFooterImg = document.querySelector('#custom-page-footer img') as HTMLImageElement;
+            if (customFooterImg) {
+              customFooterImg.style.display = 'inline-block';
             }
             
             console.log('Custom footer added for multi-page PDF');
@@ -539,16 +549,10 @@ export async function generatePDFv2(
               overflow: hidden !important; 
             }
             
-            /* Hide all footers in single-page mode too */
-            .branding-footer,
-            #main-footer,
-            #footer-container,
-            footer {
-              display: none !important;
-            }
-            
-            /* Hide any footer inside the content area */
-            .resume-container .branding-footer {
+            /* Only hide footers that are inside the content container */
+            .resume-container footer,
+            .resume-container .branding-footer,
+            .page-content footer {
               display: none !important;
             }
             
@@ -649,14 +653,24 @@ export async function generatePDFv2(
             // Add footer to body
             document.body.appendChild(customFooter);
             
-            // Hide any possible logos within the content
-            const logoImages = document.querySelectorAll('.resume-container img');
-            for (let i = 0; i < logoImages.length; i++) {
-              const img = logoImages[i] as HTMLImageElement;
+            // Only hide logos that are WITHIN the resume content
+            const contentImages = document.querySelectorAll('.resume-container img, .page-content img');
+            for (let i = 0; i < contentImages.length; i++) {
+              const img = contentImages[i] as HTMLImageElement;
               const src = img.getAttribute('src');
+              // Skip images in our custom footer
+              if (img.closest('#custom-page-footer')) {
+                continue;
+              }
               if (src && (src.includes('logo') || src.includes('near'))) {
                 img.style.display = 'none';
               }
+            }
+            
+            // Ensure our custom footer's logo is always visible
+            const customFooterImg = document.querySelector('#custom-page-footer img');
+            if (customFooterImg) {
+              customFooterImg.style.display = 'inline-block';
             }
             
             console.log('Custom footer added for single-page PDF');
