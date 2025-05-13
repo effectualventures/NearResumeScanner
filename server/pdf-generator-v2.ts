@@ -391,6 +391,36 @@ export async function generatePDFv2(
             }
           });
           
+          // First, check if there are any unexpected "Presented by" texts or logo copies in the content
+          // Must do this BEFORE adding the CSS styles
+          const contentDiv = document.querySelector('.resume-container');
+          if (contentDiv) {
+            const allContentElements = contentDiv.querySelectorAll('*');
+            allContentElements.forEach(el => {
+              const text = el.textContent || '';
+              if (text.includes('Presented by') && !el.closest('.branding-footer')) {
+                // This is an unexpected "Presented by" in the content - remove it
+                console.log('Found and removing unexpected Presented by in content');
+                el.innerHTML = el.innerHTML.replace('Presented by', '');
+                
+                // If this is an image next to "Presented by", remove it too
+                const nextSibling = el.nextElementSibling;
+                if (nextSibling && nextSibling.tagName === 'IMG') {
+                  nextSibling.remove();
+                }
+              }
+              
+              // Also check for logo images that aren't in the footer
+              if (el.tagName === 'IMG' && !el.closest('.branding-footer')) {
+                const src = el.getAttribute('src') || '';
+                if (src.includes('near_logo') || src.includes('logo.png')) {
+                  console.log('Found and removing unexpected logo in content');
+                  el.remove();
+                }
+              }
+            });
+          }
+          
           // Add style to prevent unwanted page breaks and ensure footer is only at the end
           const style = document.createElement('style');
           style.textContent = `
@@ -419,6 +449,12 @@ export async function generatePDFv2(
               @page:not(:last-of-type) .branding-footer {
                 display: none !important;
               }
+            }
+            
+            /* Extra protection against duplicate logos or presented by text */
+            .resume-container img[src*="logo"]:not(.branding-footer img),
+            .resume-container img[src*="near"]:not(.branding-footer img) {
+              display: none !important;
             }
           `;
           document.head.appendChild(style);
