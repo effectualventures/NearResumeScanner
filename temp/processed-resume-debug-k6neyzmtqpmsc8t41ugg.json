@@ -1,0 +1,201 @@
+{
+  "header": {
+    "firstName": "Luis",
+    "tagline": "Senior Sales Development Leader – SaaS & Retail Tech",
+    "location": "Colombia",
+    "city": "Bogotá",
+    "country": "Colombia"
+  },
+  "summary": "Dynamic sales development leader with over 10 years of expertise in SaaS & FinTech, consistently achieving 120% quota.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Outbound Prospecting",
+        "Lead Generation",
+        "Pipeline Management",
+        "Account Strategies",
+        "Team Leadership",
+        "Sales Strategy Design",
+        "Workflow Optimization",
+        "Performance Tracking",
+        "Training Programs Development",
+        "CRM Management",
+        "Digital Outreach Channels",
+        "Sales Playbooks",
+        "Performance Metrics",
+        "Retail Tech",
+        "SaaS",
+        "FinTech",
+        "Enterprise Sales",
+        "Negotiation",
+        "Customer Relationship Management",
+        "Market Analysis",
+        "Sales Forecasting",
+        "Competitive Analysis",
+        "Strategic Planning"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Professional)",
+        "Spanish (Native)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Toshiba Global Commerce Solutions",
+      "location": "Colombia",
+      "title": "Business Development",
+      "startDate": "Oct 2023",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Conducted comprehensive quantitative and qualitative analysis to evaluate new business potential, increasing qualified lead volume by 42% within the LATAM region through strategic market assessment, resulting in a 15% increase in conversion rates.",
+          "metrics": []
+        },
+        {
+          "text": "Identified and cultivated new customer relationships in LATAM, directly contributing to $3.5M USD in new pipeline generation by aligning with Toshiba's expansive market strategy.",
+          "metrics": []
+        },
+        {
+          "text": "Evaluated and prioritized over 40 partner requests monthly, implementing a strategic scoring system to enhance partner quality by 38%.",
+          "metrics": []
+        },
+        {
+          "text": "Collaborated with cross-functional teams to achieve a 15% increase in channel revenue and spearheaded product enhancement initiatives within the first three quarters.",
+          "metrics": []
+        },
+        {
+          "text": "Represented Toshiba as an SME at 5 major industry events across LATAM, enhancing brand presence and driving strategic partnerships.",
+          "metrics": []
+        },
+        {
+          "text": "Sourced a record $200K USD deal for a major cosmetic brand within six months, surpassing individual sales targets by 25%.",
+          "metrics": []
+        },
+        {
+          "text": "Led a team of 3 BDRs, optimizing prospecting processes to accelerate pipeline growth by 30% through targeted coaching and development programs.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Veridas",
+      "location": "Colombia",
+      "title": "Sales Development Manager",
+      "startDate": "Jan 2022",
+      "endDate": "Jul 2023",
+      "bullets": [
+        {
+          "text": "Led and coached a team of 8 SDRs across LATAM and U.S. markets, resulting in a 132% collective quota attainment over five consecutive quarters.",
+          "metrics": []
+        },
+        {
+          "text": "Designed efficient outbound sales strategies that enhanced SDR productivity, leading to a reduction in sales cycle time by 25%.",
+          "metrics": []
+        },
+        {
+          "text": "Developed comprehensive sales playbooks and performance tracking systems, improving SDR training completion rate by 45% within the first year.",
+          "metrics": []
+        },
+        {
+          "text": "Increased market penetration by developing targeted training programs that boosted regional growth by 20% YoY.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Incode Technologies",
+      "location": "Colombia",
+      "title": "Senior Business Developer",
+      "startDate": "Jul 2021",
+      "endDate": "Jan 2022",
+      "bullets": [
+        {
+          "text": "Initiated and successfully managed over 25 sales opportunities through outbound prospecting and lead qualification, securing a $1.2M USD deal with a major U.S. rental car company within six months.",
+          "metrics": []
+        },
+        {
+          "text": "Collaborated with marketing to refine lead qualification processes, achieving a 37% increase in lead-to-opportunity conversion rate.",
+          "metrics": []
+        },
+        {
+          "text": "Developed advanced sales outreach sequences that improved prospect engagement by 28%, leading to a pipeline growth surge.",
+          "metrics": []
+        },
+        {
+          "text": "Provided strategic insights on pipeline management, driving a 15% increase in closure rates through tactical adjustments.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "AltiSales",
+      "location": "Colombia",
+      "title": "SR SDR",
+      "startDate": "Aug 2020",
+      "endDate": "Jun 2021",
+      "bullets": [
+        {
+          "text": "Drove generation and qualification of high-value corporate leads, resulting in a consistent 98% average quota attainment across the SDR team.",
+          "metrics": []
+        },
+        {
+          "text": "Executed strategic cold-calling campaigns, securing an $880K deal with a premier U.S. stadium through targeted outreach.",
+          "metrics": []
+        },
+        {
+          "text": "Worked cross-functionally to develop effective call scripts and lead qualification criteria, boosting lead generation by 35%.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "ProspectHunter",
+      "location": "Colombia",
+      "title": "BDR",
+      "startDate": "Feb 2018",
+      "endDate": "Dec 2018",
+      "bullets": [
+        {
+          "text": "Prepared comprehensive reports, bids, and presentations, directly supporting commercial actions and enhancing client interactions.",
+          "metrics": []
+        },
+        {
+          "text": "Actively participated in marketing initiatives, achieving 120% of quota and earning recognition through a President’s Club award.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Strategic Properties",
+      "location": "Colombia",
+      "title": "Account Executive",
+      "startDate": "Mar 2014",
+      "endDate": "Sep 2017",
+      "bullets": [
+        {
+          "text": "Managed a diverse portfolio of strategic accounts, achieving consistent quota attainment and earning multiple accolades for sales excellence.",
+          "metrics": []
+        },
+        {
+          "text": "Led initiatives that improved account growth and retention, using data-driven strategies to maximize revenue potential.",
+          "metrics": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad Sergio Arboleda",
+      "degree": "International Business",
+      "location": "Colombia",
+      "year": "2020",
+      "additionalInfo": ""
+    }
+  ],
+  "additionalExperience": "Volunteered as a sales trainer at local community workshops, empowering aspiring entrepreneurs with essential sales skills."
+}
