@@ -61,20 +61,38 @@ async function checkPDFFooters() {
       // This is a very basic approach - in a real implementation we would use a PDF parsing library
       const pdfString = pdfData.toString('utf8', 0, pdfData.length);
       
-      // Count occurrences of "Presented by"
-      const matches = pdfString.match(/Presented\s+by/g) || [];
-      const count = matches.length;
+      // Check for "Presented by" text
+      const presentedByMatches = pdfString.match(/Presented\s+by/g) || [];
+      const presentedByCount = presentedByMatches.length;
+      
+      // Check for Near logo reference
+      const logoMatches = pdfString.match(/Near\s+logo/gi) || [];
+      const logoCount = logoMatches.length;
+      
+      // Determine if there's a footer by checking for image data
+      const hasImageData = pdfString.includes('/Image') || pdfString.includes('/XObject');
+      
+      // Check if there are references to positioning elements at the bottom of page
+      const hasFooterPositioning = pdfString.includes('0.35 inch') || 
+                                 pdfString.includes('25.2 pt') ||
+                                 pdfString.toLowerCase().includes('footer');
       
       // Determine if there's duplication
-      const hasDuplication = count > 1;
+      const hasDuplication = presentedByCount > 1;
       
       results.push({
         filename: pdf.name,
-        presentedByCount: count,
+        presentedByCount,
+        logoCount,
+        hasImageData,
+        hasFooterPositioning,
         hasDuplication
       });
       
-      console.log(`  "Presented by" occurrences: ${count}`);
+      console.log(`  "Presented by" occurrences: ${presentedByCount}`);
+      console.log(`  "Near logo" references: ${logoCount}`);
+      console.log(`  Has image data: ${hasImageData ? 'YES' : 'NO'}`);
+      console.log(`  Has footer positioning: ${hasFooterPositioning ? 'YES' : 'NO'}`);
       console.log(`  Duplication detected: ${hasDuplication ? 'YES' : 'NO'}`);
       
     } catch (error) {
@@ -92,8 +110,23 @@ async function checkPDFFooters() {
     if (result.error) {
       return `${pdf.name}: ERROR - ${result.error}`;
     }
-    return `${pdf.name}: Found ${result.presentedByCount} instances of "Presented by" - ${result.hasDuplication ? 'DUPLICATION DETECTED' : 'NO DUPLICATION'}`;
-  }).join('\n');
+    
+    let status = 'OK';
+    if (result.presentedByCount === 0) {
+      status = 'MISSING FOOTER TEXT';
+    } else if (result.hasDuplication) {
+      status = 'DUPLICATION DETECTED';
+    } else if (!result.hasImageData) {
+      status = 'MISSING LOGO';
+    }
+    
+    return `${pdf.name}:
+  - Status: ${status}
+  - "Presented by" count: ${result.presentedByCount}
+  - Near logo references: ${result.logoCount}
+  - Has image data: ${result.hasImageData ? 'YES' : 'NO'}
+  - Has footer positioning: ${result.hasFooterPositioning ? 'YES' : 'NO'}`;
+  }).join('\n\n');
   
   fs.writeFileSync(OUTPUT_FILE, summaryText);
   console.log(`\nResults written to ${OUTPUT_FILE}`);

@@ -1,3 +1,20 @@
-u964g3zex5mkm1sijzvqn_v2.pdf: Found 0 instances of "Presented by" - NO DUPLICATION
-pfnux980u4t3duk1kzve_v2.pdf: Found 0 instances of "Presented by" - NO DUPLICATION
-h242w7p1lsuiwveeziozrc_v2.pdf: Found 0 instances of "Presented by" - NO DUPLICATION
+v7xsv6799hl9vjgu0o68g_v2.pdf:
+  - Status: MISSING FOOTER TEXT
+  - "Presented by" count: 0
+  - Near logo references: 0
+  - Has image data: YES
+  - Has footer positioning: NO
+
+8j2kf20oteh8q9lyjrtcyc_v2.pdf:
+  - Status: MISSING FOOTER TEXT
+  - "Presented by" count: 0
+  - Near logo references: 0
+  - Has image data: YES
+  - Has footer positioning: NO
+
+h0bggxfwc8qhdhj8rgkitu_v2.pdf:
+  - Status: MISSING FOOTER TEXT
+  - "Presented by" count: 0
+  - Near logo references: 0
+  - Has image data: YES
+  - Has footer positioning: NO
