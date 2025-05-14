@@ -139,6 +139,31 @@ export async function generatePDFv2(
       await page.waitForFunction(
         'document.images.length > 0 && Array.from(document.images).every(img => img.complete)'
       );
+      
+      // Add the "Presented by Near" footer at the bottom center of the last page
+      await page.evaluate(() => {
+        try {
+          // Create a centered footer element
+          const footerElement = document.createElement('div');
+          footerElement.innerText = 'Presented by Near';
+          footerElement.style.position = 'fixed';
+          footerElement.style.bottom = '0.1in';
+          footerElement.style.left = '0';
+          footerElement.style.right = '0';
+          footerElement.style.textAlign = 'center';
+          footerElement.style.fontFamily = "'Inter', sans-serif";
+          footerElement.style.fontSize = '10px';
+          footerElement.style.fontWeight = 'bold';
+          footerElement.style.color = '#333333';
+          footerElement.style.zIndex = '9999';
+          
+          // Add the footer to the document
+          document.body.appendChild(footerElement);
+          console.log('Added "Presented by Near" footer');
+        } catch (error) {
+          console.error('Error adding footer:', error);
+        }
+      });
 
       const pdfOutputPath = path.join(tempDir, `${sessionId}_v2.pdf`);
       const pdfOptions: PDFOptions = {
