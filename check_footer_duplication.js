@@ -20,7 +20,7 @@ const OUTPUT_FILE = path.join(__dirname, 'footer_check_results.txt');
 function findRecentPDFs() {
   // Get all files in the temp directory
   const files = fs.readdirSync(PDF_DIR)
-    .filter(f => f.endsWith('_v2.pdf'))
+    .filter(f => f.endsWith('.pdf'))
     .map(f => ({
       name: f,
       path: path.join(PDF_DIR, f),
@@ -28,8 +28,8 @@ function findRecentPDFs() {
     }))
     .sort((a, b) => b.mtime - a.mtime); // Sort newest first
   
-  // Return the 3 most recent files
-  return files.slice(0, 3);
+  // Return the 5 most recent files, regardless of naming convention
+  return files.slice(0, 5);
 }
 
 /**

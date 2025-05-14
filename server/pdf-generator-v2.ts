@@ -432,6 +432,10 @@ export async function generatePDFv2(
             const templateFooter = document.querySelector('#main-footer');
             const resumeContainer = document.querySelector('.resume-container');
             
+            // Debug logging
+            console.log('DEBUG: Template footer found:', templateFooter ? 'YES' : 'NO');
+            console.log('DEBUG: Resume container found:', resumeContainer ? 'YES' : 'NO');
+            
             if (templateFooter && resumeContainer) {
               // Create a properly positioned footer that will appear at the end
               const positionedFooter = document.createElement('div');
@@ -461,9 +465,13 @@ export async function generatePDFv2(
               textSpan.style.fontFamily = "'Inter', Arial, sans-serif";
               textSpan.style.fontWeight = 'normal';
               
-              // Create the Logo image
+              // Create the Logo image - using absolute path in case relative path isn't working
               const logoImg = document.createElement('img');
-              logoImg.src = '/images/near_logo.png'; // Use the relative path
+              
+              // Use the absolute path for reliability
+              const logoPath = '/home/runner/workspace/public/images/near_logo.png';
+              logoImg.src = `file://${logoPath}`;
+              
               logoImg.alt = 'Near logo';
               logoImg.style.height = '25px';
               logoImg.style.width = 'auto';
@@ -480,6 +488,11 @@ export async function generatePDFv2(
               
               // Add it to the document body
               document.body.appendChild(positionedFooter);
+              
+              // Debug info
+              console.log('DEBUG: Footer added to document');
+              console.log('DEBUG: Footer content:', positionedFooter.innerHTML);
+              console.log('DEBUG: Footer children count:', positionedFooter.childNodes.length);
               
               // Add spacing at the end of content to prevent footer from overlapping content
               const spacer = document.createElement('div');
