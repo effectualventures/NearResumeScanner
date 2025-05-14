@@ -318,17 +318,19 @@
       width: auto;
     }
     
-    /* Aggressively hide template footer to prevent duplication issues */
-    #footer-container, #main-footer {
-      display: none !important;
+    /* Hide template footer visually but keep it accessible to JavaScript */
+    #footer-container {
+      position: absolute !important;
+      left: -9999px !important;
+      top: -9999px !important;
       visibility: hidden !important;
       opacity: 0 !important;
-      position: absolute !important;
-      z-index: -9999 !important;
-      width: 0 !important;
-      height: 0 !important;
+      /* Important: Don't set display:none as that would make it inaccessible to JavaScript */
+      width: 1px !important;
+      height: 1px !important;
       overflow: hidden !important;
       pointer-events: none !important;
+      z-index: -9999 !important;
     }
   </style>
 </head>
@@ -542,9 +544,10 @@
     to position the footer correctly. The template itself should never be visible.
     *** IMPORTANT: This footer should NEVER appear in the final output! ***
     It is only used as a source for JavaScript to clone from.
+    Note: Do not use display:none as that would make it inaccessible to JavaScript.
   -->
-  <div id="footer-container" style="display: none !important; visibility: hidden !important; position: absolute !important; z-index: -9999 !important; width: 0 !important; height: 0 !important; overflow: hidden !important; opacity: 0 !important;">
-    <footer id="main-footer" class="branding-footer" style="display: none !important; visibility: hidden !important; position: absolute !important; z-index: -9999 !important; width: 0 !important; height: 0 !important; overflow: hidden !important; opacity: 0 !important;">
+  <div id="footer-container" style="position: absolute !important; left: -9999px !important; top: -9999px !important; visibility: hidden !important; opacity: 0 !important; width: 1px !important; height: 1px !important; overflow: hidden !important; pointer-events: none !important; z-index: -9999 !important;">
+    <footer id="main-footer" class="branding-footer">
       <span><strong>Presented by</strong></span>
       <img src="file://{{logoPath}}" alt="Near logo" style="height: 25px; width: auto;"/>
     </footer>
