@@ -317,34 +317,6 @@
       height: 25px;
       width: auto;
     }
-    
-    /* Hide template footer visually but keep it accessible to JavaScript */
-    #footer-container {
-      position: absolute !important;
-      left: -9999px !important;
-      top: -9999px !important;
-      visibility: hidden !important;
-      opacity: 0 !important;
-      /* Important: Don't set display:none as that would make it inaccessible to JavaScript */
-      width: 1px !important;
-      height: 1px !important;
-      overflow: hidden !important;
-      pointer-events: none !important;
-      z-index: -9999 !important;
-    }
-    
-    /* Make footer content visible within the hidden container (for JavaScript access) */
-    #main-footer {
-      /* Keep opacity at 1 to ensure text is readable by JavaScript */
-      opacity: 1 !important;
-    }
-    
-    /* Ensure the JavaScript-positioned footer is actually visible */
-    #positioned-footer {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-    }
   </style>
 </head>
 <body>
@@ -552,24 +524,12 @@
     <div class="logo-zone"></div>
   </div>
   
-  <!-- 
-    Hidden template footer (serves as source for JavaScript)
-    But this is invisible due to positioning outside viewport
-  -->
-  <div id="footer-container" style="position: absolute !important; left: -9999px !important; top: -9999px !important; visibility: hidden !important; opacity: 0 !important; width: 1px !important; height: 1px !important; overflow: hidden !important; pointer-events: none !important; z-index: -9999 !important;">
-    <footer id="main-footer" class="branding-footer" style="opacity: 1 !important;">
+  <!-- Only include the footer HTML but no styling - styling will be added by JavaScript -->
+  <div id="footer-container" style="display: none;">
+    <footer id="main-footer" class="branding-footer">
       <span><strong>Presented by</strong></span>
-      <img src="file://{{logoPath}}" alt="Near logo" style="height: 25px; width: auto; display: inline-block !important;"/>
+      <img src="file://{{logoPath}}" alt="Near logo" style="height: 25px; width: auto;"/>
     </footer>
-  </div>
-  
-  <!-- 
-    Added visible footer that will always be in the document
-    This is a direct approach to ensure the footer text always appears
-  -->
-  <div id="visible-footer" style="position: fixed; bottom: 0.35in; right: 0.5in; display: flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif; font-size: 10px;">
-    <span><strong>Presented by</strong></span>
-    <img src="file://{{logoPath}}" alt="Near logo" style="height: 25px; width: auto;"/>
   </div>
 </body>
 </html>

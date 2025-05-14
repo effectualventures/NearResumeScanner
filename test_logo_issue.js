@@ -22,44 +22,17 @@ async function uploadAndProcessResume() {
   try {
     console.log('Step 1: Uploading and processing resume...');
     
-    // First verify the file exists
-    if (!fs.existsSync(PDF_FILE_PATH)) {
-      throw new Error(`Resume file not found at path: ${PDF_FILE_PATH}`);
-    }
-    
-    console.log('Using resume file:', PDF_FILE_PATH);
-    
     // Create form data with file
     const formData = new FormData();
-    
-    // Add the resume file with explicit filename
-    const fileStream = fs.createReadStream(PDF_FILE_PATH);
-    formData.append('resume', fileStream, {
-      filename: 'resume.pdf',
-      contentType: 'application/pdf',
-    });
-    
-    // Set options for faster processing, bypassing OpenAI validation where possible
-    formData.append('skipValidation', 'true'); 
-    formData.append('skipTransform', 'true');
-    formData.append('enhancedFormat', 'false');
-    formData.append('detailedFormat', 'false');
+    formData.append('file', fs.createReadStream(PDF_FILE_PATH));
+    formData.append('skipValidation', 'true'); // Skip OpenAI validation for faster processing
+    formData.append('detailedFormat', 'false'); // Use standard format, not detailed
 
-    console.log('Sending request to API...');
-    
-    // Set longer timeout for fetch
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 60000); // 60-second timeout
-    
     // Upload the file using v2 API
     const response = await fetch(`${API_BASE_URL}/v2/convert`, {
       method: 'POST',
-      body: formData,
-      signal: controller.signal
+      body: formData
     });
-    
-    // Clear the timeout
-    clearTimeout(timeoutId);
 
     const result = await response.json();
     

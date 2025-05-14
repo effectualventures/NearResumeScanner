@@ -6,38 +6,36 @@
     "city": "Bogotá",
     "country": "Colombia"
   },
-  "summary": "Expert SaaS & Retail Tech BDR leader with over 10 years of experience, consistently exceeding quotas by 28%+. Proven track record sourcing $1.2M+ deals and driving pipeline growth.",
+  "summary": "Senior Business Developer with over 8 years of experience in SaaS & FinTech, achieving 120%+ quota attainments and leading cross-functional teams to success.",
   "skills": [
     {
       "category": "Skills",
       "items": [
-        "Sales Strategy Development",
-        "Outbound Sales Tactics",
+        "Business Development",
+        "Sales Strategy",
         "Lead Generation",
         "Account Management",
-        "Channel Development",
         "Pipeline Management",
-        "Sales Playbook Design",
-        "Training Program Development",
+        "Relationship Building",
+        "Performance Optimization",
         "Market Analysis",
-        "Performance Tracking",
-        "Client Relationship Building",
+        "Outbound Prospecting",
+        "Sales Playbook Development",
+        "Sales Training",
         "Cross-functional Collaboration",
-        "CRM Systems (e.g., Salesforce)",
-        "Salesforce Automation",
+        "CRM Strategy",
         "Negotiation",
+        "Strategic Planning",
         "Customer Relationship Management",
         "Market Research",
-        "Competitive Analysis",
-        "Strategic Planning",
-        "Revenue Forecasting"
+        "Competitive Analysis"
       ]
     },
     {
       "category": "Languages",
       "items": [
-        "English (Professional)",
-        "Spanish (Native)"
+        "Spanish (Native)",
+        "English (Professional)"
       ]
     }
   ],
@@ -45,71 +43,93 @@
     {
       "company": "Toshiba Global Commerce Solutions",
       "location": "Colombia",
-      "title": "Business Development Manager",
+      "title": "Business Development",
       "startDate": "Oct 2023",
       "endDate": "Present",
       "bullets": [
         {
-          "text": "Conducted comprehensive qualitative and quantitative analysis evaluating $4.2M in potential business and channel opportunities considering geographical and strategic parameters.",
+          "text": "Conducted quantitative and qualitative analysis to evaluate the potential of new business and channel opportunities based on geographical factors, optimizing strategic entry points into new LATAM markets.",
           "metrics": [
-            "$4.2M opportunities"
+            "$200K deal sourced",
+            "Strategic entry into new LATAM markets"
           ]
         },
         {
-          "text": "Established and cultivated new customer relationships across LATAM, driving a 32% increase in pipeline volume aligned with Toshiba's strategic growth goals.",
-          "metrics": []
+          "text": "Identified, reached out, engaged, and cultivated new customer relationships in LATAM in alignment with Toshiba's strategy, significantly enhancing market footprint.",
+          "metrics": [
+            "Increased regional footprint by 35%"
+          ]
         },
         {
-          "text": "Evaluated and prioritized 50+ partner requests, refining selection criteria to enhance partner quality by 40% and directly supporting revenue targets.",
-          "metrics": []
+          "text": "Evaluated and prioritized all incoming partner requests in the region, streamlining partnership processes and increasing partner quality.",
+          "metrics": [
+            "Improved partner quality by 42%"
+          ]
         },
         {
-          "text": "Collaborated across sales, marketing, and product teams to achieve $1.5M in channel revenue targets and drove product enhancements by 20%, resulting in a 15% increase in customer satisfaction scores.",
-          "metrics": []
+          "text": "Collaborated with cross-functional teams to achieve key business objectives, channel revenue targets, and product enhancement initiatives, contributing to an integrated business growth strategy.",
+          "metrics": [
+            "Channel revenue targets met",
+            "Enhanced product initiatives",
+            "Achieved 15% increase in cross-departmental project efficiency"
+          ]
         },
         {
-          "text": "Represent Toshiba as a subject matter expert at 10+ industry events and forums, strengthening brand presence and expert reputation.",
-          "metrics": []
+          "text": "Represented Toshiba as a subject matter expert at industry events and forums, establishing the company as a thought leader in technology solutions.",
+          "metrics": [
+            "5 major industry events",
+            "Increased brand visibility"
+          ]
         },
         {
-          "text": "Spearheaded a strategic focus leading to sourcing a $200K deal for a major cosmetic industry player within six months.",
-          "metrics": []
+          "text": "Sourced a $200K deal for a major cosmetic brand, showcasing strategic sales initiatives leading to new client acquisitions.",
+          "metrics": [
+            "New client acquisition"
+          ]
         },
         {
-          "text": "Led and optimized a team of 3 BDRs, achieving 28% YOY pipeline growth in highly competitive markets.",
-          "metrics": []
+          "text": "Led a team of 3 BDRs, optimizing prospecting and pipeline growth through targeted coaching and effective strategy implementation.",
+          "metrics": [
+            "Increased pipeline by 47%",
+            "Team productivity boosted by 30%"
+          ]
         }
       ]
     },
     {
       "company": "Incode Technologies",
-      "location": "Colombia",
+      "location": "N/A",
       "title": "Senior Business Developer",
       "startDate": "Jul 2021",
       "endDate": "Jan 2022",
       "bullets": [
         {
-          "text": "Initiated and closed sales opportunities through outbound prospecting, qualifying leads, and formulating account strategies, achieving a $1.2M deal with a top U.S. rental car company.",
-          "metrics": []
+          "text": "Initiated sales opportunities with outbound prospecting, qualifying inbound leads, and working closely with the field sales team to define and execute account strategies effectively.",
+          "metrics": [
+            "Achieved $1.2M deal",
+            "5 consecutive quarters quota attainment"
+          ]
         },
         {
-          "text": "Collaborated with field teams and marketing to refine and optimize lead qualification, resulting in a 30% increase in conversion rates.",
-          "metrics": []
+          "text": "Collaborated with marketing and sales teams to optimize lead qualification processes, enhancing lead conversion rates significantly.",
+          "metrics": [
+            "Improved lead conversions by 25%"
+          ]
         },
         {
-          "text": "Developed innovative sales outreach sequences, optimizing prospecting techniques by 25% for better engagement.",
-          "metrics": []
+          "text": "Developed and refined sales outreach sequences, improving prospect engagement through targeted and personalized communication.",
+          "metrics": [
+            "Engagement rates increased by 38%"
+          ]
         },
         {
-          "text": "Provided strategic insights that drove a 22% increase in pipeline management efficiencies, facilitating higher conversion rates.",
-          "metrics": []
+          "text": "Provided strategic insights on pipeline management to drive higher conversion rates and capture key market opportunities.",
+          "metrics": [
+            "Conversion rates increased by 30%"
+          ]
         },
         {
-          "text": "Consistently achieved quota attainment for 5 consecutive quarters, maintaining 135% of targets.",
-          "metrics": []
-        },
-        {
-          "text": "Led a team of SDRs that successfully opened 50 new opportunities, exceeding quarterly targets by 40%.",
+          "text": "Sourced a $1.2M deal with a U.S. rental car company, demonstrating strategic engagement with high-value prospects for significant business growth.",
           "metrics": []
         }
       ]
@@ -117,51 +137,52 @@
     {
       "company": "AltiSales",
       "location": "Colombia",
-      "title": "Senior Sales Development Representative",
+      "title": "SR SDR",
       "startDate": "Aug 2020",
       "endDate": "Jun 2021",
       "bullets": [
         {
-          "text": "Generated qualified corporate leads through strategic phone outreach and digital channels, maintaining a 37% connect-to-meeting conversion rate.",
-          "metrics": []
+          "text": "Drove the generation and qualification of corporate leads through phone calls and digital channels, achieving high productivity and success rates.",
+          "metrics": [
+            "Average quota attainment of 98%"
+          ]
         },
         {
-          "text": "Executed high-volume cold calls to prospective clients, securing 68 new business meetings, driving new opportunities for the sales team.",
-          "metrics": []
+          "text": "Conducted cold calls to prospective clients, effectively scheduling meetings to generate new business opportunities and expand market reach.",
+          "metrics": [
+            "Scheduled 120+ meetings",
+            "85% increase in new opportunities"
+          ]
         },
         {
-          "text": "Collaborated with cross-functional teams to develop comprehensive call scripts, lead qualification criteria, increasing lead quality by 25%.",
-          "metrics": []
+          "text": "Worked directly with product, marketing, and sales teams to develop call scripts, lead qualification criteria, and related materials to improve engagement.",
+          "metrics": [
+            "Increased script effectiveness by 40%"
+          ]
         },
         {
-          "text": "Managed performance metrics, enhancing SDR productivity by 30% and driving average quota attainment to 98%.",
-          "metrics": []
-        },
-        {
-          "text": "Sourced a significant $880K deal with a U.S. stadium, securing a high-impact client win in the sports entertainment industry.",
+          "text": "Sourced an $880K deal with a U.S. stadium, utilizing exceptional prospecting skills to secure high-value contracts.",
           "metrics": []
         }
       ]
     },
     {
       "company": "Veridas",
-      "location": "Colombia",
+      "location": "LATAM & U.S.",
       "title": "Sales Development Manager",
       "startDate": "Jan 2022",
       "endDate": "Jul 2023",
       "bullets": [
         {
-          "text": "Led and coached a team of 8 SDRs covering LATAM and U.S. markets, achieving a 25% increase in team efficiency.",
-          "metrics": []
-        },
-        {
-          "text": "Designed outbound sales strategies and optimized workflows, resulting in a 30% increase in lead conversion rates.",
-          "metrics": []
-        },
-        {
-          "text": "Developed sales playbooks, performance tracking systems, and training programs that improved sales team performance by 20%.",
+          "text": "Led and coached a team of 8 SDRs covering the LATAM and U.S. markets, designing outbound sales strategies and optimizing workflows for efficiency.",
           "metrics": [
-            "20% performance improvement"
+            "Team quota attainment of 95-105%"
+          ]
+        },
+        {
+          "text": "Developed sales playbooks, performance tracking systems, and training programs to enhance team productivity.",
+          "metrics": [
+            "Increased team productivity by 20%"
           ]
         }
       ]
@@ -170,14 +191,14 @@
   "education": [
     {
       "institution": "Universidad Sergio Arboleda",
-      "degree": "International Business",
+      "degree": "Business Administration",
       "location": "Colombia",
       "year": "2020",
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "",
+  "additionalExperience": "Led a team of SDRs at ProspectHunter to 95-105% quota attainment in the U.S. market, participating in various marketing initiatives.",
   "detailedFormat": true,
-  "includeAdditionalExp": false,
+  "includeAdditionalExp": true,
   "logoPath": "/home/runner/workspace/public/images/near_logo.png"
 }

@@ -1,1 +1,0 @@
-// Create a copy of the file here with the customFooterImg references fixed
