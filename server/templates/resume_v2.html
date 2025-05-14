@@ -524,9 +524,12 @@
     <div class="logo-zone"></div>
   </div>
   
-  <!-- Only include the footer HTML but no styling - styling will be added by JavaScript -->
-  <div id="footer-container" style="display: none;">
-    <footer id="main-footer" class="branding-footer">
+  <!-- 
+    Hidden footer template - this is an HTML template that will be used by JavaScript
+    to position the footer correctly. The template itself should never be visible.
+  -->
+  <div id="footer-container" style="display: none !important; visibility: hidden;">
+    <footer id="main-footer" class="branding-footer" style="display: none !important; visibility: hidden;">
       <span><strong>Presented by</strong></span>
       <img src="file://{{logoPath}}" alt="Near logo" style="height: 25px; width: auto;"/>
     </footer>

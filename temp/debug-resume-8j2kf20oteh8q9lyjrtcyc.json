@@ -62,33 +62,47 @@
       "bullets": [
         {
           "text": "Conducted thorough quantitative and qualitative analyses evaluating the potential of new business and channel opportunities based on geographical factors and comprehensive market parameters, resulting in a 15% increase in market penetration.",
-          "metrics": []
+          "metrics": [
+            "15% market penetration increase"
+          ]
         },
         {
           "text": "Identified, engaged, and cultivated strong customer relationships in the LATAM region aligning with Toshiba's strategic initiatives, leading to a 20% increase in customer retention.",
-          "metrics": []
+          "metrics": [
+            "20% customer retention increase"
+          ]
         },
         {
           "text": "Evaluated and prioritized over 50 incoming partner requests, enhancing partner quality across the region by 42%.",
           "metrics": [
+            "50+ partner requests",
             "42% enhancement"
           ]
         },
         {
           "text": "Collaborated with cross-functional teams, achieving business objectives and meeting channel revenue targets through strategic product enhancement initiatives, resulting in a 10% increase in product adoption.",
-          "metrics": []
+          "metrics": [
+            "10% product adoption increase"
+          ]
         },
         {
           "text": "Represented Toshiba as a subject matter expert at multiple industry events and forums increasing brand awareness by 25%.",
-          "metrics": []
+          "metrics": [
+            "25% brand awareness increase"
+          ]
         },
         {
           "text": "Sourced a major $200K deal with a leading cosmetic brand, contributing significantly to annual targets.",
-          "metrics": []
+          "metrics": [
+            "$200K deal"
+          ]
         },
         {
           "text": "Successfully led a team of 3 BDRs, optimizing prospecting and driving pipeline growth by 40%.",
-          "metrics": []
+          "metrics": [
+            "3 BDR team",
+            "40% pipeline growth"
+          ]
         }
       ]
     },
@@ -105,23 +119,34 @@
         },
         {
           "text": "Collaborated with marketing and sales teams, optimizing lead qualification processes to improve MQL-to-SQL conversion by 20%.",
-          "metrics": []
+          "metrics": [
+            "20% conversion improvement"
+          ]
         },
         {
           "text": "Developed and refined targeted sales outreach sequences, enhancing prospect engagement and response rates by 35%.",
-          "metrics": []
+          "metrics": [
+            "35% response rate improvement"
+          ]
         },
         {
           "text": "Provided strategic insights on pipeline management improving conversion rates and achieving quota attainment for 5 consecutive quarters.",
-          "metrics": []
+          "metrics": [
+            "5 consecutive quarters"
+          ]
         },
         {
           "text": "Sourced a significant $1.2M USD deal with a major U.S. rental car company, exceeding quarterly targets by 28%.",
-          "metrics": []
+          "metrics": [
+            "$1.2M USD deal",
+            "28% above target"
+          ]
         },
         {
           "text": "Led a team of SDRs that opened over 50 new high-value opportunities for Account Executives within six months.",
-          "metrics": []
+          "metrics": [
+            "50+ new opportunities"
+          ]
         }
       ]
     },
@@ -138,7 +163,9 @@
         },
         {
           "text": "Executed strategic cold-calling campaigns, successfully scheduling 75+ meetings generating new lucrative business opportunities.",
-          "metrics": []
+          "metrics": [
+            "75+ meetings scheduled"
+          ]
         },
         {
           "text": "Collaborated with product, marketing, and sales teams to develop impactful call scripts, lead qualification criteria, and essential sales materials.",
@@ -146,11 +173,15 @@
         },
         {
           "text": "Managed and analyzed performance metrics, ensuring high SDR productivity leading to a sustained quota attainment of 98%.",
-          "metrics": []
+          "metrics": [
+            "98% quota attainment"
+          ]
         },
         {
           "text": "Sourced an impressive $880K deal with a major U.S. stadium, contributing greatly to team objectives.",
-          "metrics": []
+          "metrics": [
+            "$880K deal"
+          ]
         }
       ]
     },
@@ -185,12 +216,15 @@
         {
           "text": "Successfully reached 120% of quota consistently earning a President’s Club award for outstanding sales performance.",
           "metrics": [
+            "120% quota",
             "President’s Club award"
           ]
         },
         {
           "text": "Led a high-performing team of SDRs in the U.S. market that achieved 95-105% quota attainment, consistently surpassing expectations.",
-          "metrics": []
+          "metrics": [
+            "95-105% quota attainment"
+          ]
         }
       ]
     }
@@ -204,8 +238,5 @@
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "Volunteered at local community center, enhancing outreach programs and developing strategic initiatives to increase engagement by 30%.",
-  "detailedFormat": true,
-  "includeAdditionalExp": true,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": "Volunteered at local community center, enhancing outreach programs and developing strategic initiatives to increase engagement by 30%."
 }
