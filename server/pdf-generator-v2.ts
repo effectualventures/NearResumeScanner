@@ -140,11 +140,29 @@ export async function generatePDFv2(
         'document.images.length > 0 && Array.from(document.images).every(img => img.complete)'
       );
       
-      // Add the "Presented by" text with NEAR logo in the footer
-      await page.evaluate((logoBase64) => {
+      // We need to determine the number of pages before adding the footer
+      // First, let's calculate approximate page count based on content height
+      const pageCount = await page.evaluate(() => {
+        // Get the total height of the resume content
+        const resumeContainer = document.querySelector('.resume-container');
+        if (!resumeContainer) return 1; // Default to 1 if can't determine
+        
+        const contentHeight = resumeContainer.scrollHeight;
+        const pageHeight = 11 * 96; // Letter size page in pixels (11 inches at 96 dpi)
+        const effectiveHeight = pageHeight - 150; // Account for margins
+        
+        // Calculate number of pages
+        return Math.ceil(contentHeight / effectiveHeight);
+      });
+      
+      console.log(`Detected ${pageCount} pages in the resume`);
+      
+      // Add the "Presented by" footer only to the last page
+      await page.evaluate((logoBase64, pageCount) => {
         try {
           // Create a centered footer element
           const footerElement = document.createElement('div');
+          footerElement.id = 'last-page-footer';
           footerElement.style.position = 'fixed';
           footerElement.style.bottom = '0.1in';
           footerElement.style.left = '0';
@@ -164,13 +182,29 @@ export async function generatePDFv2(
             <img src="${logoBase64}" alt="Near logo" style="height: 25px; width: auto;"/>
           `;
           
+          // Add CSS to only show the footer on the last page
+          const style = document.createElement('style');
+          style.innerHTML = `
+            @media print {
+              #last-page-footer {
+                display: none !important;
+              }
+              @page:last {
+                #last-page-footer {
+                  display: flex !important;
+                }
+              }
+            }
+          `;
+          document.head.appendChild(style);
+          
           // Add the footer to the document
           document.body.appendChild(footerElement);
-          console.log('Added "Presented by" with NEAR logo footer');
+          console.log(`Added "Presented by" with NEAR logo footer to last page (page ${pageCount})`);
         } catch (error) {
           console.error('Error adding footer:', error);
         }
-      }, logoBase64);
+      }, logoBase64, pageCount);
 
       const pdfOutputPath = path.join(tempDir, `${sessionId}_v2.pdf`);
       const pdfOptions: PDFOptions = {
