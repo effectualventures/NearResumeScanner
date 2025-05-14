@@ -61,8 +61,8 @@ async function checkPDFFooters() {
       // This is a very basic approach - in a real implementation we would use a PDF parsing library
       const pdfString = pdfData.toString('utf8', 0, pdfData.length);
       
-      // Check for "Presented by" text
-      const presentedByMatches = pdfString.match(/Presented\s+by/g) || [];
+      // Check for "Presented by" text (case insensitive)
+      const presentedByMatches = pdfString.match(/Presented\s+by/gi) || [];
       const presentedByCount = presentedByMatches.length;
       
       // Check for Near logo reference

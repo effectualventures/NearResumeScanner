@@ -449,25 +449,34 @@ export async function generatePDFv2(
               positionedFooter.style.right = '0.5in';
               positionedFooter.style.zIndex = '9999';
               
-              // Copy the HTML content directly from the template footer
-              // Use a more explicit approach to clone the content
-              const spanElement = templateFooter.querySelector('span');
-              const imgElement = templateFooter.querySelector('img');
+              // Instead of cloning the content which might not work properly,
+              // let's create the footer content directly
               
-              if (spanElement) {
-                const newSpan = document.createElement('span');
-                newSpan.innerHTML = '<strong>Presented by</strong>';
-                positionedFooter.appendChild(newSpan);
-              }
+              // Create the "Presented by" text
+              const textSpan = document.createElement('span');
+              textSpan.innerHTML = '<strong>Presented by</strong>';
+              textSpan.style.margin = '0';
+              textSpan.style.padding = '0';
+              textSpan.style.fontSize = '10px';
+              textSpan.style.fontFamily = "'Inter', Arial, sans-serif";
+              textSpan.style.fontWeight = 'normal';
               
-              if (imgElement) {
-                const newImg = document.createElement('img');
-                newImg.src = imgElement.src;
-                newImg.alt = 'Near logo';
-                newImg.style.height = '25px';
-                newImg.style.width = 'auto';
-                positionedFooter.appendChild(newImg);
-              }
+              // Create the Logo image
+              const logoImg = document.createElement('img');
+              logoImg.src = '/images/near_logo.png'; // Use the relative path
+              logoImg.alt = 'Near logo';
+              logoImg.style.height = '25px';
+              logoImg.style.width = 'auto';
+              logoImg.style.display = 'inline-block';
+              logoImg.style.margin = '0';
+              logoImg.style.padding = '0';
+              
+              // Add to the footer
+              positionedFooter.appendChild(textSpan);
+              positionedFooter.appendChild(logoImg);
+              
+              // Add some spacing between text and logo
+              positionedFooter.style.gap = '6px';
               
               // Add it to the document body
               document.body.appendChild(positionedFooter);
