@@ -68,9 +68,16 @@ export function registerHandlebarsHelpers() {
   });
 
   // Check if array has some condition true
-  Handlebars.registerHelper('some', function(array: any[], condition: (item: any) => boolean) {
-    if (!array || !Array.isArray(array)) return false;
-    return array.some(condition);
+  Handlebars.registerHelper('some', function(array) {
+    // Get all arguments except the options hash
+    const args = Array.prototype.slice.call(arguments, 0, -1);
+    const array1 = args[0];
+    
+    if (!array1 || !Array.isArray(array1)) return false;
+    
+    // In Handlebars context, we can't pass actual functions as arguments
+    // So we just check if any item exists
+    return array1.length > 0;
   });
 }
 
