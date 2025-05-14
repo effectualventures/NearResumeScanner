@@ -317,6 +317,19 @@
       height: 25px;
       width: auto;
     }
+    
+    /* Aggressively hide template footer to prevent duplication issues */
+    #footer-container, #main-footer {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      position: absolute !important;
+      z-index: -9999 !important;
+      width: 0 !important;
+      height: 0 !important;
+      overflow: hidden !important;
+      pointer-events: none !important;
+    }
   </style>
 </head>
 <body>
@@ -527,9 +540,11 @@
   <!-- 
     Hidden footer template - this is an HTML template that will be used by JavaScript
     to position the footer correctly. The template itself should never be visible.
+    *** IMPORTANT: This footer should NEVER appear in the final output! ***
+    It is only used as a source for JavaScript to clone from.
   -->
-  <div id="footer-container" style="display: none !important; visibility: hidden;">
-    <footer id="main-footer" class="branding-footer" style="display: none !important; visibility: hidden;">
+  <div id="footer-container" style="display: none !important; visibility: hidden !important; position: absolute !important; z-index: -9999 !important; width: 0 !important; height: 0 !important; overflow: hidden !important; opacity: 0 !important;">
+    <footer id="main-footer" class="branding-footer" style="display: none !important; visibility: hidden !important; position: absolute !important; z-index: -9999 !important; width: 0 !important; height: 0 !important; overflow: hidden !important; opacity: 0 !important;">
       <span><strong>Presented by</strong></span>
       <img src="file://{{logoPath}}" alt="Near logo" style="height: 25px; width: auto;"/>
     </footer>
