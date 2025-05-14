@@ -140,71 +140,64 @@ export async function generatePDFv2(
         'document.images.length > 0 && Array.from(document.images).every(img => img.complete)'
       );
       
-      // We need to determine the number of pages before adding the footer
-      // First, let's calculate approximate page count based on content height
+      // First check if we have multiple pages in the document
       const pageCount = await page.evaluate(() => {
-        // Get the total height of the resume content
         const resumeContainer = document.querySelector('.resume-container');
-        if (!resumeContainer) return 1; // Default to 1 if can't determine
+        if (!resumeContainer) return 1;
         
-        const contentHeight = resumeContainer.scrollHeight;
-        const pageHeight = 11 * 96; // Letter size page in pixels (11 inches at 96 dpi)
-        const effectiveHeight = pageHeight - 150; // Account for margins
-        
-        // Calculate number of pages
-        return Math.ceil(contentHeight / effectiveHeight);
+        const containerHeight = resumeContainer.scrollHeight;
+        const viewportHeight = window.innerHeight;
+        return Math.ceil(containerHeight / viewportHeight);
       });
       
       console.log(`Detected ${pageCount} pages in the resume`);
       
-      // Add the "Presented by" footer only to the last page
-      await page.evaluate((logoBase64, pageCount) => {
-        try {
-          // Create a centered footer element
-          const footerElement = document.createElement('div');
-          footerElement.id = 'last-page-footer';
-          footerElement.style.position = 'fixed';
-          footerElement.style.bottom = '0.1in';
-          footerElement.style.left = '0';
-          footerElement.style.right = '0';
-          footerElement.style.textAlign = 'center';
-          footerElement.style.display = 'flex';
-          footerElement.style.alignItems = 'center';
-          footerElement.style.justifyContent = 'center';
-          footerElement.style.gap = '6px';
-          footerElement.style.fontFamily = "'Inter', sans-serif";
-          footerElement.style.fontSize = '10px';
-          footerElement.style.zIndex = '9999';
-          
-          // Add the "Presented by" text and logo
-          footerElement.innerHTML = `
-            <span><strong>Presented by</strong></span>
-            <img src="${logoBase64}" alt="Near logo" style="height: 25px; width: auto;"/>
-          `;
-          
-          // Add CSS to only show the footer on the last page
-          const style = document.createElement('style');
-          style.innerHTML = `
-            @media print {
-              #last-page-footer {
-                display: none !important;
-              }
-              @page:last {
-                #last-page-footer {
-                  display: flex !important;
-                }
-              }
+      // If we have at least 2 pages, add the footer to the HTML at the end of content
+      if (pageCount >= 2) {
+        await page.evaluate((logoBase64) => {
+          try {
+            // Get the resume container to append our footer after it
+            const resumeContainer = document.querySelector('.resume-container');
+            if (!resumeContainer) {
+              console.error('Could not find resume container');
+              return;
             }
-          `;
-          document.head.appendChild(style);
-          
-          // Add the footer to the document
-          document.body.appendChild(footerElement);
-          console.log(`Added "Presented by" with NEAR logo footer to last page (page ${pageCount})`);
-        } catch (error) {
-          console.error('Error adding footer:', error);
-        }
-      }, logoBase64, pageCount);
+            
+            // Create a footer div that will be positioned at the end of content
+            const footerDiv = document.createElement('div');
+            footerDiv.style.width = '100%';
+            footerDiv.style.height = '30px';
+            footerDiv.style.marginBottom = '0.1in';
+            footerDiv.style.display = 'flex';
+            footerDiv.style.justifyContent = 'center';
+            footerDiv.style.alignItems = 'center';
+            footerDiv.style.gap = '6px';
+            footerDiv.style.fontFamily = "'Inter', sans-serif";
+            footerDiv.style.fontSize = '10px';
+            
+            // Add the footer content
+            footerDiv.innerHTML = `
+              <span><strong>Presented by</strong></span>
+              <img src="${logoBase64}" alt="Near logo" style="height: 25px; width: auto;"/>
+            `;
+            
+            // Insert a page break before the footer if needed
+            const pageBreak = document.createElement('div');
+            pageBreak.style.pageBreakBefore = 'always';
+            pageBreak.style.height = '0px';
+            
+            // Append everything to the document
+            document.body.appendChild(pageBreak);
+            document.body.appendChild(footerDiv);
+            
+            console.log('Added "Presented by" with NEAR logo footer to the second page');
+          } catch (error) {
+            console.error('Error adding footer:', error);
+          }
+        }, logoBase64);
+      } else {
+        console.log('Single page resume detected, not adding footer');
+      }
 
       const pdfOutputPath = path.join(tempDir, `${sessionId}_v2.pdf`);
       const pdfOptions: PDFOptions = {
