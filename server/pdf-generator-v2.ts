@@ -450,7 +450,24 @@ export async function generatePDFv2(
               positionedFooter.style.zIndex = '9999';
               
               // Copy the HTML content directly from the template footer
-              positionedFooter.innerHTML = templateFooter.innerHTML;
+              // Use a more explicit approach to clone the content
+              const spanElement = templateFooter.querySelector('span');
+              const imgElement = templateFooter.querySelector('img');
+              
+              if (spanElement) {
+                const newSpan = document.createElement('span');
+                newSpan.innerHTML = '<strong>Presented by</strong>';
+                positionedFooter.appendChild(newSpan);
+              }
+              
+              if (imgElement) {
+                const newImg = document.createElement('img');
+                newImg.src = imgElement.src;
+                newImg.alt = 'Near logo';
+                newImg.style.height = '25px';
+                newImg.style.width = 'auto';
+                positionedFooter.appendChild(newImg);
+              }
               
               // Add it to the document body
               document.body.appendChild(positionedFooter);
@@ -578,32 +595,13 @@ export async function generatePDFv2(
           console.log('Non-critical error removing empty elements:', err);
         });
         
-        // Position the footer correctly using JavaScript
+        // The footer positioning has already been handled in a previous section
+        // That creates #positioned-footer, so we don't need to duplicate that work here
+        // Just add some spacing to ensure the footer doesn't overlap with content
         await page.evaluate(() => {
-          // 1. Find the resume container and the branding footer
+          // Add extra space at the bottom of content to prevent footer from overlapping
           const container = document.querySelector('.resume-container');
-          const footer = document.querySelector('.branding-footer');
-          
-          if (container && footer) {
-            // 2. Create a duplicate of the footer that will only show on the last page
-            const lastPageFooter = footer.cloneNode(true) as HTMLElement;
-            
-            // 3. Add a special class to identify it
-            lastPageFooter.classList.add('last-page-only-footer');
-            
-            // 4. Style this footer to ensure it appears at the end of the document
-            lastPageFooter.style.display = 'flex';
-            lastPageFooter.style.position = 'absolute';
-            lastPageFooter.style.bottom = '0.35in';
-            lastPageFooter.style.right = '0.5in';
-            
-            // 5. Append it to the end of the document
-            document.body.appendChild(lastPageFooter);
-            
-            // 6. Hide the original footer
-            (footer as HTMLElement).style.display = 'none';
-            
-            // 7. Add extra space at the bottom of the content to ensure footer doesn't overlap
+          if (container) {
             const spacer = document.createElement('div');
             spacer.style.height = '0.7in';
             spacer.style.width = '100%';
@@ -611,10 +609,9 @@ export async function generatePDFv2(
             container.appendChild(spacer);
           }
         }).catch(err => {
-          console.log('Non-critical error positioning footer:', err);
+          console.log('Non-critical error adding spacing:', err);
         });
         
-        // The footer positioning has already been handled in the previous step
         // Just ensure logos in the content are hidden
         await page.evaluate(() => {
           try {

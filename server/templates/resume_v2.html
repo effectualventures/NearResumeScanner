@@ -332,6 +332,19 @@
       pointer-events: none !important;
       z-index: -9999 !important;
     }
+    
+    /* Make footer content visible within the hidden container (for JavaScript access) */
+    #main-footer {
+      /* Keep opacity at 1 to ensure text is readable by JavaScript */
+      opacity: 1 !important;
+    }
+    
+    /* Ensure the JavaScript-positioned footer is actually visible */
+    #positioned-footer {
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
   </style>
 </head>
 <body>
@@ -547,9 +560,10 @@
     Note: Do not use display:none as that would make it inaccessible to JavaScript.
   -->
   <div id="footer-container" style="position: absolute !important; left: -9999px !important; top: -9999px !important; visibility: hidden !important; opacity: 0 !important; width: 1px !important; height: 1px !important; overflow: hidden !important; pointer-events: none !important; z-index: -9999 !important;">
-    <footer id="main-footer" class="branding-footer">
+    <!-- This footer element must remain accessible to JavaScript for proper cloning, but invisible in the final output -->
+    <footer id="main-footer" class="branding-footer" style="opacity: 1 !important;">
       <span><strong>Presented by</strong></span>
-      <img src="file://{{logoPath}}" alt="Near logo" style="height: 25px; width: auto;"/>
+      <img src="file://{{logoPath}}" alt="Near logo" style="height: 25px; width: auto; display: inline-block !important;"/>
     </footer>
   </div>
 </body>
