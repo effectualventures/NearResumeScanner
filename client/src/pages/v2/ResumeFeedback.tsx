@@ -134,7 +134,7 @@ export function ResumeFeedback() {
     <div className="container max-w-3xl py-10">
       <Card className="mb-6">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Resume Feedback (v2)</CardTitle>
+          <CardTitle className="text-2xl font-bold">Resume Feedback</CardTitle>
           <CardDescription>
             Get AI feedback on your processed resume and implement improvements
           </CardDescription>
@@ -193,7 +193,7 @@ export function ResumeFeedback() {
                   </a>
                 </Button>
                 
-                <Button variant="outline" onClick={() => setLocation("/v2/upload")}>
+                <Button variant="outline" onClick={() => setLocation("/")}>
                   Process Another Resume
                 </Button>
               </div>
@@ -203,8 +203,8 @@ export function ResumeFeedback() {
       </Card>
       
       <div className="text-center">
-        <Button variant="outline" onClick={() => setLocation("/v2/upload")}>
-          Return to Upload Page
+        <Button variant="outline" onClick={() => setLocation("/")}>
+          Return to Home
         </Button>
       </div>
     </div>

@@ -83,9 +83,9 @@ export function UploadResume() {
     <div className="container max-w-3xl py-10">
       <Card>
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Enhanced Resume Processor (v2)</CardTitle>
+          <CardTitle className="text-2xl font-bold">Near Resume Processor</CardTitle>
           <CardDescription>
-            Upload your resume to transform it into the Near format with improved precision and formatting
+            Upload your resume to transform it into the Near format with professional polish and standardized metrics
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -152,7 +152,7 @@ export function UploadResume() {
               </Button>
               
               <Button variant="outline" asChild>
-                <a href={`/v2/feedback?sessionId=${sessionId}`}>
+                <a href={`/feedback?sessionId=${sessionId}`}>
                   Get AI Feedback
                 </a>
               </Button>
