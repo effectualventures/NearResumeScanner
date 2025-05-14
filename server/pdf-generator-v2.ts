@@ -648,7 +648,7 @@ export async function generatePDFv2(
               // Fallback if footer content not found
               customFooter.innerHTML = `
                 <span><strong>Presented by</strong></span>
-                <img src="file:///home/runner/workspace/public/images/near_logo.png" alt="Near logo" style="height: 25px; width: auto;"/>
+                <img src="./public/images/near_logo.png" alt="Near logo" style="height: 25px; width: auto;"/>
               `;
             }
             
