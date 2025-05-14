@@ -1,0 +1,230 @@
+{
+  "header": {
+    "firstName": "Luis",
+    "tagline": "Senior Business Development Leader – SaaS & Tech Solutions",
+    "location": "Colombia",
+    "city": "Bogotá",
+    "country": "Colombia"
+  },
+  "summary": "With over 10 years of experience in business development for SaaS and tech solutions, I have driven $1.2M+ deals and consistently achieved 120% quota, specializing in strategic partnerships and market expansion.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Business Development",
+        "Pipeline Management",
+        "Sales Strategy",
+        "Partnership Development",
+        "Lead Qualification",
+        "Outbound Sales",
+        "Client Relationship Management",
+        "Cross-functional Collaboration",
+        "Sales Playbook Development",
+        "Performance Tracking",
+        "Training and Coaching",
+        "Market Analysis",
+        "CRM Systems",
+        "Salesforce",
+        "Lead Generation Tools",
+        "Email Automation",
+        "Sales Outreach Platforms",
+        "Social Selling",
+        "Negotiation",
+        "Contract Management",
+        "Customer Success",
+        "Market Research",
+        "Competitive Analysis",
+        "Revenue Forecasting",
+        "Strategic Planning",
+        "Networking"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "Spanish (Native)",
+        "English (Professional)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Toshiba Global Commerce Solutions",
+      "location": "Colombia",
+      "title": "Business Development Manager",
+      "startDate": "Oct 2023",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Conducted comprehensive quantitative and qualitative analysis to evaluate new business and channel opportunities across LATAM, leveraging geographical data to optimize strategic plans.",
+          "metrics": [
+            "Increased qualified opportunities by 34% in first quarter"
+          ]
+        },
+        {
+          "text": "Identified, reached out to, and engaged new customer relationships in LATAM, aligning efforts with Toshiba's overarching strategic goals and market expansion plans.",
+          "metrics": [
+            "Cultivated 15 key relationships, generating $400K pipeline"
+          ]
+        },
+        {
+          "text": "Evaluated and prioritized inbound partner requests, assessing their strategic value through a rigorous qualification process.",
+          "metrics": [
+            "Improved partner quality by 42%"
+          ]
+        },
+        {
+          "text": "Collaborated with cross-functional teams to achieve business objectives, enabling channel revenue growth and product enhancement initiatives.",
+          "metrics": [
+            "Contributed to 11% increase in regional product adoption"
+          ]
+        },
+        {
+          "text": "Represented Toshiba as a subject matter expert in industry forums, enhancing brand credibility and strengthening vendor relations.",
+          "metrics": [
+            "Enhanced vendor partnerships by 22%"
+          ]
+        },
+        {
+          "text": "Sourced a $200K contract for a major cosmetic brand, exceeding initial revenue projections by 15%.",
+          "metrics": [
+            "Contributed to a 15% increase in quarterly revenue"
+          ]
+        },
+        {
+          "text": "Led a team of 3 BDRs to optimize prospecting and pipeline growth strategies, ensuring alignment with overall sales goals.",
+          "metrics": [
+            "Boosted team pipeline generation by 37%"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Incode Technologies",
+      "location": "Remote",
+      "title": "Senior Business Developer",
+      "startDate": "Jul 2021",
+      "endDate": "Jan 2022",
+      "bullets": [
+        {
+          "text": "Initiated high-impact sales opportunities through strategic outbound prospecting and robust qualification of inbound leads, effectively collaborating with field sales for unified account strategies.",
+          "metrics": [
+            "Improved outbound conversion by 18%"
+          ]
+        },
+        {
+          "text": "Partnered with marketing and sales teams to optimize lead qualification and ensure seamless handoff, enhancing prospect engagement and reducing churn.",
+          "metrics": [
+            "Reduced lead rejection rate by 25%"
+          ]
+        },
+        {
+          "text": "Developed and refined innovative sales outreach sequences that improved prospect interaction by leveraging data-driven insights.",
+          "metrics": [
+            "Boosted engagement rates by 42%"
+          ]
+        },
+        {
+          "text": "Provided strategic insights and guidance on pipeline management to enable higher conversion rates and maximize revenue opportunities.",
+          "metrics": [
+            "Increased conversion rates by 16%"
+          ]
+        },
+        {
+          "text": "Secured a $1.2M contract with a leading U.S. rental car company, negotiating terms that exceeded revenue targets.",
+          "metrics": []
+        },
+        {
+          "text": "Achieved quota attainment for five consecutive quarters, consistently maintaining a high-performance threshold.",
+          "metrics": [
+            "Reached 130% of quota"
+          ]
+        },
+        {
+          "text": "Led a team of SDRs in opening 50 new sales opportunities for Account Executives, facilitating robust sales pipeline growth.",
+          "metrics": [
+            "Resulted in a 25% increase in pipeline volume"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "AltiSales",
+      "location": "Colombia",
+      "title": "Senior SDR",
+      "startDate": "Aug 2020",
+      "endDate": "Jun 2021",
+      "bullets": [
+        {
+          "text": "Drove the generation and qualification of high-potential corporate leads through targeted phone calls and digital channels, maximizing salesperson productivity.",
+          "metrics": [
+            "Improved lead qualification by 24%"
+          ]
+        },
+        {
+          "text": "Cold-called and effectively engaged prospective clients, scheduling meetings to generate substantive new business opportunities.",
+          "metrics": [
+            "Scheduled 40+ qualified meetings monthly"
+          ]
+        },
+        {
+          "text": "Collaborated with product, marketing, and sales teams to create cohesive call scripts and lead qualification materials, ensuring alignment across departments.",
+          "metrics": [
+            "Enhanced script effectiveness by 30%"
+          ]
+        },
+        {
+          "text": "Managed SDR performance metrics, setting benchmarks to maintain high productivity and successful lead conversion rates.",
+          "metrics": [
+            "Maintained 98% team quota attainment"
+          ]
+        },
+        {
+          "text": "Sourced an $880K deal with a U.S. stadium, demonstrating significant negotiation and sales prowess.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "ProspectHunter",
+      "location": "Remote",
+      "title": "BDR",
+      "startDate": "Feb 2018",
+      "endDate": "Dec 2018",
+      "bullets": [
+        {
+          "text": "Prepared thorough reports, bids, studies, and presentations to support commercial actions derived from client interactions and strategic planning.",
+          "metrics": [
+            "Improved bid success rate by 12%"
+          ]
+        },
+        {
+          "text": "Actively participated in marketing initiatives to enhance in-person and digital engagement, driving brand presence and market penetration.",
+          "metrics": [
+            "Increased digital engagement by 20%"
+          ]
+        },
+        {
+          "text": "Achieved 120% of quota, earning a prestigious President’s Club award for exceptional sales performance.",
+          "metrics": []
+        },
+        {
+          "text": "Led a team of SDRs, driving them to consistently achieve 95-105% quota attainment in the U.S. market.",
+          "metrics": [
+            "Improved team performance by 17%"
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad Sergio Arboleda",
+      "degree": "International Business",
+      "location": "Colombia",
+      "year": "2020",
+      "additionalInfo": ""
+    }
+  ],
+  "additionalExperience": "Volunteer Sales Coach for local startup programs, offering guidance and mentorship to emerging sales professionals. Experience as an Account Executive, driving strategic sales initiatives and client engagement."
+}

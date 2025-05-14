@@ -66,7 +66,9 @@
         },
         {
           "text": "Sourced a $200K deal for a major cosmetic brand.",
-          "metrics": []
+          "metrics": [
+            "$200K"
+          ]
         }
       ]
     },
@@ -83,7 +85,9 @@
         },
         {
           "text": "Sourced a $1.2M USD deal with a U.S. rental car company.",
-          "metrics": []
+          "metrics": [
+            "$1.2M USD"
+          ]
         },
         {
           "text": "Achieved quota attainment for 5 consecutive quarters.",
@@ -110,7 +114,9 @@
         },
         {
           "text": "Sourced an $880K USD deal with a U.S. stadium.",
-          "metrics": []
+          "metrics": [
+            "$880K USD"
+          ]
         },
         {
           "text": "Maintained an average quota attainment of 98% across the team.",
@@ -129,7 +135,9 @@
       "bullets": [
         {
           "text": "Led and coached a team of 8 SDRs covering LATAM and U.S. markets, achieving a 120% quota attainment.",
-          "metrics": []
+          "metrics": [
+            "120%"
+          ]
         },
         {
           "text": "Developed sales playbooks and performance tracking systems, improving team efficiency by 30%.",
@@ -149,8 +157,5 @@
       "additionalInfo": ""
     }
   ],
-  "additionalExperience": "Account Executive at Strategic Properties from Mar 2014 to Sep 2017. Led a team achieving consistent quota attainment in the U.S. market.",
-  "detailedFormat": false,
-  "includeAdditionalExp": true,
-  "logoPath": "/home/runner/workspace/public/images/near_logo.png"
+  "additionalExperience": "Account Executive at Strategic Properties from Mar 2014 to Sep 2017. Led a team achieving consistent quota attainment in the U.S. market."
 }
