@@ -98,6 +98,22 @@ For each bullet point that lacks metrics or impact:
 3. Rewrite vague descriptions with clear, specific outcomes that demonstrate business impact
 4. Ensure all metrics align with industry benchmarks and role expectations
 
+CRITICAL FOR TECHNICAL RESUMES - MAINTAIN SPECIALIZED SECTIONS:
+1. ALWAYS preserve and enhance any "Projects" section from the original resume
+   - Technical hiring managers heavily weight project experience
+   - Include technologies used, implementation details and measurable outcomes
+   - Format these in the "projects" array in your JSON output
+
+2. ALWAYS preserve any "Certifications", "Awards" or "Recognitions" sections
+   - Include all technical certifications with years when available
+   - Include programming competitions, hackathons and technical achievements
+   - Format these in the "certifications" array in your JSON output
+
+3. For AI/ML Engineer roles specifically:
+   - Focus on model performance metrics, accuracy improvements
+   - Include specific frameworks (e.g., TensorFlow, PyTorch) and techniques used
+   - Highlight projects that showcase AI implementation
+
 RESUME FORMAT REQUIREMENTS (MANDATORY):
 - Clean, professional layout with standard sections
 - One or two page length depending on experience level (generally use one page for less than 10 years experience)
