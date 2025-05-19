@@ -1,0 +1,204 @@
+{
+  "header": {
+    "firstName": "Federico",
+    "tagline": "Head AI Engineer – Technological Advancements",
+    "location": "Uruguay",
+    "city": "Montevideo",
+    "country": "Uruguay"
+  },
+  "summary": "Head AI Engineer with over 5 years of experience in developing cutting-edge AI solutions. Improved sales by 70% in legal-tech and enhanced product capabilities by 30%.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "AI Initiatives",
+        "Full-Stack Web Development",
+        "Mobile Applications",
+        "React",
+        "React Native",
+        "Node.js",
+        "LangChain",
+        "Python",
+        "Next.js",
+        "Typescript",
+        "GraphQL",
+        "UI Design",
+        "Cloud Platforms",
+        "AWS",
+        "Azure",
+        "GenAI Applications",
+        "Project Management",
+        "Machine Learning",
+        "Data Analysis",
+        "AI Strategy",
+        "Deep Learning",
+        "Natural Language Processing",
+        "TensorFlow",
+        "Keras",
+        "Scikit-learn",
+        "Data Visualization",
+        "Algorithm Development"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Professional)",
+        "Spanish (Native)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Aurora Ideas",
+      "location": "Uruguay",
+      "title": "Head AI Engineer",
+      "startDate": "Jan 2024",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Led AI initiatives to drive technological advancements and foster a culture of innovation, resulting in a 20% increase in project efficiency.",
+          "metrics": [
+            "Innovative AI solutions",
+            "20% increase in efficiency"
+          ]
+        },
+        {
+          "text": "Spearheaded development of AI solutions, enhancing product capabilities by 30% and market reach.",
+          "metrics": [
+            "+30% product capability"
+          ]
+        },
+        {
+          "text": "Collaborated with cross-functional teams to define AI strategy and integrate AI features into products.",
+          "metrics": [
+            "Strategic AI integration"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "String and Key",
+      "location": "USA",
+      "title": "Software Engineer",
+      "startDate": "Jan 2022",
+      "endDate": "Jan 2023",
+      "bullets": [
+        {
+          "text": "Developed an online tool removing need for medical exams in insurance, improving customer satisfaction by 25%.",
+          "metrics": [
+            "+25% satisfaction"
+          ]
+        },
+        {
+          "text": "Integrated technology to streamline user experience and reduce paperwork.",
+          "metrics": [
+            "Streamlined processes"
+          ]
+        },
+        {
+          "text": "Contributed to a platform for tailored insurance plans on web and mobile.",
+          "metrics": [
+            "Cross-platform delivery"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Effectus Software",
+      "location": "Uruguay",
+      "title": "Software Engineer",
+      "startDate": "Feb 2020",
+      "endDate": "Jan 2025",
+      "bullets": [
+        {
+          "text": "Built full-stack web and mobile applications enhancing user experience.",
+          "metrics": [
+            "Optimized UX"
+          ]
+        },
+        {
+          "text": "Involved in UI design and implementation for client alignment.",
+          "metrics": [
+            "Client vision translation"
+          ]
+        },
+        {
+          "text": "Published applications on App Store and Google Play, increasing user engagement by 40%.",
+          "metrics": [
+            "+40% user engagement"
+          ]
+        },
+        {
+          "text": "Facilitated client decision-making processes, ensuring alignment with project goals and fostering successful outcomes.",
+          "metrics": [
+            "Client alignment"
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad ORT",
+      "degree": "Systems",
+      "location": "Uruguay",
+      "year": "2024",
+      "additionalInfo": "GPA: 3.9"
+    }
+  ],
+  "projects": [
+    {
+      "name": "UruguAi Legal",
+      "technologies": "LangChain, Python, Next.js, React, Typescript",
+      "description": "Gen AI product for law, expediting legal research in Uruguay.",
+      "details": [
+        "Speeds up research from days to minutes"
+      ]
+    },
+    {
+      "name": "Expert Lawyer AI Agent",
+      "technologies": "Node, LangChain, Whatsapp",
+      "description": "AI Agent for law firms increasing sales by 70% and saving hundreds of hours.",
+      "details": [
+        "Web-based AI interface"
+      ]
+    },
+    {
+      "name": "wysh",
+      "technologies": "React, Typescript, GraphQL",
+      "description": "Platform offering multi-products in insurance, recognized for disruptive innovation.",
+      "details": [
+        "Insurance-financial integration"
+      ]
+    }
+  ],
+  "certifications": [
+    {
+      "name": "Cambridge English Proficiency (CPE)",
+      "year": "2019",
+      "description": ""
+    },
+    {
+      "name": "First Prize for Best Academic Project",
+      "year": "2023",
+      "description": "Awarded by the National Academy of Engineering, Uruguay"
+    },
+    {
+      "name": "Universidad ORT Programming Contest",
+      "year": "2022",
+      "description": "2nd place"
+    },
+    {
+      "name": "DeepLearning.AI: Deep Learning Specialization",
+      "year": "2022",
+      "description": ""
+    },
+    {
+      "name": "ICPC Programming contest participation",
+      "year": "2023",
+      "description": ""
+    }
+  ],
+  "additionalExperience": ""
+}
