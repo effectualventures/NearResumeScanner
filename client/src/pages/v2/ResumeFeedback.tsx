@@ -5,9 +5,16 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
+import Editor from "@monaco-editor/react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type FeedbackResponse = {
   feedback: string;
+  sessionId: string;
+};
+
+type ResumeDataResponse = {
+  resumeData: any;
   sessionId: string;
 };
 
