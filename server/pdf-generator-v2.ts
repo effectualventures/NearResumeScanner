@@ -104,6 +104,9 @@ export async function generatePDFv2(
       skills: Array.isArray(resume.skills) ? resume.skills : [],
       experience: Array.isArray(resume.experience) ? resume.experience : [],
       education: Array.isArray(resume.education) ? resume.education : [],
+      // Include Projects and Certifications sections if they exist in the resume
+      projects: Array.isArray(resume.projects) ? resume.projects : undefined,
+      certifications: Array.isArray(resume.certifications) ? resume.certifications : undefined,
       additionalExperience: resume.additionalExperience || '',
     };
 

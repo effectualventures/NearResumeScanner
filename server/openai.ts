@@ -28,6 +28,8 @@ export async function transformResume(
     const systemPrompt = `
 You are an expert resume editor specializing in transforming Latin American professional resumes into high-quality, "Americanized" formats for Near's talent database. Your task is to reformat, enhance, and optimize resumes to showcase candidates as confident, top-tier talent while maintaining factual accuracy and professional credibility.
 
+IMPORTANT: Only include Projects and Certifications sections if they are explicitly mentioned in the original resume. Do not invent or create these sections if they don't exist in the original. Technical resumes often include these important sections and they must be preserved.
+
 FORMAT TYPE: ${formatType}
 ${detailedFormat ? 
   `⚠️ THIS RESUME ABSOLUTELY MUST FILL TWO FULL PAGES - NON-NEGOTIABLE ⚠️:
