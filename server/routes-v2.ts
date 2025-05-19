@@ -594,6 +594,98 @@ English (Fluent), Spanish (Intermediate)`;
     }
   });
 
+  // Get resume JSON data for a specific session
+  app.get('/api/v2/resume-data/:sessionId', async (req: Request, res: Response) => {
+    try {
+      const { sessionId } = req.params;
+      
+      // Check if session exists
+      if (!sessions[sessionId]) {
+        return res.status(404).json({
+          success: false,
+          error: "Session not found"
+        });
+      }
+      
+      // Return the processed JSON data
+      return res.json({
+        success: true,
+        data: {
+          resumeData: JSON.parse(sessions[sessionId].processedJson),
+          sessionId
+        }
+      });
+    } catch (error: any) {
+      console.error("Error retrieving resume data:", error);
+      return res.status(500).json({
+        success: false,
+        error: error.message || "An unknown error occurred"
+      });
+    }
+  });
+  
+  // Generate PDF from edited resume JSON
+  app.post('/api/v2/generate-from-json', async (req: Request, res: Response) => {
+    try {
+      const { resumeData, sessionId } = req.body;
+      
+      // Validate inputs
+      if (!resumeData || !sessionId) {
+        return res.status(400).json({
+          success: false,
+          error: "Resume data and session ID are required"
+        });
+      }
+      
+      // Check if original session exists
+      if (!sessions[sessionId]) {
+        return res.status(404).json({
+          success: false,
+          error: "Session not found"
+        });
+      }
+      
+      // Apply text enhancement to ensure consistency
+      const enhancedResumeData = enhanceResumeText(resumeData);
+      
+      // Generate a new session ID for the updated resume
+      const newSessionId = generateSessionId();
+      
+      // Store the enhanced JSON data in the new session
+      sessions[newSessionId] = {
+        originalText: sessions[sessionId].originalText,
+        processedJson: JSON.stringify(enhancedResumeData),
+        enhancedFormat: sessions[sessionId].enhancedFormat,
+        includeAdditionalExp: sessions[sessionId].includeAdditionalExp
+      };
+      
+      // Generate PDF with the edited resume data
+      await generatePDFv2(
+        enhancedResumeData, 
+        newSessionId, 
+        !!sessions[sessionId].enhancedFormat,
+        !!sessions[sessionId].includeAdditionalExp
+      );
+      
+      // Generate download URL
+      const pdfUrl = `/api/v2/download/${newSessionId}`;
+      
+      return res.json({
+        success: true,
+        data: {
+          sessionId: newSessionId,
+          pdfUrl
+        }
+      });
+    } catch (error: any) {
+      console.error("Error generating PDF from edited JSON:", error);
+      return res.status(500).json({
+        success: false,
+        error: error.message || "An unknown error occurred"
+      });
+    }
+  });
+
   console.log("Enhanced v2 routes registered");
 }
 

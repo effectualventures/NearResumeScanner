@@ -1,0 +1,177 @@
+{
+  "header": {
+    "firstName": "Federico",
+    "tagline": "AI Engineer – Innovation & Solutions",
+    "location": "Uruguay",
+    "city": "Montevideo",
+    "country": "Uruguay"
+  },
+  "summary": "Dynamic AI expert with over 10 years of experience in SaaS and FinTech, driving 70% sales growth and leading AI initiatives that increased product efficiency by 40%.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "AI Strategy",
+        "Cross-Functional Leadership",
+        "Innovation Cultivation",
+        "UI Design",
+        "Full-Stack Development",
+        "Business & Tech Integration",
+        "Decision Making",
+        "Problem Solving",
+        "Mentoring",
+        "React",
+        "React Native",
+        "Node.js",
+        "LangChain",
+        "Python",
+        "Next.js",
+        "Typescript",
+        "GraphQL",
+        "AWS",
+        "Azure",
+        "DeepLearning.AI: Deep Learning Specialization",
+        "Cambridge English Proficiency (CPE)",
+        "Machine Learning",
+        "Data Analysis",
+        "TensorFlow",
+        "Keras",
+        "Natural Language Processing (NLP)",
+        "API Development",
+        "Docker",
+        "Kubernetes"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "Spanish (Native)",
+        "English (Fluent)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Aurora Ideas",
+      "location": "Uruguay",
+      "title": "Head AI Engineer",
+      "startDate": "Jan 2024",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Directed AI innovation initiatives, enhancing product features and expanding market presence by 25% through AI-driven technologies.",
+          "metrics": []
+        },
+        {
+          "text": "Led the development and deployment of sophisticated AI solutions, broadening product capabilities and securing additional market segments.",
+          "metrics": []
+        },
+        {
+          "text": "Collaborated with cross-functional teams to map AI integration strategies, doubling product efficiency and streamlining operations.",
+          "metrics": []
+        },
+        {
+          "text": "Implemented AI improvements, resulting in 40% increased engagement and operational cost reductions of $500K.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "String and Key",
+      "location": "USA",
+      "title": "Software Engineer",
+      "startDate": "Jan 2022",
+      "endDate": "Jan 2023",
+      "bullets": [
+        {
+          "text": "Developed an innovative online insurance platform reducing onboarding time by 40% through elimination of medical prerequisites.",
+          "metrics": []
+        },
+        {
+          "text": "Integrated advanced technologies optimizing user accessibility, slashing paperwork by 80%, simplifying insurance access, and increasing user satisfaction by 30%.",
+          "metrics": []
+        },
+        {
+          "text": "Collaborated on the custom development of a tailored insurance platform, leading to a 30% increase in mobile and web usage rates.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Effectus Software",
+      "location": "Uruguay",
+      "title": "Software Engineer",
+      "startDate": "Feb 2020",
+      "endDate": "Jan 2025",
+      "bullets": [
+        {
+          "text": "Crafted top-tier web and mobile applications using cutting-edge frameworks, improving customer satisfaction by 35%.",
+          "metrics": []
+        },
+        {
+          "text": "Engaged directly with clients to translate their creative concepts into functional, attractive user interfaces, boosting project success rates by 50%.",
+          "metrics": []
+        },
+        {
+          "text": "Facilitated more informed client decision-making by aligning project goals and providing insightful UX/UI recommendations.",
+          "metrics": []
+        },
+        {
+          "text": "Optimized and released multiple applications, leading to a 25,000+ increase in user base across platforms.",
+          "metrics": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad ORT",
+      "degree": "Systems",
+      "location": "Uruguay",
+      "year": "2024",
+      "additionalInfo": "Grades average of 94% (GPA: 3.9)"
+    }
+  ],
+  "projects": [
+    {
+      "name": "UruguAi Legal",
+      "technologies": "LangChain, Python, Next.js, React, Typescript",
+      "description": "Gen AI product for expedited legal document access.",
+      "details": [
+        "Developed a platform significantly reducing legal research time from days to minutes.",
+        "Innovative solution tailored for legal professionals, transforming the research process in Uruguay."
+      ]
+    },
+    {
+      "name": "Expert Lawyer AI Agent",
+      "technologies": "Node, LangChain, Whatsapp",
+      "description": "AI Agent for legal firms to streamline client interactions.",
+      "details": [
+        "Enabled 70% sales growth and notable administrative efficiency improvements.",
+        "Facilitated direct communication and scheduling, enhancing client-lawyer interaction."
+      ]
+    },
+    {
+      "name": "wysh",
+      "technologies": "React, Typescript, GraphQL",
+      "description": "Multi-product insurance-financial platform.",
+      "details": [
+        "Developed a user-centric interface offering a range of insurance products.",
+        "Enhanced user engagement through feature-rich, intuitive design."
+      ]
+    }
+  ],
+  "certifications": [
+    {
+      "name": "DeepLearning.AI: Deep Learning Specialization",
+      "year": "2022",
+      "description": "Advanced AI methodologies and applications."
+    },
+    {
+      "name": "Cambridge English Proficiency (CPE)",
+      "year": "2019",
+      "description": "Proven English language proficiency at expert level."
+    }
+  ],
+  "additionalExperience": "Recognized at the National Academy of Engineering, Uruguay with the First Prize for Best Academic Project in 2023 and secured second place at the Universidad ORT Programming contest in 2022."
+}
