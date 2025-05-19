@@ -151,11 +151,18 @@ export function UploadResume() {
                 </a>
               </Button>
               
-              <Button variant="outline" asChild>
-                <a href={`/feedback?sessionId=${sessionId}`}>
-                  Get AI Feedback
-                </a>
-              </Button>
+              <div className="flex gap-3 mt-3">
+                <Button variant="outline" asChild>
+                  <a href={`/feedback?sessionId=${sessionId}&tab=feedback`}>
+                    Get AI Feedback
+                  </a>
+                </Button>
+                <Button variant="outline" asChild>
+                  <a href={`/feedback?sessionId=${sessionId}&tab=json`}>
+                    Edit Resume JSON
+                  </a>
+                </Button>
+              </div>
             </div>
           </CardFooter>
         )}

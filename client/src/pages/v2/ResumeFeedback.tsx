@@ -38,6 +38,12 @@ export function ResumeFeedback() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const sid = params.get("sessionId");
+    const tabParam = params.get("tab");
+    
+    // Set the active tab based on URL parameter
+    if (tabParam === "json" || tabParam === "feedback") {
+      setActiveTab(tabParam);
+    }
     
     if (sid) {
       setSessionId(sid);
@@ -285,7 +291,7 @@ export function ResumeFeedback() {
           </CardContent>
         ) : (
           <CardContent>
-            <Tabs defaultValue="json" className="w-full" onValueChange={setActiveTab} value={activeTab}>
+            <Tabs defaultValue="feedback" className="w-full" onValueChange={setActiveTab} value={activeTab}>
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="feedback">AI Feedback</TabsTrigger>
                 <TabsTrigger value="json">Edit JSON</TabsTrigger>
