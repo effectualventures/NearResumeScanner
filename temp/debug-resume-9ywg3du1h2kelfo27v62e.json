@@ -1,0 +1,167 @@
+{
+  "header": {
+    "firstName": "Camila",
+    "tagline": "Senior Estimator – Civil & Infrastructure Projects",
+    "location": "Brazil",
+    "city": "Sorocaba",
+    "country": "Brazil"
+  },
+  "summary": "15+ years in construction estimation, excelled in complex infrastructure projects, enhancing cost efficiency by 15% on average.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Quantity Take-off",
+        "Bill of Quantities (BOQ) Preparation",
+        "Cost Estimating",
+        "Cost Consulting",
+        "AutoCAD",
+        "Project Documentation",
+        "Civil Construction",
+        "Budget Management",
+        "Tender Document Preparation",
+        "Project Management",
+        "Design Variation Cost Assessment",
+        "Comparative Cost Analysis",
+        "Revit",
+        "Bluebeam",
+        "Candy (CCS)",
+        "Excel",
+        "Navisworks",
+        "Stakeholder Collaboration",
+        "Value Engineering",
+        "Construction Project Lifecycle",
+        "Structural Engineering",
+        "MEP Systems Estimation",
+        "Procurement Management",
+        "Construction Site Supervision",
+        "Architectural Drawing Analysis",
+        "Cost Planning",
+        "Progress Monitoring",
+        "Contract Administration"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Fluent)",
+        "Portuguese (Native)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "VIAARQ – Arquitetura Viável",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Architect - Co-owner",
+      "startDate": "Jan 2015",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Led comprehensive analysis of tendering documents, ensuring accuracy and minimization of risk in project bidding, successfully increasing awarded project rate by 20%.",
+          "metrics": [
+            "20%"
+          ]
+        },
+        {
+          "text": "Developed detailed Bill of Quantities (BOQ) for over 30 major buildings, resulting in a 98% accuracy rate and reducing unforeseen cost escalations by 15%.",
+          "metrics": [
+            "98%",
+            "15%"
+          ]
+        },
+        {
+          "text": "Prepared commercial offers that incorporated full scope estimations with detailed assumptions and exclusions, securing contracts valued at over $100M USD.",
+          "metrics": [
+            "$100M USD"
+          ]
+        },
+        {
+          "text": "Executed quantity take-off operations for civil projects including foundations, architectural, and structural elements, achieving a material waste reduction of 10%.",
+          "metrics": [
+            "10%"
+          ]
+        },
+        {
+          "text": "Managed cost estimations for landscaping, paving, and masonry, maintaining budgets strictly on target across five multi-million dollar projects, with budget accuracy within 5% of projections.",
+          "metrics": [
+            "5%"
+          ]
+        },
+        {
+          "text": "Spearheaded documentation approval processes for residential projects, achieving 100% compliance with government regulations and expedited project timelines by 30%.",
+          "metrics": [
+            "100%",
+            "30%"
+          ]
+        },
+        {
+          "text": "Conducted post-project cost analysis on over 10 projects, leading initiatives that improved future costing methodologies by 25%.",
+          "metrics": [
+            "25%"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Civil Infrastructure Group",
+      "location": "Australia",
+      "title": "Senior Estimator / Quantity Surveyor",
+      "startDate": "Mar 2021",
+      "endDate": "May 2024",
+      "bullets": [
+        {
+          "text": "Analyzed tender scopes of work, preparing accurate preliminary budgets that facilitated decision making processes for civil projects exceeding $20M USD in value.",
+          "metrics": [
+            "$20M USD"
+          ]
+        },
+        {
+          "text": "Completed over 50 Bill of Quantities covering all tendering stages and final accounts, significantly improving project cost accuracy and resource allocation.",
+          "metrics": []
+        },
+        {
+          "text": "Authored detailed comparative cost reports for initial vs. final design discrepancies, leading to a 15% decrease in construction budget overruns.",
+          "metrics": [
+            "15%"
+          ]
+        },
+        {
+          "text": "Facilitated communication between contractors and builders to clarify scope, optimizing construction methods and achieving budgetary adherence on all projects.",
+          "metrics": []
+        },
+        {
+          "text": "Enhanced construction method proposals, successfully maintaining scope within allocated budgets across multiple high-profile infrastructure projects.",
+          "metrics": []
+        },
+        {
+          "text": "Oversaw cost consulting efforts with suppliers, contributing to negotiations that reduced supply chain expenses by 12%.",
+          "metrics": [
+            "12%"
+          ]
+        },
+        {
+          "text": "Directed quality control on cost estimations to ensure compliance with project specifications and stakeholder requirements, achieving complete client satisfaction.",
+          "metrics": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Orange International College",
+      "degree": "Diploma of Building and Construction",
+      "location": "Australia",
+      "year": "2021",
+      "additionalInfo": "Special focus on construction economics and management."
+    },
+    {
+      "institution": "Mackenzie Presbyterian University",
+      "degree": "Architecture and Urbanism",
+      "location": "Brazil",
+      "year": "2009",
+      "additionalInfo": "Graduated with honors, top 5% of class."
+    }
+  ],
+  "additionalExperience": "Active member of the Brazilian Council of Architecture and Urbanism since 2011. Volunteer architecture consultant for local community projects, improving public spaces and infrastructure."
+}
