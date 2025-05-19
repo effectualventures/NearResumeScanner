@@ -480,6 +480,7 @@
     
     <!-- PROJECTS SECTION -->
     {{#if projects}}
+    {{#unless singlePage}}
     <section class="projects-section" data-section="projects">
       <h2 class="section-title">Projects</h2>
       <hr class="section-rule"/>
@@ -504,10 +505,12 @@
         {{/each}}
       </div>
     </section>
+    {{/unless}}
     {{/if}}
 
     <!-- CERTIFICATIONS SECTION -->
     {{#if certifications}}
+    {{#unless singlePage}}
     <section class="certifications-section" data-section="certifications">
       <h2 class="section-title">Certifications & Recognitions</h2>
       <hr class="section-rule"/>
@@ -519,6 +522,7 @@
         </ul>
       </div>
     </section>
+    {{/unless}}
     {{/if}}
     
     <!-- EDUCATION -->

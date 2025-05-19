@@ -119,6 +119,7 @@ export async function generatePDFv2(
       detailedFormat,
       includeAdditionalExp,
       logoPath: logoBase64,
+      singlePage: !detailedFormat, // Add this flag for the template
     };
 
     const html = template(data);
