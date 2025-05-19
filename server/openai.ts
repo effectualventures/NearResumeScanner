@@ -182,6 +182,21 @@ Your response must be a valid JSON object representing the processed resume with
       "additionalInfo": string
     }
   ],
+  "projects": [
+    {
+      "name": string,
+      "technologies": string,
+      "description": string,
+      "details": string[]
+    }
+  ],
+  "certifications": [
+    {
+      "name": string,
+      "year": string,
+      "description": string
+    }
+  ],
   "additionalExperience": string
 }`;
 

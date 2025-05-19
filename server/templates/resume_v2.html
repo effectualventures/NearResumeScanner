@@ -472,6 +472,49 @@
       </div>
     </section>
     
+    <!-- PROJECTS SECTION -->
+    {{#if projects}}
+    <section class="projects-section" data-section="projects">
+      <h2 class="section-title">Projects</h2>
+      <hr class="section-rule"/>
+      <div class="projects">
+        {{#each projects}}
+          <div class="project-item" style="margin-bottom: 10px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+              <span style="font-weight: 600;">{{name}}</span>
+              {{#if technologies}}
+              <span style="font-style: italic;">({{technologies}})</span>
+              {{/if}}
+            </div>
+            <div style="margin-bottom: 3px;">{{description}}</div>
+            {{#if details}}
+            <ul style="margin-top: 0;">
+              {{#each details}}
+                <li>{{this}}{{#unless (endsWith this ".")}}{{#unless (endsWith this "?")}}{{#unless (endsWith this "!")}}{{#unless (endsWith this ":")}}{{#unless (endsWith this ";")}}{{#unless (endsWith this "...")}}{{#unless (endsWith this "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</li>
+              {{/each}}
+            </ul>
+            {{/if}}
+          </div>
+        {{/each}}
+      </div>
+    </section>
+    {{/if}}
+
+    <!-- CERTIFICATIONS SECTION -->
+    {{#if certifications}}
+    <section class="certifications-section" data-section="certifications">
+      <h2 class="section-title">Certifications & Recognitions</h2>
+      <hr class="section-rule"/>
+      <div class="certifications">
+        <ul style="margin-top: 2px;">
+          {{#each certifications}}
+            <li>{{name}}{{#if year}} ({{year}}){{/if}}{{#if description}} — {{description}}{{/if}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    </section>
+    {{/if}}
+    
     <!-- EDUCATION -->
     <section class="education-section" data-section="education">
       <h2 class="section-title">Education</h2>
