@@ -876,13 +876,14 @@ ${JSON.stringify(currentResume, null, 2)}
 
 QUALITY IMPROVEMENT GUIDELINES:
 - Add strong action verbs to bullet points (e.g., "Transformed", "Pioneered", "Architected" instead of "Helped" or "Supported")
-- Look for any bullets without specific metrics and ADD THEM based on role requirements above
+- For EXPERIENCE SECTION ONLY (not the summary): Look for any bullets without specific metrics and ADD THEM based on role requirements above
 - Any mention of "led team" or "managed team" MUST include team performance metrics (e.g., "Led team of 8 SDRs to 115% attainment, with 7 reps exceeding targets")
 - Make every bullet powerful enough to impress a hiring manager within 5 seconds of reading
 - Format the skills section with clear categories and items (e.g., "CRM: Salesforce | Tools: SalesLoft • Outreach • HubSpot")
 - When adding quantifiable outcomes, make them specific but credible (e.g., 42% is more believable than 40%)
 - Never add metrics that would seem implausible or overstated for the role or experience level
-- TRANSFORM ANY VAGUE STATEMENT like "improved team performance" into SPECIFIC METRICS like "improved team performance by 35% over 6 months, with 92% of team members exceeding quotas"
+- For EXPERIENCE SECTION ONLY (not the summary): TRANSFORM ANY VAGUE STATEMENT like "improved team performance" into SPECIFIC METRICS like "improved team performance by 35% over 6 months, with 92% of team members exceeding quotas"
+- SUMMARY SECTION: DO NOT add made-up percentage metrics or quantitative achievements unless explicitly mentioned in the original resume. Focus on experience and expertise rather than numerical claims.
 
 Your response must be a valid JSON with two main keys:
 1. "updatedResume": The full updated resume JSON object
