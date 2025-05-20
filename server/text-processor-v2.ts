@@ -39,14 +39,34 @@ export function enhanceResumeText(resume: Resume): Resume {
               
               // Ensure we don't create double periods
               bullet.text = bullet.text.replace(/\.\s*\./g, '.');
-              
-              // Log for debugging
-              console.log('Fixed sentence punctuation in bullet:', bullet.text);
             }
           });
         }
       });
     }
+    
+    // Also fix sentence punctuation in projects section if it exists
+    if (processedResume.projects && Array.isArray(processedResume.projects)) {
+      processedResume.projects.forEach((project: any) => {
+        if (project.description) {
+          project.description = project.description.replace(/([a-zA-Z0-9])\s+([A-Z])/g, '$1. $2');
+          project.description = project.description.replace(/\.\s*\./g, '.');
+        }
+        
+        if (project.details && Array.isArray(project.details)) {
+          project.details.forEach((detail: string, index: number) => {
+            if (detail) {
+              let fixedDetail = detail.replace(/([a-zA-Z0-9])\s+([A-Z])/g, '$1. $2');
+              fixedDetail = fixedDetail.replace(/\.\s*\./g, '.');
+              project.details[index] = fixedDetail;
+            }
+          });
+        }
+      });
+    }
+    
+    // The sentence punctuation has already been fixed above
+    // No need for duplicate processing
     
     // Log the resume structure after processing
     console.log('AFTER Text processing, resume keys:', 
