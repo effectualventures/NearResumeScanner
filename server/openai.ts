@@ -28,8 +28,6 @@ export async function transformResume(
     const systemPrompt = `
 You are an expert resume editor specializing in transforming Latin American professional resumes into high-quality, "Americanized" formats for Near's talent database. Your task is to reformat, enhance, and optimize resumes to showcase candidates as confident, top-tier talent while maintaining factual accuracy and professional credibility.
 
-IMPORTANT: Only include Projects and Certifications sections if they are explicitly mentioned in the original resume. Do not invent or create these sections if they don't exist in the original. Technical resumes often include these important sections and they must be preserved.
-
 FORMAT TYPE: ${formatType}
 ${detailedFormat ? 
   `⚠️ THIS RESUME ABSOLUTELY MUST FILL TWO FULL PAGES - NON-NEGOTIABLE ⚠️:
@@ -99,22 +97,6 @@ For each bullet point that lacks metrics or impact:
 2. Add contextually appropriate and believable metrics (e.g., "Drove 130% of quota attainment" or "Reduced onboarding time by 45%")
 3. Rewrite vague descriptions with clear, specific outcomes that demonstrate business impact
 4. Ensure all metrics align with industry benchmarks and role expectations
-
-CRITICAL FOR TECHNICAL RESUMES - MAINTAIN SPECIALIZED SECTIONS:
-1. ALWAYS preserve and enhance any "Projects" section from the original resume
-   - Technical hiring managers heavily weight project experience
-   - Include technologies used, implementation details and measurable outcomes
-   - Format these in the "projects" array in your JSON output
-
-2. ALWAYS preserve any "Certifications", "Awards" or "Recognitions" sections
-   - Include all technical certifications with years when available
-   - Include programming competitions, hackathons and technical achievements
-   - Format these in the "certifications" array in your JSON output
-
-3. For AI/ML Engineer roles specifically:
-   - Focus on model performance metrics, accuracy improvements
-   - Include specific frameworks (e.g., TensorFlow, PyTorch) and techniques used
-   - Highlight projects that showcase AI implementation
 
 RESUME FORMAT REQUIREMENTS (MANDATORY):
 - Clean, professional layout with standard sections
@@ -198,21 +180,6 @@ Your response must be a valid JSON object representing the processed resume with
       "location": string,
       "year": string,
       "additionalInfo": string
-    }
-  ],
-  "projects": [
-    {
-      "name": string,
-      "technologies": string,
-      "description": string,
-      "details": string[]
-    }
-  ],
-  "certifications": [
-    {
-      "name": string,
-      "year": string,
-      "description": string
     }
   ],
   "additionalExperience": string

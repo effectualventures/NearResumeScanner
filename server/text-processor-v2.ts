@@ -4,7 +4,6 @@ import { Resume } from '../shared/schema';
  * Enhanced resume text processor
  * Applies multiple transformations to improve resume text quality
  */
-
 export function enhanceResumeText(resume: Resume): Resume {
   if (!resume) {
     console.error('ERROR: enhanceResumeText received null or undefined resume');
@@ -27,46 +26,6 @@ export function enhanceResumeText(resume: Resume): Resume {
     processedResume = dedupeMetricEcho(processedResume);
     processedResume = cleanEducationFormat(processedResume);
     processedResume = limitBulletPoints(processedResume);
-    
-    // Fix missing periods between sentences within bullet points
-    if (processedResume.experience && Array.isArray(processedResume.experience)) {
-      processedResume.experience.forEach((exp: any) => {
-        if (exp.bullets && Array.isArray(exp.bullets)) {
-          exp.bullets.forEach((bullet: any) => {
-            if (bullet.text) {
-              // Add periods between sentences (lowercase or uppercase letter followed by space and uppercase letter)
-              bullet.text = bullet.text.replace(/([a-zA-Z0-9])\s+([A-Z])/g, '$1. $2');
-              
-              // Ensure we don't create double periods
-              bullet.text = bullet.text.replace(/\.\s*\./g, '.');
-            }
-          });
-        }
-      });
-    }
-    
-    // Also fix sentence punctuation in projects section if it exists
-    if (processedResume.projects && Array.isArray(processedResume.projects)) {
-      processedResume.projects.forEach((project: any) => {
-        if (project.description) {
-          project.description = project.description.replace(/([a-zA-Z0-9])\s+([A-Z])/g, '$1. $2');
-          project.description = project.description.replace(/\.\s*\./g, '.');
-        }
-        
-        if (project.details && Array.isArray(project.details)) {
-          project.details.forEach((detail: string, index: number) => {
-            if (detail) {
-              let fixedDetail = detail.replace(/([a-zA-Z0-9])\s+([A-Z])/g, '$1. $2');
-              fixedDetail = fixedDetail.replace(/\.\s*\./g, '.');
-              project.details[index] = fixedDetail;
-            }
-          });
-        }
-      });
-    }
-    
-    // The sentence punctuation has already been fixed above
-    // No need for duplicate processing
     
     // Log the resume structure after processing
     console.log('AFTER Text processing, resume keys:', 

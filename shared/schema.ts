@@ -71,26 +71,11 @@ export interface ResumeEducation {
   additionalInfo?: string;
 }
 
-export interface ResumeProject {
-  name: string;
-  technologies?: string;
-  description: string;
-  details?: string[];
-}
-
-export interface ResumeCertification {
-  name: string;
-  year?: string;
-  description?: string;
-}
-
 export interface Resume {
   header: ResumeHeader;
   summary: string;
   skills: ResumeSkill[];
   experience: ResumeExperience[];
   education: ResumeEducation[];
-  projects?: ResumeProject[];
-  certifications?: ResumeCertification[];
   additionalExperience?: string;
 }
