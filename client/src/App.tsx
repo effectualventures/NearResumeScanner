@@ -25,6 +25,7 @@ function Router() {
       <div className="flex-grow">
         <Switch>
           <Route path="/" component={UploadResume}/>
+          <Route path="/v2" component={UploadResume}/>
           <Route path="/feedback" component={ResumeFeedback}/>
           <Route component={NotFound} />
         </Switch>
