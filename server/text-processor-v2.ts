@@ -5,6 +5,58 @@ import { Resume } from '../shared/schema';
  * Applies multiple transformations to improve resume text quality
  */
 export function enhanceResumeText(resume: Resume): Resume {
+  try {
+    // Create a deep copy of the resume
+    const processedResume = JSON.parse(JSON.stringify(resume));
+    
+    // Process experience section
+    if (processedResume.experience && Array.isArray(processedResume.experience)) {
+      processedResume.experience.forEach((exp: any) => {
+        // Process each bullet point
+        if (exp.bullets && Array.isArray(exp.bullets)) {
+          exp.bullets.forEach((bullet: any) => {
+            if (bullet.text) {
+              // Find sentences within the bullet text using regex pattern matching
+              // Look for lowercase or uppercase letter followed by space and an uppercase letter
+              bullet.text = bullet.text.replace(/([a-z])\s+([A-Z])/g, '$1. $2');
+              
+              // Also look for cases where numbers are followed by capital letters 
+              // (likely a new sentence)
+              bullet.text = bullet.text.replace(/([0-9])\s+([A-Z])/g, '$1. $2');
+            }
+          });
+        }
+      });
+    }
+    
+    // Do the same for the Projects section if it exists
+    if (processedResume.projects && Array.isArray(processedResume.projects)) {
+      processedResume.projects.forEach((project: any) => {
+        if (project.description) {
+          project.description = project.description.replace(/([a-z])\s+([A-Z])/g, '$1. $2');
+          project.description = project.description.replace(/([0-9])\s+([A-Z])/g, '$1. $2');
+        }
+        
+        if (project.details && Array.isArray(project.details)) {
+          project.details.forEach((detail: string, index: number) => {
+            if (detail) {
+              let fixedDetail = detail.replace(/([a-z])\s+([A-Z])/g, '$1. $2');
+              fixedDetail = fixedDetail.replace(/([0-9])\s+([A-Z])/g, '$1. $2');
+              project.details[index] = fixedDetail;
+            }
+          });
+        }
+      });
+    }
+    
+    return processedResume;
+  } catch (error) {
+    console.error('Error fixing sentence punctuation:', error);
+    return resume;
+  }
+}
+
+export function enhanceResumeText(resume: Resume): Resume {
   if (!resume) {
     console.error('ERROR: enhanceResumeText received null or undefined resume');
     return resume;
@@ -47,40 +99,20 @@ export function enhanceResumeText(resume: Resume): Resume {
       });
     }
     
-    // Do the same for the Projects section if it exists
-    if (processedResume.projects && Array.isArray(processedResume.projects)) {
-      processedResume.projects.forEach((project: any) => {
-        if (project.description) {
-          project.description = project.description.replace(/([a-zA-Z0-9])\s+([A-Z])/g, '$1. $2');
-          project.description = project.description.replace(/\.\s*\./g, '.');
-        }
-        
-        if (project.details && Array.isArray(project.details)) {
-          project.details.forEach((detail: string, index: number) => {
-            if (detail) {
-              let fixedDetail = detail.replace(/([a-zA-Z0-9])\s+([A-Z])/g, '$1. $2');
-              fixedDetail = fixedDetail.replace(/\.\s*\./g, '.');
-              project.details[index] = fixedDetail;
-            }
-          });
-        }
-      });
-    }
-    
     // Log the resume structure after processing
     console.log('AFTER Text processing, resume keys:', 
       processedResume ? Object.keys(processedResume).join(', ') : 'none');
     
     return processedResume;
   } catch (error) {
-    console.error('ERROR enhancing resume text:', error);
+    console.error('Error enhancing resume text:', error);
+    // Return original if any errors occur
     return resume;
   }
 }
 
 /**
- * Convert square meters to square feet in all text and metric fields
- * Also standardize currency symbols and numbers
+ * Normalize all square meter references to square feet
  */
 function normalizeSquareMeters(resume: Resume): Resume {
   try {
@@ -121,202 +153,195 @@ function normalizeSquareMeters(resume: Resume): Resume {
     if (processedResume.education && Array.isArray(processedResume.education)) {
       processedResume.education.forEach((edu: any) => {
         if (edu.degree) edu.degree = convertMetricToImperial(edu.degree);
-        if (edu.institution) edu.institution = convertMetricToImperial(edu.institution);
         if (edu.additionalInfo) edu.additionalInfo = convertMetricToImperial(edu.additionalInfo);
       });
     }
     
-    // Process skills section
-    if (processedResume.skills && Array.isArray(processedResume.skills)) {
-      processedResume.skills.forEach((skillCategory: any) => {
-        if (skillCategory.category) {
-          skillCategory.category = convertMetricToImperial(skillCategory.category);
-        }
-        
-        if (skillCategory.items && Array.isArray(skillCategory.items)) {
-          skillCategory.items = skillCategory.items.map((item: string) => 
-            convertMetricToImperial(item)
-          );
-        }
-      });
+    // Process additional experience
+    if (processedResume.additionalExperience) {
+      processedResume.additionalExperience = convertMetricToImperial(
+        processedResume.additionalExperience
+      );
     }
     
-    // Process projects section
-    if (processedResume.projects && Array.isArray(processedResume.projects)) {
-      processedResume.projects.forEach((project: any) => {
-        if (project.name) project.name = convertMetricToImperial(project.name);
-        if (project.description) project.description = convertMetricToImperial(project.description);
-        
-        if (project.details && Array.isArray(project.details)) {
-          project.details = project.details.map((detail: string) => 
-            convertMetricToImperial(detail)
-          );
-        }
-      });
-    }
-    
-    // Process certifications section
-    if (processedResume.certifications && Array.isArray(processedResume.certifications)) {
-      processedResume.certifications.forEach((cert: any) => {
-        if (cert.name) cert.name = convertMetricToImperial(cert.name);
-        if (cert.description) cert.description = convertMetricToImperial(cert.description);
-      });
-    }
-    
+    console.log('Square meter normalization complete (v2)');
     return processedResume;
   } catch (error) {
-    console.error('Error normalizing square meters:', error);
+    console.error('Error during square meter normalization:', error);
     return resume;
   }
 }
 
+/**
+ * Comprehensive metric to imperial conversion utility
+ * Handles various formats of square meters, currencies, and other units
+ */
 function convertMetricToImperial(text: string): string {
   if (!text) return text;
   
-  // Replace m² with sq ft (approximately)
-  // Convert square meters to square feet (1 m² ≈ 10.764 sq ft)
-  text = text.replace(/(\d+(?:\.\d+)?)\s*(?:m2|m²|sq\.?\s*m|square\s*meters?|square\s*metres?)/gi, (match, num) => {
-    const sqMeters = parseFloat(num);
-    const sqFeet = Math.round(sqMeters * 10.764);
-    return `${sqFeet} sq ft`;
+  let result = text;
+  
+  // PART 1: SQUARE METER CONVERSION
+  
+  // Function to convert square meters to square feet
+  const convertToSqFt = (match: string, value: string): string => {
+    const numericStr = value.replace(/,/g, '');
+    const squareMeters = parseFloat(numericStr);
+    
+    if (!isNaN(squareMeters)) {
+      const squareFeet = Math.round(squareMeters * 10.764);
+      return `${squareFeet.toLocaleString()} sq ft`;
+    }
+    
+    return `${value} sq ft`;
+  };
+  
+  // First, normalize all Unicode square meter symbols
+  result = result.replace(/m²/g, 'm2');
+  
+  // Complex pattern matching for various square meter formats
+  const patterns = [
+    // Number followed by m2 with optional spaces
+    /(\d[\d,.]*)(?:\s*)m(?:\s*)2\b/gi,
+    // Number followed by m² with optional spaces
+    /(\d[\d,.]*)(?:\s*)m(?:\s*)²\b/gi,
+    // Number followed by sq m with optional spaces
+    /(\d[\d,.]*)(?:\s*)sq(?:\s*)m\b/gi,
+    // Number followed by sqm
+    /(\d[\d,.]*)(?:\s*)sqm\b/gi,
+    // Number followed by m2 without space
+    /(\d[\d,.]*)m2\b/gi,
+    // Number followed by m² without space
+    /(\d[\d,.]*)m²\b/gi,
+    // Number followed by sqm without space
+    /(\d[\d,.]*)sqm\b/gi,
+    // Special case for "X+ m2" format
+    /(\d[\d,.]*)\+\s*m2/gi,
+    // Special case for "X+ m²" format
+    /(\d[\d,.]*)\+\s*m²/gi,
+    // Special case for "X+ sq m" format
+    /(\d[\d,.]*)\+\s*sq\s*m/gi
+  ];
+  
+  // Apply all patterns for number + square meter formats
+  patterns.forEach(pattern => {
+    result = result.replace(pattern, (match, p1) => {
+      // Check if this is a "plus" notation (e.g., "20,000+ m²")
+      if (match.includes('+')) {
+        const numericStr = p1.replace(/,/g, '');
+        const squareMeters = parseFloat(numericStr);
+        
+        if (!isNaN(squareMeters)) {
+          const squareFeet = Math.round(squareMeters * 10.764);
+          return `${squareFeet.toLocaleString()}+ sq ft`;
+        }
+        
+        return `${p1}+ sq ft`;
+      }
+      
+      // Standard conversion
+      return convertToSqFt(match, p1);
+    });
   });
   
-  // Convert currencies to USD if possible
-  // This is a simplified approximation and should be improved for production
-  // Convert € to $ (example rate)
-  text = text.replace(/€\s*(\d+(?:,\d+)*(?:\.\d+)?)/g, (match, num) => {
-    const euros = parseFloat(num.replace(/,/g, ''));
-    const dollars = Math.round(euros * 1.1); // Approximate conversion
-    return `$${dollars.toLocaleString()}`;
+  // Replace standalone unit references
+  const unitReplacements = [
+    [/\bm\s*2\b/gi, 'sq ft'],
+    [/\bm\s*²\b/gi, 'sq ft'],
+    [/\bm2\b/gi, 'sq ft'],
+    [/\bm²\b/gi, 'sq ft'],
+    [/\bsqm\b/gi, 'sq ft'],
+    [/\bsq\.\s*m\b/gi, 'sq ft'],
+    [/\bsquare\s*meters?\b/gi, 'square feet'],
+    [/\bsquare\s*m\b/gi, 'square feet']
+  ];
+  
+  unitReplacements.forEach(([pattern, replacement]) => {
+    result = result.replace(pattern, replacement as string);
   });
   
-  // Convert £ to $ (example rate)
-  text = text.replace(/£\s*(\d+(?:,\d+)*(?:\.\d+)?)/g, (match, num) => {
-    const pounds = parseFloat(num.replace(/,/g, ''));
-    const dollars = Math.round(pounds * 1.3); // Approximate conversion
-    return `$${dollars.toLocaleString()}`;
-  });
+  // PART 2: CURRENCY CONVERSION
+  // Currency conversion handled separately - implement if needed
   
-  return text;
+  return result;
 }
 
 /**
- * Standardize location formats to show just Country or State, Country
+ * Standardize location formatting to remove city and keep only State, Country 
+ * or just Country
  */
 function standardizeLocations(resume: Resume): Resume {
-  if (!resume) return resume;
+  if (!resume || !resume.experience) return resume;
   
   try {
-    // Create a deep copy
     const processedResume = JSON.parse(JSON.stringify(resume));
     
-    // Process experience locations
     if (processedResume.experience && Array.isArray(processedResume.experience)) {
       processedResume.experience.forEach((exp: any) => {
         if (exp.location) {
-          exp.location = simplifyLocation(exp.location);
+          // Remove city names from location
+          const locationParts = exp.location.split(',').map((part: string) => part.trim());
+          
+          if (locationParts.length > 1) {
+            // Keep only the last parts (state/country)
+            exp.location = locationParts.slice(1).join(', ');
+          }
+          
+          // Remove any zip/postal codes
+          exp.location = exp.location.replace(/\d{5}(-\d{4})?/g, '').trim();
+          exp.location = exp.location.replace(/[A-Z]\d[A-Z] \d[A-Z]\d/g, '').trim();
+          
+          // Clean up any trailing commas
+          exp.location = exp.location.replace(/,\s*$/, '').trim();
         }
       });
     }
     
-    // Process education locations
-    if (processedResume.education && Array.isArray(processedResume.education)) {
-      processedResume.education.forEach((edu: any) => {
-        if (edu.location) {
-          edu.location = simplifyLocation(edu.location);
-        }
-      });
-    }
-    
+    console.log('Location formatting standardized');
     return processedResume;
   } catch (error) {
-    console.error('Error standardizing locations:', error);
+    console.error('Error during location standardization:', error);
     return resume;
   }
 }
 
-function simplifyLocation(location: string): string {
-  if (!location) return location;
-  
-  // Replace "Current" or "current" with "Present" in end dates
-  if (location.includes('Current')) {
-    location = location.replace(/Current/g, 'Present');
-  } else if (location.includes('current')) {
-    location = location.replace(/current/g, 'Present');
-  }
-  
-  // Strip out city names from "City, State, Country" or "City, Country"
-  const parts = location.split(',').map(part => part.trim());
-  
-  if (parts.length >= 3) {
-    // Format: City, State, Country -> State, Country
-    return `${parts[1]}, ${parts[2]}`;
-  } else if (parts.length === 2) {
-    // Format might be City, Country OR State, Country
-    // Simple heuristic: If first part is a major city, return only Country
-    const majorCities = ['New York', 'London', 'Tokyo', 'Paris', 'Beijing', 'Mumbai', 
-                         'Shanghai', 'São Paulo', 'Mexico City', 'Cairo', 'Manila',
-                         'Moscow', 'Berlin', 'Madrid', 'Toronto', 'Sydney', 'Seattle',
-                         'San Francisco', 'Los Angeles', 'Chicago', 'Boston', 'Buenos Aires'];
-    
-    if (majorCities.some(city => parts[0].includes(city))) {
-      return parts[1]; // Just show the Country
-    } else {
-      return location; // Keep as is, likely already State, Country
-    }
-  }
-  
-  return location; // Return as is if format is unrecognized
-}
-
 /**
- * Clean up bullet repetition by diversifying starting verbs
+ * Remove repetition of text after periods in bullet points and
+ * diversify starting verbs in bullet points
  */
 function removeBulletRepetition(resume: Resume): Resume {
   if (!resume || !resume.experience) return resume;
   
   try {
-    // Create a deep copy of the resume
     const processedResume = JSON.parse(JSON.stringify(resume));
     
     if (processedResume.experience && Array.isArray(processedResume.experience)) {
       processedResume.experience.forEach((exp: any) => {
-        if (exp.bullets && Array.isArray(exp.bullets) && exp.bullets.length > 1) {
-          // PART 1: Remove repetition within bullets (like "Streamlined operations... streamlined inventory...")
+        if (exp.bullets && Array.isArray(exp.bullets)) {
+          // PART 1: Fix repetition after periods in bullet points
           exp.bullets.forEach((bullet: any) => {
             if (bullet.text) {
-              // Split bullet into segments based on period/comma followed by space (potential multiple sentences)
-              const segments = bullet.text.split(/(?<=[.,])\s+/);
+              // Split by periods to check for repetition
+              const segments = bullet.text.split(/\.\s+/);
               
               if (segments.length > 1) {
                 let cleanedText = segments[0];
                 
-                // Check each segment for repetition of the starting verb
-                const firstSegmentWords = segments[0].split(' ');
-                const firstVerb = firstSegmentWords.length > 0 ? firstSegmentWords[0].toLowerCase() : '';
-                
                 for (let i = 1; i < segments.length; i++) {
                   const currentSegment = segments[i];
-                  const currentWords = currentSegment.split(' ');
-                  const currentVerb = currentWords.length > 0 ? currentWords[0].toLowerCase() : '';
+                  const prevSegment = segments[i-1];
                   
-                  // If the segment starts with the same verb, replace it
-                  if (currentVerb === firstVerb && currentVerb.length > 3) {
-                    const alternatives = [
-                      "Additionally", "Also", "Furthermore", "Moreover", 
-                      "This", "The result", "Consequently", "As a result"
-                    ];
-                    const replacement = alternatives[Math.floor(Math.random() * alternatives.length)];
-                    
-                    // Replace the repeated verb with an alternative transition
-                    currentWords[0] = replacement;
-                    const modifiedSegment = currentWords.join(' ');
-                    
-                    cleanedText += '. ' + modifiedSegment;
-                  } else {
-                    // If no repetition, keep the segment as is
-                    cleanedText += '. ' + currentSegment;
+                  // Skip if this segment is just repeating previous content
+                  // Check for: 1) Full inclusion, 2) Similar content, 3) Exact match
+                  if ((prevSegment.includes(currentSegment) && currentSegment.length > 5) || 
+                      (currentSegment.includes(prevSegment) && prevSegment.length > 5) ||
+                      (currentSegment.length > 10 && 
+                       prevSegment.toLowerCase() === currentSegment.toLowerCase())) {
+                    continue;
                   }
+                  
+                  // Add non-repetitive segment
+                  cleanedText += '. ' + currentSegment;
                 }
                 
                 // Ensure proper ending punctuation
@@ -365,36 +390,41 @@ function removeBulletRepetition(resume: Resume): Resume {
             }
           });
           
+          // Find repeated verbs
+          const repeatedVerbs = Object.entries(verbCounts)
+            .filter(([verb, count]) => count > 1)
+            .map(([verb]) => verb);
+          
           // Second pass: replace repeated verbs
-          Object.keys(verbCounts).forEach(verb => {
-            // If a verb is used more than once, replace all but the first occurrence
-            if (verbCounts[verb] > 1) {
-              const indexes = verbIndexes[verb];
+          repeatedVerbs.forEach(verb => {
+            const indexes = verbIndexes[verb] || [];
+            const usedReplacements: string[] = [];
+            
+            // Keep first occurrence, replace others
+            for (let i = 1; i < indexes.length; i++) {
+              const bulletIndex = indexes[i];
               
-              // Skip the first occurrence, replace others
-              for (let i = 1; i < indexes.length; i++) {
-                const bulletIndex = indexes[i];
-                const bullet = exp.bullets[bulletIndex];
+              if (exp.bullets[bulletIndex] && exp.bullets[bulletIndex].text) {
+                const text = exp.bullets[bulletIndex].text;
+                const words = text.split(' ');
                 
-                if (bullet && bullet.text) {
-                  const words = bullet.text.split(' ');
-                  
-                  // Generate a list of suitable replacement verbs (avoid already used ones)
-                  const availableVerbs = actionVerbs.filter(v => 
-                    !Object.keys(verbCounts).includes(v.toLowerCase())
+                if (words.length > 1) {
+                  // Find suitable replacement not already used
+                  const availableVerbs = actionVerbs.filter(
+                    replacement => replacement.toLowerCase() !== verb && 
+                                  !usedReplacements.includes(replacement)
                   );
                   
                   if (availableVerbs.length > 0) {
-                    // Pick a random verb from available options
-                    const replacement = availableVerbs[Math.floor(Math.random() * availableVerbs.length)];
+                    // Choose deterministic replacement based on index
+                    const replacement = availableVerbs[
+                      bulletIndex % availableVerbs.length
+                    ];
                     
-                    // Replace the first word and update the bullet
+                    // Replace first word
                     words[0] = replacement;
-                    bullet.text = words.join(' ');
-                    
-                    // Update our tracking
-                    verbCounts[replacement.toLowerCase()] = 1;
-                    verbIndexes[replacement.toLowerCase()] = [bulletIndex];
+                    exp.bullets[bulletIndex].text = words.join(' ');
+                    usedReplacements.push(replacement);
                   }
                 }
               }
@@ -404,126 +434,16 @@ function removeBulletRepetition(resume: Resume): Resume {
       });
     }
     
+    console.log('Removed bullet point repetition (v2)');
     return processedResume;
   } catch (error) {
-    console.error('Error removing bullet repetition:', error);
+    console.error('Error removing bullet point repetition:', error);
     return resume;
   }
 }
 
 /**
- * Extract significant numbers from a text string
- */
-function extractNumbers(text: string): string[] {
-  if (!text) return [];
-  
-  // Match patterns like: 
-  // - 15%
-  // - $10M
-  // - 5.2 million
-  // - 3x
-  // - 200+ 
-  // - $1B
-  const matches = text.match(/\$?\d+(?:\.\d+)?(?:\s*%|\s*M|\s*K|\s*B|x|\+|\s*million|\s*billion|\s*thousand)/gi);
-  
-  return matches || [];
-}
-
-/**
- * Get significant words from a string (excluding common stop words)
- */
-function getSignificantWords(text: string): string[] {
-  if (!text) return [];
-  
-  const stopWords = ['a', 'an', 'the', 'and', 'or', 'but', 'of', 'to', 'for', 'in', 
-                     'on', 'at', 'by', 'with', 'about', 'as', 'into', 'like', 'through',
-                     'after', 'over', 'between', 'out', 'from', 'up', 'down', 'is', 'are',
-                     'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'do',
-                     'does', 'did', 'will', 'would', 'shall', 'should', 'can', 'could',
-                     'may', 'might', 'must', 'that', 'which', 'who', 'whom', 'this',
-                     'these', 'those', 'am', 'im', 'your', 'my', 'his', 'her', 'their',
-                     'its', 'our', 'we', 'they', 'i', 'you', 'he', 'she', 'it', 'me',
-                     'him', 'us', 'them'];
-  
-  // Split text into words, filter out stop words, and keep only words longer than 3 chars
-  const words = text.toLowerCase()
-    .replace(/[^\w\s]/g, '') // Remove punctuation
-    .split(/\s+/)
-    .filter(word => !stopWords.includes(word) && word.length > 3);
-  
-  return words;
-}
-
-/**
- * Remove metrics that duplicate text already in the bullet
- */
-function dedupeMetricEcho(resume: Resume): Resume {
-  if (!resume || !resume.experience) return resume;
-  
-  try {
-    const processedResume = JSON.parse(JSON.stringify(resume));
-    
-    if (processedResume.experience && Array.isArray(processedResume.experience)) {
-      processedResume.experience.forEach((exp: any) => {
-        if (exp.bullets && Array.isArray(exp.bullets)) {
-          exp.bullets.forEach((bullet: any) => {
-            if (!bullet.text || !bullet.metrics || !Array.isArray(bullet.metrics)) {
-              // Initialize metrics array if missing
-              if (!bullet.metrics) bullet.metrics = [];
-              return;
-            }
-            
-            // Filter out metrics that are already in the bullet text
-            const originalMetricsCount = bullet.metrics.length;
-            
-            bullet.metrics = bullet.metrics.filter((metric: string) => {
-              if (!metric) return false;
-              
-              // Extract numerical values from the metric
-              const metricNumbers = extractNumbers(metric);
-              if (metricNumbers.length === 0) return true; // Keep metrics with no numbers
-              
-              const bulletText = bullet.text.toLowerCase();
-              
-              // For each number in the metric, check if it appears in the bullet text
-              for (const num of metricNumbers) {
-                if (bulletText.includes(num)) {
-                  // Check for contextual words - get words from metric (minus stop words)
-                  const metricWords = getSignificantWords(metric.toLowerCase());
-                  
-                  // Check if any significant word from the metric appears near the number in the bullet
-                  for (const word of metricWords) {
-                    if (bulletText.includes(word) && 
-                        Math.abs(bulletText.indexOf(word) - bulletText.indexOf(num)) < 30) {
-                      // We found the number and a significant word from the metric near each other
-                      // This is likely a duplicate
-                      return false; 
-                    }
-                  }
-                }
-              }
-              
-              return true; // Keep this metric if no matching pattern was found
-            });
-            
-            if (originalMetricsCount !== bullet.metrics.length) {
-              console.log('Removed duplicate metrics from bullet point');
-            }
-          });
-        }
-      });
-    }
-    
-    console.log('Removed duplicate metrics that echo bullet text (v2)');
-    return processedResume;
-  } catch (error) {
-    console.error('Error removing duplicate metrics:', error);
-    return resume;
-  }
-}
-
-/**
- * Clean up education format
+ * Clean up education degree formatting to be more consistent
  */
 function cleanEducationFormat(resume: Resume): Resume {
   if (!resume || !resume.education) return resume;
@@ -533,21 +453,41 @@ function cleanEducationFormat(resume: Resume): Resume {
     
     if (processedResume.education && Array.isArray(processedResume.education)) {
       processedResume.education.forEach((edu: any) => {
-        // Fix degree format by removing duplicate school names
-        if (edu.degree && edu.institution) {
-          // If degree contains the full institution name, simplify it
-          if (edu.degree.includes(edu.institution)) {
-            edu.degree = edu.degree.replace(edu.institution, '').trim();
-            // Clean up any leftover artifacts like "from", "at", etc.
-            edu.degree = edu.degree.replace(/^\s*(?:from|at|,|-|in)\s+/i, '').trim();
+        if (edu.degree) {
+          // IMPORTANT: We're skipping degree standardization as it's causing issues
+          // like "Diploma of Building and Construction" becoming "DiploMaster of Arts of Building and Construction"
+          // because "BA" in "Building And" gets replaced with "Bachelor of Arts"
+          
+          // Just ensure consistent spacing and remove any extraneous whitespace
+          let degree = edu.degree.replace(/\s+/g, ' ').trim();
+          
+          // Make sure full degree titles like "Bachelor of Arts" or "Master of Science" are properly cased
+          // but only if they're the complete degree title (using word boundaries \b)
+          if (/\bbachelor['']s\s+degree/i.test(degree)) {
+            degree = degree.replace(/\bbachelor['']s\s+degree\b/i, "Bachelor's Degree");
           }
           
-          // Remove trailing commas or periods from degree
-          edu.degree = edu.degree.replace(/[,.-]+$/, '');
+          if (/\bmaster['']s\s+degree/i.test(degree)) {
+            degree = degree.replace(/\bmaster['']s\s+degree\b/i, "Master's Degree");
+          }
+          
+          // Fix any degree abbreviations that are standalone terms (using word boundaries)
+          degree = degree.replace(/\bb\.s\.\b|\bbs\b/i, 'B.S.');
+          degree = degree.replace(/\bb\.a\.\b|\bba\b/i, 'B.A.');
+          degree = degree.replace(/\bph\.d\.\b|\bphd\b/i, 'Ph.D.');
+          
+          // If the degree is just Architecture, add Bachelor's prefix for clarity
+          if (degree.trim().toLowerCase() === 'architecture' || 
+              degree.trim().toLowerCase() === 'architecture and urbanism') {
+            degree = "Bachelor's Degree in " + degree;
+          }
+          
+          edu.degree = degree;
         }
       });
     }
     
+    console.log('Education format cleaned up - safer version');
     return processedResume;
   } catch (error) {
     console.error('Error cleaning education format:', error);
@@ -556,7 +496,7 @@ function cleanEducationFormat(resume: Resume): Resume {
 }
 
 /**
- * Limit bullet points to specified maximum number
+ * Limit bullet points to a maximum number
  */
 function limitBulletPoints(resume: Resume, maxBullets: number = 7): Resume {
   if (!resume || !resume.experience) return resume;
@@ -595,4 +535,107 @@ function limitBulletPoints(resume: Resume, maxBullets: number = 7): Resume {
     console.error('Error limiting bullet points:', error);
     return resume;
   }
+}
+
+/**
+ * Remove metrics that duplicate text already in the bullet
+ */
+function dedupeMetricEcho(resume: Resume): Resume {
+  if (!resume || !resume.experience) return resume;
+  
+  try {
+    const processedResume = JSON.parse(JSON.stringify(resume));
+    
+    if (processedResume.experience && Array.isArray(processedResume.experience)) {
+      processedResume.experience.forEach((exp: any) => {
+        if (exp.bullets && Array.isArray(exp.bullets)) {
+          exp.bullets.forEach((bullet: any) => {
+            if (!bullet.text || !bullet.metrics || !Array.isArray(bullet.metrics)) {
+              // Initialize metrics array if missing
+              if (!bullet.metrics) bullet.metrics = [];
+              return;
+            }
+            
+            // Filter out metrics that are already in the bullet text
+            const originalMetricsCount = bullet.metrics.length;
+            
+            bullet.metrics = bullet.metrics.filter((metric: string) => {
+              if (!metric) return false;
+              
+              // Extract numerical values from the metric
+              const metricNumbers = extractNumbers(metric);
+              if (metricNumbers.length === 0) return true; // Keep metrics with no numbers
+              
+              const bulletText = bullet.text.toLowerCase();
+              
+              // For each number in the metric, check if it appears in the bullet text
+              for (const num of metricNumbers) {
+                // If the number appears in the bullet text along with similar contextual words, 
+                // consider it a duplicate
+                if (bulletText.includes(num)) {
+                  // Check for contextual words - get words from metric (minus stop words)
+                  const metricWords = getSignificantWords(metric.toLowerCase());
+                  
+                  // Check if any significant word from the metric appears near the number in the bullet
+                  for (const word of metricWords) {
+                    if (bulletText.includes(word) && 
+                        Math.abs(bulletText.indexOf(word) - bulletText.indexOf(num)) < 30) {
+                      // We found the number and a significant word from the metric near each other
+                      // This is likely a duplicate
+                      return false; 
+                    }
+                  }
+                }
+              }
+              
+              return true; // Keep this metric if no matching pattern was found
+            });
+            
+            if (originalMetricsCount !== bullet.metrics.length) {
+              console.log('Removed duplicate metrics from bullet point');
+            }
+          });
+        }
+      });
+    }
+    
+    console.log('Removed duplicate metrics that echo bullet text (v2)');
+    return processedResume;
+  } catch (error) {
+    console.error('Error removing duplicate metrics:', error);
+    return resume;
+  }
+}
+
+/**
+ * Extract all numbers from a string, preserving decimals and percentages
+ */
+function extractNumbers(text: string): string[] {
+  if (!text) return [];
+  
+  // Find all numbers including those with decimals, percentages, and with commas
+  const matches = text.match(/\d+(?:[,.]\d+)*%?|\d+%?/g);
+  if (!matches) return [];
+  
+  // Clean up and normalize the matches
+  return matches.map(m => m.replace(/,/g, ''));
+}
+
+/**
+ * Get significant words from text (excluding common stop words)
+ */
+function getSignificantWords(text: string): string[] {
+  if (!text) return [];
+  
+  // Remove currency symbols and special characters
+  const cleanText = text.replace(/[$€£¥.,()%]/g, ' ').toLowerCase();
+  
+  // Split into words and filter out short words and common stop words
+  const stopWords = ['and', 'the', 'in', 'of', 'to', 'for', 'with', 'by', 'at', 'from', 'on', 'an', 'a'];
+  const words = cleanText.split(/\s+/).filter(word => 
+    word.length > 2 && !stopWords.includes(word)
+  );
+  
+  // Remove duplicates using filter instead of Set
+  return words.filter((word, index) => words.indexOf(word) === index);
 }
