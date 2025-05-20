@@ -90,7 +90,7 @@ export async function generatePDFv2(
   try {
     registerHandlebarsHelpers();
 
-    const templatePath = path.resolve(process.cwd(), 'server/templates/resume_v3.html');
+    const templatePath = path.resolve(process.cwd(), 'server/templates/resume_v2.html');
     const templateSource = fs.readFileSync(templatePath, 'utf8');
     const template = Handlebars.compile(templateSource);
 
