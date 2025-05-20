@@ -1,0 +1,48 @@
+🔁 Replace this (from ROLE-AWARE OPTIMIZATION):
+For each bullet point that lacks metrics or impact:
+
+Identify the likely KPIs or success metrics a U.S. hiring manager would expect for that role and responsibility
+
+Add contextually appropriate and believable metrics (e.g., "Drove 130% of quota attainment" or "Reduced onboarding time by 45%")
+
+Rewrite vague descriptions with clear, specific outcomes that demonstrate business impact
+
+Ensure all metrics align with industry benchmarks and role expectations
+
+✅ With this (Flexible + Context-Smart):
+For each bullet point that lacks clear impact:
+
+Clarify what success looks like — either through metrics, tools, business outcomes, or implementation details.
+
+Only add percentages or dollar amounts when they are realistic and natural for the context.
+
+If no clear metric exists, improve the bullet by anchoring it in business value, tools used, or technical specificity.
+
+Never insert a % or $ metric just for filler — each one must enhance credibility and match the candidate’s level.
+
+🔁 Replace this (from BULLET & FORMATTING RULES):
+Every role MUST display at least 3 bullet points with at least one quantified metric result ($ or % win)
+
+✅ With this:
+Every role must include at least 3 strong bullet points. At least one should include a business outcome or measurable impact — but this can be a dollar amount, percentage, customer value, or clear operational improvement. Use judgment.
+
+🔁 Replace this (from QUALITY STANDARDS):
+Every bullet must convey impact and value through specificity and quantified results
+
+Add subtle industry context to company descriptions where helpful
+
+Create bullets that would make a hiring manager say "wow" within 5 seconds
+
+✅ With this:
+Every bullet must convey value through either metrics, specific tools, clear business results, or implementation context
+
+Avoid overuse of % metrics — use them where they fit, but not by default
+
+Focus on credibility and clarity; specificity beats generic numbers
+
+Add subtle industry context to company descriptions where helpful
+
+Create bullets that would make a hiring manager say "wow" within 5 seconds
+
+🔁 Optional Add (top of prompt or right before “ROLE-AWARE OPTIMIZATION”)
+🧠 Guiding Principle: Not every bullet needs a number. Think like a hiring manager: would a % help here? If not, highlight scope, tools, efficiency, or outcomes in other ways. Use numbers only when they naturally make the line stronger.
