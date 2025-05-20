@@ -5,6 +5,58 @@ import { Resume } from '../shared/schema';
  * Applies multiple transformations to improve resume text quality
  */
 export function enhanceResumeText(resume: Resume): Resume {
+  try {
+    // Create a deep copy of the resume
+    const processedResume = JSON.parse(JSON.stringify(resume));
+    
+    // Process experience section
+    if (processedResume.experience && Array.isArray(processedResume.experience)) {
+      processedResume.experience.forEach((exp: any) => {
+        // Process each bullet point
+        if (exp.bullets && Array.isArray(exp.bullets)) {
+          exp.bullets.forEach((bullet: any) => {
+            if (bullet.text) {
+              // Find sentences within the bullet text using regex pattern matching
+              // Look for lowercase or uppercase letter followed by space and an uppercase letter
+              bullet.text = bullet.text.replace(/([a-z])\s+([A-Z])/g, '$1. $2');
+              
+              // Also look for cases where numbers are followed by capital letters 
+              // (likely a new sentence)
+              bullet.text = bullet.text.replace(/([0-9])\s+([A-Z])/g, '$1. $2');
+            }
+          });
+        }
+      });
+    }
+    
+    // Do the same for the Projects section if it exists
+    if (processedResume.projects && Array.isArray(processedResume.projects)) {
+      processedResume.projects.forEach((project: any) => {
+        if (project.description) {
+          project.description = project.description.replace(/([a-z])\s+([A-Z])/g, '$1. $2');
+          project.description = project.description.replace(/([0-9])\s+([A-Z])/g, '$1. $2');
+        }
+        
+        if (project.details && Array.isArray(project.details)) {
+          project.details.forEach((detail: string, index: number) => {
+            if (detail) {
+              let fixedDetail = detail.replace(/([a-z])\s+([A-Z])/g, '$1. $2');
+              fixedDetail = fixedDetail.replace(/([0-9])\s+([A-Z])/g, '$1. $2');
+              project.details[index] = fixedDetail;
+            }
+          });
+        }
+      });
+    }
+    
+    return processedResume;
+  } catch (error) {
+    console.error('Error fixing sentence punctuation:', error);
+    return resume;
+  }
+}
+
+export function enhanceResumeText(resume: Resume): Resume {
   if (!resume) {
     console.error('ERROR: enhanceResumeText received null or undefined resume');
     return resume;
@@ -26,6 +78,26 @@ export function enhanceResumeText(resume: Resume): Resume {
     processedResume = dedupeMetricEcho(processedResume);
     processedResume = cleanEducationFormat(processedResume);
     processedResume = limitBulletPoints(processedResume);
+    
+    // Fix missing periods between sentences within bullet points
+    if (processedResume.experience && Array.isArray(processedResume.experience)) {
+      processedResume.experience.forEach((exp: any) => {
+        if (exp.bullets && Array.isArray(exp.bullets)) {
+          exp.bullets.forEach((bullet: any) => {
+            if (bullet.text) {
+              // Add periods between sentences (lowercase or uppercase letter followed by space and uppercase letter)
+              bullet.text = bullet.text.replace(/([a-zA-Z0-9])\s+([A-Z])/g, '$1. $2');
+              
+              // Ensure we don't create double periods
+              bullet.text = bullet.text.replace(/\.\s*\./g, '.');
+              
+              // Log for debugging
+              console.log('Fixed sentence punctuation in bullet:', bullet.text);
+            }
+          });
+        }
+      });
+    }
     
     // Log the resume structure after processing
     console.log('AFTER Text processing, resume keys:', 
