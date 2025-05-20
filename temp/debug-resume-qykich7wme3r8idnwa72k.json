@@ -1,0 +1,329 @@
+{
+  "header": {
+    "firstName": "Ignacio",
+    "tagline": "Supply Chain Leader",
+    "location": "Argentina"
+  },
+  "summary": "Seasoned Supply Chain Head with 15+ years in Pharma and FMCG, specializing in strategic procurement and logistics management, delivering $58.5M ROI and achieving 25% cost reductions.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Data Analytics",
+        "Trello",
+        "Lean & Six Sigma",
+        "First Principle Estimating",
+        "AutoCAD",
+        "Bill of Quantities (BOQ)",
+        "Tender Documents",
+        "Project Management",
+        "Cost Estimating",
+        "Cost Consulting",
+        "Budget Management",
+        "Logistics",
+        "Procurement",
+        "Operations Management",
+        "Pharma",
+        "Food",
+        "Travel",
+        "Technology & Services",
+        "AI",
+        "Sustainability",
+        "Supply Chain Optimization",
+        "Vendor Management",
+        "Inventory Management",
+        "Strategic Sourcing",
+        "Logistics Management",
+        "Demand Planning",
+        "Supply Chain Analytics",
+        "ERP Systems",
+        "Quantity Take-off",
+        "Bill of Quantities (BOQ) Preparation",
+        "Project Documentation",
+        "Civil Construction",
+        "Tender Document Preparation"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "Spanish (Native)",
+        "English (Professional)",
+        "Portuguese (Upper Intermediate)",
+        "French (Basic understanding)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "MAD Supply Consulting",
+      "location": "Argentina",
+      "title": "Founder",
+      "startDate": "Oct 2023",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Consulted for LETIS managerial roles, designing a comprehensive restructuring for regionalization, optimizing workflow and improving international alignment.",
+          "metrics": []
+        },
+        {
+          "text": "Designed and implemented a strategic procurement redesign for SGS, boosting tailored solutions per Business Unit, and achieving a 25% cost cut in the first year.",
+          "metrics": [
+            "25% cost reduction"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Philip Morris International",
+      "location": "Argentina",
+      "title": "Southern Cone Customer Service Head",
+      "startDate": "Oct 2021",
+      "endDate": "Sep 2023",
+      "bullets": [
+        {
+          "text": "Oversaw operations across Argentina, Paraguay, Uruguay, Chile, and Bolivia, leading AR & regional distribution centers with Open+ methodologies, generating 12.5M USD productivity.",
+          "metrics": [
+            "12.5M USD productivity"
+          ]
+        },
+        {
+          "text": "Launched a customer collaboration team successfully integrating commercial activities to capture market share and strengthen customer relations, resulting in a 15% increase in customer satisfaction scores.",
+          "metrics": [
+            "15% increase in customer satisfaction"
+          ]
+        },
+        {
+          "text": "Directed financial optimizations, reducing Finished Product Days on Inventory (DoI) from 45 to 15, slashing P&L impact by 75M USD.",
+          "metrics": [
+            "75M USD reduction"
+          ]
+        },
+        {
+          "text": "Championed productivity projects yielding a total savings of 58.5M USD, driving efficiency and business value region-wide.",
+          "metrics": [
+            "58.5M USD projects"
+          ]
+        },
+        {
+          "text": "Executed a cultural shift from S&OP to IBP methodology, enhancing strategic planning processes with an integrated framework.",
+          "metrics": []
+        },
+        {
+          "text": "Managed the successful nationalization of 75% of imported materials amid restrictive import conditions, ensuring operational continuity.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Bayer",
+      "location": "Argentina",
+      "title": "AR Supply Chain Head",
+      "startDate": "Jul 2019",
+      "endDate": "Oct 2021",
+      "bullets": [
+        {
+          "text": "Spearheaded teams across Supply & Demand Planning, Material Management, Order to Cash, ensuring alignment with LATAM demand forecasts and production plans.",
+          "metrics": []
+        },
+        {
+          "text": "Enhanced operations at 2 Argentine production plants, synchronizing release plans for raw materials and finished products for optimal supply chain flow.",
+          "metrics": []
+        },
+        {
+          "text": "Led a project to replace on-site 4PL providers, improving logistical efficiency and operational cost management.",
+          "metrics": []
+        },
+        {
+          "text": "Integrated Order to Cash and ComEx departments, creating cohesiveness that resulted in streamlined operations and improved financial performance.",
+          "metrics": []
+        },
+        {
+          "text": "Negotiated a 2.5M EUR reduction in Raw Material during the pandemic, significantly releasing cash flow constraints.",
+          "metrics": [
+            "2.5M EUR cost reduction"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "World Courier",
+      "location": "Argentina",
+      "title": "Commercial & Business Development Manager",
+      "startDate": "Aug 2017",
+      "endDate": "Jul 2019",
+      "bullets": [
+        {
+          "text": "Pioneered company entry into the temperature-controlled food shipment industry, expanding market reach and client base.",
+          "metrics": [
+            "32% shipment increase"
+          ]
+        },
+        {
+          "text": "Secured 2 tier-1 pharmaceutical tenders, managing operational activities and establishing strategic market position.",
+          "metrics": [
+            "Tier-1 tender wins"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "GlaxoSmithKline",
+      "location": "Argentina",
+      "title": "Supply Planning Regional Manager",
+      "startDate": "Jun 2013",
+      "endDate": "Aug 2017",
+      "bullets": [
+        {
+          "text": "Designed and implemented LATAM planning HUB, and transitioned from Manugistics to SAP APO, improving supply chain responsiveness.",
+          "metrics": []
+        },
+        {
+          "text": "Achieved an exemplary Customer Service Level (CSL) of 98%, showcasing reliability and high operational standards.",
+          "metrics": [
+            "98% CSL"
+          ]
+        },
+        {
+          "text": "Reduced minimum order quantities (MOQ) strategically across production hubs, aiding financial liquidity with a $1089.7K saving.",
+          "metrics": [
+            "$1089.7K savings"
+          ]
+        },
+        {
+          "text": "Efficiently managed stock reduction from 80 to 65 days, releasing $5.4M regionally from operational budgets.",
+          "metrics": [
+            "$5.4M reduction"
+          ]
+        },
+        {
+          "text": "Led the transition of production from New York, mitigating potential market supply disruptions effectively.",
+          "metrics": []
+        },
+        {
+          "text": "Launched 45 products at a regional scale, streamlining processes to avoid market entry delays.",
+          "metrics": [
+            "45 product launches"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Pernod Ricard AR",
+      "location": "Argentina",
+      "title": "Demand Planning Lead / Project Manager",
+      "startDate": "Sep 2011",
+      "endDate": "Jun 2013",
+      "bullets": [
+        {
+          "text": "Implemented an 18-month rolling forecast and monthly S&OP processes, enhancing demand reliability.",
+          "metrics": []
+        },
+        {
+          "text": "Developed KPI Dashboard to track forecast accuracy, MoC, OOS visibility, CSL, and DIO, enabling data-driven decisions.",
+          "metrics": []
+        },
+        {
+          "text": "Increased Forecast Accuracy from 45% to 85%, reinforcing trust in forecasting practices.",
+          "metrics": [
+            "85% accuracy"
+          ]
+        },
+        {
+          "text": "Reduced SLOB inventories at a finished product level by 50%, boosting financial and operational efficiency.",
+          "metrics": [
+            "50% inventory reduction"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Novartis Pharma AG",
+      "location": "Argentina",
+      "title": "AR Demand & Supply Planner",
+      "startDate": "Feb 2009",
+      "endDate": "Sep 2011",
+      "bullets": [
+        {
+          "text": "Elevated Forecast Accuracy from 98% to 99.3% and achieved a CSL of 99.7%, setting a benchmark for excellence.",
+          "metrics": [
+            "99.3% accuracy",
+            "99.7% CSL"
+          ]
+        },
+        {
+          "text": "Managed complex transitions and localizations of 25 products from import to domestic production.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Eastman Kodak Co.",
+      "location": "Argentina",
+      "title": "Regional Operations Responsible (CARICAM, EC, PE, UR, BO)",
+      "startDate": "Nov 2007",
+      "endDate": "Feb 2009",
+      "bullets": [
+        {
+          "text": "Established a robust Drop Shipment process that reduced budget expenditure by 35%, optimizing operating costs.",
+          "metrics": [
+            "35% budget savings"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Bunge Argentina",
+      "location": "Argentina",
+      "title": "AR Demand & Supply Planner",
+      "startDate": "Dec 2005",
+      "endDate": "Nov 2007",
+      "bullets": [
+        {
+          "text": "Implemented the LogEx system for process excellence and trained teams in Argentina and Brazil, fostering cross-border operational improvements.",
+          "metrics": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad Austral Argentina",
+      "degree": "Applicant for Supply Chain MBA",
+      "location": "Argentina",
+      "year": "2026",
+      "additionalInfo": "March 2026 - December 2028"
+    },
+    {
+      "institution": "Project Management Institute",
+      "degree": "PMP Certification",
+      "location": "Argentina",
+      "year": "2014",
+      "additionalInfo": "March 2014 - December 2014"
+    },
+    {
+      "institution": "APICS Centre for Supply Chain Professionals",
+      "degree": "CPIM Certification",
+      "location": "Argentina",
+      "year": "2012",
+      "additionalInfo": "March 2012 - December 2012"
+    },
+    {
+      "institution": "Universidad Católica Argentina",
+      "degree": "Post Graduate in International Businesses",
+      "location": "Argentina",
+      "year": "2010",
+      "additionalInfo": "March 2010 - December 2010"
+    },
+    {
+      "institution": "Universidad Argentina de la Empresa",
+      "degree": "Business Administration Major",
+      "location": "Argentina",
+      "year": "2007",
+      "additionalInfo": "February 2002 - June 2007"
+    }
+  ],
+  "projects": [],
+  "certifications": [],
+  "additionalExperience": ""
+}
