@@ -414,13 +414,7 @@
               {{#if ../detailedFormat}}
                 <!-- Show all bullet points for detailed format -->
                 {{#each bullets}}
-                  <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>
-                    {{#if metrics.length}}
-                      {{#unless (containsAny text metrics)}}
-                        <span class="metrics">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>
-                      {{/unless}}
-                    {{/if}}
-                  </li>
+                  <li><span>{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span></li>
                 {{/each}}
               {{else}}
                 <!-- Progressive bullet point reduction for standard format based on experience position -->
