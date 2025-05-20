@@ -111,7 +111,7 @@ RESUME FORMAT REQUIREMENTS (MANDATORY):
 - Near logo in bottom right (handled by template)
 
 CRITICAL CONTENT SECTIONS (MUST INCLUDE ALL):
-- SUMMARY: Create a compelling two-sentence professional summary (each <90 chars) that mentions specific industries (SaaS, FinTech, etc.) and quantified achievements. This MUST be included.
+- SUMMARY: Create a compelling two-sentence professional summary (each <90 chars) that mentions specific industries (SaaS, FinTech, etc.) and professional strengths. DO NOT include made-up percentage metrics or quantified achievements unless explicitly mentioned in the original resume. Focus on experience and expertise rather than numerical claims. This MUST be included.
 - SKILLS & LANGUAGES: ABSOLUTELY CRITICAL: Extract and list EVERY SINGLE skill mentioned anywhere in the resume. For construction estimator roles, this MUST include First Principle Estimating, Bill of Quantities (BOQ), Tender Documents, Quantity Take-Off, AutoCAD, Civil Construction, Infrastructure Projects, Cost Estimating, Cost Consulting, Project Management, Budget Management, and any others found in the text. For languages, ALWAYS include both English (with reasonable proficiency level) AND the native language from the resume. DO NOT OMIT ANY SKILLS mentioned in the resume. This MUST be included.
 - PROFESSIONAL EXPERIENCE: Reverse chronological order with metrics. This MUST be included.
 - EDUCATION: Must include full degree with specific field of study (e.g., "Bachelor's Degree in International Business", NOT just "Bachelor's Degree"), institution, location, and graduation year. This MUST be included.
