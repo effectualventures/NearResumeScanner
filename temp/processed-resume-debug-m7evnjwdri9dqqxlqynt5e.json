@@ -1,0 +1,372 @@
+{
+  "header": {
+    "firstName": "Ignacio",
+    "tagline": "Supply Chain Head – Expertise in Pharma & FMCG",
+    "location": "Argentina"
+  },
+  "summary": "Supply chain expert with 15+ years in Pharma & FMCG, achieving $58.5M in productivity gains and reducing FP DOI by 75%.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Supply Chain Management",
+        "Procurement Optimization",
+        "Cost Reduction Strategies",
+        "Lean & Six Sigma",
+        "Sales & Operations Planning (S&OP)",
+        "Integrated Business Planning (IBP)",
+        "Customer Service Strategy",
+        "Project Management",
+        "Data Analytics",
+        "Logistics Coordination",
+        "Inventory Control",
+        "Forecasting & Demand Planning",
+        "Quantity Take-off",
+        "Bill of Quantities (BOQ) Preparation",
+        "Cost Estimating",
+        "Cost Consulting",
+        "AutoCAD",
+        "Project Documentation",
+        "Civil Construction",
+        "Budget Management",
+        "Tender Document Preparation"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "Spanish (Native)",
+        "English (Fluent)",
+        "Portuguese (Upper Intermediate)",
+        "French (Basic)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "MAD Supply Consulting",
+      "location": "Argentina",
+      "title": "Founder",
+      "startDate": "Oct 2023",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Designed a comprehensive restructuring process aimed at the regionalization of the company, enhancing operational agility and market penetration.",
+          "metrics": []
+        },
+        {
+          "text": "Redesigned the logistics and procurement processes according to specific BU needs, leading to a 25% reduction in procurement costs in the first year.",
+          "metrics": [
+            "25% cost reduction"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Philip Morris International",
+      "location": "Argentina",
+      "title": "Southern Cone Customer Service Head",
+      "startDate": "Oct 2021",
+      "endDate": "Sep 2023",
+      "bullets": [
+        {
+          "text": "Managed operations across Argentina, Paraguay, Uruguay, Chile, and Bolivia, ensuring seamless processes and cross-border efficiencies, achieving a 10% increase in cross-border efficiency.",
+          "metrics": [
+            "10% efficiency increase"
+          ]
+        },
+        {
+          "text": "Implemented 'Open+' methodology, achieving $12.5M in productivity improvements at regional distribution centers.",
+          "metrics": [
+            "$12.5M productivity"
+          ]
+        },
+        {
+          "text": "Launched a customer collaboration team, deeply integrating commercial activities to streamline operations.",
+          "metrics": []
+        },
+        {
+          "text": "Reduced finished products' Days of Inventory from 45 to 15 days, generating a $75M reduction in P&L.",
+          "metrics": [
+            "75M USD reduction"
+          ]
+        },
+        {
+          "text": "Executed multiple productivity projects totaling $58.5M, solidifying operations and reducing overhead.",
+          "metrics": [
+            "58.5M USD"
+          ]
+        },
+        {
+          "text": "Transitioned from S&OP to IBP methodology, fostering a data-driven culture and elevating strategic planning.",
+          "metrics": []
+        },
+        {
+          "text": "Led nationalization initiatives for 75% of imported materials amid SIRA constraints, optimizing local supply chains.",
+          "metrics": [
+            "75% nationalization"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Bayer",
+      "location": "Argentina",
+      "title": "AR Supply Chain Head",
+      "startDate": "Jul 2019",
+      "endDate": "Oct 2021",
+      "bullets": [
+        {
+          "text": "Oversaw Supply & Demand Planning, Material Management, Order to Cash, and Distribution, streamlining operations across two production plants.",
+          "metrics": []
+        },
+        {
+          "text": "Aligned production plans with LATAM demand forecasts, optimizing supply chain responsiveness.",
+          "metrics": []
+        },
+        {
+          "text": "Implemented major 4PL replacement project, ensuring uninterrupted service levels and operational excellence.",
+          "metrics": []
+        },
+        {
+          "text": "Integrated Order 2 Cash and ComEx departments, enhancing process efficiencies and cross-functional collaboration.",
+          "metrics": []
+        },
+        {
+          "text": "Released $2.7MM in cash flow during pandemic by reducing RM, maintaining financial stability.",
+          "metrics": [
+            "$2.7MM release"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "World Courier",
+      "location": "Argentina",
+      "title": "Commercial & Business Development Manager",
+      "startDate": "Aug 2017",
+      "endDate": "Jul 2019",
+      "bullets": [
+        {
+          "text": "Expanded company into the food industry focusing on temperature-controlled shipments, introducing innovative logistics solutions.",
+          "metrics": []
+        },
+        {
+          "text": "Increased shipment volumes by 32% through tier 2 customer sales, boosting market presence.",
+          "metrics": [
+            "32% increase"
+          ]
+        },
+        {
+          "text": "Secured two major tier 1 pharma tenders, enhancing operational capacity and customer satisfaction.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "GlaxoSmithKline",
+      "location": "Argentina",
+      "title": "Supply Planning Regional Manager",
+      "startDate": "Jun 2013",
+      "endDate": "Aug 2017",
+      "bullets": [
+        {
+          "text": "Led the creation and implementation of LATAM planning HUB, centralizing processes and driving efficiencies.",
+          "metrics": []
+        },
+        {
+          "text": "Achieved a Customer Service Level (CSL) of 98% across the region.",
+          "metrics": [
+            "98% CSL"
+          ]
+        },
+        {
+          "text": "Reduced minimum order quantities for productive hubs, recovering $1089.7K in capital.",
+          "metrics": [
+            "$1089.7K recovery"
+          ]
+        },
+        {
+          "text": "Lowered regional inventories by $5.4MM, cutting days of stock from 80 to 65 days.",
+          "metrics": [
+            "$5.4MM reduction"
+          ]
+        },
+        {
+          "text": "Decreased safety stock across the market by 15 days, achieving inventory reductions valued at $4.5MM.",
+          "metrics": [
+            "$4.5MM reduction"
+          ]
+        },
+        {
+          "text": "Cut regional working capital inventories from $76.9MM to $57.7MM.",
+          "metrics": [
+            "$19.2MM reduction"
+          ]
+        },
+        {
+          "text": "Collaborated material stock at a US hub by 15% YOY, recovering 7.8% financial outlay.",
+          "metrics": [
+            "7.8% recovery"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Pernod Ricard AR",
+      "location": "Argentina",
+      "title": "Demand Planning Lead / Project Manager",
+      "startDate": "Sep 2011",
+      "endDate": "Jun 2013",
+      "bullets": [
+        {
+          "text": "Implemented 18M rolling forecasts and monthly S&OP processes, aligning demand with strategic goals.",
+          "metrics": []
+        },
+        {
+          "text": "Developed KPI dashboards including Forecast Accuracy and DIO metrics, boosting transparency.",
+          "metrics": []
+        },
+        {
+          "text": "Automated tools for analyzing sales vs. forecast data, improving decision-making accuracy.",
+          "metrics": []
+        },
+        {
+          "text": "Reduced slow-moving and obsolete inventories by 50% at the FP level.",
+          "metrics": [
+            "50% reduction"
+          ]
+        },
+        {
+          "text": "Improved forecast accuracy from 45% to 85%, enhancing supply chain efficiency.",
+          "metrics": [
+            "40% increase"
+          ]
+        },
+        {
+          "text": "Increased CSL from 88% to 96.5%, strengthening service delivery.",
+          "metrics": [
+            "8.5% increase"
+          ]
+        },
+        {
+          "text": "Drove raw material purchases by 18%, optimizing procurement strategy.",
+          "metrics": [
+            "18% reduction"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Novartis Pharma AG",
+      "location": "Argentina",
+      "title": "AR Demand & Supply Planner",
+      "startDate": "Feb 2009",
+      "endDate": "Sep 2011",
+      "bullets": [
+        {
+          "text": "Enhanced forecast accuracy from 98% to 99.3%, maintaining CSL at remarkable 99.7%.",
+          "metrics": [
+            "99.3% forecast accuracy",
+            "99.7% CSL"
+          ]
+        },
+        {
+          "text": "Transferred 25 products to local production in response to DJAI impact, stabilizing the supply chain.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Eastman Kodak Co.",
+      "location": "Argentina",
+      "title": "Regional Operations Responsible CARICAM, EC, PE, UR, BO",
+      "startDate": "Nov 2007",
+      "endDate": "Feb 2009",
+      "bullets": [
+        {
+          "text": "Implemented drop shipment processes, saving 35% of the area's budget and enhancing logistical efficiencies.",
+          "metrics": [
+            "35% budget savings"
+          ]
+        },
+        {
+          "text": "Developed 3M and 6M purchasing forecasts with distributors, improving supply chain predictability.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Bunge Argentina",
+      "location": "Argentina",
+      "title": "AR Demand & Supply Planner",
+      "startDate": "Dec 2005",
+      "endDate": "Nov 2007",
+      "bullets": [
+        {
+          "text": "Spearheaded the implementation of 'LogEx' logistical excellence systems, enhancing process capability.",
+          "metrics": []
+        },
+        {
+          "text": "Collaborated with Accenture consulting teams to train and support operational teams in Brazil and Argentina.",
+          "metrics": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad Austral Argentina",
+      "degree": "Applicant for Supply Chain MBA",
+      "location": "Argentina",
+      "year": "2026",
+      "additionalInfo": "March 2026 - December 2028"
+    },
+    {
+      "institution": "Project Management Institute",
+      "degree": "PMP Certification",
+      "location": "Argentina",
+      "year": "2014",
+      "additionalInfo": "March 2014 - December 2014"
+    },
+    {
+      "institution": "APICS Centre for Supply Chain Professionals",
+      "degree": "CPIM Certification",
+      "location": "Argentina",
+      "year": "2012",
+      "additionalInfo": "March 2012 - December 2012"
+    },
+    {
+      "institution": "Universidad Catolica Argentina",
+      "degree": "Post Graduate in International Businesses",
+      "location": "Argentina",
+      "year": "2010",
+      "additionalInfo": "March 2010 - December 2010"
+    },
+    {
+      "institution": "Universidad Argentina de la Empresa",
+      "degree": "Business Administration Major",
+      "location": "Argentina",
+      "year": "2007",
+      "additionalInfo": "February 2002 - June 2007"
+    }
+  ],
+  "certifications": [],
+  "projects": [],
+  "leadershipActivities": [
+    {
+      "organization": "Alex Coffee Roasters",
+      "role": "Co-Founder & Angel Investor",
+      "startDate": "Apr 2017",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Developed brand identity for own stores & franchises, including design of store layout, furniture, and branding."
+        },
+        {
+          "text": "Designed unique coffee blends, enhancing product offerings."
+        }
+      ]
+    }
+  ]
+}
