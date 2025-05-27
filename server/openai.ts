@@ -37,8 +37,8 @@ ${detailedFormat ?
   4. Expand EVERY bullet point with specific implementations, methodologies, challenges overcome, and quantifiable results
   5. Include ALL past roles from the original resume with EXTENSIVE details - do not omit or condense employment history
   6. For EACH company, add 1-2 sentences about the business, market position, and industry context
-  7. For recent roles (within 5 years), include AT LEAST 10-12 bullet points with multiple metrics per bullet
-  8. Provide EXTREMELY detailed descriptions of projects, responsibilities, and achievements for each role
+  7. For recent roles (within 5 years), include 10–12 detailed bullet points that highlight impact through clear outcomes. Only include metrics when they are realistic and appropriate.
+8. Provide detailed descriptions of projects, responsibilities, and achievements using tools, outcomes, or credible metrics.
   9. Use the FULL width of the page - make bullet points span at least 80% of the available width
   10. SKILLS SECTION: Include AT LEAST 12-15 skills under multiple categories (Skills, Tools, Certifications, Technical Skills, etc.) - be comprehensive and detailed with specific tools, methodologies, and technical expertise
   11. THIS IS CRITICAL: The final output MUST fill TWO COMPLETE PAGES with no empty space` 
@@ -98,7 +98,7 @@ For each bullet point that lacks clear impact:
 1. Clarify what success looks like — either through metrics, tools, business outcomes, or implementation details.
 2. Only add percentages or dollar amounts when they are realistic and natural for the context.
 3. If no clear metric exists, improve the bullet by anchoring it in business value, tools used, or technical specificity.
-4. Never insert a % or $ metric just for filler — each one must enhance credibility and match the candidate's level.
+4. Never insert a % or $ metric just for filler — each one must enhance credibility and match the candidate’s level.
 
 RESUME FORMAT REQUIREMENTS (MANDATORY):
 - Clean, professional layout with standard sections
@@ -123,7 +123,7 @@ BULLET & FORMATTING RULES:
 1. Every bullet MUST end with a period and have a strong action verb.
 2. Format Skills & Languages with ONLY two categories: "Skills" and "Languages". For Languages, include proficiency level (e.g., "Skills: Project Management, Leadership, CRM | Languages: English (C2), Spanish (Native)")
 3. Every company header MUST follow exact format "Company — City, Country" (with proper em dash) - location is required for ALL companies
-4. Every role must include at least 3 strong bullet points. At least one should include a business outcome or measurable impact — but this can be a dollar amount, percentage, customer value, or clear operational improvement. Use judgment.
+Every role must include at least 3 strong bullet points. At least one should include a business outcome or measurable impact — but this can be a dollar amount, percentage, customer value, or clear operational improvement. Use judgment.
 5. Convert all currencies with format "($1.2M USD)" when showing monetary values
 6. Format numbers: K for thousands, M for millions, B for billions, no decimals
 7. Allocate bullets based on relevance with highest-impact stat first for each role

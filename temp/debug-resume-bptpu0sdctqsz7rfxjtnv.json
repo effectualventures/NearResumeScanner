@@ -1,0 +1,233 @@
+{
+  "header": {
+    "firstName": "José",
+    "tagline": "Senior Supply Chain Leader – Global Operations & Strategic Planning",
+    "location": "Argentina"
+  },
+  "summary": "Accomplished supply chain leader in Pharma & FMCG with over 15 years of experience, driving $75M+ cost savings with strategic transformations.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Supply Chain Management",
+        "Strategic Planning",
+        "Logistics Optimization",
+        "Forecasting & Demand Planning",
+        "Data Analytics",
+        "Lean & Six Sigma",
+        "SAP APO",
+        "Manugistics",
+        "4PL Management",
+        "S&OP",
+        "IBP Methodology",
+        "Project Management",
+        "Trello",
+        "ERP Systems",
+        "CRM Tools",
+        "BI Tools",
+        "PMP Certification",
+        "CPIM Certification",
+        "Cost Estimating",
+        "Cost Consulting",
+        "Tender Document Preparation",
+        "Budget Management",
+        "Quantity Take-off",
+        "Bill of Quantities (BOQ) Preparation",
+        "AutoCAD",
+        "Project Documentation",
+        "Civil Construction"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "Spanish (Native)",
+        "English (Professional)",
+        "Portuguese (Upper Intermediate)",
+        "French (Basic understanding)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "MAD SUPPLY CONSULTING",
+      "location": "Hybrid (Argentina)",
+      "title": "Founder",
+      "startDate": "Oct 2023",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Designed and executed the regional restructuring process for LETIS, aligning operations with strategic regional objectives to enhance competitive positioning, resulting in a 20% increase in operational efficiency.",
+          "metrics": []
+        },
+        {
+          "text": "Implemented a comprehensive procurement redesign for SGS tailored to specific business unit needs, achieving a significant 25% reduction in procurement costs in the first year.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Philip Morris International",
+      "location": "Hybrid (Argentina)",
+      "title": "Southern Cone Customer Service Head",
+      "startDate": "Oct 2021",
+      "endDate": "Sep 2023",
+      "bullets": [
+        {
+          "text": "Oversaw operations across Argentina, Paraguay, Uruguay, Chile, and Bolivia, driving $12.5M productivity gains at regional distribution centers through the 'Open+' methodology.",
+          "metrics": []
+        },
+        {
+          "text": "Spearheaded the integration of customer collaboration teams with commercial activities, significantly enhancing customer service responsiveness.",
+          "metrics": []
+        },
+        {
+          "text": "Drove the reduction of Finished Product Days of Inventory (FP DoI) from 45 to 15 days, realizing a P&L impact of $75M.",
+          "metrics": []
+        },
+        {
+          "text": "Generated $58.5M in productivity improvements through focused process optimization initiatives.",
+          "metrics": []
+        },
+        {
+          "text": "Led organizational shift from S&OP to IBP methodology with a comprehensive cultural transformation strategy.",
+          "metrics": []
+        },
+        {
+          "text": "Nationalized 75% of imported materials amid SIRAs regulations, ensuring continued production and market supply.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Bayer",
+      "location": "Hybrid (Argentina)",
+      "title": "AR Supply Chain Head",
+      "startDate": "Jul 2019",
+      "endDate": "Oct 2021",
+      "bullets": [
+        {
+          "text": "Managed Supply & Demand Planning, Material Management, ComEx, and Order to Cash teams, optimizing operations at two production plants.",
+          "metrics": []
+        },
+        {
+          "text": "Aligned production plans with LATAM demand forecasts, ensuring timely release of Raw Materials and Finished Products for optimal customer supply.",
+          "metrics": []
+        },
+        {
+          "text": "Orchestrated on-site 4PL replacement, contributing to significant operational efficiencies and cost savings.",
+          "metrics": []
+        },
+        {
+          "text": "Integrated Order to Cash and ComEx departments, achieving a streamlined process flow and improved cash cycle management.",
+          "metrics": []
+        },
+        {
+          "text": "Facilitated a $2.7M reduction in raw materials, improving cash flow during the pandemic.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "World Courier",
+      "location": "On-site (Argentina)",
+      "title": "Commercial & Business Development Manager",
+      "startDate": "Aug 2017",
+      "endDate": "Jul 2019",
+      "bullets": [
+        {
+          "text": "Expanded company presence into the food industry for temperature-controlled shipments, increasing shipment volume by 32% via tier 2 customers.",
+          "metrics": []
+        },
+        {
+          "text": "Secured two tier 1 pharma tenders, overseeing operational activities and contributing to significant revenue growth.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "GlaxoSmithKline",
+      "location": "On-site (Argentina)",
+      "title": "Supply Planning Regional Manager",
+      "startDate": "Jun 2013",
+      "endDate": "Aug 2017",
+      "bullets": [
+        {
+          "text": "Designed and led the implementation of LATAM planning HUB and SAP APO, transitioning from Manugistics to enhance planning accuracy.",
+          "metrics": []
+        },
+        {
+          "text": "Achieved a 98% CSL at a regional level by optimizing supply chain processes and reducing stock levels.",
+          "metrics": []
+        },
+        {
+          "text": "Reduced purchasing MOQ, saving $1089.7K, and cut stock days from 80 to 65, releasing $5.4M.",
+          "metrics": []
+        },
+        {
+          "text": "Decreased safety stock days by 15 at a regional level, releasing $4.5M, and reduced working capital from $76.9M to $57.7M.",
+          "metrics": []
+        },
+        {
+          "text": "Coordinated the resourceful transference of a NY production plant, maintaining market availability.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Eastman Kodak Co.",
+      "location": "On-site (Argentina)",
+      "title": "Regional Operations Responsible CARICAM, EC, PE, UR, BO",
+      "startDate": "Nov 2007",
+      "endDate": "Feb 2009",
+      "bullets": [
+        {
+          "text": "Implemented a Drop Shipment process for materials, achieving a 35% savings on the area's budget.",
+          "metrics": []
+        },
+        {
+          "text": "Executed 3M&6M purchasing forecasts with distributors, enhancing supply chain visibility.",
+          "metrics": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad Austral Argentina",
+      "degree": "Applicant for Supply Chain MBA",
+      "location": "Argentina",
+      "year": "2026",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Project Management Institute",
+      "degree": "PMP Certification",
+      "location": "Argentina",
+      "year": "2014",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "APICS Centre for Supply Chain Professionals",
+      "degree": "CPIM Certification",
+      "location": "Argentina",
+      "year": "2012",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Universidad Catolica Argentina",
+      "degree": "Post Graduate in International Businesses",
+      "location": "Argentina",
+      "year": "2010",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Universidad Argentina de la Empresa",
+      "degree": "Business Administration Major",
+      "location": "Argentina",
+      "year": "2007",
+      "additionalInfo": ""
+    }
+  ],
+  "additionalExperience": ""
+}
