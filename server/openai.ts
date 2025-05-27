@@ -7,146 +7,172 @@ import {
 import * as fs from 'fs';
 import * as path from 'path';
 
+// Configuration constants
+const CONFIG = {
+  MAX_BULLETS_PER_ROLE: 7,
+  OPENAI_MODEL: "gpt-4o",
+  MAX_SUMMARY_LENGTH: 180, // Reduced to ensure complete sentences
+  REQUIRED_SECTIONS: ['Summary', 'Skills', 'Experience', 'Education']
+};
+
 // Initialize OpenAI with API key from environment variables
 const openai = new OpenAI({ 
   apiKey: process.env.OPENAI_API_KEY || 'your-api-key'
 });
 
-// Main function to transform resume
-export async function transformResume(
-  resumeText: string,
-  sessionId: string,
-  detailedFormat: boolean = false,
-  includeAdditionalExp: boolean = true,
-  useOpenAIValidation: boolean = true
-): Promise<ResumeTransformationResponse> {
-  try {
-    // Create system prompt with comprehensive stakeholder feedback and role-aware logic
-    // Check if detailed format is requested
-    const formatType = detailedFormat ? "DETAILED TWO-PAGE FORMAT" : "STANDARD ONE-PAGE FORMAT";
-    
-    const systemPrompt = `
-You are an expert resume editor specializing in transforming Latin American professional resumes into high-quality, "Americanized" formats for Near's talent database. Your task is to reformat, enhance, and optimize resumes to showcase candidates as confident, top-tier talent while maintaining factual accuracy and professional credibility.
+// Simple role detection function
+function detectRole(resumeText: string): string {
+  const text = resumeText.toLowerCase();
 
-FORMAT TYPE: ${formatType}
-${detailedFormat ? 
-  `⚠️ THIS RESUME ABSOLUTELY MUST FILL TWO FULL PAGES - NON-NEGOTIABLE ⚠️:
-  1. This resume is for an experienced professional with 10+ years of experience
-  2. MANDATORY: Include MINIMUM 8-10 bullet points for each role (NOT 5-7) - ESPECIALLY for recent positions
-  3. Make each bullet point LONGER and MORE DETAILED than standard format - write a complete picture
-  4. Expand EVERY bullet point with specific implementations, methodologies, challenges overcome, and quantifiable results
-  5. Include ALL past roles from the original resume with EXTENSIVE details - do not omit or condense employment history
-  6. For EACH company, add 1-2 sentences about the business, market position, and industry context
-  7. For recent roles (within 5 years), include 10–12 detailed bullet points that highlight impact through clear outcomes. Only include metrics when they are realistic and appropriate.
-8. Provide detailed descriptions of projects, responsibilities, and achievements using tools, outcomes, or credible metrics.
-  9. Use the FULL width of the page - make bullet points span at least 80% of the available width
-  10. SKILLS SECTION: Include AT LEAST 12-15 skills under multiple categories (Skills, Tools, Certifications, Technical Skills, etc.) - be comprehensive and detailed with specific tools, methodologies, and technical expertise
-  11. THIS IS CRITICAL: The final output MUST fill TWO COMPLETE PAGES with no empty space` 
-  : 
-  `This resume should be optimized for a one-page format that highlights the most impactful and relevant experiences, prioritizing quality over quantity. Limit bullet points to 3-5 per role, focusing only on highest-impact achievements.`
+  // Check for specific role indicators
+  if (text.includes('sdr') || text.includes('sales development')) return 'SDR';
+  if (text.includes('account executive') || text.includes(' ae ')) return 'AE';
+  if (text.includes('sales manager') || text.includes('sales lead')) return 'SALES_MANAGER';
+  if (text.includes('business development') || text.includes('business developer')) return 'BIZ_DEV';
+  if (text.includes('marketing') || text.includes('campaign')) return 'MARKETING';
+  if (text.includes('engineer') || text.includes('developer') || text.includes('technical')) return 'TECHNICAL';
+
+  // Fallback: try to determine from experience bullets
+  if (text.includes('pipeline') || text.includes('quota') || text.includes('prospects')) return 'SALES_GENERAL';
+  if (text.includes('code') || text.includes('software') || text.includes('api')) return 'TECHNICAL';
+
+  return 'GENERAL';
 }
 
-ROLE-AWARE OPTIMIZATION (HIRING MANAGER MINDSET):
-You must actively "think like" a U.S. hiring manager for the specific role the candidate is targeting. Analyze the resume to determine the role type (Sales, Technical, Support, etc.) and then enhance each section with relevant KPIs and business impacts that U.S. hiring managers would expect.
+// Role-specific guidance - balanced approach to metrics
+const ROLE_GUIDANCE = {
+  SDR: `
+For SDR/BDR roles, focus on these key metrics when they naturally fit:
+- Pipeline generation with specific amounts when credible
+- Conversion rates and quota attainment percentages
+- Outbound activity volume and results
+- Performance ranking relative to team when known
+- Lead qualification and opportunity creation numbers`,
 
-For EVERY bullet point missing specific metrics, predict what a hiring manager for that role would want to see:
+  AE: `
+For AE/Sales roles, emphasize these achievements:
+- Deal sizes and revenue numbers when specific amounts are known
+- Win rates and sales cycle improvements with realistic percentages
+- Territory growth and account expansion metrics
+- Relationship management scope (number of accounts, deal values)
+- Year-over-year growth figures when available`,
 
-For SDR/BDR roles, hiring managers SPECIFICALLY want to see:
-- EXACT pipeline generation numbers: "Generated $3.2M in qualified pipeline, exceeding target by 28%" (not just "generated pipeline")
-- PRECISE conversion metrics: "Achieved 37% connect-to-meeting conversion rate, 15% above team average" (not just "good conversion rate")
-- SPECIFIC quota attainment: "Consistently achieved 132% of quota for 5 consecutive quarters" (not just "exceeded quota")
-- ACTUAL outbound volume: "Executed 80+ strategic outbound sequences resulting in 42 qualified opportunities" (not just "many sequences")
-- COMPARATIVE metrics: "Maintained top performer status with 148% attainment vs. team average of 102%" (not just "top performer")
+  SALES_MANAGER: `
+For Sales Management roles, highlight:
+- Team performance metrics (quota attainment, growth rates)
+- Individual rep development and productivity improvements
+- Team retention and hiring success rates
+- Process improvements that led to measurable gains
+- Budget management and resource allocation results`,
 
-For AE/Sales roles, hiring managers SPECIFICALLY want to see:
-- SPECIFIC deal metrics: "Closed 5 enterprise deals valued at $250K-$780K, including a record $780K deal" (not just "large deals")
-- PRECISE win rates: "Maintained 42% win rate against key competitors, compared to team average of 31%" (not just "good win rate")
-- EXACT revenue growth: "Grew territory revenue by 37% YoY, highest growth rate in the region" (not just "grew revenue")
-- CONCRETE sales cycle improvements: "Reduced average sales cycle from 95 to 64 days through value-selling approach" (not just "faster sales")
-- NUMERIC relationships: "Managed portfolio of 35 strategic accounts generating $4.7M in annual recurring revenue" (not just "many accounts")
+  BIZ_DEV: `
+For Business Development roles, showcase:
+- Market opportunity identification and sizing
+- Partnership development and pipeline contribution
+- New market entry results and expansion metrics
+- Relationship building scope and conversion rates
+- Strategic initiative outcomes and business impact`,
 
-For Business Development roles, hiring managers SPECIFICALLY want to see:
-- EXACT opportunity metrics: "Identified and qualified $4.2M in untapped opportunities across 5 key LATAM markets" (not just "identified opportunities")
-- SPECIFIC partnership results: "Established 3 strategic partnerships yielding $1.5M in new pipeline within 6 months" (not just "created partnerships")
-- PRECISE market analysis: "Conducted comprehensive market analysis resulting in 42% increase in qualified leads" (not just "analyzed markets") 
-- CONCRETE relationship metrics: "Cultivated 12 new enterprise relationships with 35% conversion to opportunities" (not just "built relationships")
-- NUMERIC evaluation metrics: "Evaluated 40+ partner requests using 5-point scoring system, improving partner quality by 42%" (not just "evaluated partners")
-For Sales Management, hiring managers SPECIFICALLY want to see:
-- PRECISE team quota metrics: "Led team to 115% average quota attainment, with 7 of 8 SDRs exceeding targets by min. 15%" (not just "good performance")
-- SPECIFIC rep development metrics: "Increased per-rep pipeline generation by 47% through personalized coaching" (not just "developed team")
-- EXACT retention metrics: "Maintained 90% team retention rate vs. company average of 70%" (not just "good retention")
-- PRECISE ramp time metrics: "Reduced new hire ramp time from 4 months to 2.5 months through improved onboarding" (not just "faster onboarding")
-- TANGIBLE performance metrics: "Improved team connect rate from 23% to 42% through call coaching and targeted messaging" (not just "improved performance")
+  MARKETING: `
+For Marketing roles, demonstrate:
+- Campaign performance and lead generation results
+- Conversion rate improvements and funnel optimization
+- Budget management and ROI achievements
+- Brand awareness and engagement growth
+- Digital marketing metrics (traffic, rankings, engagement)`,
 
-For Marketing roles, hiring managers SPECIFICALLY want to see:
-- EXACT lead generation metrics: "Increased MQL volume by 137% YoY through targeted campaigns" (not just "more leads")
-- SPECIFIC conversion metrics: "Improved MQL-to-SQL conversion from 12% to 28% in 6 months" (not just "better conversion")
-- PRECISE campaign ROI: "Achieved 347% ROI on targeted ABM campaigns, 2.5x industry average" (not just "good ROI")
-- CONCRETE engagement metrics: "Boosted email engagement by 84% with personalized content strategy" (not just "better engagement")
-- NUMERIC growth metrics: "Drove 42% increase in organic traffic resulting in 215 qualified leads" (not just "more traffic")
+  TECHNICAL: `
+For Technical roles, emphasize:
+- Performance improvements and optimization results
+- System scale and reliability enhancements
+- Cost savings through technical improvements
+- Process automation and efficiency gains
+- User experience improvements and adoption metrics`,
 
-For Technical roles, hiring managers SPECIFICALLY want to see:
-- SPECIFIC optimization metrics: "Reduced page load time by 62%, decreasing bounce rate by 37%" (not just "faster performance")
-- PRECISE scale metrics: "Scaled architecture to handle 3.5M concurrent users, up from 850K" (not just "improved scale")
-- EXACT cost savings: "Saved $420K annually through cloud infrastructure optimization" (not just "reduced costs")
-- CONCRETE efficiency metrics: "Automated 72% of routine tasks, saving 28 developer hours weekly" (not just "increased efficiency")
-- NUMERIC improvement metrics: "Decreased application error rate from 2.3% to 0.4%, improving user retention by 28%" (not just "fewer errors")
+  SALES_GENERAL: `
+For Sales roles, focus on:
+- Revenue impact and quota performance
+- Customer acquisition and retention
+- Process improvements and efficiency gains
+- Territory or market development results`,
 
-🧠 Guiding Principle: Not every bullet needs a number. Think like a hiring manager: would a % help here? If not, highlight scope, tools, efficiency, or outcomes in other ways. Use numbers only when they naturally make the line stronger.
+  GENERAL: `
+Focus on quantifiable business impact:
+- Process improvements with measurable outcomes
+- Cost savings or revenue contributions when known
+- Efficiency gains and productivity improvements
+- Project scope and stakeholder management
+- Tools and methodologies that delivered results`
+};
 
-For each bullet point that lacks clear impact:
-1. Clarify what success looks like — either through metrics, tools, business outcomes, or implementation details.
-2. Only add percentages or dollar amounts when they are realistic and natural for the context.
-3. If no clear metric exists, improve the bullet by anchoring it in business value, tools used, or technical specificity.
-4. Never insert a % or $ metric just for filler — each one must enhance credibility and match the candidate’s level.
+// Base system prompt components
+const BASE_PROMPT = `
+You are an expert resume editor specializing in transforming professional resumes into high-quality, "Americanized" formats for Near's talent database. Your task is to reformat, enhance, and optimize resumes to showcase candidates as confident, top-tier talent while maintaining factual accuracy and professional credibility.
 
-RESUME FORMAT REQUIREMENTS (MANDATORY):
+CRITICAL FORMATTING REQUIREMENTS:
 - Clean, professional layout with standard sections
-- One or two page length depending on experience level (generally use one page for less than 10 years experience)
 - First name only (anonymized) - CRITICAL
-- Professional role title (5 words max) must be metric-anchored, specific and tailored (e.g., "Senior Sales Development Leader – SaaS & Retail Tech")
-- Location (City, Country)
-- Sections MUST appear in this exact order: Summary, Skills & Tools, Professional Experience, Education, Additional Experience
+- Professional role title (5 words max) must be specific and tailored
+- Location format: "Country" for header, "City, Country" for experience/education
+- Sections MUST appear in this exact order: Summary, Skills, Professional Experience, Education, Additional Experience
 - Past tense for all bullets except current role
 - Solid round bullets with periods at the end of each bullet
-- Three-letter month format for all dates (e.g., "Jan 2023 – Present") - consistency is critical
-- Near logo in bottom right (handled by template)
+- Three-letter month format for all dates (e.g., "Jan 2023 – Present")
 
-CRITICAL CONTENT SECTIONS (MUST INCLUDE ALL):
-- SUMMARY: Create a compelling two-sentence professional summary (each <90 chars) that mentions specific industries (SaaS, FinTech, etc.) and professional strengths. DO NOT include made-up percentage metrics or quantified achievements unless explicitly mentioned in the original resume. Focus on experience and expertise rather than numerical claims. This MUST be included.
-- SKILLS & LANGUAGES: ABSOLUTELY CRITICAL: Extract and list EVERY SINGLE skill mentioned anywhere in the resume. For construction estimator roles, this MUST include First Principle Estimating, Bill of Quantities (BOQ), Tender Documents, Quantity Take-Off, AutoCAD, Civil Construction, Infrastructure Projects, Cost Estimating, Cost Consulting, Project Management, Budget Management, and any others found in the text. For languages, ALWAYS include both English (with reasonable proficiency level) AND the native language from the resume. DO NOT OMIT ANY SKILLS mentioned in the resume. This MUST be included.
-- PROFESSIONAL EXPERIENCE: Reverse chronological order with metrics. This MUST be included.
-- EDUCATION: Must include full degree with specific field of study (e.g., "Bachelor's Degree in International Business", NOT just "Bachelor's Degree"), institution, location, and graduation year. This MUST be included.
-- ADDITIONAL EXPERIENCE: ${includeAdditionalExp ? 'REQUIRED - must include this section with volunteer work, community contributions, or other activities' : 'DO NOT INCLUDE this section regardless of resume content'}.
+CONTENT REQUIREMENTS:
+- SUMMARY: Create a compelling professional summary (maximum ${CONFIG.MAX_SUMMARY_LENGTH} characters) with TWO complete sentences. Ensure both sentences are fully formed and end properly. Focus on experience and expertise.
+- SKILLS: Extract and list all relevant skills from the resume. Include both technical and soft skills. Always include English and native language.
+- EXPERIENCE: Reverse chronological order. Every role needs at least 3 strong bullet points with realistic, credible achievements.
+- EDUCATION: Include full degree with field of study, institution, location, and graduation year. If year is unknown, use "N/A" sparingly and only when absolutely necessary.
 
-BULLET & FORMATTING RULES:
-1. Every bullet MUST end with a period and have a strong action verb.
-2. Format Skills & Languages with ONLY two categories: "Skills" and "Languages". For Languages, include proficiency level (e.g., "Skills: Project Management, Leadership, CRM | Languages: English (C2), Spanish (Native)")
-3. Every company header MUST follow exact format "Company — City, Country" (with proper em dash) - location is required for ALL companies
-Every role must include at least 3 strong bullet points. At least one should include a business outcome or measurable impact — but this can be a dollar amount, percentage, customer value, or clear operational improvement. Use judgment.
-5. Convert all currencies with format "($1.2M USD)" when showing monetary values
-6. Format numbers: K for thousands, M for millions, B for billions, no decimals
-7. Allocate bullets based on relevance with highest-impact stat first for each role
-8. Education format must be precise: "Institution — Degree in Field, Location, Year" with GPA if available
-9. Company and product names must have correct capitalization: "AltiSales" not "AltISales"
-10. ALWAYS use past tense for bullets in previous roles (ended jobs) and present tense ONLY for current roles
-11. Include industry context (SaaS, B2B, etc.) in company descriptions or role bullets
+METRICS AND ACHIEVEMENTS GUIDELINES:
+- Use specific numbers and percentages ONLY when they enhance credibility
+- Avoid round numbers like 20%, 30%, 40% - use more specific figures like 23%, 37%, 42%
+- Each bullet should have business impact, but not every bullet needs a percentage
+- Focus on scope, tools, methodologies, and outcomes over manufactured metrics
+- When adding metrics, ensure they match the candidate's experience level and role
 
 QUALITY STANDARDS:
-- Summary must feel human and impressive, not generic (avoid phrases like "dynamic business developer")
-- Bullets must have strong action verbs that convey impact, not just responsibilities
-- Every bullet must convey value through either metrics, specific tools, clear business results, or implementation context
-- Avoid overuse of % metrics — use them where they fit, but not by default
-- Focus on credibility and clarity; specificity beats generic numbers
-- Add subtle industry context to company descriptions where helpful
-- Create bullets that would make a hiring manager say "wow" within 5 seconds
-- For "led team" descriptions, always include team performance metrics (attainment, growth, retention)
-- When adding quantifiable outcomes, make them specific but credible (e.g., 42% is more believable than 40%)
-- Never add metrics that would seem implausible or overstated for the role or experience level
-- Perfect grammar and spelling throughout the document
-- Every section MUST be included - Summary, Skills, Experience, Education
+- Strong action verbs that convey impact
+- Specific, believable achievements that pass the "credibility test"
+- Industry context where helpful
+- Perfect grammar and spelling
+- Professional credibility throughout`;
 
-Your response must be a valid JSON object representing the processed resume with the following structure:
+const FORMAT_GUIDANCE = {
+  DETAILED: `
+⚠️ DETAILED TWO-PAGE FORMAT REQUIREMENTS:
+- Include 8-10 bullet points per recent role (5+ years)
+- Expand bullet points with specific implementations and methodologies
+- Include company context and market position
+- Use full page width for content
+- Skills section must include 12-15 comprehensive skills
+- Final output MUST fill two complete pages`,
+
+  STANDARD: `
+STANDARD ONE-PAGE FORMAT:
+- Limit to 3-5 bullet points per role
+- Focus on highest-impact achievements
+- Prioritize quality over quantity
+- Optimize for concise, powerful statements`
+};
+
+// Build system prompt based on detected role and format
+function buildSystemPrompt(detectedRole: string, detailedFormat: boolean, includeAdditionalExp: boolean): string {
+  const roleGuidance = ROLE_GUIDANCE[detectedRole] || ROLE_GUIDANCE['GENERAL'];
+  const formatGuidance = detailedFormat ? FORMAT_GUIDANCE.DETAILED : FORMAT_GUIDANCE.STANDARD;
+
+  return `${BASE_PROMPT}
+
+FORMAT TYPE: ${detailedFormat ? "DETAILED TWO-PAGE FORMAT" : "STANDARD ONE-PAGE FORMAT"}
+${formatGuidance}
+
+ROLE-SPECIFIC OPTIMIZATION:
+${roleGuidance}
+
+ADDITIONAL EXPERIENCE: ${includeAdditionalExp ? 'REQUIRED - include volunteer work, community contributions, or other activities' : 'DO NOT INCLUDE this section'}.
+
+Your response must be a valid JSON object with this structure:
 {
   "header": {
     "firstName": string,
@@ -171,8 +197,7 @@ Your response must be a valid JSON object representing the processed resume with
       "endDate": string,
       "bullets": [
         {
-          "text": string,
-          "metrics": string[]
+          "text": string
         }
       ]
     }
@@ -188,360 +213,140 @@ Your response must be a valid JSON object representing the processed resume with
   ],
   "additionalExperience": string
 }`;
+}
 
+// Main function to transform resume
+export async function transformResume(
+  resumeText: string,
+  sessionId: string,
+  detailedFormat: boolean = false,
+  includeAdditionalExp: boolean = true,
+  useOpenAIValidation: boolean = true
+): Promise<ResumeTransformationResponse> {
+
+  // Input validation
+  if (!resumeText || resumeText.trim().length < 50) {
+    return {
+      success: false,
+      resume: null,
+      error: 'Resume text is too short or empty'
+    };
+  }
+
+  if (!sessionId || sessionId.trim().length === 0) {
+    return {
+      success: false,
+      resume: null,
+      error: 'Session ID is required'
+    };
+  }
+
+  try {
+    console.log(`[${sessionId}] Starting resume transformation`);
+
+    // Detect role and build appropriate prompt
+    const detectedRole = detectRole(resumeText);
+    console.log(`[${sessionId}] Detected role: ${detectedRole}`);
+
+    const systemPrompt = buildSystemPrompt(detectedRole, detailedFormat, includeAdditionalExp);
+    const userPrompt = String(resumeText);
+
+    console.log(`[${sessionId}] System prompt length: ${systemPrompt.length} characters`);
+
+    // Call OpenAI API
+    const response = await openai.chat.completions.create({
+      model: CONFIG.OPENAI_MODEL,
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt }
+      ],
+      response_format: { type: "json_object" }
+    });
+
+    // Parse and validate response
+    const responseContent = response.choices[0].message.content || '';
+    console.log(`[${sessionId}] OpenAI response length: ${responseContent.length}`);
+
+    let resumeData: Resume;
     try {
-      // User prompt is simply the resume text - ensure it's a string
-      const userPrompt = String(resumeText);
-      
-      // Call OpenAI API
-      const response = await openai.chat.completions.create({
-        model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: userPrompt }
-        ],
-        response_format: { type: "json_object" }
-      });
-      
-      // Parse the response JSON, ensuring we have a string
-      const responseContent = response.choices[0].message.content || '';
-      console.log('OpenAI API response length:', responseContent.length);
-      console.log('OpenAI API response preview:', responseContent.substring(0, 300) + '...');
-      
-      // Parse the JSON response
-      let resumeData: Resume;
-      try {
-        resumeData = JSON.parse(responseContent);
-        
-        // Validate the parsed data has the expected structure
-        if (!resumeData || typeof resumeData !== 'object') {
-          console.error('ERROR: OpenAI returned invalid JSON structure');
-          throw new Error('Invalid JSON structure in API response');
-        }
-        
-        console.log('Parsed resume data structure - keys:', Object.keys(resumeData).join(', '));
-        
-        // Validate critical resume sections
-        if (!resumeData.header || typeof resumeData.header !== 'object') {
-          console.error('ERROR: Missing or invalid header section in resume data');
-          resumeData.header = { 
-            firstName: 'Professional',
-            tagline: 'Resume',
-            location: 'United States'
-          };
-        }
-        
-        if (!resumeData.skills || !Array.isArray(resumeData.skills)) {
-          console.error('ERROR: Missing or invalid skills section in resume data');
-          resumeData.skills = [];
-        }
-        
-        if (!resumeData.experience || !Array.isArray(resumeData.experience)) {
-          console.error('ERROR: Missing or invalid experience section in resume data');
-          resumeData.experience = [];
-        }
-      } catch (parseError) {
-        console.error('Error parsing OpenAI response:', parseError);
-        console.error('Invalid JSON response from OpenAI API');
-        throw new Error('Failed to parse resume data from API response');
+      resumeData = JSON.parse(responseContent);
+
+      if (!resumeData || typeof resumeData !== 'object') {
+        throw new Error('Invalid JSON structure in API response');
       }
-      
-      // Consolidate skills into just Skills and Languages per user requirement
-      const languageItems: string[] = [];
-      const skillItems: string[] = [];
-      
-      // First gather all skills and languages from various categories
-      resumeData.skills.forEach(skillCategory => {
-        if (skillCategory.category.toLowerCase() === "languages") {
-          languageItems.push(...skillCategory.items);
-        } else {
-          skillItems.push(...skillCategory.items);
-        }
-      });
-      
-      // For construction estimator roles, always ensure a comprehensive set of skills
-      if (resumeData.header.tagline.toLowerCase().includes('estimator') || 
-          resumeData.header.tagline.toLowerCase().includes('quant') ||
-          resumeData.header.tagline.toLowerCase().includes('construction')) {
-        
-        // Add comprehensive estimator skills based on original resume
-        const comprehensiveEstimatorSkills = [
-          "First Principle Estimating",
-          "Bill of Quantities (BOQ) Preparation",
-          "Quantity Take-off",
-          "AutoCAD",
-          "Revit",
-          "Civil Construction",
-          "Infrastructure Projects",
-          "Cost Estimating",
-          "Cost Consulting",
-          "Tender Document Preparation",
-          "Project Management",
-          "Budget Management",
-          "Project Documentation",
-          "Stakeholder Collaboration",
-          "Commercial Construction",
-          "Residential Construction",
-          "Value Engineering",
-          "Construction Project Lifecycle",
-          "Bluebeam",
-          "Excel Advanced Functions",
-          "Construction Standards",
-          "Design Interpretation",
-          "Structural Engineering",
-          "MEP Systems Estimation",
-          "Procurement Management",
-          "Construction Site Supervision",
-          "Architectural Drawing Analysis",
-          "Cost Planning",
-          "Progress Monitoring",
-          "Contract Administration"
-        ];
-        
-        // Add only skills that aren't already present
-        comprehensiveEstimatorSkills.forEach(skill => {
-          if (!skillItems.some(item => item.toLowerCase().includes(skill.toLowerCase()))) {
-            skillItems.push(skill);
-          }
-        });
-        
-        console.log("Enhanced estimator skills with comprehensive industry-specific capabilities");
+
+      // Validate required sections
+      if (!resumeData.header) {
+        resumeData.header = { 
+          firstName: 'Professional',
+          tagline: 'Resume',
+          location: 'United States'
+        };
       }
-      
-      // If no languages found, add English with reasonable assumption
-      if (languageItems.length === 0) {
-        languageItems.push("English (Fluent)", "Portuguese (Native)");
-        console.log("Added default languages since none were found");
-      } else if (!languageItems.some(lang => lang.toLowerCase().includes('english'))) {
-        // Make sure English is included
-        languageItems.push("English (Fluent)");
-        console.log("Added English language as it was missing from original output");
+
+      if (!Array.isArray(resumeData.skills)) {
+        resumeData.skills = [];
       }
-      
-      // Make sure English is marked as Fluent for consistency
-      for (let i = 0; i < languageItems.length; i++) {
-        if (languageItems[i].toLowerCase().includes('english') && 
-            !languageItems[i].toLowerCase().includes('fluent')) {
-          languageItems[i] = "English (Fluent)";
-          console.log("Updated English language proficiency to Fluent");
-        }
+
+      if (!Array.isArray(resumeData.experience)) {
+        resumeData.experience = [];
       }
-      
-      // Create the consolidated skills array with just Skills and Languages
-      // Remove duplicates without using Sets (for compatibility)
-      const uniqueSkillItems: string[] = [];
-      skillItems.forEach(skill => {
-        if (!uniqueSkillItems.includes(skill)) {
-          uniqueSkillItems.push(skill);
-        }
-      });
-      
-      const uniqueLanguageItems: string[] = [];
-      languageItems.forEach(lang => {
-        if (!uniqueLanguageItems.includes(lang)) {
-          uniqueLanguageItems.push(lang);
-        }
-      });
-      
-      resumeData.skills = [
-        {
-          category: "Skills",
-          items: uniqueSkillItems
-        },
-        {
-          category: "Languages",
-          items: uniqueLanguageItems
-        }
-      ];
-      
-      console.log("Consolidated skills categories to just Skills and Languages");
-      
-      let finalResume = resumeData;
-      
-      // Only run validation step if enabled
-      if (useOpenAIValidation) {
-        // NEW VALIDATION STEP - Run the resume through a quality check
-        console.log("Running resume validation and enhancement process...");
-        finalResume = await validateAndEnhanceResume(resumeData, resumeText);
-      } else {
-        console.log("Skipping OpenAI validation step (faster processing)");
-      }
-      
-      // Apply square meter normalization to fix m2/m² rendering issues
-      finalResume = normalizeSquareMeters(finalResume);
-      
-      // Standardize location formatting (remove city, keep State, Country)
-      finalResume = standardizeLocations(finalResume);
-      
-      // Remove repetitive starts in bullet points (e.g. "Developed... Developed... Developed...")
-      finalResume = removeBulletRepetition(finalResume);
-      
-      // Note: Duplicate metrics removal is now handled in text-processor-v2.ts
-      // with a more sophisticated implementation
-      
-      // Apply bullet point limitation (max 7 bullets per role)
-      // For detailed format, still limit to 7 bullets per stakeholder feedback
-      const maxBullets = 7; // Set hard limit to 7 regardless of format
-      finalResume = limitBulletPoints(finalResume, maxBullets);
-      
-      // Clean up education degree formatting
-      finalResume = cleanEducationFormat(finalResume);
-      
-      // Create temp directory if it doesn't exist
-      if (!fs.existsSync('temp')) {
-        fs.mkdirSync('temp', { recursive: true });
-      }
-      
-      // Write debug JSON with session ID in filename for easier correlation with PDFs
-      const debugPath = `temp/debug-resume-${sessionId}.json`;
-      fs.writeFileSync(debugPath, JSON.stringify(finalResume, null, 2));
-      console.log(`Debug resume JSON written to: ${debugPath}`);
-      
+
+    } catch (parseError) {
+      console.error(`[${sessionId}] JSON parsing failed:`, parseError);
+      throw new Error('Failed to parse resume data from API response');
+    }
+
+    // Consolidate skills into Skills and Languages categories
+    const consolidatedSkills = consolidateSkills(resumeData.skills);
+    resumeData.skills = consolidatedSkills;
+
+    let finalResume = resumeData;
+
+    // Optional validation step
+    if (useOpenAIValidation) {
+      console.log(`[${sessionId}] Running validation step`);
+      finalResume = await validateAndEnhanceResume(resumeData, resumeText, sessionId);
+    }
+
+    // Apply post-processing improvements
+    finalResume = standardizeLocations(finalResume);
+    finalResume = removeBulletRepetition(finalResume);
+    finalResume = limitBulletPoints(finalResume, CONFIG.MAX_BULLETS_PER_ROLE);
+    finalResume = cleanEducationFormat(finalResume);
+    finalResume = validateSummaryCompletion(finalResume, sessionId);
+
+    // Write debug output
+    const debugPath = `temp/debug-resume-${sessionId}.json`;
+    if (!fs.existsSync('temp')) {
+      fs.mkdirSync('temp', { recursive: true });
+    }
+    fs.writeFileSync(debugPath, JSON.stringify(finalResume, null, 2));
+    console.log(`[${sessionId}] Debug file written: ${debugPath}`);
+
+    return {
+      success: true,
+      resume: finalResume
+    };
+
+  } catch (error: any) {
+    console.error(`[${sessionId}] Error transforming resume:`, error);
+
+    // Handle rate limits with demo data
+    if (error?.status === 429 || error?.code === 'insufficient_quota') {
+      console.log(`[${sessionId}] Rate limit reached, using demo data`);
+
+      const demoResume: Resume = createDemoResume();
+
+      const debugDemoPath = `temp/debug-demo-resume-${sessionId}.json`;
+      fs.writeFileSync(debugDemoPath, JSON.stringify(demoResume, null, 2));
+
       return {
         success: true,
-        resume: finalResume
+        resume: demoResume
       };
-    } catch (error: any) {
-      console.error('OpenAI API error:', error);
-      
-      // If we encounter rate limits or quota issues, provide a demo resume
-      if (error?.status === 429 || error?.code === 'insufficient_quota') {
-        console.log('OpenAI rate limit reached. Using demo resume data.');
-        
-        // Create a demonstration resume with sample data following stakeholder requirements
-        const demoResume: Resume = {
-          header: {
-            firstName: "Luis",
-            tagline: "Senior Sales Development Leader – SaaS & Retail Tech",
-            location: "Bogotá, Colombia",
-            city: "Bogotá",
-            country: "Colombia"
-          },
-          summary: "Strategic B2B SaaS sales leader with proven expertise in driving $1M+ deals and leading high-performance teams. Specialized in optimizing LATAM market sales strategies, resulting in 35% revenue growth in retail tech sector.",
-          skills: [
-            {
-              category: "Skills",
-              items: ["B2B Sales Strategy", "Enterprise Deal Negotiation", "Channel Management", "SaaS Sales Methodology", "Sales Pipeline Forecasting", "Market Segmentation", "Sales Pipeline Analysis", "Opportunity Scoring", "Lead Qualification", "Sales Territory Management", "Salesforce Enterprise", "HubSpot Sales Hub", "Outreach.io", "SalesLoft", "ZoomInfo", "LinkedIn Sales Navigator"]
-            },
-            {
-              category: "Languages",
-              items: ["English (C2)", "Spanish (Native)", "Portuguese (B1)"]
-            }
-          ],
-          experience: [
-            {
-              company: "Toshiba Global Commerce Solutions",
-              location: "Bogotá, Colombia",
-              title: "Business Development",
-              startDate: "Oct 2023",
-              endDate: "Present",
-              bullets: [
-                {
-                  text: "Sourced a $880K deal with a U.S. stadium, resulting in the largest retail tech implementation in LATAM region for Q1 2024.",
-                  metrics: ["$880K deal", "Largest in LATAM"]
-                },
-                {
-                  text: "Conducted analysis to evaluate potential of new business and channel opportunities in LATAM.",
-                  metrics: ["20+ opportunities identified"]
-                },
-                {
-                  text: "Cultivated new customer relationships in alignment with Toshiba's strategy.",
-                  metrics: ["15 new clients"]
-                },
-                {
-                  text: "Established strategic partnerships with key stakeholders to increase deal velocity by 28%.",
-                  metrics: ["28% faster deals"]
-                },
-                {
-                  text: "Collaborated with cross-functional teams to achieve business objectives and channel revenue targets.",
-                  metrics: ["112% of target"]
-                }
-              ]
-            },
-            {
-              company: "Veridas",
-              location: "Bogotá, Colombia",
-              title: "Sales Development Manager",
-              startDate: "Jan 2022",
-              endDate: "Jul 2023",
-              bullets: [
-                {
-                  text: "Led and coached a team of 5 SDRs over LATAM and U.S. markets, achieving 125% of target in first quarter.",
-                  metrics: ["125% of target", "5-person team"]
-                },
-                {
-                  text: "Designed scalable sales strategies optimizing workflows for efficiency, reducing lead response time by 35%.",
-                  metrics: ["35% faster response"]
-                },
-                {
-                  text: "Developed sales playbooks, performance tracking systems, and training programs that increased SDR productivity by 42%.",
-                  metrics: ["42% productivity increase"]
-                }
-              ]
-            },
-            {
-              company: "Incode Technologies",
-              location: "Bogotá, Colombia",
-              title: "Senior Business Developer",
-              startDate: "Jul 2021",
-              endDate: "Jan 2022",
-              bullets: [
-                {
-                  text: "Initiated sales opportunities through prospecting and lead qualification, generating $1.2M in pipeline.",
-                  metrics: ["$1.2M pipeline"]
-                },
-                {
-                  text: "Developed refined sales outreach sequences increasing prospect engagement by 47%.",
-                  metrics: ["47% higher engagement"]
-                }
-              ]
-            },
-            {
-              company: "AltiSales",
-              location: "Bogotá, Colombia",
-              title: "Senior SDR",
-              startDate: "Aug 2020",
-              endDate: "Jun 2021",
-              bullets: [
-                {
-                  text: "Drove lead generation and qualification via calls and digital channels, converting 15% more prospects than team average.",
-                  metrics: ["15% above average"]
-                },
-                {
-                  text: "Sourced an $880K deal with a U.S. stadium, the largest in company history at that time.",
-                  metrics: ["$880K deal"]
-                }
-              ]
-            }
-          ],
-          education: [
-            {
-              institution: "Universidad Sergio Arboleda",
-              degree: "Bachelor's Degree in International Business",
-              location: "Bogotá, Colombia",
-              year: "2020",
-              additionalInfo: "GPA 3.8; President of Sales Club; Graduated with honors"
-            }
-          ],
-          additionalExperience: "Led quarterly go-to-market strategy sessions for LATAM B2B SaaS market entry. Delivered presentations at SaaS Connect 2022 conference on 'Enterprise Sales Enablement in Emerging Markets' and contributed to SalesHacker blog series on optimizing sales technology stacks."
-        };
-        
-        // Also write debug JSON for demo resume
-        const debugDemoPath = `temp/debug-demo-resume-${sessionId}.json`;
-        fs.writeFileSync(debugDemoPath, JSON.stringify(demoResume, null, 2));
-        console.log(`Debug demo resume JSON written to: ${debugDemoPath}`);
-        
-        return {
-          success: true,
-          resume: demoResume
-        };
-      } else {
-        // For other errors, return the error message
-        throw error;
-      }
     }
-  } catch (error: any) {
-    console.error('Error transforming resume:', error);
+
     return {
       success: false,
       resume: null,
@@ -550,247 +355,335 @@ Your response must be a valid JSON object representing the processed resume with
   }
 }
 
-// Process feedback directly from ChatGPT
-// Generate automated feedback for a processed resume
+// Helper function to consolidate skills
+function consolidateSkills(skills: any[]): any[] {
+  const languageItems: string[] = [];
+  const skillItems: string[] = [];
+
+  skills.forEach(skillCategory => {
+    if (skillCategory.category.toLowerCase() === "languages") {
+      languageItems.push(...skillCategory.items);
+    } else {
+      skillItems.push(...skillCategory.items);
+    }
+  });
+
+  // Ensure English is included
+  if (!languageItems.some(lang => lang.toLowerCase().includes('english'))) {
+    languageItems.push("English (Professional)");
+  }
+
+  // Remove duplicates
+  const uniqueSkills = [...new Set(skillItems)];
+  const uniqueLanguages = [...new Set(languageItems)];
+
+  return [
+    {
+      category: "Skills",
+      items: uniqueSkills
+    },
+    {
+      category: "Languages", 
+      items: uniqueLanguages
+    }
+  ];
+}
+
+// Create demo resume for rate limit scenarios
+function createDemoResume(): Resume {
+  return {
+    header: {
+      firstName: "Maria",
+      tagline: "Strategic Sales Development Leader – B2B SaaS",
+      location: "Colombia",
+      city: "Bogotá",
+      country: "Colombia"
+    },
+    summary: "Strategic B2B SaaS sales professional with 8+ years driving revenue growth and team performance. Specialized in LATAM market expansion with proven track record of exceeding targets.",
+    skills: [
+      {
+        category: "Skills",
+        items: ["B2B Sales", "Pipeline Management", "Lead Qualification", "CRM Management", "Sales Strategy", "Team Leadership", "Market Analysis", "Client Relationship Management"]
+      },
+      {
+        category: "Languages",
+        items: ["English (Professional)", "Spanish (Native)", "Portuguese (Conversational)"]
+      }
+    ],
+    experience: [
+      {
+        company: "TechSolutions Inc",
+        location: "Colombia",
+        title: "Senior Sales Development Representative",
+        startDate: "Jan 2022",
+        endDate: "Present",
+        bullets: [
+          {
+            text: "Generated $2.1M in qualified pipeline, exceeding target by 35% through strategic prospecting."
+          },
+          {
+            text: "Achieved 142% of quota for 6 consecutive quarters, ranking top 5% company-wide."
+          },
+          {
+            text: "Developed and executed outreach sequences resulting in 38% connect-to-meeting conversion rate."
+          }
+        ]
+      }
+    ],
+    education: [
+      {
+        institution: "Universidad Nacional",
+        degree: "Bachelor's Degree in Business Administration",
+        location: "Colombia",
+        year: "2018",
+        additionalInfo: "Marketing concentration"
+      }
+    ],
+    additionalExperience: "Active volunteer with local entrepreneurship organizations, mentoring early-stage startups on sales strategy and market entry."
+  };
+}
+
+// New function to validate summary completion
+function validateSummaryCompletion(resume: Resume, sessionId: string): Resume {
+  if (!resume.summary) return resume;
+
+  const processedResume = { ...resume };
+
+  // Check if summary ends abruptly or is incomplete
+  const summary = processedResume.summary.trim();
+
+  // Common patterns that indicate incomplete summaries
+  const incompletePatterns = [
+    / and$/,           // ends with " and"
+    / with$/,          // ends with " with"
+    / including$/,     // ends with " including"
+    / through$/,       // ends with " through"
+    / by$/,           // ends with " by"
+    / in$/,           // ends with " in"
+    / of$/,           // ends with " of"
+    / to$/,           // ends with " to"
+    / for$/,          // ends with " for"
+    /\.\s*\w+\s*$/    // ends with period followed by incomplete word
+  ];
+
+  let isIncomplete = false;
+  for (const pattern of incompletePatterns) {
+    if (pattern.test(summary)) {
+      isIncomplete = true;
+      break;
+    }
+  }
+
+  // Also check if summary is too long
+  if (summary.length > CONFIG.MAX_SUMMARY_LENGTH) {
+    isIncomplete = true;
+  }
+
+  if (isIncomplete) {
+    console.log(`[${sessionId}] Detected incomplete summary, fixing...`);
+
+    // Try to clean up by removing incomplete trailing phrase
+    let cleanedSummary = summary;
+
+    // Remove trailing incomplete phrases
+    for (const pattern of incompletePatterns) {
+      cleanedSummary = cleanedSummary.replace(pattern, '.');
+    }
+
+    // Ensure it ends with a period
+    if (!cleanedSummary.endsWith('.')) {
+      cleanedSummary += '.';
+    }
+
+    // Truncate if still too long
+    if (cleanedSummary.length > CONFIG.MAX_SUMMARY_LENGTH) {
+      // Find the last complete sentence within the limit
+      const sentences = cleanedSummary.split('. ');
+      let result = '';
+
+      for (const sentence of sentences) {
+        const potential = result ? `${result}. ${sentence}` : sentence;
+        if (potential.length <= CONFIG.MAX_SUMMARY_LENGTH - 1) { // -1 for final period
+          result = potential;
+        } else {
+          break;
+        }
+      }
+
+      cleanedSummary = result.endsWith('.') ? result : result + '.';
+    }
+
+    processedResume.summary = cleanedSummary;
+    console.log(`[${sessionId}] Summary fixed: ${cleanedSummary.length} characters`);
+  }
+
+  return processedResume;
+}
+
+// Enhanced validation function
+export async function validateAndEnhanceResume(
+  resume: Resume,
+  originalText: string,
+  sessionId: string
+): Promise<Resume> {
+  try {
+    console.log(`[${sessionId}] Starting validation`);
+
+    // Basic validation checks
+    const issues = [];
+
+    // Check summary
+    if (!resume.summary) {
+      issues.push('Missing summary');
+    } else if (resume.summary.length > CONFIG.MAX_SUMMARY_LENGTH) {
+      issues.push('Summary too long');
+    }
+
+    // Check required sections
+    if (!resume.skills || resume.skills.length === 0) {
+      issues.push('Missing skills section');
+    }
+
+    if (!resume.experience || resume.experience.length === 0) {
+      issues.push('Missing experience section');
+    }
+
+    // Check education for N/A years
+    if (resume.education) {
+      const naCount = resume.education.filter(edu => 
+        !edu.year || edu.year.toLowerCase() === 'n/a' || edu.year.trim() === ''
+      ).length;
+
+      if (naCount > 0) {
+        issues.push(`${naCount} education entries missing graduation years`);
+      }
+    }
+
+    if (issues.length === 0) {
+      console.log(`[${sessionId}] Validation passed`);
+      return resume;
+    }
+
+    console.log(`[${sessionId}] Validation found ${issues.length} issues:`, issues);
+
+    // Apply basic fixes
+    const enhancedResume = { ...resume };
+
+    // Fix education N/A issues by trying to infer reasonable years
+    if (enhancedResume.education) {
+      enhancedResume.education.forEach((edu, index) => {
+        if (!edu.year || edu.year.toLowerCase() === 'n/a' || edu.year.trim() === '') {
+          // Try to infer from degree type and work experience
+          const currentYear = new Date().getFullYear();
+          const oldestWorkYear = enhancedResume.experience
+            ?.map(exp => exp.startDate ? parseInt(exp.startDate.split(' ')[1]) : currentYear)
+            .filter(year => !isNaN(year))
+            .sort((a, b) => a - b)[0] || currentYear;
+
+          // Estimate graduation year based on degree type
+          let estimatedYear = oldestWorkYear - 2; // Assume 2 years before first job
+
+          if (edu.degree.toLowerCase().includes('master')) {
+            estimatedYear = oldestWorkYear - 1; // Masters usually closer to work start
+          }
+
+          // Ensure reasonable range
+          if (estimatedYear < 1990) estimatedYear = 1990;
+          if (estimatedYear > currentYear) estimatedYear = currentYear;
+
+          edu.year = estimatedYear.toString();
+          console.log(`[${sessionId}] Estimated graduation year for ${edu.institution}: ${estimatedYear}`);
+        }
+      });
+    }
+
+    return enhancedResume;
+
+  } catch (error) {
+    console.error(`[${sessionId}] Validation error:`, error);
+    return resume;
+  }
+}
+
+// Generate feedback function (simplified)
 export async function generateFeedback(
   currentResume: Resume,
   pdfUrl: string
 ): Promise<string> {
   try {
-    // Read the project MD files for context
-    let projectContext = '';
-    try {
-      const mdFiles = [
-        path.join(process.cwd(), 'attached_assets', 'near-resume-processor-prd-clean.md'),
-        path.join(process.cwd(), 'attached_assets', 'resume-processor-principles.md'),
-        path.join(process.cwd(), 'attached_assets', 'near-resume-implementation-guide.md')
-      ];
-      
-      for (const filePath of mdFiles) {
-        if (fs.existsSync(filePath)) {
-          const content = fs.readFileSync(filePath, 'utf8');
-          projectContext += content + '\n\n';
-        }
-      }
-    } catch (err) {
-      console.log('Could not load project context files:', err);
-      // Continue without context if files can't be read
-    }
-    
-    // Create system prompt for generating feedback with role-aware analysis
     const systemPrompt = `
-You are an expert resume reviewer with the following responsibilities:
-1. Evaluate the resume for adherence to Near's resume standards
-2. Provide specific, actionable feedback to improve the resume based on the target role
-3. Focus on the most impactful improvements first
-4. Consider feedback from multiple perspectives
+You are an expert resume reviewer for a staffing agency. Provide specific, actionable feedback to improve this resume for client presentations.
 
-You will critique this resume as if you were these 4 different stakeholders:
-1. CEO Perspective: Strategic positioning, executive presence, and overall impression
-2. Design Perspective: Visual consistency, spacing, formatting, and readability
-3. Sales Perspective: Impact metrics, achievements, and persuasiveness
-4. Customer Perspective: Clarity, credibility, and alignment with US hiring expectations
+Focus on:
+1. Professional presentation quality
+2. Quantified achievements and metrics
+3. Formatting consistency
+4. Industry-relevant skills and experience
+5. Overall impression for hiring managers
 
-${projectContext ? 'USE THIS PROJECT CONTEXT TO GUIDE YOUR FEEDBACK:\n' + projectContext : ''}
+Be constructive and specific in your recommendations.`;
 
-ROLE-AWARE ANALYSIS (CRITICAL):
-First, identify the candidate's target role (SDR, AE, Sales Manager, Operations, etc.) from their experience and skills.
-Then evaluate if the resume effectively demonstrates the KPIs and business impacts that a U.S. hiring manager would expect for that specific role:
+    const userPrompt = `Please review this resume and provide feedback:\n\n${JSON.stringify(currentResume, null, 2)}`;
 
-For Sales roles:
-- Are there metrics about pipeline generation, win rates, deal sizes, quota attainment?
-- Do leadership roles include team performance data?
-- Are impact statements quantified with revenue, growth percentages, or efficiency gains?
-
-For Marketing roles:
-- Are there metrics about lead generation, conversion rates, campaign ROI?
-- Does it quantify growth, engagement, or audience expansion metrics?
-
-For Technical roles:
-- Does it show technical impact on business outcomes?
-- Are there efficiency/optimization metrics that demonstrate business value?
-
-For Operations/Support roles:
-- Are there metrics about process improvements, time/cost savings, quality improvements?
-- Does it quantify scale, volume, or efficiency gains?
-
-KEY EVALUATION CRITERIA:
-- Does the resume follow Near's formatting standards?
-- Is the summary compelling and specific to the industry?
-- Are the skills properly categorized and comprehensive?
-- Do all experience bullets include quantifiable metrics that would impress a U.S. hiring manager?
-- Are metrics believable, specific, and aligned with industry standards for the role?
-- Are team leadership roles enhanced with team performance data?
-- Is everything properly formatted (dates, bullets, spacing)?
-- Are there any inconsistencies in tense, format, or punctuation?
-- Is the education section properly formatted with full degree and field?
-- Does the entire resume fit on one page with proper white space?
-
-Format your response as a structured review with:
-1. Overall Rating (1-10) and summary assessment, including identified target role
-2. Top 3-5 strengths of the resume
-3. Top 3-5 areas for improvement with specific suggestions tailored to enhance role-specific impact
-4. Feedback from the 4 stakeholder perspectives
-5. Suggested additions of specific metrics or KPIs that would strengthen the resume for the target role
-6. Conclusion with 1-2 sentence recommendation for implementation
-
-Be specific, actionable, and professional. Your feedback will be directly used to improve this resume.`;
-
-    // User prompt is simply the resume JSON
-    const userPrompt = `Please review this resume JSON and provide comprehensive feedback:\n\n${JSON.stringify(currentResume, null, 2)}\n\nThe visual PDF version is available at: ${pdfUrl}`;
-    
-    // Call OpenAI API
     const response = await openai.chat.completions.create({
-      model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+      model: CONFIG.OPENAI_MODEL,
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt }
       ]
     });
-    
-    // Return the feedback
+
     return response.choices[0].message.content || 'Failed to generate feedback.';
+
   } catch (error: any) {
     console.error('Error generating feedback:', error);
-    return `Failed to generate automatic feedback: ${error.message || 'Unknown error'}. Please try again later or provide your own feedback.`;
+    return `Failed to generate feedback: ${error.message || 'Unknown error'}`;
   }
 }
 
+// Process direct feedback (simplified)
 export async function processDirectFeedback(
   feedback: string,
   implementationPlan: string,
   currentResume: Resume
 ): Promise<ChatProcessingResponse> {
   try {
-    // Create system prompt with highly specific role-aware intelligence for hiring managers
     const systemPrompt = `
-You are an expert resume editor helping transform resumes into the "Near format" following very specific stakeholder requirements.
-You've been given feedback from a human reviewer to improve a resume. Your job is to implement this feedback with precise, role-specific enhancements.
+You are a resume editor implementing specific feedback. Apply the requested changes while maintaining professional formatting and consistency.
 
-Your task is to:
-1. Understand what changes are being suggested in the feedback
-2. Apply those changes to the resume while maintaining all formatting requirements
-3. Identify the candidate's target role and ACTIVELY "THINK LIKE A HIRING MANAGER" for that role
-4. ALWAYS verify that ALL mandatory sections are included (Summary, Skills, Experience, Education)
-5. Make precise, targeted modifications to the resume JSON with specific, not generic, metrics
-6. Return the updated resume JSON along with a summary of changes made
+Key requirements:
+- Keep all required sections (Summary, Skills, Experience, Education)
+- Maintain professional tone and formatting
+- Ensure metrics are realistic and credible
+- Use strong action verbs
 
-ROLE-AWARE OPTIMIZATION (HIRING MANAGER MINDSET):
-First identify the candidate's target role type (Sales, Technical, Support, etc.) from the feedback and resume.
-For EVERY bullet point missing specific metrics, predict what a hiring manager for that role would want to see:
+Current resume: ${JSON.stringify(currentResume, null, 2)}
 
-For SDR/BDR roles, hiring managers SPECIFICALLY want to see:
-- EXACT pipeline generation numbers: "Generated $3.2M in qualified pipeline, exceeding target by 28%" (not just "generated pipeline")
-- PRECISE conversion metrics: "Achieved 37% connect-to-meeting conversion rate, 15% above team average" (not just "good conversion rate")
-- SPECIFIC quota attainment: "Consistently achieved 132% of quota for 5 consecutive quarters" (not just "exceeded quota")
-- ACTUAL outbound volume: "Executed 80+ strategic outbound sequences resulting in 42 qualified opportunities" (not just "many sequences")
-- COMPARATIVE metrics: "Maintained top performer status with 148% attainment vs. team average of 102%" (not just "top performer")
+Feedback to implement: ${feedback}
+${implementationPlan ? `Implementation plan: ${implementationPlan}` : ''}
 
-For AE/Sales roles, hiring managers SPECIFICALLY want to see:
-- SPECIFIC deal metrics: "Closed 5 enterprise deals valued at $250K-$780K, including a record $780K deal" (not just "large deals")
-- PRECISE win rates: "Maintained 42% win rate against key competitors, compared to team average of 31%" (not just "good win rate")
-- EXACT revenue growth: "Grew territory revenue by 37% YoY, highest growth rate in the region" (not just "grew revenue")
-- CONCRETE sales cycle improvements: "Reduced average sales cycle from 95 to 64 days through value-selling approach" (not just "faster sales")
-- NUMERIC relationships: "Managed portfolio of 35 strategic accounts generating $4.7M in annual recurring revenue" (not just "many accounts")
+Return updated resume JSON and list of changes made.`;
 
-For Sales Management, hiring managers SPECIFICALLY want to see:
-- PRECISE team quota metrics: "Led team to 115% average quota attainment, with 7 of 8 SDRs exceeding targets by min. 15%" (not just "good performance")
-- SPECIFIC rep development metrics: "Increased per-rep pipeline generation by 47% through personalized coaching" (not just "developed team")
-- EXACT retention metrics: "Maintained 90% team retention rate vs. company average of 70%" (not just "good retention")
-- PRECISE ramp time metrics: "Reduced new hire ramp time from 4 months to 2.5 months through improved onboarding" (not just "faster onboarding")
-- TANGIBLE performance metrics: "Improved team connect rate from 23% to 42% through call coaching and targeted messaging" (not just "improved performance")
-
-For Marketing roles, hiring managers SPECIFICALLY want to see:
-- EXACT lead generation metrics: "Increased MQL volume by 137% YoY through targeted campaigns" (not just "more leads")
-- SPECIFIC conversion metrics: "Improved MQL-to-SQL conversion from 12% to 28% in 6 months" (not just "better conversion")
-- PRECISE campaign ROI: "Achieved 347% ROI on targeted ABM campaigns, 2.5x industry average" (not just "good ROI")
-- CONCRETE engagement metrics: "Boosted email engagement by 84% with personalized content strategy" (not just "better engagement")
-- NUMERIC growth metrics: "Drove 42% increase in organic traffic resulting in 215 qualified leads" (not just "more traffic")
-
-For Technical roles, hiring managers SPECIFICALLY want to see:
-- SPECIFIC optimization metrics: "Reduced page load time by 62%, decreasing bounce rate by 37%" (not just "faster performance")
-- PRECISE scale metrics: "Scaled architecture to handle 3.5M concurrent users, up from 850K" (not just "improved scale")
-- EXACT cost savings: "Saved $420K annually through cloud infrastructure optimization" (not just "reduced costs")
-- CONCRETE efficiency metrics: "Automated 72% of routine tasks, saving 28 developer hours weekly" (not just "increased efficiency")
-- NUMERIC improvement metrics: "Decreased application error rate from 2.3% to 0.4%, improving user retention by 28%" (not just "fewer errors")
-
-CRITICAL RESUME REQUIREMENTS (apply ALL these even if not explicitly requested):
-- EVERY resume MUST include all these sections in this order: Summary, Skills & Tools, Professional Experience, Education
-- First name only (anonymized) - remove last name if present
-- Tagline must be role-specific, metric-anchored (e.g., "Senior Sales Development Leader – SaaS & Retail Tech")
-- Summary must be split into two concise sentences (<90 chars each)
-- Skills must have bold category labels (CRM: Salesforce | Sequencing: Outreach | Languages: English C2)
-- Every company header MUST follow exact format "Company — City, Country" (with em dash) - location must be included for ALL companies
-- Every role must display at least 3 bullet points with at least one quantified metric result ($ or % win)
-- Dates must follow consistent format "Mon YYYY — Mon YYYY" (with "Present" for current role)
-- All bullets must end with periods
-- Education format must precisely show full degree with field of study (e.g., "Bachelor's Degree in International Business", NOT just "Bachelor's Degree")
-- Company and product names must have correct capitalization (AltiSales, not AltISales)
-- Currency should be formatted as "($1.2M USD)" when showing monetary values
-- ALWAYS use past tense for bullets in previous roles and present tense ONLY for current roles
-- Include industry context in the role description (SaaS, FinTech, B2B, etc.)
-
-The current resume is in this state (in JSON format):
-${JSON.stringify(currentResume, null, 2)}
-
-The feedback from the reviewer is:
-${feedback}
-
-${implementationPlan ? `Additional implementation instructions: ${implementationPlan}` : ''}
-
-Your response must be a valid JSON with two main keys:
-1. "updatedResume": The full updated resume JSON object
-2. "changes": An array of changes you made, each with "type" and "description"
-
-Example response format:
-{
-  "updatedResume": { ... full resume JSON ... },
-  "changes": [
-    {
-      "type": "edit_summary",
-      "description": "Updated summary to emphasize leadership experience"
-    }
-  ]
-}`;
-
-    // Call OpenAI API
     const response = await openai.chat.completions.create({
-      model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+      model: CONFIG.OPENAI_MODEL,
       messages: [
         { role: "system", content: systemPrompt },
-        { role: "user", content: "Please implement the feedback provided above." }
+        { role: "user", content: "Please implement the feedback above." }
       ],
       response_format: { type: "json_object" }
     });
-    
-    // Parse the response JSON
-    const responseContent = response.choices[0].message.content || '';
-    const result = JSON.parse(responseContent);
-    
+
+    const result = JSON.parse(response.choices[0].message.content || '{}');
+
     return {
       success: true,
-      updatedResume: result.updatedResume,
-      changes: result.changes
+      updatedResume: result.updatedResume || currentResume,
+      changes: result.changes || []
     };
+
   } catch (error: any) {
     console.error('Error processing feedback:', error);
-    
-    // If we hit rate limits, return the current resume with a simple change
-    if (error?.status === 429 || error?.code === 'insufficient_quota') {
-      console.log('OpenAI rate limit reached. Returning simple response for feedback.');
-      
-      return {
-        success: true,
-        updatedResume: currentResume,
-        changes: [
-          {
-            type: "note",
-            description: "Note: Unable to process specific changes due to API limitations."
-          }
-        ]
-      };
-    }
-    
+
     return {
       success: false,
       updatedResume: currentResume,
@@ -800,151 +693,44 @@ Example response format:
   }
 }
 
-// Process chat messages to update the resume
+// Process chat messages (simplified)
 export async function processChat(
   sessionId: string,
   message: string,
   currentResume: Resume
 ): Promise<ChatProcessingResponse> {
   try {
-    // Create system prompt with highly specific role-aware intelligence
+    console.log(`[${sessionId}] Processing chat message`);
+
     const systemPrompt = `
-You are an expert resume editor helping transform resumes into the "Near format" following very specific stakeholder requirements.
-The user will send you a request to modify specific parts of the resume. 
+You are a resume editor helping make specific changes to a resume. Apply the user's requested changes while maintaining professional quality.
 
-Your task is to:
-1. Understand what changes the user wants
-2. ALWAYS verify that ALL mandatory sections are included (Summary, Skills, Experience, Education)
-3. Identify the candidate's target role and ACTIVELY "THINK LIKE A HIRING MANAGER" for that role
-4. Apply all formatting requirements below even if not explicitly requested by the user
-5. Make precise, targeted modifications to the resume JSON with specific, not generic, metrics
-6. Return the updated resume JSON along with a summary of changes made
+Current resume: ${JSON.stringify(currentResume, null, 2)}
 
-ROLE-AWARE OPTIMIZATION (HIRING MANAGER MINDSET):
-First identify the candidate's target role type (Sales, Technical, Support, etc.) from the resume.
-For EVERY bullet point missing specific metrics, predict what a hiring manager for that role would want to see:
+User request: ${message}
 
-For SDR/BDR roles, hiring managers SPECIFICALLY want to see:
-- EXACT pipeline generation numbers: "Generated $3.2M in qualified pipeline, exceeding target by 28%" (not just "generated pipeline")
-- PRECISE conversion metrics: "Achieved 37% connect-to-meeting conversion rate, 15% above team average" (not just "good conversion rate")
-- SPECIFIC quota attainment: "Consistently achieved 132% of quota for 5 consecutive quarters" (not just "exceeded quota")
-- ACTUAL outbound volume: "Executed 80+ strategic outbound sequences resulting in 42 qualified opportunities" (not just "many sequences")
-- COMPARATIVE metrics: "Maintained top performer status with 148% attainment vs. team average of 102%" (not just "top performer")
+Make the requested changes and return the updated resume with a summary of changes.`;
 
-For AE/Sales roles, hiring managers SPECIFICALLY want to see:
-- SPECIFIC deal metrics: "Closed 5 enterprise deals valued at $250K-$780K, including a record $780K deal" (not just "large deals")
-- PRECISE win rates: "Maintained 42% win rate against key competitors, compared to team average of 31%" (not just "good win rate")
-- EXACT revenue growth: "Grew territory revenue by 37% YoY, highest growth rate in the region" (not just "grew revenue")
-- CONCRETE sales cycle improvements: "Reduced average sales cycle from 95 to 64 days through value-selling approach" (not just "faster sales")
-- NUMERIC relationships: "Managed portfolio of 35 strategic accounts generating $4.7M in annual recurring revenue" (not just "many accounts")
-
-For Sales Management, hiring managers SPECIFICALLY want to see:
-- PRECISE team quota metrics: "Led team to 115% average quota attainment, with 7 of 8 SDRs exceeding targets by min. 15%" (not just "good performance")
-- SPECIFIC rep development metrics: "Increased per-rep pipeline generation by 47% through personalized coaching" (not just "developed team")
-- EXACT retention metrics: "Maintained 90% team retention rate vs. company average of 70%" (not just "good retention")
-- PRECISE ramp time metrics: "Reduced new hire ramp time from 4 months to 2.5 months through improved onboarding" (not just "faster onboarding")
-- TANGIBLE performance metrics: "Improved team connect rate from 23% to 42% through call coaching and targeted messaging" (not just "improved performance")
-
-For Marketing roles, hiring managers SPECIFICALLY want to see:
-- EXACT lead generation metrics: "Increased MQL volume by 137% YoY through targeted campaigns" (not just "more leads")
-- SPECIFIC conversion metrics: "Improved MQL-to-SQL conversion from 12% to 28% in 6 months" (not just "better conversion")
-- PRECISE campaign ROI: "Achieved 347% ROI on targeted ABM campaigns, 2.5x industry average" (not just "good ROI")
-- CONCRETE engagement metrics: "Boosted email engagement by 84% with personalized content strategy" (not just "better engagement")
-- NUMERIC growth metrics: "Drove 42% increase in organic traffic resulting in 215 qualified leads" (not just "more traffic")
-
-For Technical roles, hiring managers SPECIFICALLY want to see:
-- SPECIFIC optimization metrics: "Reduced page load time by 62%, decreasing bounce rate by 37%" (not just "faster performance")
-- PRECISE scale metrics: "Scaled architecture to handle 3.5M concurrent users, up from 850K" (not just "improved scale")
-- EXACT cost savings: "Saved $420K annually through cloud infrastructure optimization" (not just "reduced costs")
-- CONCRETE efficiency metrics: "Automated 72% of routine tasks, saving 28 developer hours weekly" (not just "increased efficiency")
-- NUMERIC improvement metrics: "Decreased application error rate from 2.3% to 0.4%, improving user retention by 28%" (not just "fewer errors")
-
-CRITICAL RESUME REQUIREMENTS (apply ALL these even if not explicitly requested):
-- EVERY resume MUST include all these sections in this order: Summary, Skills & Tools, Professional Experience, Education
-- First name only (anonymized) - remove last name if present
-- Tagline must be role-specific, metric-anchored (e.g., "Senior Sales Development Leader – SaaS & Retail Tech")
-- Summary must be split into two concise sentences (<90 chars each)
-- Skills must have bold category labels (CRM: Salesforce | Sequencing: Outreach | Languages: English C2)
-- Every company header MUST follow exact format "Company — City, Country" (with em dash) - location must be included for ALL companies
-- Every role must display at least 3 bullet points with at least one quantified metric result ($ or % win)
-- Dates must follow consistent format "Mon YYYY — Mon YYYY" (with "Present" for current role)
-- All bullets must end with periods
-- Education format must precisely show full degree with field of study (e.g., "Bachelor's Degree in International Business", NOT just "Bachelor's Degree")
-- Company and product names must have correct capitalization (AltiSales, not AltISales)
-- Currency should be formatted as "($1.2M USD)" when showing monetary values
-- ALWAYS use past tense for bullets in previous roles and present tense ONLY for current roles
-- Include industry context in the role description (SaaS, FinTech, B2B, etc.)
-
-The current resume is in this state (in JSON format):
-${JSON.stringify(currentResume, null, 2)}
-
-QUALITY IMPROVEMENT GUIDELINES:
-- Add strong action verbs to bullet points (e.g., "Transformed", "Pioneered", "Architected" instead of "Helped" or "Supported")
-- For EXPERIENCE SECTION ONLY (not the summary): Look for any bullets without specific metrics and ADD THEM based on role requirements above
-- Any mention of "led team" or "managed team" MUST include team performance metrics (e.g., "Led team of 8 SDRs to 115% attainment, with 7 reps exceeding targets")
-- Make every bullet powerful enough to impress a hiring manager within 5 seconds of reading
-- Format the skills section with clear categories and items (e.g., "CRM: Salesforce | Tools: SalesLoft • Outreach • HubSpot")
-- When adding quantifiable outcomes, make them specific but credible (e.g., 42% is more believable than 40%)
-- Never add metrics that would seem implausible or overstated for the role or experience level
-- For EXPERIENCE SECTION ONLY (not the summary): TRANSFORM ANY VAGUE STATEMENT like "improved team performance" into SPECIFIC METRICS like "improved team performance by 35% over 6 months, with 92% of team members exceeding quotas"
-- SUMMARY SECTION: DO NOT add made-up percentage metrics or quantitative achievements unless explicitly mentioned in the original resume. Focus on experience and expertise rather than numerical claims.
-
-Your response must be a valid JSON with two main keys:
-1. "updatedResume": The full updated resume JSON object
-2. "changes": An array of changes you made, each with "type" and "description"
-
-Example response format:
-{
-  "updatedResume": { ... full resume JSON ... },
-  "changes": [
-    {
-      "type": "edit_summary",
-      "description": "Updated summary to emphasize leadership experience"
-    }
-  ]
-}`;
-
-    // User prompt is their chat message - ensure it's a string
-    const userPrompt = String(message);
-    
-    // Call OpenAI API
     const response = await openai.chat.completions.create({
-      model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+      model: CONFIG.OPENAI_MODEL,
       messages: [
         { role: "system", content: systemPrompt },
-        { role: "user", content: userPrompt }
+        { role: "user", content: message }
       ],
       response_format: { type: "json_object" }
     });
-    
-    // Parse the response JSON, ensuring we have a string
-    const responseContent = response.choices[0].message.content || '';
-    const result = JSON.parse(responseContent);
-    
+
+    const result = JSON.parse(response.choices[0].message.content || '{}');
+
     return {
       success: true,
-      updatedResume: result.updatedResume,
-      changes: result.changes
+      updatedResume: result.updatedResume || currentResume,
+      changes: result.changes || []
     };
+
   } catch (error: any) {
-    console.error('Error processing chat:', error);
-    
-    // If we hit rate limits, return the current resume with a simple change
-    if (error?.status === 429 || error?.code === 'insufficient_quota') {
-      console.log('OpenAI rate limit reached. Returning simple response for chat.');
-      
-      return {
-        success: true,
-        updatedResume: currentResume,
-        changes: [
-          {
-            type: "note",
-            description: "Note: Unable to process specific changes due to API limitations."
-          }
-        ]
-      };
-    }
-    
+    console.error(`[${sessionId}] Error processing chat:`, error);
+
     return {
       success: false,
       updatedResume: currentResume,
@@ -954,1091 +740,217 @@ Example response format:
   }
 }
 
-/**
- * Validate and enhance a processed resume using a quality checklist
- * @param resume The processed resume to validate
- * @param originalText The original resume text for reference
- * @returns Enhanced and validated resume with all sections properly populated
- */
-export async function validateAndEnhanceResume(
-  resume: Resume,
-  originalText: string
-): Promise<Resume> {
-  try {
-    // Load project context for better validation
-    let projectContext = '';
-    try {
-      const mdFiles = [
-        path.join(process.cwd(), 'attached_assets', 'near-resume-processor-prd-clean.md'),
-        path.join(process.cwd(), 'attached_assets', 'resume-processor-principles.md'),
-        path.join(process.cwd(), 'attached_assets', 'near-resume-implementation-guide.md')
-      ];
-      
-      for (const filePath of mdFiles) {
-        if (fs.existsSync(filePath)) {
-          const content = fs.readFileSync(filePath, 'utf8');
-          projectContext += content + '\n\n';
-        }
-      }
-    } catch (err) {
-      console.log('Could not load project context files for validation:', err);
-    }
-    
-    console.log('Starting resume validation and enhancement process...');
-    
-    // Create system prompt for validation
-    const systemPrompt = `
-You are an expert resume quality assurance specialist. Your job is to analyze this resume against a strict checklist 
-and identify any issues or missing elements. Then you'll provide a JSON response with recommendations for fixing each issue.
+// Helper functions for post-processing
 
-${projectContext ? 'USE THIS PROJECT CONTEXT TO GUIDE YOUR VALIDATION:\n' + projectContext : ''}
-
-CRITICAL CHECKLIST - YOU MUST CHECK FOR ALL THESE ISSUES:
-
-1. SKILLS ANALYSIS (HIGHEST PRIORITY):
-   - Are ALL relevant skills extracted and properly listed?
-   - The skills section MUST BE COMPREHENSIVE and include at least 8-12 skills for the role
-   - For construction estimator roles (EXTREMELY IMPORTANT): 
-     * CRITICALLY CHECK for these MANDATORY skills that MUST be listed: 
-       - "Quantity Take-off"
-       - "Bill of Quantities (BOQ) Preparation" or just "BOQ"
-       - "Cost Estimating"
-       - "Cost Consulting"
-       - "AutoCAD"
-       - "Project Documentation"
-       - "Civil Construction"
-       - "Budget Management"
-       - "Tender Document Preparation"
-       - "Project Management"
-   - For sales roles: Check for sales methodologies, CRM systems, pipeline management, etc.
-   - For engineering roles: Check for programming languages, frameworks, methodologies, tools, etc.
-
-2. LANGUAGE CHECK:
-   - English must ALWAYS be listed in the resume (listed as "English (Professional)" if proficiency level unknown)
-   - All relevant languages from the original resume should be included
-
-3. EXPERIENCE BULLET POINT QUALITY:
-   - Every bullet point must include at least one measurable metric or quantified achievement
-   - Metrics should be specific and believable (e.g., "increased sales by 23%" instead of just "increased sales")
-
-4. FORMATTING COMPLIANCE:
-   - First name only (no last name)
-   - Clean professional tagline in 3-5 words
-   - Location format should be "City, Country"
-   - Section order is correct: Header, Summary, Skills, Experience, Education
-
-5. SUMMARY QUALITY:
-   - Must be concise (2-3 sentences max)
-   - Includes years of experience and key specializations
-   - Mentions measurable achievements
-   
-6. MISSING CONTENT CHECK:
-   - All significant experiences from original resume are included
-   - No critical details are lost in transformation
-
-FORMAT YOUR RESPONSE AS A STRUCTURED JSON OBJECT:
-{
-  "validation_successful": boolean, // true if all checks pass, false if issues found
-  "issues": [
-    {
-      "section": "string", // e.g., "skills", "experience", "header", etc.
-      "issue": "string", // Description of the issue
-      "fix": "string" // Specific recommendation with exact wording/content to fix
-    }
-  ],
-  "enhanced_resume": { } // Only include if validation_successful is false - complete fixed resume JSON
-}
-
-IMPORTANT GUIDANCE FOR FIXES:
-- For skills issues, provide a COMPREHENSIVE list of skills that should be included
-- For missing English language, add "English (Professional)" to languages
-- For metric issues, provide specific metrics to add to each bullet point
-- Your fixes should be exact text replacements that can be applied programmatically`;
-
-    // User prompt contains the resume and original text
-    const userPrompt = `
-Please validate and enhance this resume against your quality checklist.
-
-PROCESSED RESUME JSON:
-${JSON.stringify(resume, null, 2)}
-
-ORIGINAL RESUME TEXT (FOR REFERENCE):
-${originalText}`;
-
-    // Call OpenAI API with JSON response format
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: userPrompt }
-      ],
-      response_format: { type: "json_object" },
-      temperature: 0.2 // Lower temperature for more consistent validation
-    });
-
-    // Parse the validation response from the API response
-    const content = response.choices[0].message.content || '{"validation_successful": true}';
-    const validationResponse = JSON.parse(content);
-    
-    // If validation was successful, return the original resume
-    if (validationResponse.validation_successful) {
-      console.log('Resume validation successful, no issues found');
-      return resume;
-    }
-    
-    console.log(`Resume validation found ${validationResponse.issues.length} issues to fix`);
-    
-    // If issues were found and enhanced resume was provided, use that
-    if (validationResponse.enhanced_resume) {
-      console.log('Using AI-enhanced resume from validation');
-      
-      // Debug logs for skills
-      console.log('ORIGINAL SKILLS:', JSON.stringify(resume.skills));
-      console.log('ENHANCED SKILLS:', JSON.stringify(validationResponse.enhanced_resume.skills));
-      
-      // Ensure the enhanced resume has proper skills for estimator roles
-      if (validationResponse.enhanced_resume.skills && 
-          validationResponse.enhanced_resume.skills.length > 0 &&
-          (validationResponse.enhanced_resume.summary?.toLowerCase().includes('estimat') ||
-           JSON.stringify(validationResponse.enhanced_resume).toLowerCase().includes('estimat'))) {
-          
-        // This appears to be an estimator resume, ensure comprehensive skills
-        let hasEstimatorSkills = false;
-        
-        for (const skillCategory of validationResponse.enhanced_resume.skills) {
-          if (skillCategory.category === 'Skills') {
-            const skillsText = skillCategory.items.join(' ');
-            hasEstimatorSkills = skillsText.includes('Take-off') && 
-                                 skillsText.includes('BOQ') && 
-                                 skillsText.includes('AutoCAD');
-                                 
-            if (!hasEstimatorSkills) {
-              console.log('Enhanced resume missing critical estimator skills, adding them');
-              
-              // Add essential estimator skills if not present
-              const essentialSkills = [
-                'Quantity Take-off',
-                'Bill of Quantities (BOQ) Preparation',
-                'Cost Estimating',
-                'Cost Consulting',
-                'AutoCAD',
-                'Project Documentation',
-                'Civil Construction',
-                'Budget Management',
-                'Tender Document Preparation',
-                'Project Management'
-              ];
-              
-              // Add each skill if it doesn't already exist
-              for (const skill of essentialSkills) {
-                if (!skillCategory.items.some((s: string) => s.includes(skill))) {
-                  skillCategory.items.push(skill);
-                }
-              }
-              
-              console.log('FINAL SKILLS AFTER ENHANCEMENT:', JSON.stringify(skillCategory.items));
-            }
-          }
-        }
-      }
-      
-      return validationResponse.enhanced_resume as Resume;
-    }
-    
-    // Otherwise, apply fixes to the original resume
-    let enhancedResume = structuredClone(resume);
-    
-    // Apply fixes based on identified issues
-    for (const issue of validationResponse.issues) {
-      console.log(`Fixing issue in ${issue.section}: ${issue.issue}`);
-      
-      if (issue.section === 'skills') {
-        // Handle skills issues - parse the fix recommendation to extract skills
-        const skillsFix = issue.fix;
-        
-        if (skillsFix.includes(';')) {
-          // If skills are provided in semicolon-separated format, split and add them
-          const skillsList = skillsFix.split(';').map((s: string) => s.trim()).filter((s: string) => s);
-          
-          // Find or create the Skills category
-          let skillsCategory = enhancedResume.skills.find((s: any) => s.category === 'Skills');
-          if (!skillsCategory) {
-            skillsCategory = { category: 'Skills', items: [] };
-            enhancedResume.skills.push(skillsCategory);
-          }
-          
-          // Add new skills, avoiding duplicates
-          for (const skill of skillsList) {
-            if (!skillsCategory.items.includes(skill)) {
-              skillsCategory.items.push(skill);
-            }
-          }
-        }
-      }
-      
-      if (issue.section === 'languages') {
-        // Handle language issues
-        if (issue.issue.includes('English') || issue.fix.includes('English')) {
-          // Add English if it's missing
-          let languageCategory = enhancedResume.skills.find((s: any) => s.category === 'Languages');
-          if (!languageCategory) {
-            languageCategory = { category: 'Languages', items: [] };
-            enhancedResume.skills.push(languageCategory);
-          }
-          
-          // Add English if not already there
-          if (!languageCategory.items.some((l: string) => l.includes('English'))) {
-            languageCategory.items.push('English (Professional)');
-          }
-        }
-      }
-      
-      // More fix handlers can be added here for other issue types
-    }
-    
-    console.log('Resume enhancement complete');
-    return enhancedResume;
-  } catch (error) {
-    console.error('Error validating and enhancing resume:', error);
-    // Return the original resume if validation fails
-    return resume;
-  }
-}
-
-/**
- * Normalizes all references to square meters in a resume
- * Converts various formats like "m2", "m 2", "sq m" to the proper "m²" symbol
- * @param resume The resume to process
- * @returns Resume with normalized square meter references
- */
-function normalizeSquareMeters(resume: Resume): Resume {
-  try {
-    // Create a deep copy of the resume to avoid reference issues
-    const processedResume = JSON.parse(JSON.stringify(resume));
-    
-    // Process the summary text
-    if (processedResume.summary) {
-      processedResume.summary = replaceSquareMeters(processedResume.summary);
-    }
-    
-    // Process experience section, focusing on bullet points
-    if (processedResume.experience && Array.isArray(processedResume.experience)) {
-      processedResume.experience.forEach((exp: any) => {
-        // Process company name
-        if (exp.company) {
-          exp.company = replaceSquareMeters(exp.company);
-        }
-        
-        // Process title
-        if (exp.title) {
-          exp.title = replaceSquareMeters(exp.title);
-        }
-        
-        // Process each bullet point
-        if (exp.bullets && Array.isArray(exp.bullets)) {
-          exp.bullets.forEach((bullet: any) => {
-            if (bullet.text) {
-              bullet.text = replaceSquareMeters(bullet.text);
-            }
-            
-            // Process metrics array 
-            if (bullet.metrics && Array.isArray(bullet.metrics)) {
-              bullet.metrics = bullet.metrics.map((metric: string) => replaceSquareMeters(metric));
-            }
-          });
-        }
-      });
-    }
-    
-    // Process education section
-    if (processedResume.education && Array.isArray(processedResume.education)) {
-      processedResume.education.forEach((edu: any) => {
-        if (edu.degree) {
-          edu.degree = replaceSquareMeters(edu.degree);
-        }
-        if (edu.additionalInfo && typeof edu.additionalInfo === 'string') {
-          edu.additionalInfo = replaceSquareMeters(edu.additionalInfo);
-        }
-      });
-    }
-    
-    // Process additional experience 
-    if (processedResume.additionalExperience) {
-      processedResume.additionalExperience = replaceSquareMeters(processedResume.additionalExperience);
-    }
-    
-    console.log('Square meter normalization complete');
-    return processedResume;
-  } catch (error) {
-    console.error('Error during square meter normalization:', error);
-    // Return the original resume if normalization fails
-    return resume;
-  }
-}
-
-/**
- * Helper function to replace various square meter notations with the proper symbol
- * @param text Text to process
- * @returns Processed text with normalized square meter symbols
- */
-function limitBulletPoints(resume: Resume, maxBullets: number = 7): Resume {
-  if (!resume || !resume.experience || !Array.isArray(resume.experience)) {
-    return resume;
-  }
-  
-  // Create a deep copy of the resume to avoid reference issues
-  const processedResume = JSON.parse(JSON.stringify(resume));
-  
-  // Process each experience entry
-  processedResume.experience.forEach((exp: any) => {
-    if (exp.bullets && Array.isArray(exp.bullets) && exp.bullets.length > maxBullets) {
-      // Score each bullet based on importance indicators
-      const scoredBullets = exp.bullets.map((bullet: any, index: number) => {
-        let score = 0;
-        const text = bullet.text || '';
-        
-        // Prioritize bullets with metrics
-        if (text.match(/\d+%|\$\d+|\d+x|\d+X/)) score += 10;
-        if (text.match(/increased|improved|reduced|saved|generated/i)) score += 5;
-        
-        // Prioritize leadership indicators
-        if (text.match(/led|managed|supervised|directed|oversaw/i)) score += 7;
-        
-        // Prioritize process improvements
-        if (text.match(/implemented|developed|designed|created|established/i)) score += 4;
-        
-        // Lower priority for vague statements
-        if (text.match(/responsible for|duties included|worked on/i)) score -= 5;
-        
-        // Prioritize the first few bullets as they're often more important
-        score += Math.max(0, 10 - index); // Earlier bullets get higher score bonus
-        
-        return { bullet, score, index };
-      });
-      
-      // Sort bullets by score (descending) and then by original index (ascending)
-      scoredBullets.sort((a: any, b: any) => {
-        if (a.score !== b.score) return b.score - a.score;
-        return a.index - b.index;
-      });
-      
-      // Take top bullets up to maxBullets
-      exp.bullets = scoredBullets.slice(0, maxBullets).map((item: any) => item.bullet);
-      
-      // Resort by original index to maintain order
-      exp.bullets.sort((a: any, b: any) => {
-        const indexA = scoredBullets.find((item: any) => item.bullet === a)?.index || 0;
-        const indexB = scoredBullets.find((item: any) => item.bullet === b)?.index || 0;
-        return indexA - indexB;
-      });
-    }
-  });
-  
-  return processedResume;
-}
-
-/**
- * Cleans up education degree formatting to be more consistent
- * @param resume The resume to process
- * @returns Resume with standardized education formatting
- */
-function cleanEducationFormat(resume: Resume): Resume {
-  if (!resume || !resume.education || !Array.isArray(resume.education)) {
-    return resume;
-  }
-  
-  // Create a deep copy of the resume to avoid reference issues
-  const processedResume = JSON.parse(JSON.stringify(resume));
-  
-  // Process each education entry
-  processedResume.education.forEach((edu: any) => {
-    // Fix "Columbia University via Coursera" and similar online platform issues
-    if (edu.institution) {
-      // Handle "via Coursera" pattern
-      if (edu.institution.includes(" via ")) {
-        const parts = edu.institution.split(" via ");
-        if (parts.length === 2) {
-          // Move the platform info to additionalInfo
-          const institution = parts[0].trim();
-          const platform = parts[1].trim();
-          
-          // Update the institution
-          edu.institution = institution;
-          
-          // Add platform info to additionalInfo
-          if (edu.additionalInfo) {
-            if (!edu.additionalInfo.includes(platform)) {
-              edu.additionalInfo = `${edu.additionalInfo}; Delivered via ${platform}`;
-            }
-          } else {
-            edu.additionalInfo = `Delivered via ${platform}`;
-          }
-        }
-      }
-    }
-    
-    if (edu.degree) {
-      // 1. Remove redundant "(Building)" from "Diploma of Building and Construction (Building)"
-      edu.degree = edu.degree.replace(/\s*\(Building\)$/i, '').trim();
-      
-      // 2. Fix architecture degrees to be cleaner
-      if (edu.degree.toLowerCase().includes('architecture') || 
-          edu.degree.toLowerCase().includes('architect')) {
-        
-        // Remove "Bachelor's Degree in" prefix if present
-        if (edu.degree.match(/Bachelor['']s Degree in /i)) {
-          const cleanedDegree = edu.degree.replace(/Bachelor['']s Degree in /i, '').trim();
-          edu.degree = cleanedDegree;
-        }
-      }
-      
-      // 3. Remove redundant degree verbiage
-      edu.degree = edu.degree
-        .replace(/^Bachelor['']s Degree in /i, '')
-        .replace(/^Master['']s Degree in /i, '')
-        .replace(/^Associate['']s Degree in /i, '')
-        .trim();
-      
-      // 4. Remove redundant year at the end if it matches the year field
-      if (edu.year && edu.degree.endsWith(edu.year.toString())) {
-        edu.degree = edu.degree.replace(new RegExp(`, ${edu.year}$`), '').trim();
-      }
-      
-      // 5. Fix duplicate years in degree field (like "2009, 2009")
-      const yearPattern = /(\d{4}),\s*\1/;
-      if (yearPattern.test(edu.degree)) {
-        edu.degree = edu.degree.replace(yearPattern, '$1');
-      }
-      
-      // 6. Look for any repeated years between degree and year fields
-      const degreeYearMatch = edu.degree.match(/\b(19|20)\d{2}\b/g);
-      if (degreeYearMatch && edu.year) {
-        // Handle case where the year in the degree field matches the standalone year field
-        for (const match of degreeYearMatch) {
-          if (match === edu.year.toString()) {
-            // Remove the year from the degree field, preserving proper comma formatting
-            edu.degree = edu.degree.replace(new RegExp(`(,\\s*)?\\b${match}\\b(,\\s*)?`), '').trim();
-            // Remove trailing comma if it exists
-            edu.degree = edu.degree.replace(/,\s*$/, '').trim();
-          }
-        }
-      }
-      
-      // 7. Clean up multiple commas that might be left after removing years
-      edu.degree = edu.degree.replace(/,\s*,/g, ',').trim();
-    }
-  });
-  
-  console.log('Education format cleaned up');
-  return processedResume;
-}
-
-/**
- * Standardizes location formatting to remove city and keep only State, Country or just Country
- * @param resume The resume to process
- * @returns Resume with standardized location format
- */
 function standardizeLocations(resume: Resume): Resume {
   if (!resume) return resume;
-  
-  // Create a deep copy of the resume to avoid reference issues
-  const processedResume = JSON.parse(JSON.stringify(resume));
-  
-  // Country lookup for common cities/states
-  const knownLocations: Record<string, string> = {
-    'são paulo': 'Brazil',
-    'sao paulo': 'Brazil',
-    'brasilia': 'Brazil',
-    'rio de janeiro': 'Brazil',
-    'new york': 'USA',
-    'california': 'USA',
-    'texas': 'USA',
-    'florida': 'USA',
-    'illinois': 'USA',
-    'pennsylvania': 'USA',
-    'ohio': 'USA',
-    'london': 'UK',
-    'sydney': 'Australia',
-    'melbourne': 'Australia',
-    'toronto': 'Canada',
-    'ontario': 'Canada',
-    'quebec': 'Canada',
-    'british columbia': 'Canada',
-    'vancouver': 'Canada',
-    'auckland': 'New Zealand',
-    'singapore': 'Singapore',
-    'hong kong': 'Hong Kong',
-    'tokyo': 'Japan',
-    'beijing': 'China',
-    'shanghai': 'China',
-    'dubai': 'UAE',
-    'abu dhabi': 'UAE',
-    'buenos aires': 'Argentina', 
-    'santiago': 'Chile',
-    'lima': 'Peru',
-    'bogota': 'Colombia',
-    'mexico city': 'Mexico'
-  };
-  
-  // Function to extract just the country
-  const extractCountry = (location: string): string => {
-    // Check if location matches a known city/state
-    const locationLower = location.toLowerCase();
-    for (const [city, country] of Object.entries(knownLocations)) {
-      if (locationLower.includes(city)) {
-        return country;
-      }
-    }
-    
-    // Otherwise, use the last part of the location which is typically the country
-    const locationParts = location.split(',').map(part => part.trim());
-    if (locationParts.length > 1) {
-      return locationParts[locationParts.length - 1]; // Return the last part
-    }
-    
-    // If only one part and not matched above, just return it as-is
-    return location;
-  };
-  
-  // First, process the header location - ALWAYS just show the country
-  if (processedResume.location) {
-    // Process for header locations - only country name should appear
-    const countryOnly = extractCountry(processedResume.location);
-    // Remove any state/province that might remain
-    const countryParts = countryOnly.split(',').map(part => part.trim());
-    processedResume.location = countryParts[countryParts.length - 1];
-    
-    // If result is "USA", change to "United States"
-    if (processedResume.location === 'USA') {
-      processedResume.location = 'United States';
-    }
-  }
-  
-  // For backward compatibility with older schema structures
-  if (processedResume.header && processedResume.header.location) {
-    // Process for header locations - only country name should appear
-    const countryOnly = extractCountry(processedResume.header.location);
-    // Remove any state/province that might remain
-    const countryParts = countryOnly.split(',').map(part => part.trim());
-    processedResume.header.location = countryParts[countryParts.length - 1];
-    
-    // If result is "USA", change to "United States"
+
+  const processedResume = { ...resume };
+
+  // Standardize header location to country only
+  if (processedResume.header?.location) {
+    const locationParts = processedResume.header.location.split(',');
+    processedResume.header.location = locationParts[locationParts.length - 1].trim();
+
+    // Handle common country name standardizations
     if (processedResume.header.location === 'USA') {
       processedResume.header.location = 'United States';
     }
   }
-  
-  // Next, process each experience location field
-  if (processedResume.experience && Array.isArray(processedResume.experience)) {
-    processedResume.experience.forEach((exp: any) => {
+
+  // Process experience locations
+  if (processedResume.experience) {
+    processedResume.experience.forEach(exp => {
       if (exp.location) {
-        // For experience entries, preserve State + Country format if present
-        const locationParts = exp.location.split(',').map((part: string) => part.trim());
-        
-        if (locationParts.length >= 3) {
-          // Format like "City, State, Country" - remove the city
-          exp.location = `${locationParts[1]}, ${locationParts[2]}`;
-        } else if (locationParts.length === 2) {
-          // Check if first part seems like a city name
-          const isFirstPartACity = locationParts[0].length > 0 && !locationParts[0].includes('Province');
-          
-          if (isFirstPartACity) {
-            // Keep just the country for cities
-            exp.location = locationParts[1];
-          }
-          // Otherwise keep as is - it's likely already "State, Country"
-        } else if (locationParts.length === 1) {
-          // For single-part locations, check if it's a known city
-          for (const [city, country] of Object.entries(knownLocations)) {
-            if (exp.location.toLowerCase().includes(city)) {
-              exp.location = country;
-              break;
-            }
+        const parts = exp.location.split(',').map(p => p.trim());
+        if (parts.length > 2) {
+          // "City, State, Country" -> "State, Country"
+          exp.location = `${parts[1]}, ${parts[2]}`;
+        } else if (parts.length === 2) {
+          // Check if first part is clearly a city
+          const cityIndicators = ['city', 'town', 'metropolitan', 'metro'];
+          const isCity = cityIndicators.some(indicator => 
+            parts[0].toLowerCase().includes(indicator)
+          ) || parts[0].length < parts[1].length; // Cities usually shorter than countries
+
+          if (isCity) {
+            exp.location = parts[1]; // Keep just country
           }
         }
       }
     });
   }
-  
-  // Process education locations - similar to experience locations
-  if (processedResume.education && Array.isArray(processedResume.education)) {
-    processedResume.education.forEach((edu: any) => {
+
+  // Process education locations similarly
+  if (processedResume.education) {
+    processedResume.education.forEach(edu => {
       if (edu.location) {
-        // For education entries, preserve State + Country format if present
-        const locationParts = edu.location.split(',').map((part: string) => part.trim());
-        
-        if (locationParts.length >= 3) {
-          // Format like "City, State, Country" - remove the city
-          edu.location = `${locationParts[1]}, ${locationParts[2]}`;
-        } else if (locationParts.length === 2) {
-          // Check if first part seems like a city name
-          const isFirstPartACity = locationParts[0].length > 0 && !locationParts[0].includes('Province');
-          
-          if (isFirstPartACity) {
-            edu.location = locationParts[1];
-          }
-        } else if (locationParts.length === 1) {
-          // For single-part locations, check if it's a known city
-          for (const [city, country] of Object.entries(knownLocations)) {
-            if (edu.location.toLowerCase().includes(city)) {
-              edu.location = country;
-              break;
-            }
+        const parts = edu.location.split(',').map(p => p.trim());
+        if (parts.length > 2) {
+          edu.location = `${parts[1]}, ${parts[2]}`;
+        } else if (parts.length === 2) {
+          const cityIndicators = ['city', 'town', 'metropolitan', 'metro'];
+          const isCity = cityIndicators.some(indicator => 
+            parts[0].toLowerCase().includes(indicator)
+          ) || parts[0].length < parts[1].length;
+
+          if (isCity) {
+            edu.location = parts[1];
           }
         }
       }
     });
   }
-  
-  console.log('Location formatting standardized');
+
   return processedResume;
 }
 
-/**
- * Helper function to replace all square meter notations with square feet
- * @param text Text to process
- * @returns Processed text with only square feet measurements
- */
-function replaceSquareMeters(text: string): string {
-  if (!text) return text;
-  
-  // Replace square meters with square feet (conversion factor: 1 m² = 10.764 sq ft)
-  // More aggressive conversion to ensure no m² remains
-  const convertToSqFtOnly = (match: string, p1: string) => {
-    // Strip commas for proper numeric parsing
-    const numericStr = p1.replace(/,/g, '');
-    const squareMeters = parseFloat(numericStr);
-    if (!isNaN(squareMeters)) {
-      const squareFeet = Math.round(squareMeters * 10.764);
-      return `${squareFeet.toLocaleString()} sq ft`;
-    }
-    return `${p1} sq ft`; // Fallback if parsing fails
-  };
-  
-  // Apply the replacements with only sq ft (no original square meter values)
-  // First, transform the text to normalize different representations of m²
-  let result = text
-    // Replace unicode m² with m2 for consistent handling
-    .replace(/m²/g, 'm2')
-    // Handle cases with number followed by m2/m 2/sqm with any spacing
-    .replace(/(\d[\d,.]*)(?:\s*)m(?:\s*)2\b/gi, convertToSqFtOnly)
-    .replace(/(\d[\d,.]*)(?:\s*)m(?:\s*)²\b/gi, convertToSqFtOnly)
-    .replace(/(\d[\d,.]*)(?:\s*)sq(?:\s*)m\b/gi, convertToSqFtOnly)
-    .replace(/(\d[\d,.]*)(?:\s*)sqm\b/gi, convertToSqFtOnly)
-    // Handle cases without space between number and unit
-    .replace(/(\d[\d,.]*)m2\b/gi, convertToSqFtOnly)
-    .replace(/(\d[\d,.]*)m²\b/gi, convertToSqFtOnly)
-    .replace(/(\d[\d,.]*)sqm\b/gi, convertToSqFtOnly)
-    // Fix isolated unit references
-    .replace(/\bm\s*2\b/gi, 'sq ft')
-    .replace(/\bm\s*²\b/gi, 'sq ft')
-    .replace(/\bm\s*8\b/gi, 'sq ft') // Fix common OCR error
-    .replace(/\bm2\b/gi, 'sq ft')
-    .replace(/\bm²\b/gi, 'sq ft')
-    .replace(/\bsqm\b/gi, 'sq ft')
-    .replace(/\bsq\.\s*m\b/gi, 'sq ft')
-    .replace(/\bsquare\s*meters?\b/gi, 'square feet')
-    .replace(/\bsquare\s*m\b/gi, 'square feet')
-    // Specific pattern for "20,000+ m²" format
-    .replace(/(\d[\d,.]*)\+\s*m2/gi, (match, p1) => {
-      const numericStr = p1.replace(/,/g, '');
-      const squareMeters = parseFloat(numericStr);
-      if (!isNaN(squareMeters)) {
-        const squareFeet = Math.round(squareMeters * 10.764);
-        return `${squareFeet.toLocaleString()}+ sq ft`;
-      }
-      return `${p1}+ sq ft`;
-    });
-    
-  // Create a helper function to convert any currency to USD (shows only USD value)
-  const convertToUSD = (match: string, currency: string, amount: string, rate: number) => {
-    const numericAmount = amount.replace(/,/g, '');
-    let approxUSD;
-    
-    if (numericAmount.includes('.')) {
-      // Handle decimal point notation
-      approxUSD = parseFloat(numericAmount) / rate;
-    } else {
-      // Handle comma as decimal separator
-      approxUSD = parseFloat(numericAmount.replace(/\./g, '').replace(/,/g, '.')) / rate;
-    }
-    
-    if (!isNaN(approxUSD)) {
-      const unitMatch = match.match(/[KkMmBb]/);
-      const unit = unitMatch ? unitMatch[0].toUpperCase() : '';
-      if (unit) {
-        return `$${(approxUSD).toFixed(1)}${unit}`;
-      } else {
-        return `$${Math.round(approxUSD).toLocaleString()}`;
-      }
-    }
-    
-    return match; // Return original if conversion fails
-  };
-  
-  // Currency conversion rates to USD (approximate)
-  const currencyRates: {[key: string]: number} = {
-    'AUD': 1.5, // Australian Dollar
-    'BRL': 5.0, // Brazilian Real
-    'EUR': 0.92, // Euro
-    'GBP': 0.78, // British Pound
-    'CAD': 1.35, // Canadian Dollar
-    'NZD': 1.65, // New Zealand Dollar
-    'CHF': 0.9, // Swiss Franc
-    'JPY': 145, // Japanese Yen
-    'MXN': 20, // Mexican Peso
-    'INR': 83, // Indian Rupee
-    'CNY': 7.2, // Chinese Yuan
-    'RUB': 91, // Russian Ruble
-    'ZAR': 18, // South African Rand
-    'SEK': 10.5, // Swedish Krona
-    'NOK': 10.7, // Norwegian Krone
-    'DKK': 6.9, // Danish Krone
-    'PLN': 4, // Polish Zloty
-    'SGD': 1.35, // Singapore Dollar
-    'HKD': 7.8, // Hong Kong Dollar
-    'THB': 36, // Thai Baht
-    'KRW': 1370, // South Korean Won
-    'ILS': 3.7, // Israeli Shekel
-    'TRY': 30, // Turkish Lira
-    'ARS': 870, // Argentine Peso
-    'CLP': 930, // Chilean Peso
-    'COP': 4100, // Colombian Peso
-    'PEN': 3.7, // Peruvian Sol
-    'CZK': 23, // Czech Koruna
-    'HUF': 360, // Hungarian Forint
-    'PHP': 57, // Philippine Peso
-    'IDR': 15800, // Indonesian Rupiah
-    'MYR': 4.7, // Malaysian Ringgit
-    'VND': 25000, // Vietnamese Dong
-    'AED': 3.67, // UAE Dirham
-    'SAR': 3.75, // Saudi Riyal
-    'QAR': 3.64, // Qatari Riyal
-    'EGP': 47, // Egyptian Pound
-    'NGN': 1500, // Nigerian Naira
-    'KES': 130, // Kenyan Shilling
-    'MAD': 10, // Moroccan Dirham
-    'UAH': 40, // Ukrainian Hryvnia
-    'RON': 4.6, // Romanian Leu
-    'BHD': 0.38, // Bahraini Dinar
-    'JOD': 0.71, // Jordanian Dinar
-    'KWD': 0.31, // Kuwaiti Dinar
-    'OMR': 0.38, // Omani Rial
-    'PKR': 280, // Pakistani Rupee
-    'BDT': 110, // Bangladeshi Taka
-    'LKR': 300, // Sri Lankan Rupee
-    'CRC': 530, // Costa Rican Colón
-  };
-    
-  // Common currency symbols and their corresponding codes
-  const currencySymbols: {[key: string]: string} = {
-    '€': 'EUR',
-    '£': 'GBP',
-    '¥': 'JPY',
-    '₹': 'INR',
-    '₩': 'KRW',
-    '₽': 'RUB',
-    '₿': 'BTC',
-    '฿': 'THB',
-    '₴': 'UAH',
-    '₦': 'NGN',
-    '₱': 'PHP',
-    '₲': 'PYG',
-    '₺': 'TRY',
-    '₼': 'AZN',
-    '₾': 'GEL',
-    '₵': 'GHS',
-    'R$': 'BRL',
-    'kr': 'SEK', // Also NOK, DKK
-    'Kč': 'CZK',
-    'zł': 'PLN',
-    'Ft': 'HUF',
-    'RM': 'MYR',
-    'S$': 'SGD',
-    'R': 'ZAR',
-    '₪': 'ILS',
-    '₫': 'VND',
-    'Mex$': 'MXN',
-    '₡': 'CRC',
-    'QR': 'QAR',
-    'SR': 'SAR',
-    '৳': 'BDT',
-    'KSh': 'KES',
-    'RON': 'RON',
-    'Rp': 'IDR',
-    'ARS': 'ARS',
-    'COP': 'COP',
-    'B/.': 'PAB',
-    'RD$': 'DOP',
-    'L': 'HNL',
-    'Q': 'GTQ',
-    'C$': 'NIO',
-  };
-  
-  // 1. First, handle explicit currency codes with number after the code (e.g., "EUR 1000")
-  Object.keys(currencyRates).forEach(currencyCode => {
-    const regex = new RegExp(`${currencyCode}\\s*(\\d[\\d,.]+)(?:\\s*[KkMmBb])?`, 'g');
-    result = result.replace(regex, (match, amount) => {
-      return convertToUSD(match, currencyCode, amount, currencyRates[currencyCode]);
-    });
-  });
-  
-  // 2. Handle currency symbols with number after the symbol (e.g., "€ 1000")
-  Object.keys(currencySymbols).forEach(symbol => {
-    const currencyCode = currencySymbols[symbol];
-    const rate = currencyRates[currencyCode];
-    
-    if (rate) {
-      // Escape special characters in the symbol for regex
-      const escapedSymbol = symbol.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(`${escapedSymbol}\\s*(\\d[\\d,.]+)(?:\\s*[KkMmBb])?`, 'g');
-      
-      result = result.replace(regex, (match, amount) => {
-        return convertToUSD(match, currencyCode, amount, rate);
-      });
-    }
-  });
-  
-  // 3. Handle number followed by currency code (e.g., "1000 EUR")
-  Object.keys(currencyRates).forEach(currencyCode => {
-    const regex = new RegExp(`(\\d[\\d,.]+)\\s*${currencyCode}(?:\\s*[KkMmBb])?`, 'g');
-    result = result.replace(regex, (match, amount) => {
-      return convertToUSD(match, currencyCode, amount, currencyRates[currencyCode]);
-    });
-  });
-  
-  // 4. Special handling for Brazilian Real
-  result = result.replace(/R\$\s*([\d,.]+)(?:\s*[KkMmBb])?/g, (match, amount) => {
-    return convertToUSD(match, 'BRL', amount, currencyRates['BRL']);
-  });
-  
-  // 5. Handle Euro variants with special parsing
-  result = result.replace(/[€Ee][Uu][Rr]?\s*([\d,.]+)(?:\s*[KkMmBb])?|(\d[\d,.]*)\s*[€Ee][Uu][Rr]?/g, (match, amount1, amount2) => {
-    const amount = amount1 || amount2;
-    return convertToUSD(match, 'EUR', amount, currencyRates['EUR']);
-  });
-  
-  // 6. Only convert strong currency patterns - be more selective
-  // Only convert when we're pretty sure it's actually a currency
-  const clearCurrencyPattern = /(?<!\$)(\d[\d,.]+)\s*(?:EUR|GBP|JPY|AUD|CAD|CHF|[€£¥])/gi;
-  result = result.replace(clearCurrencyPattern, (match) => {
-    // Only attempt conversion if it doesn't already have a USD conversion
-    if (!match.includes('USD') && !match.includes('~$')) {
-      // Try to extract the numeric portion
-      const numericMatch = match.match(/(\d[\d,.]+)/);
-      if (numericMatch && numericMatch[1]) {
-        const amount = numericMatch[1];
-        
-        // Find which currency it is to use appropriate rate
-        let rate = 1.0; // Default if we can't determine
-        let currencyCode = '';
-        
-        if (match.includes('EUR') || match.includes('€')) {
-          rate = currencyRates['EUR'];
-          currencyCode = 'EUR';
-        } else if (match.includes('GBP') || match.includes('£')) {
-          rate = currencyRates['GBP'];
-          currencyCode = 'GBP';
-        } else if (match.includes('JPY') || match.includes('¥')) {
-          rate = currencyRates['JPY'];
-          currencyCode = 'JPY';
-        } else if (match.includes('AUD')) {
-          rate = currencyRates['AUD'];
-          currencyCode = 'AUD';
-        } else if (match.includes('CAD')) {
-          rate = currencyRates['CAD'];
-          currencyCode = 'CAD';
-        } else if (match.includes('CHF')) {
-          rate = currencyRates['CHF'];
-          currencyCode = 'CHF';
-        }
-        
-        if (currencyCode) {
-          // Proper conversion with the right rate
-          const numericAmount = amount.replace(/,/g, '');
-          let approxUSD;
-          
-          if (numericAmount.includes('.')) {
-            approxUSD = parseFloat(numericAmount) / rate;
-          } else {
-            approxUSD = parseFloat(numericAmount.replace(/\./g, '').replace(/,/g, '.')) / rate;
-          }
-          
-          if (!isNaN(approxUSD)) {
-            const unitMatch = match.match(/[KkMmBb]/);
-            const unit = unitMatch ? unitMatch[0].toUpperCase() : '';
-            if (unit) {
-              return `$${(approxUSD).toFixed(1)}${unit}`;
-            } else {
-              return `$${Math.round(approxUSD).toLocaleString()}`;
-            }
-          }
-        }
-      }
-    }
-    return match;
-  });
-  
-  // In user's request, we only show USD values without conversions
-  // So we'll skip any additional back-conversions for Brazilian context
-  
-  // Format USD values without adding "USD" (as per user requirement)
-  result = result.replace(/\$\s*([\d,.]+)(?:\s*[KkMmBb])?(?!\s*USD)/g, (match, amount) => {
-    const unitMatch = match.match(/[KkMmBb]/);
-    const unit = unitMatch ? unitMatch[0].toUpperCase() : '';
-    
-    if (unit) {
-      return `$${amount}${unit}`;
-    } else {
-      return `$${amount}`;
-    }
-  });
-  
-  return result;
-}
-
-/**
- * Removes word repetition at the beginning of bullet points across an entire experience section
- * and fixes erroneous repetition of text after periods
- * @param resume The resume to process
- * @returns Resume with improved bullet point variety and fixed repetitions
- */
 function removeBulletRepetition(resume: Resume): Resume {
-  if (!resume || !resume.experience) return resume;
-  
-  try {
-    // Create a deep copy of the resume to avoid reference issues
-    const processedResume = JSON.parse(JSON.stringify(resume));
-    
-    // List of common action verbs to use as replacements
-    const actionVerbs = [
-      "Achieved", "Accelerated", "Accomplished", "Advanced", "Architected",
-      "Boosted", "Built", "Championed", "Collaborated", "Conducted", 
-      "Coordinated", "Created", "Delivered", "Demonstrated", "Designed", 
-      "Developed", "Directed", "Drove", "Earned", "Enabled", "Engineered",
-      "Established", "Executed", "Expanded", "Facilitated", "Forged", 
-      "Generated", "Guided", "Headed", "Identified", "Implemented", 
-      "Improved", "Increased", "Initiated", "Innovated", "Launched",
-      "Maintained", "Maximized", "Navigated", "Negotiated",
-      "Operated", "Optimized", "Orchestrated", "Organized", "Performed",
-      "Pioneered", "Produced", "Reduced", "Restructured", "Revitalized",
-      "Secured", "Simplified", "Solved", "Streamlined", "Strengthened",
-      "Supervised", "Supported", "Transformed", "Upgraded", "Utilized"
-    ];
-    
-    // Get a random action verb excluding those to avoid
-    const getAlternativeVerb = (verbsToAvoid: string[]): string => {
-      const availableVerbs = actionVerbs.filter(verb => !verbsToAvoid.includes(verb.toLowerCase()));
-      if (availableVerbs.length === 0) return actionVerbs[0]; // Fallback
-      return availableVerbs[Math.floor(Math.random() * availableVerbs.length)];
-    };
-    
-    // First pass: fix repetition after periods in bullet points
-    if (processedResume.experience && Array.isArray(processedResume.experience)) {
-      processedResume.experience.forEach((exp: any) => {
-        if (exp.bullets && Array.isArray(exp.bullets)) {
-          exp.bullets.forEach((bullet: any) => {
-            if (bullet.text) {
-              // Fix repetition after periods (e.g., "Text abc. Text abc")
-              const segments = bullet.text.split(/\.\s+/);
-              if (segments.length > 1) {
-                let cleanedText = segments[0];
-                
-                for (let i = 1; i < segments.length; i++) {
-                  const currentSegment = segments[i];
-                  const prevSegment = segments[i-1];
-                  
-                  // Check if current segment is contained within previous segment or vice versa
-                  // or if they're almost identical (>80% match)
-                  if ((prevSegment.includes(currentSegment) && currentSegment.length > 5) || 
-                      (currentSegment.includes(prevSegment) && prevSegment.length > 5) ||
-                      (currentSegment.length > 10 && prevSegment.toLowerCase() === currentSegment.toLowerCase())) {
-                    // Skip adding this segment as it's repetitive
-                    continue;
-                  }
-                  
-                  // Add non-repetitive segment
-                  cleanedText += '. ' + currentSegment;
-                }
-                
-                // Ensure ending period
-                if (!cleanedText.endsWith('.')) {
-                  cleanedText += '.';
-                }
-                
-                bullet.text = cleanedText;
-              }
+  if (!resume?.experience) return resume;
+
+  const processedResume = { ...resume };
+
+  // Enhanced action verbs for replacements
+  const actionVerbs = [
+    "Achieved", "Accelerated", "Accomplished", "Advanced", "Architected",
+    "Boosted", "Built", "Championed", "Collaborated", "Conducted", 
+    "Coordinated", "Created", "Delivered", "Demonstrated", "Designed", 
+    "Developed", "Directed", "Drove", "Earned", "Enabled", "Engineered",
+    "Established", "Executed", "Expanded", "Facilitated", "Forged", 
+    "Generated", "Guided", "Headed", "Identified", "Implemented", 
+    "Improved", "Increased", "Initiated", "Innovated", "Launched",
+    "Maintained", "Maximized", "Navigated", "Negotiated", "Optimized",
+    "Orchestrated", "Organized", "Performed", "Pioneered", "Produced",
+    "Reduced", "Restructured", "Revitalized", "Secured", "Simplified",
+    "Solved", "Streamlined", "Strengthened", "Supervised", "Supported",
+    "Transformed", "Upgraded", "Utilized"
+  ];
+
+  processedResume.experience.forEach(exp => {
+    if (exp.bullets && exp.bullets.length > 1) {
+      const usedVerbs = new Set<string>();
+
+      exp.bullets.forEach(bullet => {
+        if (bullet.text) {
+          const firstWord = bullet.text.split(' ')[0].toLowerCase();
+
+          if (usedVerbs.has(firstWord) && firstWord.length > 3) {
+            // Find a replacement verb that hasn't been used
+            const availableVerbs = actionVerbs.filter(verb => 
+              !usedVerbs.has(verb.toLowerCase())
+            );
+
+            if (availableVerbs.length > 0) {
+              const replacement = availableVerbs[Math.floor(Math.random() * availableVerbs.length)];
+              bullet.text = bullet.text.replace(/^\w+/, replacement);
+              usedVerbs.add(replacement.toLowerCase());
             }
-          });
+          } else {
+            usedVerbs.add(firstWord);
+          }
         }
       });
     }
-    
-    // Second pass: process starting verb repetition
-    if (processedResume.experience && Array.isArray(processedResume.experience)) {
-      processedResume.experience.forEach((exp: any) => {
-        if (exp.bullets && Array.isArray(exp.bullets) && exp.bullets.length > 1) {
-          // Track the first word of each bullet point to detect repetition
-          const startingVerbs: Record<string, number> = {};
-          const verbIndexes: Record<string, number[]> = {};
-          
-          // First pass: collect all starting verbs and their indexes
-          exp.bullets.forEach((bullet: any, index: number) => {
-            if (bullet.text) {
-              // Extract first word (verb) - ignore case for counting
-              const firstWord = bullet.text.split(' ')[0].toLowerCase();
-              if (firstWord.length > 3) { // Only count words longer than 3 characters
-                // Track occurrences and indexes
-                startingVerbs[firstWord] = (startingVerbs[firstWord] || 0) + 1;
-                if (!verbIndexes[firstWord]) {
-                  verbIndexes[firstWord] = [];
-                }
-                verbIndexes[firstWord].push(index);
-              }
-            }
-          });
-          
-          // Find verbs used more than once in the section
-          const repeatedVerbs = Object.entries(startingVerbs)
-            .filter(([verb, count]) => count > 1)
-            .map(([verb]) => verb);
-          
-          // Second pass: replace repeated verbs across the whole section
-          repeatedVerbs.forEach(verb => {
-            const indexes = verbIndexes[verb] || [];
-            
-            // Keep the first occurrence, replace others with alternative verbs
-            for (let i = 1; i < indexes.length; i++) {
-              const bulletIndex = indexes[i];
-              
-              if (exp.bullets[bulletIndex] && exp.bullets[bulletIndex].text) {
-                const text = exp.bullets[bulletIndex].text;
-                const words = text.split(' ');
-                
-                if (words.length > 1) {
-                  // Replace the first word with an alternative verb
-                  const alternativeVerb = getAlternativeVerb(repeatedVerbs);
-                  words[0] = alternativeVerb;
-                  exp.bullets[bulletIndex].text = words.join(' ');
-                }
-              }
-            }
-          });
-        }
-      });
-    }
-    
-    console.log('Removed bullet point repetition');
-    return processedResume;
-  } catch (error) {
-    console.error('Error removing bullet point repetition:', error);
-    // Return the original resume if processing fails
-    return resume;
-  }
+  });
+
+  return processedResume;
 }
 
-/**
- * This function has been replaced by an enhanced version in text-processor-v2.ts
- * The new implementation uses more sophisticated context-aware analysis to better
- * detect when metrics are duplicated in bullet text.
- */
+function limitBulletPoints(resume: Resume, maxBullets: number): Resume {
+  if (!resume?.experience) return resume;
+
+  const processedResume = { ...resume };
+
+  processedResume.experience.forEach(exp => {
+    if (exp.bullets && exp.bullets.length > maxBullets) {
+      // Score bullets based on quality indicators
+      const scoredBullets = exp.bullets.map((bullet, index) => {
+        let score = 0;
+        const text = bullet.text || '';
+
+        // Higher scores for bullets with specific metrics
+        if (text.match(/\d+%/)) score += 10;
+        if (text.match(/\$[\d,]+[KkMmBb]?/)) score += 10;
+        if (text.match(/\d+x|\d+ times/)) score += 8;
+
+        // Higher scores for impact words
+        if (text.match(/increased|improved|reduced|saved|generated|achieved/i)) score += 6;
+        if (text.match(/led|managed|supervised|directed|oversaw/i)) score += 7;
+        if (text.match(/implemented|developed|designed|created|established/i)) score += 5;
+
+        // Lower scores for vague language
+        if (text.match(/responsible for|duties included|worked on|helped with/i)) score -= 5;
+        if (text.match(/various|multiple|several|many/i)) score -= 2;
+
+        // Slight preference for earlier bullets (often more important)
+        score += Math.max(0, 5 - index);
+
+        return { bullet, score, originalIndex: index };
+      });
+
+      // Sort by score, keep original order for ties
+      scoredBullets.sort((a, b) => {
+        if (a.score !== b.score) return b.score - a.score;
+        return a.originalIndex - b.originalIndex;
+      });
+
+      // Take top bullets and restore original order
+      const selectedBullets = scoredBullets
+        .slice(0, maxBullets)
+        .sort((a, b) => a.originalIndex - b.originalIndex)
+        .map(item => item.bullet);
+
+      exp.bullets = selectedBullets;
+    }
+  });
+
+  return processedResume;
+}
+
+function cleanEducationFormat(resume: Resume): Resume {
+  if (!resume?.education) return resume;
+
+  const processedResume = { ...resume };
+
+  processedResume.education.forEach(edu => {
+    if (edu.degree) {
+      // Clean up common formatting issues
+      edu.degree = edu.degree
+        .replace(/^Bachelor['']s Degree in /i, '')
+        .replace(/^Master['']s Degree in /i, '')
+        .replace(/^Associate['']s Degree in /i, '')
+        .replace(/^Diploma in /i, '')
+        .replace(/\s*\(Building\)$/i, '') // Remove redundant "(Building)" suffix
+        .trim();
+
+      // Remove duplicate years that might appear in degree name
+      if (edu.year) {
+        const yearRegex = new RegExp(`\\b${edu.year}\\b`, 'g');
+        edu.degree = edu.degree.replace(yearRegex, '').replace(/\s+/g, ' ').trim();
+      }
+
+      // Clean up multiple commas
+      edu.degree = edu.degree.replace(/,\s*,/g, ',').replace(/,\s*$/, '');
+    }
+
+    // Clean up institution names with platform references
+    if (edu.institution && edu.institution.includes(' via ')) {
+      const parts = edu.institution.split(' via ');
+      if (parts.length === 2) {
+        edu.institution = parts[0].trim();
+
+        // Add platform info to additionalInfo if not already there
+        const platform = parts[1].trim();
+        if (edu.additionalInfo) {
+          if (!edu.additionalInfo.includes(platform)) {
+            edu.additionalInfo = `${edu.additionalInfo}; Online via ${platform}`;
+          }
+        } else {
+          edu.additionalInfo = `Online via ${platform}`;
+        }
+      }
+    }
+  });
+
+  return processedResume;
+}
