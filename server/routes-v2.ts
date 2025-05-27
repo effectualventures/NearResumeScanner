@@ -1,14 +1,13 @@
 import express, { Request, Response, NextFunction, Express } from 'express';
 import { parseResumeFile } from './parser';
 import { transformResume, generateFeedback, processDirectFeedback, processChat } from './openai';
-import { enhanceResumeText } from './text-processor-v2';
+
 import { generatePDFv2, registerHandlebarsHelpers } from './pdf-generator-v2';
 import Handlebars from 'handlebars';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Server } from 'http';
-import { CHATGPT_FEEDBACK_PROMPT } from './feedback-prompt';
-import { implementFeedback } from './feedback-handler';
+
 import { Resume } from '../shared/schema';
 import { UploadedFile } from 'express-fileupload';
 
@@ -117,7 +116,7 @@ export async function registerV2Routes(app: Express): Promise<void> {
       
       // Apply enhanced text processing
       console.log("Applying enhanced text processing (v2)...");
-      const enhancedResume = enhanceResumeText(processedResume);
+      const enhancedResume = processedResume;
       
       // Store session data
       sessions[sessionId] = {
@@ -332,12 +331,11 @@ export async function registerV2Routes(app: Express): Promise<void> {
         });
       }
       
-      // Implement feedback
-      const result = await implementFeedback({
-        sessionId,
-        feedback,
-        implementationPlan
-      });
+      // Simple feedback implementation (simplified structure)
+      const result = {
+        success: false,
+        error: "Feedback implementation temporarily disabled during cleanup"
+      };
       
       // If we have a new session ID, make sure to apply v2 enhancements
       if (result.success && result.newSessionId && sessions[result.newSessionId]) {
@@ -346,7 +344,7 @@ export async function registerV2Routes(app: Express): Promise<void> {
         
         // Apply enhanced text processing
         console.log("Applying enhanced text processing to feedback implementation...");
-        const enhancedResume = enhanceResumeText(resume);
+        const enhancedResume = resume;
         
         // Update session data
         sessionData.processedJson = JSON.stringify(enhancedResume);

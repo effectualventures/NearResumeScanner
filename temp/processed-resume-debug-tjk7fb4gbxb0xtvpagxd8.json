@@ -1,0 +1,197 @@
+{
+  "header": {
+    "firstName": "Claudia",
+    "tagline": "Senior Marketing Strategist – Non-Profit & B2B Growth",
+    "location": "Colombia"
+  },
+  "summary": "Marketing expert with over 10 years of experience in strategy and execution across non-profit and B2B sectors. Proven skills in brand development, digital outreach, and market expansion, achieving a 30% increase in brand engagement and a 20% growth in market share.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Offline & Online Marketing Strategies",
+        "Growth Strategies",
+        "SEO/SEM",
+        "Analytics",
+        "Lead Generation",
+        "Brand Development",
+        "Communication Strategies",
+        "Project Management",
+        "Market Expansion",
+        "Digital Transformation",
+        "Content Marketing",
+        "Customer Engagement",
+        "Google Ads Certified",
+        "Facebook Ads (Meta Blueprint) Certified",
+        "SEO Fundamentals Certified",
+        "Scrum Foundation Professional Certificate",
+        "Google Analytics",
+        "Tag Manager",
+        "Power BI",
+        "Mailchimp",
+        "Constant Contact",
+        "LinkedIn Campaign Manager",
+        "HubSpot",
+        "Meta Ads Manager",
+        "CRM Dynamics",
+        "Market Research",
+        "Competitive Analysis",
+        "Customer Segmentation",
+        "Public Relations",
+        "Event Planning",
+        "Budget Management"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "Spanish (Native)",
+        "English (Fluent)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Northwest Center",
+      "location": "WA, USA",
+      "title": "Director of Marketing – Independent Contractor",
+      "startDate": "Feb 2024",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Developed comprehensive marketing campaigns designed to drive significant audience engagement and action, leading to an increase in leads and sales opportunities for the organization's seven business units, resulting in a 25% increase in engagement and a 15% increase in sales opportunities.",
+          "metrics": [
+            "25% increase in engagement",
+            "15% increase in sales opportunities"
+          ]
+        },
+        {
+          "text": "Created and implemented marketing strategies for diverse product lines and services, successfully identifying and penetrating new market segments, leading to a 20% market share growth.",
+          "metrics": [
+            "20% market share growth"
+          ]
+        },
+        {
+          "text": "Supervised digital properties maintenance, and managed high-impact paid ad campaigns across platforms such as Facebook, Instagram, Google, and LinkedIn, achieving a 30% increase in ad performance.",
+          "metrics": [
+            "30% increase in ad performance"
+          ]
+        },
+        {
+          "text": "Administered a marketing budget of $1.5M USD, ensuring efficient resource allocation and maximizing cross-channel promotional effectiveness.",
+          "metrics": [
+            "$1.5M USD"
+          ]
+        },
+        {
+          "text": "Designed influential digital and offline marketing plans tailored to the specific needs of a startup foundation, driving brand recognition and stakeholder engagement.",
+          "metrics": []
+        },
+        {
+          "text": "Crafted email marketing initiatives and directed social media paid campaigns to bolster fundraising efforts, resulting in increased donation rates.",
+          "metrics": []
+        },
+        {
+          "text": "Led a cross-functional team including content developers, web designers, and graphic designers to produce cohesive marketing deliverables aligned with organizational goals.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Darash Ahava Foundation",
+      "location": "AZ, USA",
+      "title": "Director of Marketing – Independent Contractor",
+      "startDate": "Jan 2023",
+      "endDate": "Jan 2024",
+      "bullets": [
+        {
+          "text": "Directed the development and execution of integrated marketing strategies that enhanced brand awareness and doubled stakeholder engagement.",
+          "metrics": []
+        },
+        {
+          "text": "Collaborated with leadership to align communication strategies with the foundation's mission, fostering community relationships and increasing volunteer participation.",
+          "metrics": []
+        },
+        {
+          "text": "Evaluated and improved the effectiveness of online and offline promotional campaigns, leading to a 30% increase in community reach.",
+          "metrics": [
+            "30% increase"
+          ]
+        },
+        {
+          "text": "Managed comprehensive digital strategy implementations, including the optimization of SEO practices and the refinement of content distribution approaches.",
+          "metrics": []
+        },
+        {
+          "text": "Advanced the foundation's external communications through strategic use of social media platforms, successfully engaging a broader audience base.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "IPF",
+      "location": "Colombia",
+      "title": "Marketing Director",
+      "startDate": "2019",
+      "endDate": "2021",
+      "bullets": [
+        {
+          "text": "Established the entire marketing department, pioneering digital transformation projects that dramatically increased the brand's online visibility.",
+          "metrics": []
+        },
+        {
+          "text": "Implemented diverse lead generation strategies, resulting in the onboarding of over 1,000 qualified leads and the launch of an E-commerce channel.",
+          "metrics": [
+            "1,000+ qualified leads"
+          ]
+        },
+        {
+          "text": "Executed strategic SEO initiatives and spearheaded content marketing campaigns that fortified the brand's presence across digital landscapes.",
+          "metrics": []
+        },
+        {
+          "text": "Directed impactful brand strategies and oversaw paid media campaigns across Facebook, Instagram, Google, and LinkedIn platforms.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "West Química",
+      "location": "Colombia",
+      "title": "Marketing Director",
+      "startDate": "2018",
+      "endDate": "2019",
+      "bullets": [
+        {
+          "text": "Led the company's marketing, communications, customer service, and advertising departments, integrating online and offline strategies to maximize market impact.",
+          "metrics": []
+        },
+        {
+          "text": "Orchestrated targeted paid campaigns that significantly boosted market presence and elevated brand awareness.",
+          "metrics": []
+        },
+        {
+          "text": "Managed and optimized a comprehensive marketing budget to ensure cost-effective campaign execution and sustained growth.",
+          "metrics": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Eafit University",
+      "degree": "MA in Marketing Management",
+      "location": "Colombia",
+      "year": "2020",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Pontificia Bolivariana University",
+      "degree": "BA in Industrial Design",
+      "location": "Colombia",
+      "year": "2015",
+      "additionalInfo": ""
+    }
+  ],
+  "additionalExperience": "Leadership Management Course, Incolda, Cesa University, Colombia – 2008. Certified in January 2022 in Google Ads, Meta Ads, and SEO strategies."
+}

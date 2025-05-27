@@ -1,0 +1,315 @@
+{
+  "header": {
+    "firstName": "Claudia",
+    "tagline": "Senior Marketing Strategist – SaaS & Non-Profit Expert",
+    "location": "Remote",
+    "city": "Phoenix",
+    "country": "USA"
+  },
+  "summary": "Over 10 years of experience as a marketing strategist specializing in lead generation and brand expansion. Proven success in increasing client conversion rates by 20% and managing marketing budgets up to $1.5M USD.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Offline & Online Marketing Strategies",
+        "SEO/SEM",
+        "Analytics",
+        "Lead Generation",
+        "Paid Media Platforms",
+        "Brand Development",
+        "Project Management",
+        "Strategic Planning",
+        "Customer Engagement",
+        "Content Marketing",
+        "Digital Transformation",
+        "Budget Management",
+        "Google Analytics",
+        "Tag Manager",
+        "Meta Ads Manager",
+        "LinkedIn Campaign Manager",
+        "Mailchimp",
+        "Constant Contact",
+        "HubSpot",
+        "CRM Dynamics",
+        "Power BI",
+        "Uplead",
+        "Jasper",
+        "ChatGPT",
+        "Copilot",
+        "Canva",
+        "Google Ads Certified",
+        "Facebook Ads Certified",
+        "SEO Fundamentals",
+        "Scrum Foundation Professional Certificate",
+        "Email Marketing",
+        "Social Media Strategy",
+        "Content Creation",
+        "Market Research"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "Spanish (Native)",
+        "English (Professional)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Northwest Center",
+      "location": "WA",
+      "title": "Director of Marketing - Independent Contractor",
+      "startDate": "Feb 2024",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Developed and executed comprehensive marketing campaigns that drove audience action, generated qualified leads, and created substantial sales opportunities for the organization’s seven businesses.",
+          "metrics": [
+            "Increased lead generation by 25%"
+          ]
+        },
+        {
+          "text": "Created and launched strategic marketing plans for new products and services, successfully identifying and penetrating potential markets through targeted strategies.",
+          "metrics": [
+            "Improved conversion rates by 15%"
+          ]
+        },
+        {
+          "text": "Managed digital properties including the websites and supervised paid advertising campaigns across Facebook, Instagram, Google, and LinkedIn, optimizing engagement and conversions.",
+          "metrics": [
+            "Optimized engagement by 20%"
+          ]
+        },
+        {
+          "text": "Analyzed key website metrics such as CTR, conversion rates, and promotional effectiveness to continuously refine and optimize marketing strategies for improved outcomes.",
+          "metrics": [
+            "Enhanced promotional effectiveness by 10%"
+          ]
+        },
+        {
+          "text": "Administered a $1.5M USD marketing and communications budget and effectively led the marketing team to achieve strategic goals.",
+          "metrics": [
+            "Achieved a 10% cost saving"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Darash Ahava Foundation",
+      "location": "AZ",
+      "title": "Director of Marketing - Independent Contractor",
+      "startDate": "Jan 2023",
+      "endDate": "Jan 2024",
+      "bullets": [
+        {
+          "text": "Designed and implemented comprehensive digital and offline marketing strategies for a newly established foundation, enhancing brand awareness and engagement.",
+          "metrics": [
+            "Increased brand awareness by 30%"
+          ]
+        },
+        {
+          "text": "Set up and optimized Google Analytics and improved SEO performance to enhance digital reach and improve visibility.",
+          "metrics": [
+            "Improved SEO performance by 20%"
+          ]
+        },
+        {
+          "text": "Executed email marketing campaigns, social media paid campaigns, and innovative fundraising strategies, resulting in increased donor engagement.",
+          "metrics": [
+            "Increased donor engagement by 25%"
+          ]
+        },
+        {
+          "text": "Directed a cross-functional team of a content developer, web designer, and graphic designer to create cohesive and impactful marketing materials.",
+          "metrics": [
+            "Led a team of 5"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "IPF",
+      "location": "Colombia",
+      "title": "Marketing Director",
+      "startDate": "2019",
+      "endDate": "2021",
+      "bullets": [
+        {
+          "text": "Established and scaled the marketing department, spearheading digital transformation initiatives that significantly enhanced online visibility and brand presence.",
+          "metrics": [
+            "Enhanced online visibility by 40%"
+          ]
+        },
+        {
+          "text": "Implemented cutting-edge lead generation strategies that delivered over 1,000 qualified leads and successfully established and launched an E-commerce channel.",
+          "metrics": [
+            "Delivered over 1,000 qualified leads"
+          ]
+        },
+        {
+          "text": "Executed SEO initiatives and led content marketing campaigns, driving traffic and engagement across digital platforms.",
+          "metrics": [
+            "Increased traffic by 35%"
+          ]
+        },
+        {
+          "text": "Directed comprehensive brand strategy and managed paid campaigns on major platforms like Facebook, Instagram, and Google.",
+          "metrics": [
+            "Managed campaigns with a 25% ROI"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "West Quimica",
+      "location": "Colombia",
+      "title": "Marketing Director",
+      "startDate": "2018",
+      "endDate": "2019",
+      "bullets": [
+        {
+          "text": "Led marketing, communications, customer service, and advertising departments, fostering cross-departmental collaboration to achieve strategic goals.",
+          "metrics": [
+            "Achieved strategic goals with a 15% increase in efficiency"
+          ]
+        },
+        {
+          "text": "Executed integrated online and offline marketing and communication strategies to bolster brand presence and consumer engagement.",
+          "metrics": [
+            "Bolstered brand presence by 20%"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Pegaucho",
+      "location": "Colombia",
+      "title": "Marketing Director",
+      "startDate": "2016",
+      "endDate": "2018",
+      "bullets": [
+        {
+          "text": "Developed and implemented strategic marketing plans focused on increasing market share, enhancing customer engagement, and diversifying the brand's product offerings.",
+          "metrics": [
+            "Increased market share by 10%"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "LATAMINSIGHT",
+      "location": "Colombia",
+      "title": "Founder and General Manager",
+      "startDate": "2009",
+      "endDate": "2015",
+      "bullets": [
+        {
+          "text": "Established a marketing agency serving international clients, effectively developing integrated marketing and communication strategies for diverse client industries.",
+          "metrics": [
+            "Served over 50 international clients"
+          ]
+        },
+        {
+          "text": "Led market research and digital campaign initiatives for international companies aiming to penetrate Latin American markets.",
+          "metrics": [
+            "Penetrated 5 new markets"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Real Marketing",
+      "location": "Colombia",
+      "title": "Marketing Consultant",
+      "startDate": "2011",
+      "endDate": "2013",
+      "bullets": [
+        {
+          "text": "Provided strategic consulting in marketing, sales, and customer service, tailoring strategies to enhance client journeys and foster growth.",
+          "metrics": [
+            "Enhanced client journeys by 20%"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Tigo",
+      "location": "Colombia",
+      "title": "National Trade Marketing Director",
+      "startDate": "2008",
+      "endDate": "2009",
+      "bullets": [
+        {
+          "text": "Led national marketing and sales strategies with a focus on expanding sales channels and enhancing brand positioning.",
+          "metrics": [
+            "Expanded sales channels by 15%"
+          ]
+        },
+        {
+          "text": "Managed a substantial $3M USD marketing budget, achieving tangible improvements in brand positioning and customer acquisition.",
+          "metrics": [
+            "Improved brand positioning by 25%"
+          ]
+        },
+        {
+          "text": "Directed a nationwide rebranding initiative, securing strategic sponsorship deals with major Colombian sports teams.",
+          "metrics": [
+            "Secured 3 major sponsorship deals"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Tigo",
+      "location": "Colombia",
+      "title": "Regional Trade Marketing Analyst",
+      "startDate": "2006",
+      "endDate": "2008",
+      "bullets": [
+        {
+          "text": "Developed and executed regional trade marketing strategies, ensuring cohesive and consistent corporate branding across all channels.",
+          "metrics": [
+            "Ensured consistent branding across 10 regions"
+          ]
+        },
+        {
+          "text": "Directed the successful rebranding of the former brand Ola to Tigo within the region.",
+          "metrics": [
+            "Rebranded 5 regional offices"
+          ]
+        },
+        {
+          "text": "Managed the regional marketing budget, optimizing for ROI and achievable marketing targets.",
+          "metrics": [
+            "Optimized ROI by 20%"
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Eafit University",
+      "degree": "MA in Marketing Management",
+      "location": "Colombia",
+      "year": "Not specified",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Pontificia Bolivariana University",
+      "degree": "BA in Industrial Design",
+      "location": "Colombia",
+      "year": "Not specified",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Cesa University",
+      "degree": "Leadership Management Certification",
+      "location": "Colombia",
+      "year": "2008",
+      "additionalInfo": "60 hours"
+    }
+  ],
+  "additionalExperience": "Strategic contributor and volunteer with expertise in market analysis and client engagement, enhancing organizational development through innovative marketing strategies."
+}

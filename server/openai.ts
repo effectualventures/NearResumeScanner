@@ -39,70 +39,73 @@ function detectRole(resumeText: string): string {
   return 'GENERAL';
 }
 
-// Role-specific guidance - balanced approach to metrics
+// Role-specific guidance - balanced approach to metrics with emphasis on concise, punchy bullets
 const ROLE_GUIDANCE = {
   SDR: `
-For SDR/BDR roles, focus on these key metrics when they naturally fit:
-- Pipeline generation with specific amounts when credible
-- Conversion rates and quota attainment percentages
-- Outbound activity volume and results
-- Performance ranking relative to team when known
-- Lead qualification and opportunity creation numbers`,
+For SDR/BDR roles, create concise bullets (20-30 words max) that show:
+- Pipeline generation: "Generated $3.2M in qualified pipeline, exceeding target by 28%"
+- Conversion rates: "Achieved 37% connect-to-meeting rate, 15% above team average"
+- Quota performance: "Consistently achieved 132% of quota for 5 consecutive quarters"
+- Activity metrics: "Executed 80+ outbound sequences resulting in 42 qualified opportunities"
+- One clear achievement per bullet - avoid run-on sentences`,
 
   AE: `
-For AE/Sales roles, emphasize these achievements:
-- Deal sizes and revenue numbers when specific amounts are known
-- Win rates and sales cycle improvements with realistic percentages
-- Territory growth and account expansion metrics
-- Relationship management scope (number of accounts, deal values)
-- Year-over-year growth figures when available`,
+For AE/Sales roles, write punchy bullets (20-30 words max) emphasizing:
+- Deal metrics: "Closed 5 enterprise deals valued at $250K-$780K, including record $780K deal"
+- Win rates: "Maintained 42% win rate vs competitors, compared to team average of 31%"
+- Revenue growth: "Grew territory revenue by 37% YoY, highest growth rate in region"
+- Sales cycle: "Reduced average sales cycle from 95 to 64 days through value-selling"
+- Focus on ONE clear result per bullet point`,
 
   SALES_MANAGER: `
-For Sales Management roles, highlight:
-- Team performance metrics (quota attainment, growth rates)
-- Individual rep development and productivity improvements
-- Team retention and hiring success rates
-- Process improvements that led to measurable gains
-- Budget management and resource allocation results`,
+For Sales Management roles, create concise bullets (20-30 words max) showing:
+- Team performance: "Led team to 115% quota attainment, with 7 of 8 SDRs exceeding targets"
+- Rep development: "Increased per-rep pipeline generation by 47% through personalized coaching"
+- Retention: "Maintained 90% team retention rate vs company average of 70%"
+- Process improvement: "Reduced new hire ramp time from 4 to 2.5 months through improved onboarding"
+- Each bullet should focus on ONE leadership achievement`,
 
   BIZ_DEV: `
-For Business Development roles, showcase:
-- Market opportunity identification and sizing
-- Partnership development and pipeline contribution
-- New market entry results and expansion metrics
-- Relationship building scope and conversion rates
-- Strategic initiative outcomes and business impact`,
+For Business Development roles, write focused bullets (20-30 words max) featuring:
+- Opportunity metrics: "Identified $4.2M in untapped opportunities across 5 key LATAM markets"
+- Partnerships: "Established 3 strategic partnerships yielding $1.5M in new pipeline within 6 months"
+- Market analysis: "Conducted market analysis resulting in 42% increase in qualified leads"
+- Relationship building: "Cultivated 12 enterprise relationships with 35% conversion to opportunities"
+- One clear business development win per bullet`,
 
   MARKETING: `
-For Marketing roles, demonstrate:
-- Campaign performance and lead generation results
-- Conversion rate improvements and funnel optimization
-- Budget management and ROI achievements
-- Brand awareness and engagement growth
-- Digital marketing metrics (traffic, rankings, engagement)`,
+For Marketing roles, create sharp, concise bullets (20-30 words max) demonstrating:
+- Lead generation: "Increased MQL volume by 137% YoY through targeted campaigns"
+- Conversion optimization: "Improved MQL-to-SQL conversion from 12% to 28% in 6 months"
+- Campaign ROI: "Achieved 347% ROI on ABM campaigns, 2.5x industry average"
+- Digital growth: "Drove 42% increase in organic traffic resulting in 215 qualified leads"
+- Budget management: "Managed $1.5M marketing budget, achieving 25% cost reduction"
+- ONE clear marketing achievement per bullet - avoid redundant phrases like "leading to" and "resulting in" in same bullet`,
 
   TECHNICAL: `
-For Technical roles, emphasize:
-- Performance improvements and optimization results
-- System scale and reliability enhancements
-- Cost savings through technical improvements
-- Process automation and efficiency gains
-- User experience improvements and adoption metrics`,
+For Technical roles, write concise bullets (20-30 words max) highlighting:
+- Performance: "Reduced page load time by 62%, decreasing bounce rate by 37%"
+- Scale: "Scaled architecture to handle 3.5M concurrent users, up from 850K"
+- Cost savings: "Saved $420K annually through cloud infrastructure optimization"
+- Automation: "Automated 72% of routine tasks, saving 28 developer hours weekly"
+- Quality: "Decreased error rate from 2.3% to 0.4%, improving retention by 28%"
+- Focus on ONE technical achievement with clear business impact per bullet`,
 
   SALES_GENERAL: `
-For Sales roles, focus on:
-- Revenue impact and quota performance
-- Customer acquisition and retention
-- Process improvements and efficiency gains
-- Territory or market development results`,
+For Sales roles, create punchy bullets (20-30 words max) focusing on:
+- Revenue impact with specific numbers and percentages
+- Quota attainment and performance vs targets
+- Pipeline generation and conversion metrics
+- Territory growth and customer acquisition
+- One clear sales achievement per bullet`,
 
   GENERAL: `
-Focus on quantifiable business impact:
-- Process improvements with measurable outcomes
+Create concise, impactful bullets (20-30 words max) showing quantifiable business impact:
+- Process improvements with specific measurable outcomes
 - Cost savings or revenue contributions when known
-- Efficiency gains and productivity improvements
-- Project scope and stakeholder management
-- Tools and methodologies that delivered results`
+- Efficiency gains with clear metrics
+- Project scope and stakeholder management results
+- ONE clear achievement per bullet - avoid run-on sentences`
 };
 
 // Base system prompt components
@@ -125,12 +128,22 @@ CONTENT REQUIREMENTS:
 - EXPERIENCE: Reverse chronological order. Every role needs at least 3 strong bullet points with realistic, credible achievements.
 - EDUCATION: Include full degree with field of study, institution, location, and graduation year. If year is unknown, use "N/A" sparingly and only when absolutely necessary.
 
+BULLET POINT QUALITY STANDARDS:
+- Each bullet should be 20-30 words maximum - concise and punchy
+- ONE clear achievement per bullet - avoid run-on sentences
+- Use strong action verbs and specific metrics
+- Avoid redundant phrases like "leading to" and "resulting in" in the same bullet
+- No compound sentences with multiple outcomes chained together
+- Focus on impact, not process descriptions
+
 METRICS AND ACHIEVEMENTS GUIDELINES:
 - Use specific numbers and percentages ONLY when they enhance credibility
 - Avoid round numbers like 20%, 30%, 40% - use more specific figures like 23%, 37%, 42%
 - Each bullet should have business impact, but not every bullet needs a percentage
 - Focus on scope, tools, methodologies, and outcomes over manufactured metrics
 - When adding metrics, ensure they match the candidate's experience level and role
+- Keep bullets concise - maximum 20-30 words per bullet point
+- ONE achievement per bullet - no compound sentences or multiple chained results
 
 QUALITY STANDARDS:
 - Strong action verbs that convey impact

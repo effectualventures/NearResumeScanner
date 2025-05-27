@@ -4,11 +4,10 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { parseResumeFile } from "./parser";
 import { transformResume, processChat, generateFeedback } from "./openai";
-import { generatePDF } from "./pdf-generator";
+import { generatePDFv2 } from "./pdf-generator-v2";
 import { ApiResponse, ProcessingResult, ChatResult } from "./types";
 import { Resume } from "@shared/schema";
-import { implementFeedback } from "./feedback-handler";
-import { CHATGPT_FEEDBACK_PROMPT } from "./feedback-prompt";
+
 import path from "path";
 import fs from "fs";
 import crypto from "crypto";
@@ -79,7 +78,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             resumeData = JSON.parse(cachedData);
             
             // Generate PDF from the cached resume data
-            pdfPath = await generatePDF(resumeData, parsedFile.id);
+            pdfPath = await generatePDFv2(resumeData, parsedFile.id);
           } catch (cacheError) {
             console.error("Error reading cached resume:", cacheError);
             // If cache read fails, continue with normal processing
@@ -120,7 +119,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
           
           // Generate PDF from the processed resume (with detailed format if requested)
-          pdfPath = await generatePDF(resumeData, parsedFile.id, useDetailedFormat);
+          pdfPath = await generatePDFv2(resumeData, parsedFile.id, useDetailedFormat);
         }
         
         // Store in the session with metadata for format preference
@@ -264,7 +263,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       // Generate updated PDF (preserving detailed format if it was used)
-      const pdfPath = await generatePDF(
+      const pdfPath = await generatePDFv2(
         chatResult.updatedResume,
         `${sessionId}-updated`,
         useDetailedFormat
@@ -393,7 +392,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const puppeteer = puppeteerModule.default;
         
         // Generate the HTML content
-        const freshPdfPath = await generatePDF(resumeData, sessionId, detailedFormat);
+        const freshPdfPath = await generatePDFv2(resumeData, sessionId, detailedFormat);
         
         // Check if the generated file is HTML (puppeteer failed)
         if (freshPdfPath.endsWith('.html')) {
@@ -707,7 +706,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       // Generate PDF/HTML from the transformed resume
-      const pdfPath = await generatePDF(transformResult.resume, sessionId);
+      const pdfPath = await generatePDFv2(transformResult.resume, sessionId);
       
       // Save session data
       await storage.createSession({

@@ -1,0 +1,268 @@
+{
+  "header": {
+    "firstName": "Claudia",
+    "tagline": "Senior Marketing Strategist – Nonprofit & Food Industry",
+    "location": "Colombia"
+  },
+  "summary": "Marketing expert with over 10 years of experience in brand strategy, lead generation, and digital transformation. Successfully increased audience engagement by 30% and led teams to achieve a 20% boost in productivity.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Offline & Online Marketing Strategies",
+        "SEO/SEM",
+        "Lead Generation",
+        "Brand Development",
+        "Content Marketing",
+        "Campaign Management",
+        "Analytics",
+        "Team Leadership",
+        "Integrated Marketing Communications",
+        "Project Management",
+        "Budget Planning",
+        "Market Research",
+        "Google Analytics",
+        "Tag Manager",
+        "Data Visualization Tools",
+        "Power BI",
+        "AutoCAD",
+        "Digital Advertising Platforms",
+        "CRM Dynamics",
+        "HubSpot",
+        "Google Ads Certified – Jan 2022",
+        "Facebook Ads Certified – Jul 2021",
+        "SEO Fundamentals – Oct 2021",
+        "Scrum Foundation Professional Certificate – Aug 2022",
+        "Email Marketing Tools",
+        "SEO/SEM Strategies",
+        "Social Media Marketing",
+        "Content Creation",
+        "Public Relations",
+        "Event Planning",
+        "Customer Relationship Management",
+        "Market Analysis"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Fluent)",
+        "Spanish (Native)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Northwest Center",
+      "location": "WA",
+      "title": "Director of Marketing - Independent Contractor",
+      "startDate": "Feb 2024",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Developed integrated marketing campaigns targeted for seven diverse business units, achieving enhanced audience engagement and lead generation.",
+          "metrics": [
+            "7 business units"
+          ]
+        },
+        {
+          "text": "Crafted and implemented strategic marketing plans for new product launches, allowing entry into previously untapped markets, resulting in a 15% increase in market share.",
+          "metrics": [
+            "15% increase in market share"
+          ]
+        },
+        {
+          "text": "Pioneered digital management by analyzing CTRs and conversion rates to tweak success across Facebook, Instagram, Google, and LinkedIn platforms.",
+          "metrics": [
+            "4 platforms"
+          ]
+        },
+        {
+          "text": "Managed a substantial marketing budget of $1.5M, strategically allocating resources to optimize wide-reaching marketing efforts.",
+          "metrics": [
+            "$1.5M budget"
+          ]
+        },
+        {
+          "text": "Coordinated the marketing team, fostering collaborative innovation and meticulous execution amongst diversified roles, leading to a 20% increase in team productivity.",
+          "metrics": [
+            "20% increase in team productivity"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Darash Ahava Foundation",
+      "location": "AZ",
+      "title": "Director of Marketing - Independent Contractor",
+      "startDate": "Jan 2023",
+      "endDate": "Jan 2024",
+      "bullets": [
+        {
+          "text": "Engineered offline and digital marketing plans for a startup foundation focusing on emotional healing through art, expanding audience reach significantly, resulting in a 30% increase in audience engagement.",
+          "metrics": [
+            "30% increase in audience engagement"
+          ]
+        },
+        {
+          "text": "Structured comprehensive SEO strategies resulting in notable improvements in search engine ranking and digital presence, achieving a 25% increase in organic traffic.",
+          "metrics": [
+            "25% increase in organic traffic"
+          ]
+        },
+        {
+          "text": "Led a cross-functional team to elevate digital content and implement dynamic fundraising campaigns, boosting engagement.",
+          "metrics": []
+        },
+        {
+          "text": "Oversaw execution of email marketing and social media strategies tailored for high-impact results.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "IPF",
+      "location": "Colombia",
+      "title": "Marketing Director",
+      "startDate": "2019",
+      "endDate": "2021",
+      "bullets": [
+        {
+          "text": "Steered the marketing department to introduce transformative digital approaches, elevating brand presence.",
+          "metrics": []
+        },
+        {
+          "text": "Directed lead generation initiatives securing over 1,000 qualified leads, pushing the marketing success parameters.",
+          "metrics": [
+            "1,000 qualified leads"
+          ]
+        },
+        {
+          "text": "Amplified content marketing through strategic execution of SEO measures, leading to increased organic traffic.",
+          "metrics": []
+        },
+        {
+          "text": "Orchestrated creative brand strategies and online advertising campaigns across major platforms.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "West Química",
+      "location": "Colombia",
+      "title": "Marketing Director",
+      "startDate": "2018",
+      "endDate": "2019",
+      "bullets": [
+        {
+          "text": "Headed integrated marketing and advertising efforts, significantly enhancing brand awareness.",
+          "metrics": []
+        },
+        {
+          "text": "Engaged a team of eight, directing them towards achieving cohesive marketing goals.",
+          "metrics": [
+            "8 team members"
+          ]
+        },
+        {
+          "text": "Maximized the impact of targeted advertising through multi-platform coordination and budget management.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Latam Insight",
+      "location": "Colombia",
+      "title": "Founder and General Manager",
+      "startDate": "2009",
+      "endDate": "2015",
+      "bullets": [
+        {
+          "text": "Established a robust marketing agency delivering strategic international marketing services.",
+          "metrics": []
+        },
+        {
+          "text": "Led initiatives in market research and digital campaigns for foreign client bases in Latin America.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Real Marketing",
+      "location": "Colombia",
+      "title": "Marketing Consultant",
+      "startDate": "2011",
+      "endDate": "2013",
+      "bullets": [
+        {
+          "text": "Consulted on tailored marketing and sales strategies, enhancing customer experience for multiple firms.",
+          "metrics": []
+        },
+        {
+          "text": "Initiated bespoke strategies for boosting customer engagement and retention.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Tigo",
+      "location": "Colombia",
+      "title": "National Trade Marketing Director",
+      "startDate": "2008",
+      "endDate": "2009",
+      "bullets": [
+        {
+          "text": "Successfully managed a $3M marketing budget, propelling company into improved market positioning.",
+          "metrics": [
+            "$3M budget"
+          ]
+        },
+        {
+          "text": "Spearheaded the rebranding to align with modern consumer insights and strategic sponsorships.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Tigo",
+      "location": "Colombia",
+      "title": "Regional Trade Marketing Analyst",
+      "startDate": "2006",
+      "endDate": "2008",
+      "bullets": [
+        {
+          "text": "Executed effective regional trade strategies aligned with national branding objectives.",
+          "metrics": []
+        },
+        {
+          "text": "Facilitated the transition of brand identity, ensuring seamless customer transitions and network strengthening.",
+          "metrics": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "EAFIT University",
+      "degree": "MA in Marketing Management",
+      "location": "Colombia",
+      "year": "Not Specified",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Pontificia Bolivariana University",
+      "degree": "BA in Industrial Design",
+      "location": "Colombia",
+      "year": "Not Specified",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Cesa University",
+      "degree": "Leadership Management",
+      "location": "Colombia",
+      "year": "2008",
+      "additionalInfo": "Incolda Certificate, 60 hours"
+    }
+  ],
+  "additionalExperience": "Volunteered with various community initiatives focusing on digital marketing strategies for non-profits and startups."
+}
