@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Temporarily disabled Tailwind while fixing configuration */
 
 :root {
       --background: 0 0% 100%;
