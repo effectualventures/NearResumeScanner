@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction, Express } from 'express';
-import { parseResumeFile } from './parser';
+// Parser functionality moved inline
 import { transformResume, generateFeedback, processDirectFeedback, processChat } from './openai';
 
 import { generatePDFv2, registerHandlebarsHelpers } from './pdf-generator-v2';
