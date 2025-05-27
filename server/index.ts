@@ -3,6 +3,7 @@ import { registerV2Routes } from "./routes-v2";
 import fileUpload from "express-fileupload";
 import path from "path";
 import { createServer } from "http";
+import fetch from "node-fetch";
 
 const app = express();
 app.use(express.json({ limit: '50mb' }));
@@ -43,8 +44,28 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err);
 });
 
-// Serve static files from client/dist in production
-if (process.env.NODE_ENV === "production") {
+// In development, serve the frontend through Vite proxy
+if (process.env.NODE_ENV === "development") {
+  // Proxy frontend requests to Vite dev server
+  app.get("*", async (req, res) => {
+    try {
+      const response = await fetch(`http://localhost:5173${req.path}`);
+      const html = await response.text();
+      res.send(html);
+    } catch (error) {
+      res.status(500).send(`
+        <html>
+          <body>
+            <h1>Resume Application Loading...</h1>
+            <p>Frontend development server starting up. Please wait a moment and refresh.</p>
+            <script>setTimeout(() => window.location.reload(), 3000);</script>
+          </body>
+        </html>
+      `);
+    }
+  });
+} else {
+  // Serve static files from client/dist in production
   app.use(express.static(path.join(__dirname, "../client/dist")));
   app.get("*", (_req, res) => {
     res.sendFile(path.join(__dirname, "../client/dist/index.html"));
