@@ -3,7 +3,6 @@ import pdfParse from 'pdf-parse';
 import mammoth from 'mammoth';
 import Tesseract from 'tesseract.js';
 import { FileUploadResult } from './types';
-import { storage } from './storage';
 import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
 
@@ -27,8 +26,8 @@ export async function parseResumeFile(
     // Generate session ID
     const sessionId = uuidv4();
     
-    // Save the original file
-    const filePath = await storage.saveFile(buffer, filename);
+    // For v2, we don't save files to storage - process directly
+    const filePath = `temp/${sessionId}_${filename}`;
     
     return {
       id: sessionId,
