@@ -1,10 +1,11 @@
 import { Switch, Route, Link } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { useToast } from "@/hooks/use-toast";
-import Home from "@/pages/Home";
-import AutomatedFeedback from "@/pages/AutomatedFeedback";
-import FeedbackAutomation from "@/pages/FeedbackAutomation";
+import { Toaster } from "@/components/ui/toaster";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import NotFound from "@/pages/not-found";
+import UploadResume from "@/pages/v2/UploadResume";
+import ResumeFeedback from "@/pages/v2/ResumeFeedback";
 
 // Simple navigation bar
 function Navbar() {
@@ -23,10 +24,9 @@ function Router() {
       <Navbar />
       <div className="flex-grow">
         <Switch>
-          <Route path="/" component={Home}/>
-          <Route path="/feedback" component={AutomatedFeedback}/>
-          <Route path="/automation" component={FeedbackAutomation}/>
-          <Route component={() => <div>Page not found</div>} />
+          <Route path="/" component={UploadResume}/>
+          <Route path="/feedback" component={ResumeFeedback}/>
+          <Route component={NotFound} />
         </Switch>
       </div>
     </div>
@@ -36,7 +36,10 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Router />
+      <TooltipProvider>
+        <Toaster />
+        <Router />
+      </TooltipProvider>
     </QueryClientProvider>
   );
 }

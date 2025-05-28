@@ -1,0 +1,101 @@
+{
+  "header": {
+    "firstName": "John",
+    "tagline": "Senior Software Engineer — Full-Stack Expertise",
+    "location": "CA",
+    "city": "San Francisco",
+    "country": "USA"
+  },
+  "summary": "Innovative software engineer with 8 years in full-stack development, specializing in React and Node.js. Enhanced deployment times by 50%, boosted team productivity by 30%, and improved application performance by 40%.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "Node.js",
+        "Express",
+        "MongoDB",
+        "Git",
+        "CI/CD",
+        "Agile",
+        "HTML",
+        "CSS",
+        "RESTful API Design",
+        "Docker",
+        "Kubernetes",
+        "AWS",
+        "Microservices",
+        "Test-Driven Development (TDD)"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Fluent)",
+        "Spanish (Intermediate)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "ABC Technologies",
+      "location": "CA",
+      "title": "Senior Software Engineer",
+      "startDate": "Jan 2020",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Developed and maintained multiple web applications using React and Node.js, resulting in a 20% increase in user engagement.",
+          "metrics": []
+        },
+        {
+          "text": "Led a team of 5 developers, increasing productivity by 30%.",
+          "metrics": [
+            "30% productivity increase"
+          ]
+        },
+        {
+          "text": "Implemented CI/CD pipelines reducing deployment time by 50%.",
+          "metrics": [
+            "50% reduction in deployment time"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "XYZ Corp",
+      "location": "WA",
+      "title": "Software Engineer",
+      "startDate": "Mar 2017",
+      "endDate": "Dec 2019",
+      "bullets": [
+        {
+          "text": "Built RESTful APIs using Express.js and MongoDB, supporting over 1 million requests per month.",
+          "metrics": []
+        },
+        {
+          "text": "Collaborated with product managers to define feature requirements, leading to a 15% reduction in feature delivery time.",
+          "metrics": []
+        },
+        {
+          "text": "Refactored legacy codebase improving performance by 40%.",
+          "metrics": [
+            "40% performance improvement"
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of Washington",
+      "degree": "Bachelor of Science in Computer Science",
+      "location": "WA",
+      "year": "2016",
+      "additionalInfo": ""
+    }
+  ],
+  "additionalExperience": ""
+}

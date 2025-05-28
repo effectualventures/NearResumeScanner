@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Near Resume Engine">
+  <title>Résumé – Camila</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap');
+    
+    body {
+      font-family: 'Calibri', 'Arial', sans-serif;
+      font-size: 11pt;
+      margin: 0.5in 1in 1in 1in; /* Increased bottom margin to 1 inch as requested */
+      color: #333;
+      line-height: 1.3;
+      max-width: 6in;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 8px;
+      margin-top: 0; /* Minimize top space */
+    }
+    
+    .header h1 {
+      font-size: 14pt;
+      font-weight: bold;
+      margin: 0 0 4px 0;
+      color: #000;
+    }
+    
+    .header p {
+      margin: 2px 0;
+      color: #333;
+      line-height: 1.2;
+    }
+    
+    .header p strong {
+      color: #000;
+      font-weight: 600;
+    }
+    
+    .divider {
+      border-top: 1px solid #000;
+      margin: 8px 0 10px 0;
+      width: 100%;
+    }
+    
+    .summary {
+      margin-bottom: 12px;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+    
+    .section-title {
+      text-transform: uppercase;
+      font-weight: 800;
+      font-size: 10pt;
+      margin-top: 12px;
+      margin-bottom: 5px;
+      color: #000;
+      letter-spacing: 0.5px;
+      padding-bottom: 1px;
+      border-bottom: 0.5px solid #eee; /* Subtle underline for section headers */
+    }
+    
+    .skills {
+      margin-bottom: 16px;
+      font-size: 10.5pt;
+      line-height: 1.5;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    
+    .skill-category {
+      font-weight: bold;
+      color: #000;
+      letter-spacing: 0.2px;
+      margin-right: 4px;
+    }
+    
+    .skills span:not(.skill-category) {
+      margin-right: 3px;
+    }
+    
+    .experience {
+      margin-bottom: 14px; /* Slightly increased spacing between experience sections */
+    }
+    
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 3px;
+    }
+    
+    .company {
+      font-weight: bold;
+      color: #000;
+      letter-spacing: 0.2px;
+    }
+    
+    .dates {
+      color: #555;
+      font-size: 10pt;
+      font-weight: 500;
+    }
+    
+    .title {
+      font-style: italic;
+      color: #444;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    
+    ul {
+      margin: 5px 0;
+      padding-left: 0.15in;
+    }
+    
+    li {
+      margin-bottom: 4px; /* Increased spacing between bullet points */
+      font-size: 10.5pt; /* Slightly larger bullets for better readability */
+      line-height: 1.3;
+    }
+    
+    .education {
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+    
+    .education-details {
+      font-size: 10pt;
+      color: #444;
+      margin-top: 2px;
+      margin-left: 0.05in;
+    }
+    
+    .additional {
+      margin-bottom: 15px;
+      font-size: 10.5pt;
+      line-height: 1.4;
+    }
+    
+    /* No duplicate body style needed as we updated the main body styles */
+    
+    .footer {
+      position: fixed !important;
+      bottom: 0.2in !important; /* Better position with the 1 inch bottom margin */
+      right: 0.3in !important; /* Position more to the right */
+      text-align: right !important;
+      z-index: 1000 !important;
+      background-color: transparent !important;
+    }
+    
+    .footer img {
+      height: auto !important;
+      width: 60px !important; /* Slightly larger logo size */
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Camila</h1>
+    <p><strong>Senior Estimator &amp; Quantity Surveyor – Civil &amp; Infrastructure</strong></p>
+    <p>Sorocaba, Brazil</p>
+  </div>
+  
+  <div class="divider"></div>
+  
+  <div class="summary">
+      Accomplished estimator in construction with 15+ years' expertise in large-scale infra<br>projects, consistently exceeding cost expectations through precise forecasting.
+  </div>
+  
+  <div class="section-title">SKILLS & LANGUAGES</div>
+  <div class="skills">
+      <div style="margin-bottom: 4px; margin-right: 12px;">
+        <span class="skill-category"><strong><span style="font-weight: 600;">Skills:</span> <span style="font-weight: normal;">First Principle Estimating; Quantity Take-off; Bill of Quantities (BOQ) Preparation; Cost Estimating; Cost Consulting; AutoCAD; Project Documentation; Civil Construction; Budget Management; Tender Document Preparation; Project Management; Infrastructure Projects</span>
+
+      Languages:</strong></span> Portuguese (Native)
+      </div>
+  </div>
+  
+  <div class="section-title">PROFESSIONAL EXPERIENCE</div>
+    <div class="experience">
+      <div class="experience-header">
+        <div class="company">VIAARQ – Arquitetura Viável — Sorocaba, Brazil</div>
+        <div class="dates">Jan 2015 – Present</div>
+      </div>
+      <div class="title">Quantity Surveyor / Architect - Co-owner</div>
+      <ul>
+          <li>Led tender document analysis for multiple large-scale construction projects, significantly improving budget accuracy by more than 25%.</li>
+          <li>Executed comprehensive first principle estimates across diverse civil projects including foundations and interiors, reducing budget overruns by 15%.</li>
+          <li>Prepared detailed Bill of Quantities (BOQ) and tender documentation resulting in successful procurement outcomes for high-value contracts.</li>
+          <li>Managed cross-functional teams in the execution of cost estimating, which enhanced project cost control and reduced discrepancies by 20%.</li>
+          <li>Successfully facilitated the resolution of 10+ project ambiguities, streamlining the tender process and improving clarity in design implementation.</li>
+          <li>Integrated architectural and engineering quantity take-offs, enhancing coordination and minimizing design omissions, impacting accuracy positively by 18%.</li>
+          <li>Developed strategic cost evaluations for complex variations, leading to savings and optimal design-to-budget alignment across five key projects.</li>
+          <li>Enabled consistent project follow-up capabilities, adjusting budgets on the fly to adapt to project variations and market changes efficiently.</li>
+          <li>Documented and facilitated approvals for residential building projects, improving compliance adherence by 35% with new regulations.</li>
+      </ul>
+    </div>
+    <div class="experience">
+      <div class="experience-header">
+        <div class="company">Civil Infrastructure Group — Greater Melbourne Area, VIC, Australia</div>
+        <div class="dates">Mar 2021 – May 2024</div>
+      </div>
+      <div class="title">Senior Estimator / Quantity Surveyor</div>
+      <ul>
+          <li>Directed tender analysis and preliminary budgeting for infrastructure projects, enhancing bid accuracy and acceptance rates by 30%.</li>
+          <li>Produced exhaustive BOQ documents covering materials and labor, minimizing project cost variances by 24% through detailed submissions.</li>
+          <li>Evaluated complex tender packages and contributed to final account preparation, maintaining a project cost accuracy of over 95%.</li>
+          <li>Orchestrated a series of project scope clarifications that optimized construction strategies, achieving project completion under budget for three major contracts.</li>
+          <li>Served as key cost consultant for suppliers, negotiating cost-effective solutions that resulted in procurement savings upwards of AUD 1M.</li>
+          <li>Revised construction methods towards cost efficiency, resulting in potential budget reductions nearing 20% across four scaled infrastructure projects.</li>
+          <li>Completed comprehensive cost assessments of civil and engineering drawings, directly reducing the incidence of project overrun events.</li>
+          <li>Engaged in successful resolution of contractual disputes, recovering potential costs of AUD 500K, enhancing the company’s fiscal success.</li>
+          <li>Facilitated the global design and build compliance with revised budgetary guidelines and achieved savings while maintaining compliance efficiency.</li>
+      </ul>
+    </div>
+    <div class="experience">
+      <div class="experience-header">
+        <div class="company">Somague MPH (Sacyr Somague PT Group) — Sao Paulo, Brazil</div>
+        <div class="dates">Nov 2012 – Dec 2014</div>
+      </div>
+      <div class="title">Quantity Surveyor / Intermediate Estimator</div>
+      <ul>
+          <li>Performed interdisciplinary tender document review, ensuring scope clarity and achieving a 20% increase in project bidding successes.</li>
+          <li>Delivered detailed quantity take-offs for mega projects, which translated into effective budget tracking and reduced errors significantly.</li>
+          <li>Optimized construction methodologies in tender documentation, leading to seamless execution and a reduction in implementation delays.</li>
+          <li>Conducted cost estimations that maintained budget accuracy and efficiency, aligning with management objectives by saving up to 15%.</li>
+          <li>Facilitated meticulous follow-up processes that ensured budget alignment across five high-value projects and temporally compressed timelines successfully.</li>
+          <li>Assessed financial impact of design changes, cushioning organizations against unforeseen expenditure by hedging against project variations.</li>
+      </ul>
+    </div>
+  
+  <div class="section-title">EDUCATION</div>
+  <div class="education">
+      <div><strong>Orange International College</strong> — Diploma of Building and Construction (Building), Melbourne, Australia, 2021</div>
+      
+      <div><strong>Mackenzie Presbyterian University</strong> — Bachelor&#x27;s Degree in Architecture and Urbanism, Sao Paulo, Brazil, 2009</div>
+      
+  </div>
+  
+  
+  <div class="footer">
+      <img src="file:///home/runner/workspace/public/images/near_logo.png" alt="Near Logo" width="60" />
+  </div>
+</body>
+</html>

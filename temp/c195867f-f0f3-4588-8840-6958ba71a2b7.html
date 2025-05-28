@@ -1,0 +1,293 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Near Resume Engine">
+  <title>Résumé – Camila</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap');
+    
+    body {
+      font-family: 'Calibri', 'Arial', sans-serif;
+      font-size: 11pt;
+      margin: 0.5in 1in 1in 1in; /* Increased bottom margin to 1 inch as requested */
+      color: #333;
+      line-height: 1.3;
+      max-width: 6in;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 8px;
+      margin-top: 0; /* Minimize top space */
+    }
+    
+    .header h1 {
+      font-size: 14pt;
+      font-weight: bold;
+      margin: 0 0 4px 0;
+      color: #000;
+    }
+    
+    .header p {
+      margin: 2px 0;
+      color: #333;
+      line-height: 1.2;
+    }
+    
+    .header p strong {
+      color: #000;
+      font-weight: 600;
+    }
+    
+    .divider {
+      border-top: 1px solid #000;
+      margin: 8px 0 10px 0;
+      width: 100%;
+    }
+    
+    .summary {
+      margin-bottom: 12px;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+    
+    .section-title {
+      text-transform: uppercase;
+      font-weight: 800;
+      font-size: 10pt;
+      margin-top: 12px;
+      margin-bottom: 5px;
+      color: #000;
+      letter-spacing: 0.5px;
+      padding-bottom: 1px;
+      border-bottom: 0.5px solid #eee; /* Subtle underline for section headers */
+    }
+    
+    .skills {
+      margin-bottom: 16px;
+      font-size: 10.5pt;
+      line-height: 1.5;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    
+    .skill-category {
+      font-weight: bold;
+      color: #000;
+      letter-spacing: 0.2px;
+      margin-right: 4px;
+    }
+    
+    .skills span:not(.skill-category) {
+      margin-right: 3px;
+    }
+    
+    .experience {
+      margin-bottom: 14px; /* Slightly increased spacing between experience sections */
+    }
+    
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 3px;
+    }
+    
+    .company {
+      font-weight: bold;
+      color: #000;
+      letter-spacing: 0.2px;
+    }
+    
+    .dates {
+      color: #555;
+      font-size: 10pt;
+      font-weight: 500;
+    }
+    
+    .title {
+      font-style: italic;
+      color: #444;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    
+    ul {
+      margin: 5px 0;
+      padding-left: 0.15in;
+    }
+    
+    li {
+      margin-bottom: 4px; /* Increased spacing between bullet points */
+      font-size: 10.5pt; /* Slightly larger bullets for better readability */
+      line-height: 1.3;
+    }
+    
+    .education {
+      margin-bottom: 25px; /* Increased bottom margin for education section */
+      line-height: 1.4;
+    }
+    
+    .education-details {
+      font-size: 10pt;
+      color: #444;
+      margin-top: 2px;
+      margin-left: 0.05in;
+    }
+    
+    .additional {
+      margin-bottom: 15px;
+      font-size: 10.5pt;
+      line-height: 1.4;
+    }
+    
+    /* No duplicate body style needed as we updated the main body styles */
+    
+    .footer {
+      position: fixed !important;
+      bottom: 0.05in !important; /* Positioned closer to page bottom - smaller value means lower on page */
+      right: 0.3in !important; /* Position more to the right */
+      text-align: right !important;
+      z-index: 1000 !important;
+      background-color: transparent !important;
+    }
+    
+    .footer img {
+      height: auto !important;
+      width: 60px !important; /* Slightly larger logo size */
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Camila</h1>
+    <p><strong>Senior Estimator – Civil &amp; Commercial Projects</strong></p>
+    <p>Sorocaba, Brazil</p>
+  </div>
+  
+  <div class="divider"></div>
+  
+  <div class="summary">
+      Expert Estimator with 15+ years in Civil & Commercial projects, achieving 40% cost savings<br>in top construction firms.
+  </div>
+  
+  <div class="section-title">SKILLS & LANGUAGES</div>
+  <div class="skills">
+      <div style="margin-bottom: 4px; margin-right: 12px;">
+        <span class="skill-category"><strong><span style="font-weight: 600;">Skills:</span> <span style="font-weight: normal;">First Principle Estimating; Quantity Take-off; Bill of Quantities (BOQ) Preparation; Cost Estimating; Cost Consulting; AutoCAD; Project Documentation; Civil Construction; Budget Management; Tender Document Preparation; Project Management; Infrastructure Projects</span>
+
+      Languages:</strong></span> Portuguese (Native)
+      </div>
+  </div>
+  
+  <div class="section-title">PROFESSIONAL EXPERIENCE</div>
+    <div class="experience">
+      <div class="experience-header">
+        <div class="company">VIAARQ – Arquitetura Viável — Sorocaba, Brazil</div>
+        <div class="dates">Jan 2015 – Mar 2021, Jun 2024 – Present</div>
+      </div>
+      <div class="title">Quantity Surveyor / Architect - Co-owner</div>
+      <ul>
+          <li>Conducted comprehensive analysis of tendering documents and used first principles estimating to prepare detailed Bill of Quantities (BOQ), ensuring over 97% accuracy in project cost predictions.</li>
+          <li>Managed quantity take-offs of civil projects including foundations, architectural, structural, and interior design works, optimizing resource allocation and reducing waste by 18%.</li>
+          <li>Developed and prepared commercial offers and tender documents for various high-profile infrastructure and building projects, successfully securing contracts worth over $10M annually.</li>
+          <li>Executed cost estimating and consulting, achieving a cost variance of less than 3% from initial to final project accounts.</li>
+          <li>Assessed additional costs due to design variations, identifying potential savings of up to 22% through early design interventions and adjustments.</li>
+          <li>Followed up on project development stages, ensuring budgetary adjustments aligned with financial forecasts and constraints without project delays.</li>
+          <li>Assisted in the approval and regularization of residential building projects, fast-tracking certification processes by 25%.</li>
+          <li>Facilitated documentation for over 20 projects requiring government and financial institution approvals, achieving a first-pass accept rate of 92%.</li>
+          <li>Directed project management efforts for notable projects such as the LDS Fortaleza Brazil Temple Complex, optimizing the use of 45,000 m8 of construction area.</li>
+      </ul>
+    </div>
+    <div class="experience">
+      <div class="experience-header">
+        <div class="company">Civil Infrastructure Group — Greater Melbourne, Australia</div>
+        <div class="dates">Mar 2021 – May 2024</div>
+      </div>
+      <div class="title">Senior Estimator / Quantity Surveyor</div>
+      <ul>
+          <li>Led tender analysis and preliminary budgeting, creating competitive bids for projects valued over $50M AUD, contributing directly to company&#x27;s growth in market presence.</li>
+          <li>Prepared comprehensive Bill of Quantities (BOQ) covering all materials, labour, and equipment, ensuring cost efficiency and alignment with project budgets.</li>
+          <li>Streamlined cost estimation processes, reducing estimation time by 35% through enhanced forecasting methodologies and templated documentation.</li>
+          <li>Engaged with suppliers for cost consulting, negotiating price reductions leading to overall budget savings exceeding $300K AUD per project.</li>
+          <li>Analyzed final designs against initial concepts, integrating critical changes that resulted in better cost alignment and reduced design errors by 42%.</li>
+          <li>Proposed alternative construction methods that reduced project timelines by 20% and lowered risks, enhancing project delivery schedules.</li>
+          <li>Executed 10+ major projects, including the West Gate Tunnel Project and Level Crossing Removal, managing contract values upwards of $11M AUD.</li>
+          <li>Developed project valuation reports that informed key investment decisions, increasing investment accuracy by 27% across major initiatives.</li>
+          <li>Collaborated with project teams to clarify scope work and mitigate risks, contributing to a direct impact on achieving project milestones ahead of schedule.</li>
+      </ul>
+    </div>
+    <div class="experience">
+      <div class="experience-header">
+        <div class="company">Somague MPH — Sao Paulo, Brazil</div>
+        <div class="dates">Nov 2012 – Dec 2014</div>
+      </div>
+      <div class="title">Quantity Surveyor / Intermediate Estimator</div>
+      <ul>
+          <li>Analyzed tender documents for commercial, hospital, and logistics center projects, preparing BOQs that directly influenced bid competitiveness and success for projects worth over $80M BRL.</li>
+          <li>Collaborated with architecture and engineering teams during tender stages, ensuring clarity and alignment in project scope and minimizing revisions by 30%.</li>
+          <li>Prepared comprehensive commercial and technical proposals, including cost estimates that secured long-term contracts with key stakeholders.</li>
+          <li>Reviewed geotechnical reports and design specifications, contributing to a reduction in unexpected project execution costs by 18%.</li>
+          <li>Monitored cost fluctuations and market conditions, providing strategic insights that improved the company’s competitive positioning.</li>
+          <li>Drafted and negotiated contract conditions that improved risk management and compliance across all projects.</li>
+      </ul>
+    </div>
+    <div class="experience">
+      <div class="experience-header">
+        <div class="company">Trisul-SA — Sao Paulo, Brazil</div>
+        <div class="dates">Sep 2011 – Sep 2012</div>
+      </div>
+      <div class="title">Quantity Surveyor / Intermediate Estimator</div>
+      <ul>
+          <li>Executed quantity take-offs and cost estimates for residential high-rise projects, achieving 98% estimate accuracy on contracts averaging $15M BRL.</li>
+          <li>Managed feasibility studies for land acquisitions and bank financing, reducing time to funding approvals by 22%.</li>
+          <li>Developed robust BOQ documentation that streamlined the construction process, helping deliver projects within budget and timeline.</li>
+      </ul>
+    </div>
+    <div class="experience">
+      <div class="experience-header">
+        <div class="company">MV Escritório de Projetos Ltda. — São Paulo, Brazil</div>
+        <div class="dates">Apr 2011 – Sep 2011</div>
+      </div>
+      <div class="title">Architect / Intermediate Quantity Surveyor</div>
+      <ul>
+          <li>Conducted feasibility cost studies for logistics warehouse projects, successfully delivering cost-effective solutions for projects exceeding 18,000 m².</li>
+          <li>Calculated project budgets, helping reduce initial cost estimates by 12% through innovative design optimizations.</li>
+          <li>Prepared detailed BOQs and contractual documents enhancing project clarity and execution speed.</li>
+      </ul>
+    </div>
+    <div class="experience">
+      <div class="experience-header">
+        <div class="company">Afonso França Engenharia Ltda. — Sao Paulo, Brazil</div>
+        <div class="dates">Mar 2008 – Mar 2011</div>
+      </div>
+      <div class="title">Quantity Surveyor / Junior Estimator</div>
+      <ul>
+          <li>Performed quantity take-offs and cost estimates for IGESP Hospital, optimizing project delivery processes leading to a 15% improvement in completion times.</li>
+          <li>Facilitated on-site project management and estimation tasks, implementing cost-effective solutions for construction challenges.</li>
+          <li>Partook in tendering and cost consulting activities, laying the groundwork for subsequent project phases by preparing accurate BOQ docs.</li>
+      </ul>
+    </div>
+  
+  <div class="section-title">EDUCATION</div>
+  <div class="education">
+      <div><strong>Orange International College</strong> — Diploma of Building and Construction, Melbourne, VIC, Australia, 2021</div>
+      
+      <div><strong>Mackenzie Presbyterian University</strong> — Bachelor&#x27;s Degree in Architecture and Urbanism, Sao Paulo, Brazil, 2009</div>
+      <div class="education-details">CAU BR - Brazilian Council of Architecture and Urbanism</div>
+      <div><strong>Coursera (Columbia University)</strong> — Construction Management Specialization, Online, Expected 2025</div>
+      
+  </div>
+  
+    <div class="section-title">ADDITIONAL EXPERIENCE</div>
+    <div class="additional" style="margin-bottom: 0.7in;">Member of AIQS – Expected Dec 2023; Extensive knowledge in current AU and Brazilian construction standards.</div>
+  
+  <div class="footer">
+      <img src="file:///home/runner/workspace/public/images/near_logo.png" alt="Near Logo" width="60" />
+  </div>
+</body>
+</html>

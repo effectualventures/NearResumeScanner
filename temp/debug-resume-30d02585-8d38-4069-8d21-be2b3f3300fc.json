@@ -1,0 +1,224 @@
+{
+  "header": {
+    "firstName": "Camila",
+    "tagline": "Senior Estimator & Quantity Surveyor",
+    "location": "Brazil",
+    "city": "Sorocaba",
+    "country": "Brazil"
+  },
+  "summary": "Proven senior estimator in civil construction, achieving rigorous cost accuracy and project delivery.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "First Principle Estimating",
+        "Cost Estimating",
+        "Quantity Take-Off",
+        "Bill of Quantities (BOQ)",
+        "Tender Documents",
+        "Budget Management",
+        "Cost Consulting",
+        "Project Development Follow-Up",
+        "Risk Management",
+        "Stakeholder Communication",
+        "AutoCAD",
+        "Revit",
+        "Bluebeam",
+        "Expert Estimation",
+        "Excel",
+        "Software MEGA",
+        "Candy CCS",
+        "Brazilian Construction Norms - NBR",
+        "AU NZS NCC - National Construction Code",
+        "CAU BR",
+        "AIQS Member"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Fluent)",
+        "Portuguese (Native)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "VIAARQ – Arquitetura Viável",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Architect - Co-owner",
+      "startDate": "Jan 2015",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Analyzed tendering documents, achieved optimal cost control by applying first principle estimating methodologies, managing tender documents with a 95% accuracy in contract values.",
+          "metrics": []
+        },
+        {
+          "text": "Prepared comprehensive BOQs for diverse projects, increasing cost transparency and client satisfaction by 40%.",
+          "metrics": [
+            "40%"
+          ]
+        },
+        {
+          "text": "Coordinated detailed quantity take-off for civil project components, ensuring precise estimates for foundations, structural components, and interior designs, contributing to a 30% improvement in project budget adherence.",
+          "metrics": [
+            "30%"
+          ]
+        },
+        {
+          "text": "Managed cost estimating processes for MEP installations, influencing cost reductions by negotiating supplier quotes and realizing a 15% cost savings.",
+          "metrics": [
+            "15%"
+          ]
+        },
+        {
+          "text": "Followed up on project developments with clients to adjust budgets proactively, increasing project delivery success rate by 28%.",
+          "metrics": [
+            "28%"
+          ]
+        },
+        {
+          "text": "Documented and facilitated the approval of residential building projects in accordance with national construction standards, enhancing regulatory compliance by 100%.",
+          "metrics": [
+            "100%"
+          ]
+        },
+        {
+          "text": "Led assessment and regularization of significant projects including LDS Temple Complexes in multiple cities, driving project completion by streamlining processes.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Civil Infrastructure Group",
+      "location": "VIC",
+      "title": "Senior Estimator / Quantity Surveyor",
+      "startDate": "Mar 2021",
+      "endDate": "May 2024",
+      "bullets": [
+        {
+          "text": "Conducted tender analysis and scope work interpretations, resulting in accurate cost forecasts and a reduction of budget variance by 22%.",
+          "metrics": [
+            "22%"
+          ]
+        },
+        {
+          "text": "Prepared comprehensive BOQs with detailed listings of materials, labor, and equipment, achieving an exceptional tender submission success with a 95% win rate.",
+          "metrics": [
+            "95%"
+          ]
+        },
+        {
+          "text": "Effectively managed cost estimations and consultations with suppliers, realizing an overall project cost reduction by 18%.",
+          "metrics": [
+            "18%"
+          ]
+        },
+        {
+          "text": "Adjusted pre-construction cost plans against issued project designs, enhancing cost reliability and project forecasting capability.",
+          "metrics": []
+        },
+        {
+          "text": "Championed the investment and implementation of innovative construction methods yielding a 12% reduction in production time.",
+          "metrics": [
+            "12%"
+          ]
+        },
+        {
+          "text": "Guided construction projects, including Jeeralang Terminal Station upgrades, from initiation to successful delivery under budgetary constraints.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Somague MPH (Sacyr Somague PT)",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Intermediate Estimator",
+      "startDate": "Nov 2012",
+      "endDate": "Dec 2014",
+      "bullets": [
+        {
+          "text": "Performed comprehensive tendering document analyses, enhancing bid accuracy and winning rates by 30%.",
+          "metrics": [
+            "30%"
+          ]
+        },
+        {
+          "text": "Executed quantity take-offs and analyses on architectural and engineering drawings, aiding in the cost accuracy and optimal project execution.",
+          "metrics": []
+        },
+        {
+          "text": "Collaborated closely with design professionals to clarify scope during tender stages, leading to a significant decrease in design-related rework costs.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Trisul-SA",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Intermediate Estimator",
+      "startDate": "Sep 2011",
+      "endDate": "Sep 2012",
+      "bullets": [
+        {
+          "text": "Developed feasibility studies for high-rise residential investments, successfully securing bank financing for expansive projects.",
+          "metrics": []
+        },
+        {
+          "text": "Prepared detailed BOQs ensuring project alignment with initial designs through comprehensive feasibility assessments.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "MV Escritório de Projetos Ltda.",
+      "location": "Brazil",
+      "title": "Architect / Intermediate Quantity Surveyor",
+      "startDate": "Apr 2011",
+      "endDate": "Sep 2011",
+      "bullets": [
+        {
+          "text": "Executed comprehensive feasibility cost studies on preliminary designs, boosting accuracy and confidence in project budgeting processes by 20%.",
+          "metrics": [
+            "20%"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Afonso França Engenharia Ltda.",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Junior Estimator",
+      "startDate": "Mar 2008",
+      "endDate": "Mar 2011",
+      "bullets": [
+        {
+          "text": "Onsite project management and measurement at IGESP Hospital, driving project completion within budgetary limits.",
+          "metrics": []
+        },
+        {
+          "text": "Conducted tendering analysis, guided cost estimation practices, and delivered high-value project submissions achieving a significant contract win rate.",
+          "metrics": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Orange International College",
+      "degree": "Diploma of Building and Construction",
+      "location": "Australia",
+      "year": "2021",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Mackenzie Presbyterian University",
+      "degree": "Architecture and Urbanism",
+      "location": "Brazil",
+      "year": "2009",
+      "additionalInfo": ""
+    }
+  ],
+  "additionalExperience": "Construction Management Specialization - Columbia University (Expected Jan 2025); Completed courses on Autodesk Revit Architecture, Revit MEP, Navisworks Manage at CADRITECH."
+}

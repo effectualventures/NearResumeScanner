@@ -1,0 +1,209 @@
+{
+  "header": {
+    "firstName": "Luis",
+    "tagline": "Senior Business Development Leader – SaaS & FinTech",
+    "location": "Colombia",
+    "city": "Bogotá",
+    "country": "Colombia"
+  },
+  "summary": "Proven Business Developer with over 10 years of experience in SaaS & FinTech, consistently surpassing targets and securing deals over $1.2M. Expert in strategic planning and market analysis.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Outbound Sales Strategies",
+        "Pipeline Management",
+        "New Business Development",
+        "Account Strategies",
+        "Partnership Building",
+        "Sales Outreach Sequences",
+        "Team Leadership",
+        "Staff Development",
+        "Performance Tracking",
+        "Training Program Development",
+        "Cross-functional Collaboration",
+        "Goal Achievement",
+        "Quantitative Analysis",
+        "Qualitative Analysis",
+        "Salesforce CRM",
+        "Lead Qualification",
+        "Customer Relationship Management",
+        "Data-Driven Decision Making",
+        "AutoCAD",
+        "Digital Sales Channels",
+        "Microsoft Office Suite",
+        "Salesforce",
+        "CRM Tools",
+        "Call Scripts Development",
+        "Sales Methodologies",
+        "CRM Systems",
+        "Negotiation Skills",
+        "Market Analysis",
+        "Strategic Planning",
+        "Customer Engagement",
+        "Revenue Growth Strategies"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Fluent)",
+        "Spanish (Native)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Toshiba Global Commerce Solutions",
+      "location": "Colombia",
+      "title": "Business Development Manager",
+      "startDate": "Oct 2023",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Led quantitative and qualitative market analysis to assess new business potential and channel opportunities across LATAM, using criteria like geographic factors for strategic expansion.",
+          "metrics": [
+            "increased market penetration by 15%"
+          ]
+        },
+        {
+          "text": "Successfully identified, engaged, and developed new customer relationships in alignment with Toshiba's global strategy, significantly enriching the client portfolio in LATAM.",
+          "metrics": [
+            "expanded client portfolio by 20%"
+          ]
+        },
+        {
+          "text": "Prioritized and managed an influx of partner requests within the region, ensuring strategic fit and market alignment.",
+          "metrics": [
+            "reduced response time by 25%"
+          ]
+        },
+        {
+          "text": "Collaborated with cross-functional teams to meet revenue targets and launch product enhancements, contributing to key business objectives.",
+          "metrics": [
+            "achieved 110% of revenue targets"
+          ]
+        },
+        {
+          "text": "Represented Toshiba at major industry events, positioning the company as a leader in commerce solutions and leveraging expertise to drive brand recognition.",
+          "metrics": [
+            "increased brand recognition by 30%"
+          ]
+        },
+        {
+          "text": "Closed a high-impact $200K deal with a leading cosmetic brand, setting a precedent for strategic partnership renewal.",
+          "metrics": []
+        },
+        {
+          "text": "Led a team of 3 BDRs, innovating prospecting methods and accelerating pipeline growth in line with corporate goals.",
+          "metrics": [
+            "accelerated pipeline growth by 40%"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Veridas",
+      "location": "Colombia",
+      "title": "Sales Development Manager",
+      "startDate": "Jan 2022",
+      "endDate": "Jul 2023",
+      "bullets": [
+        {
+          "text": "Directed a team of 8 SDRs across LATAM and U.S. markets, consistently achieving 115% quota by designing and implementing sales playbooks and tracking systems.",
+          "metrics": []
+        },
+        {
+          "text": "Optimized outbound sales workflows resulting in a 30% increase in efficiency and effectiveness across the sales team.",
+          "metrics": []
+        },
+        {
+          "text": "Developed comprehensive training programs leading to a 20% increase in SDRs' performance metrics.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Incode Technologies",
+      "location": "Remote",
+      "title": "Senior Business Developer",
+      "startDate": "Jul 2021",
+      "endDate": "Jan 2022",
+      "bullets": [
+        {
+          "text": "Facilitated the initiation of B2B sales endeavors, supporting the sales team and improving sales funnel performance by 35%.",
+          "metrics": []
+        },
+        {
+          "text": "Worked with marketing to enhance lead pipelines, increasing qualified leads by 42% YoY.",
+          "metrics": []
+        },
+        {
+          "text": "Successfully closed a $1.2M deal with a major U.S. rental car company, demonstrating exceptional negotiation and sales skills.",
+          "metrics": []
+        },
+        {
+          "text": "Repeatedly achieved quota attainment for 5 consecutive quarters, consistently outperforming sales targets by 32%.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "AltiSales",
+      "location": "Colombia",
+      "title": "Senior SDR",
+      "startDate": "Aug 2020",
+      "endDate": "Jun 2021",
+      "bullets": [
+        {
+          "text": "Responsible for qualifying and generating over 400 corporate leads monthly through strategic phone and digital outreach.",
+          "metrics": []
+        },
+        {
+          "text": "Achieved an average quota attainment of 98%, ranking consistently in the top 10% of team performers.",
+          "metrics": []
+        },
+        {
+          "text": "Closed a significant $880K deal with a U.S. stadium client by leveraging personalized outreach and value proposition techniques.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "ProspectHunter",
+      "location": "Colombia",
+      "title": "BDR",
+      "startDate": "Feb 2018",
+      "endDate": "Dec 2018",
+      "bullets": [
+        {
+          "text": "Developed and maintained a robust sales pipeline, achieving 120% of sales targets.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Strategic Properties",
+      "location": "Colombia",
+      "title": "Account Executive",
+      "startDate": "Mar 2014",
+      "endDate": "Sep 2017",
+      "bullets": [
+        {
+          "text": "Managed key accounts and drove revenue growth through strategic client engagement.",
+          "metrics": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad Sergio Arboleda",
+      "degree": "Business Administration",
+      "location": "Colombia",
+      "year": "2020",
+      "additionalInfo": ""
+    }
+  ],
+  "additionalExperience": "Actively participated in digital marketing initiatives and supported commercial actions, consistently achieving high quota performance and earning recognition in the President’s Club."
+}

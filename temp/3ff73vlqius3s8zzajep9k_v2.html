@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Near Resume Engine">
+  <title>Résumé – Camila</title>
+  <style>
+    /* Base page setup with precise margins */
+    @page {
+      size: letter;
+      margin: 0.5in 0.5in 0.7in 0.5in; /* top, right, bottom, left */
+      orphans: 3; /* Minimum number of lines at the top of a page */
+      widows: 3; /* Minimum number of lines at the bottom of a page */
+    }
+    
+    /* Reset CSS to ensure consistent rendering */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-weight: normal;
+    }
+    
+    /* Base typography */
+    body {
+      font-family: 'Calibri', 'Arial', sans-serif;
+      font-size: 11pt;
+      line-height: 1.3;
+      color: #333;
+      width: 7.5in; /* Exact content width: 8.5in - margins */
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+    
+    /* Core container for all content */
+    .resume-container {
+      width: 100%;
+      position: relative;
+    }
+    
+    /* Header section */
+    .header {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    
+    .header h1 {
+      font-size: 14pt;
+      font-weight: bold;
+      margin-bottom: 2px;
+      color: #000;
+    }
+    
+    .header p {
+      margin: 1px 0;
+      color: #333;
+      line-height: 1.1;
+      font-size: 10.5pt;
+    }
+    
+    .header p strong {
+      font-weight: 600;
+      color: #000;
+    }
+    
+    /* Section styling */
+    .section-title {
+      font-size: 11pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-top: 15px;
+      margin-bottom: 3px;
+      letter-spacing: 0.5px;
+    }
+    
+    .section-rule {
+      border: none;
+      border-top: 1px solid #d9d9d9;
+      margin: 3px 0 8px;
+      width: 100%;
+    }
+    
+    section {
+      margin-bottom: 10px;
+      width: 100%;
+      clear: both;
+    }
+    
+    /* More granular page break control */
+    .experience-header, .title {
+      page-break-inside: avoid;
+      page-break-after: avoid;
+    }
+    
+    /* Allow page breaks inside experience bullet lists if necessary */
+    .experience ul {
+      page-break-inside: auto;
+    }
+    
+    /* New container for experiences to better handle page breaks */
+    .experience-container {
+      display: block;
+      break-inside: auto;
+    }
+    
+    /* More specific rules for page breaks in experiences */
+    .professional-experience {
+      break-inside: auto;
+      page-break-inside: auto;
+    }
+    
+    /* Ensure at least 2 lines of content appear when page breaks happen inside lists */
+    ul li {
+      orphans: 2;
+      widows: 2;
+    }
+    
+    /* Summary section */
+    .summary {
+      margin-bottom: 15px;
+      font-size: 11pt;
+      line-height: 1.3;
+    }
+    
+    /* Skills & Languages section */
+    .skills, .languages-list {
+      margin-bottom: 8px;
+      width: 100%;
+    }
+    
+    .skill-category {
+      font-weight: 600;
+    }
+    
+    /* Professional Experience */
+    .experience {
+      margin-bottom: 15px;
+      break-inside: auto; /* Modern property to allow breaks within experiences */
+      page-break-inside: auto; /* Allow page breaks within experience items */
+    }
+    
+    /* Keep headers with at least some content */
+    section h2.section-title {
+      page-break-after: avoid; /* Keep section headings with their content */
+    }
+    
+    /* Keep company and title headings with at least 2 lines of content */
+    .company, .title {
+      page-break-after: avoid;
+    }
+    
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      page-break-after: avoid;
+    }
+    
+    .company {
+      font-weight: 600;
+    }
+    
+    .title {
+      font-style: italic;
+      margin-bottom: 3px;
+    }
+    
+    ul {
+      padding-left: 16px;
+      margin-top: 2px;
+      margin-bottom: 10px;
+      page-break-before: avoid; /* Prevent break before the bullet list */
+    }
+    
+    li {
+      margin-bottom: 2px;
+      font-weight: normal;
+      font-size: 10.5pt;
+      break-inside: avoid-column;
+      page-break-inside: auto; /* Allow bullets to break across pages */
+    }
+    
+    /* Metric emphasis but not whole bullet */
+    li span.metrics {
+      font-weight: 500;
+      color: #333;
+    }
+    
+    /* Education section */
+    .education {
+      margin-bottom: 12px;
+      page-break-inside: avoid;
+    }
+    
+    .education-institution {
+      margin-bottom: 2px;
+      font-size: 11pt;
+    }
+    
+    .education-institution strong {
+      font-weight: 600;
+    }
+    
+    .education-degree {
+      color: #333;
+      margin-bottom: 2px;
+      font-size: 10.5pt;
+    }
+    
+    .education-details {
+      color: #444;
+      margin-bottom: 4px;
+      font-size: 10pt;
+    }
+    
+    /* Additional information */
+    .additional {
+      color: #333;
+      line-height: 1.4;
+      font-size: 10.5pt;
+    }
+    
+    .additional li {
+      margin-bottom: 3px;
+    }
+    
+    /* Ensure Skills and Languages labels are bold */
+    .skills strong {
+      font-weight: bold !important;
+    }
+    
+    /* Footer positioning - completely revised approach */
+    .logo-zone {
+      width: 100%;
+      clear: both;
+      display: block;
+      margin-top: 30px; /* Space between content and footer */
+      margin-bottom: 0; /* No margin at bottom */
+      page-break-inside: avoid; /* Keep footer on same page */
+    }
+    
+    .branding-footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end; /* Right-align content */
+      gap: 6px;
+      font-family: 'Inter', 'Helvetica', sans-serif;
+      font-size: 10px;
+      width: 100%;
+      border-top: 1px solid #f0f0f0; /* Light separator line */
+      padding-top: 10px; /* Space above the logo, after the line */
+      padding-bottom: 0; /* No padding at bottom */
+    }
+    
+    .branding-footer img {
+      height: 25px;
+      width: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="resume-container">
+    <!-- HEADER -->
+    <div class="header">
+      <h1>Camila</h1>
+      <p><strong>Senior Construction Estimator – Infrastructure &amp; Commercial Projects</strong></p>
+      <p>Brazil</p>
+    </div>
+    
+    <hr class="section-rule">
+    
+    <!-- SUMMARY -->
+    <div class="summary">
+        Expert estimator with 15+ years in civil projects, specializing in infrastructure projects, commercial construction, and cost management. Delivered 40% cost efficiencies and consistently completed projects under budget by 10%.
+    </div>
+    
+    <!-- SKILLS AND LANGUAGES SECTION -->
+    <section>
+      <h2 class="section-title">Skills</h2>
+      <hr class="section-rule"/>
+      <div class="skills">
+        <!-- First display skills -->
+            <div style="margin-bottom: 4px; width: 100%;">
+              <b style="font-weight: bold !important;">Skills:</b> First Principle Estimating • Bill of Quantities (BOQ) • Tender Documents • Cost Estimating • Cost Consulting • Quantity Take-Off • Project Management • Civil Construction • Budget Management • AutoCAD • Excel • Bluebeam • Revit • Software MEGA • Candy (CCS)
+            </div>
+        
+        <!-- Display any other categories except Languages -->
+        
+        <!-- Display Languages within the same section -->
+        <div style="margin-top: 10px;">
+          <b style="font-weight: bold !important;">Languages:</b> 
+              Portuguese (Native); English (Fluent)
+          
+        </div>
+      </div>
+    </section>
+    
+    <!-- PROFESSIONAL EXPERIENCE -->
+    <section class="professional-experience">
+      <h2 class="section-title">Professional Experience</h2>
+      <hr class="section-rule"/>
+      <div class="experience-container">
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">VIAARQ – Arquitetura Viável</span>
+                <span> — </span>
+                <span class="location">Brazil</span>
+              </div>
+              <div class="dates">Jan 2015 – Present</div>
+            </div>
+            <div class="title">Quantity Surveyor / Architect - Co-owner</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Led the detailed quantity take-off for multiple temple complexes, managing projects with total built and external areas exceeding 753,480 sq ft, ensuring compliance with client specifications.</span>
+                        <span class="metrics">Built area: 75,309 sq ft | External area: 412,513 sq ft</span>
+                  </li>
+                  <li><span>Conducted cost estimation for Cultura Inglesa English School projects, managing contracts valued at over $2.8M while implementing more cost-effective construction methodologies.</span>
+                  </li>
+                  <li><span>Coordinated the expansion of childcare facilities, overhauling design to optimize budget while successful project delivery on a contract valued at $1.2M.</span>
+                  </li>
+                  <li><span>Performed quantity take-offs and estimated office work for GOOGLE RIO YT FI09 project, effectively bringing project bids under initial budget projections.</span>
+                        <span class="metrics">Reduced project costs by 15%</span>
+                  </li>
+                  <li><span>Secured high-rise residential building finance approvals, aligning estimated budgets and specification documents with stringent banking standards.</span>
+                        <span class="metrics">Increased efficiency by 20%</span>
+                  </li>
+                  <li><span>Produced compliant technical drawings, meeting accessibility standards for residential buildings and improving construction project efficiency.</span>
+                        <span class="metrics">Improved efficiency by 10%</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Civil Infrastructure Group</span>
+                <span> — </span>
+                <span class="location">VIC</span>
+              </div>
+              <div class="dates">Mar 2021 – May 2024</div>
+            </div>
+            <div class="title">Senior Estimator / Quantity Surveyor</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Executed preliminary budgeting for terminal station projects, achieving a total project value of $3.5Million through efficient resource management.</span>
+                  </li>
+                  <li><span>Delivered accounts and documentation for significant projects like the Gippsland Line Upgrade, ensuring on-time completion within the set budget framework.</span>
+                        <span class="metrics">Project value: $1.4M</span>
+                  </li>
+                  <li><span>Led teams in tendering processes, resulting in successful bids including major road and level crossing projects valued over $7.6Million.</span>
+                  </li>
+                  <li><span>Managed all phases of cost consultation for large projects, such as the West Gate Tunnel Project, yielding a project worth of $1.5Million.</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Somague MPH</span>
+                <span> — </span>
+                <span class="location">Brazil</span>
+              </div>
+              <div class="dates">Nov 2012 – Dec 2014</div>
+            </div>
+            <div class="title">Quantity Surveyor / Intermediate Estimator</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Enhanced scope clarity and designs for tender stages, closing projects like TRYP By Wyndham Ribeirão Preto Hotel, a $12.0M contract.</span>
+                  </li>
+                  <li><span>Prepared detailed BOQs and negotiated contracts for projects including the La Vista Residencial, optimizing costs in a $4.8M agreement.</span>
+                  </li>
+                  <li><span>Resolved client disputes, refining processes to diminish budgetary discrepancies and boost client satisfaction.</span>
+                        <span class="metrics">Boosted client satisfaction by 25%</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Trisul-SA</span>
+                <span> — </span>
+                <span class="location">Brazil</span>
+              </div>
+              <div class="dates">Sep 2011 – Sep 2012</div>
+            </div>
+            <div class="title">Quantity Surveyor / Intermediate Estimator</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Completed accurate BOQ preparations leading to successful tenders for high-rise residential projects, such as the Poema Castro Alves Residencial with $4.0M contracts.</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">MV Escritório de Projetos Ltda.</span>
+                <span> — </span>
+                <span class="location">Brazil</span>
+              </div>
+              <div class="dates">Apr 2011 – Sep 2011</div>
+            </div>
+            <div class="title">Architect / Intermediate Quantity Surveyor</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Produced feasibility studies for logistics warehouse projects, aligning designs with client demands and managing costs on projects exceeding 193,752 sq ft.</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Afonso França Engenharia Ltda.</span>
+                <span> — </span>
+                <span class="location">Brazil</span>
+              </div>
+              <div class="dates">Mar 2008 – Mar 2011</div>
+            </div>
+            <div class="title">Quantity Surveyor / Junior Estimator</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Prepared comprehensive BOQ and managed on-site execution for high-profile projects like IGESP Hospital, handling a budget of $9.6M.</span>
+                  </li>
+            </ul>
+          </div>
+      </div>
+    </section>
+    
+    <!-- EDUCATION -->
+    <section>
+      <h2 class="section-title">Education</h2>
+      <hr class="section-rule"/>
+      <div class="education">
+          <div class="education-institution"><strong>Orange International College</strong> — VIC, Australia</div>
+          <div class="education-degree">Diploma of Building and Construction, 2021</div>
+          <div class="education-institution"><strong>Mackenzie Presbyterian University</strong> — SP, Brazil</div>
+          <div class="education-degree">Bachelor&#x27;s Degree in Architecture and Urbanism, 2009</div>
+      </div>
+    </section>
+    
+      <section>
+        <h2 class="section-title">Additional Experience</h2>
+        <hr class="section-rule"/>
+        <ul class="additional" style="margin-top: 2px; margin-bottom: 2px; padding-left: 16px;">
+            <li>Member of AIQS, Member of CAU BR since 2011.</li>
+        </ul>
+      </section>
+    
+    <!-- Footer with the logo at the bottom of the content -->
+    <div class="logo-zone">
+      <div class="branding-footer">
+        <span><strong>Presented by</strong></span>
+        <img src="file:///home/runner/workspace/public/images/near_logo.png" alt="Near logo"/>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

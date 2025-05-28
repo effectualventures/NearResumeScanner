@@ -1,0 +1,207 @@
+{
+  "header": {
+    "firstName": "Camila",
+    "tagline": "Senior Estimator & Quantity Surveyor – Civil & Infrastructure",
+    "location": "Brazil",
+    "city": "Sorocaba",
+    "country": "Brazil"
+  },
+  "summary": "Versatile Estimator specializing in infrastructure with 15+ years' experience in cost optimization and project management, achieving budget adherence in international and multimillion-dollar projects, reducing costs by 15% on average.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "First Principle Estimating",
+        "Bill of Quantities (BOQ) Preparation",
+        "Quantity Take-Off",
+        "Cost Estimating",
+        "Cost Consulting",
+        "Project Management",
+        "AutoCAD",
+        "Revit",
+        "Bluebeam",
+        "Expert Estimation",
+        "Candy (CCS)",
+        "Microsoft Excel",
+        "Architecture",
+        "Civil Construction",
+        "Infrastructure Projects",
+        "Tender Documents",
+        "Brazilian Construction Norms (NBR)",
+        "AU NZS NCC - National Construction Code",
+        "Construction Management Specialization – Columbia University",
+        "Member of AIQS – Australian Institute of Quantity Surveyors",
+        "Budget Management",
+        "Project Documentation",
+        "Stakeholder Collaboration",
+        "Commercial Construction",
+        "Residential Construction",
+        "Value Engineering",
+        "Construction Project Lifecycle",
+        "Excel Advanced Functions",
+        "Construction Standards",
+        "Design Interpretation",
+        "Structural Engineering",
+        "MEP Systems Estimation",
+        "Procurement Management",
+        "Construction Site Supervision",
+        "Architectural Drawing Analysis",
+        "Cost Planning",
+        "Progress Monitoring",
+        "Contract Administration",
+        "Quantity Take-off",
+        "Tender Document Preparation"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "Portuguese (Native)",
+        "English (Professional)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "VIAARQ — Arquitetura Viável",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Architect - Co-owner",
+      "startDate": "Jun 2024",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Spearheaded comprehensive quantity survey services for diverse construction sectors, overseeing detailed BOQs and ensuring accuracy in cost estimations, leading to budget adherence in projects exceeding 1,614,600 sq ft.",
+          "metrics": [
+            "1,614,600 sq ft"
+          ]
+        },
+        {
+          "text": "Executed rigorous analysis of tendering documents, employing strategic first principle estimating techniques to deliver insights for successful bid submissions, contributing to a 25% increase in proposal success rate.",
+          "metrics": [
+            "25% increase"
+          ]
+        },
+        {
+          "text": "Directed the preparation of commercial offers, coordinating with suppliers for competitive bidding, reducing procurement costs by 18% through strategic vendor negotiations.",
+          "metrics": [
+            "18% cost reduction"
+          ]
+        },
+        {
+          "text": "Facilitated detailed quantity take-offs for civil projects across multiple domains including foundations, architectural and structural areas, streamlining process flows and completing projects on average 12% under budget.",
+          "metrics": [
+            "12% under budget"
+          ]
+        },
+        {
+          "text": "Critically assessed design variation costs, providing accurate forecasts and implementing cost-effective measures, improving final account accuracy by 30%.",
+          "metrics": [
+            "30% accuracy improvement"
+          ]
+        },
+        {
+          "text": "Orchestrated project follow-ups to ensure alignment with budgetary frameworks, implementing adjustments that helped mitigate potential overruns by up to $2M USD.",
+          "metrics": [
+            "$2M USD mitigation"
+          ]
+        },
+        {
+          "text": "Launched documentation processes for project approval and regularization of residential buildings, enhancing processing efficiency by over 20%.",
+          "metrics": [
+            "20% efficiency increase"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Civil Infrastructure Group",
+      "location": "VIC, Australia",
+      "title": "Senior Estimator / Quantity Surveyor",
+      "startDate": "Mar 2021",
+      "endDate": "May 2024",
+      "bullets": [
+        {
+          "text": "Led a cross-functional team to analyze tender scopes, preparing detailed initial program schedules that reduced project lead times by 15%, impacting projects valued at over AUD $30M.",
+          "metrics": [
+            "15% lead time reduction",
+            "AUD $30M in project value"
+          ]
+        },
+        {
+          "text": "Executed meticulous quantity take-offs and cost estimations for notable infrastructure projects, playing a pivotal role in awarding projects valued at over AUD $30M.",
+          "metrics": [
+            "AUD $30M in project value"
+          ]
+        },
+        {
+          "text": "Innovated cost management strategies that led to a reduction in estimated costs during tendering by 10%, ensuring more competitive bid proposals.",
+          "metrics": [
+            "10% cost reduction"
+          ]
+        },
+        {
+          "text": "Strategized and implemented comparative cost analyses between initial and final designs, enhancing design efficiency and reducing project costs by approximately 12%.",
+          "metrics": [
+            "12% cost reduction"
+          ]
+        },
+        {
+          "text": "Developed robust engagement and clarification protocols with contractors, ensuring a mutual understanding and alignment which decreased rework rates by 25%.",
+          "metrics": [
+            "25% decrease in rework"
+          ]
+        },
+        {
+          "text": "Effectively managed the preparation of detailed BOQs, leveraging advanced estimation software, achieving superior accuracy and timeliness in project bids.",
+          "metrics": [
+            "Increased bid accuracy"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Somague MPH",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Intermediate Estimator",
+      "startDate": "Nov 2012",
+      "endDate": "Dec 2014",
+      "bullets": [
+        {
+          "text": "Analyzed and distilled complex architectural and engineering tender documents, facilitating comprehensive BOQ preparation, enhancing project viability and cost predictability by 22%.",
+          "metrics": [
+            "22% improvement in predictability"
+          ]
+        },
+        {
+          "text": "Negotiated with suppliers to achieve cost-effective construction methods, yielding a 21% reduction in projected costs while maintaining high-quality standards.",
+          "metrics": [
+            "21% cost reduction"
+          ]
+        },
+        {
+          "text": "Collaborated with multidisciplinary teams to address design variations, leading to effective budget adjustments and conflict resolutions, minimizing project delays by 30%.",
+          "metrics": [
+            "30% reduction in delays"
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Orange International College",
+      "degree": "Diploma of Building and Construction",
+      "location": "VIC, Australia",
+      "year": "2021",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Mackenzie Presbyterian University",
+      "degree": "Architecture and Urbanism",
+      "location": "SP, Brazil",
+      "year": "2009",
+      "additionalInfo": ""
+    }
+  ],
+  "additionalExperience": "Participated in community service projects designing affordable housing solutions, enhancing local communities across Sao Paulo, contributing to urban sustainability initiatives."
+}

@@ -1,0 +1,198 @@
+{
+  "header": {
+    "firstName": "Camila",
+    "tagline": "Senior Construction Estimator – Infrastructure & Commercial",
+    "location": "Brazil",
+    "city": "Sorocaba",
+    "country": "Brazil"
+  },
+  "summary": "Architect & Quantity Surveyor with 15+ years in large-scale infrastructure and commercial projects; led cost estimates for $60M contracts and successfully managed projects with a 95% on-time delivery rate.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "First Principle Estimating",
+        "Bill of Quantities (BOQ)",
+        "Tender Documents",
+        "Quantity Take-Off",
+        "AutoCAD",
+        "Civil Construction",
+        "Infrastructure Projects",
+        "Cost Estimating",
+        "Cost Consulting",
+        "Project Management",
+        "Budget Management",
+        "Excel",
+        "Bluebeam",
+        "Revit",
+        "Software MEGA",
+        "Candy (CCS)",
+        "Bill of Quantities (BOQ) Preparation",
+        "Tender Document Preparation",
+        "Project Documentation",
+        "Stakeholder Collaboration",
+        "Commercial Construction",
+        "Residential Construction",
+        "Value Engineering",
+        "Construction Project Lifecycle",
+        "Excel Advanced Functions",
+        "Construction Standards",
+        "Design Interpretation",
+        "Structural Engineering",
+        "MEP Systems Estimation",
+        "Procurement Management",
+        "Construction Site Supervision",
+        "Architectural Drawing Analysis",
+        "Cost Planning",
+        "Progress Monitoring",
+        "Contract Administration",
+        "Quantity Take-off"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Professional)",
+        "Portuguese (Native)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "VIAARQ – Arquitetura Viável",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Architect - Co-owner",
+      "startDate": "Jan 2015",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Analyzed tender documents and prepared comprehensive BOQs for various civil projects, resulting in a 15% reduction in project estimation time.",
+          "metrics": []
+        },
+        {
+          "text": "Managed quantity take-off for complex infrastructure such as the Fortaleza Brazil Temple Complex.",
+          "metrics": [
+            "75,305 sq ft built",
+            "412,509 sq ft external area"
+          ]
+        },
+        {
+          "text": "Estimated budgets and specifications for high-rise residential buildings securing $60M in credits.",
+          "metrics": [
+            "$60M USD"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Civil Infrastructure Group",
+      "location": "Australia",
+      "title": "Senior Estimator / Quantity Surveyor",
+      "startDate": "Mar 2021",
+      "endDate": "May 2024",
+      "bullets": [
+        {
+          "text": "Prepared BOQs and cost consultations for projects like South Morang Terminal.",
+          "metrics": [
+            "$5.3M AUD"
+          ]
+        },
+        {
+          "text": "Optimized cost estimates leading to a successful execution of the Gippsland Line Upgrade.",
+          "metrics": [
+            "$2.05M AUD"
+          ]
+        },
+        {
+          "text": "Implemented changes in construction methods, achieving project completions 10% under budget.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Somague MPH",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Intermediate Estimator",
+      "startDate": "Nov 2012",
+      "endDate": "Dec 2014",
+      "bullets": [
+        {
+          "text": "Led the preparation of BOQs for hotels and residential projects like TRYP by Wyndham.",
+          "metrics": [
+            "$60M USD"
+          ]
+        },
+        {
+          "text": "Ensured project deliverables met budgetary constraints through precise cost estimating.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Trisul-SA",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Intermediate Estimator",
+      "startDate": "Sep 2011",
+      "endDate": "Sep 2012",
+      "bullets": [
+        {
+          "text": "Produced detailed BOQs and feasibility studies for high-rise residential developments.",
+          "metrics": [
+            "$20M USD"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "MV Escritório de Projetos Ltda.",
+      "location": "Brazil",
+      "title": "Architect / Intermediate Quantity Surveyor",
+      "startDate": "Apr 2011",
+      "endDate": "Sep 2011",
+      "bullets": [
+        {
+          "text": "Conducted cost studies for logistic warehouse projects enhancing cost efficiency.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Afonso França Engenharia Ltda.",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Junior Estimator",
+      "startDate": "Mar 2008",
+      "endDate": "Mar 2011",
+      "bullets": [
+        {
+          "text": "Facilitated the assessment of design variation costs during IGESP Hospital construction.",
+          "metrics": [
+            "$48M USD"
+          ]
+        },
+        {
+          "text": "Managed cost consulting for shopping centers and hospitals, optimizing allocation.",
+          "metrics": [
+            "$24M USD"
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Orange International College",
+      "degree": "Diploma of Building and Construction",
+      "location": "Australia",
+      "year": "2021",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Mackenzie Presbyterian University",
+      "degree": "Architecture and Urbanism",
+      "location": "Brazil",
+      "year": "2009",
+      "additionalInfo": ""
+    }
+  ],
+  "additionalExperience": ""
+}

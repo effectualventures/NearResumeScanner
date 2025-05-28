@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Near Resume Engine">
+  <title>Résumé – Camila</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap');
+    
+    @page {
+      size: letter;
+      margin: 0.5in 0.5in 0.7in 0.5in;   /* top, right, bottom, left */
+    }
+    
+    body {
+      font-family: 'Calibri', 'Arial', sans-serif;
+      font-size: 11pt;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      line-height: 1.3;
+      max-width: 100%;
+    }
+    
+    .page-body {
+      padding: 0; /* Remove all padding */
+      margin: 0;
+      position: relative;
+    }
+    
+    /* Global rules to control page breaks and spacing */
+    .experience, /* Only apply break-inside avoid to individual experience items */
+    .education-institution {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    
+    /* Remove page breaks between sections */
+    section {
+      page-break-inside: auto;
+      break-inside: auto;
+    }
+    
+    /* Tighter spacing for better page efficiency */
+    section {
+      margin-top: 5px !important;
+      margin-bottom: 5px !important;
+    }
+    
+    /* Bullet point formatting */
+    ul {
+      margin: 0 0 8px 18px;
+      padding: 0;
+    }
+    li {
+      margin: 0 0 4px;
+      font-size: 11px;
+      line-height: 1.25;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 6px;
+      margin-top: 0; /* Minimize top space */
+    }
+    
+    .header h1 {
+      font-size: 14pt;
+      font-weight: bold;
+      margin: 0 0 2px 0;
+      color: #000;
+    }
+    
+    .header p {
+      margin: 1px 0;
+      color: #333;
+      line-height: 1.1;
+      font-size: 10.5pt;
+    }
+    
+    .header p strong {
+      color: #000;
+      font-weight: 600;
+    }
+    
+    .divider, .section-rule {
+      border: none;
+      border-top: 1px solid #d9d9d9;   /* lighter grey */
+      margin: 3px 0 12px;
+      width: 100%;
+    }
+    
+    .summary {
+      page-break-inside: avoid;
+      white-space: normal;
+      text-align: left;
+      line-height: 1.3;
+      width: 100%;
+      max-width: none;
+      margin-bottom: 6px;
+      color: #333;
+      font-size: 10.5pt;
+    }
+    
+    .section-title {
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 10.5pt;
+      color: #000;
+      margin-bottom: 1px;
+      letter-spacing: 0.2px;
+      padding-bottom: 0;
+    }
+    
+    .section-rule {
+      border: 0;
+      height: 1px;
+      background-color: #d9d9d9;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+    
+    .skills {
+      margin-bottom: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      font-size: 10pt;
+    }
+    
+    .skill-category {
+      font-weight: bold;
+      color: #000;
+      letter-spacing: 0.2px;
+      margin-right: 4px;
+    }
+    
+    .skills span:not(.skill-category) {
+      margin-right: 3px;
+    }
+    
+    .experience {
+      margin-bottom: 8px; /* Further reduced spacing between experience sections */
+    }
+    
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 2px;
+    }
+    
+    .company {
+      font-weight: bold;
+      color: #000;
+      letter-spacing: 0.2px;
+      display: inline;
+    }
+    
+    .location {
+      display: inline;
+      color: #444;
+      font-size: 10.5pt;
+      font-weight: normal;
+    }
+    
+    .dates {
+      color: #555;
+      font-size: 10pt;
+      font-weight: 500;
+    }
+    
+    .title {
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 3px;
+      font-size: 10.5pt;
+    }
+    
+    ul {
+      margin-top: 2px;
+      margin-bottom: 4px;
+      padding-left: 16px; /* More reduced bullet indentation */
+    }
+    
+    li {
+      margin-bottom: 1px;
+      color: #333;
+      page-break-inside: avoid;
+      break-inside: avoid;
+      font-size: 10pt; /* Smaller font size for bullets */
+      font-weight: normal !important;
+    }
+    
+    li * {
+      font-weight: normal !important;
+    }
+    
+    /* Exception for metrics */
+    li span[style*="font-weight: 500"],
+    li span.metrics {
+      font-weight: 500 !important;
+    }
+    
+    .education {
+      margin-bottom: 12px;
+    }
+    
+    .education-institution {
+      margin-bottom: 3px;
+      font-size: 11pt;
+    }
+    
+    .education-degree {
+      color: #333;
+      margin-bottom: 3px;
+      font-size: 10.5pt;
+    }
+    
+    .education-details {
+      color: #444;
+      margin-bottom: 5px;
+      font-size: 10pt;
+    }
+    
+    .additional {
+      color: #333;
+      line-height: 1.4;
+      font-size: 10.5pt;
+    }
+    
+    .additional ul {
+      margin-top: 5px;
+    }
+    
+    .additional li {
+      margin-bottom: 3px;
+    }
+    
+    /* Footer styling */
+    .branding-footer{
+      position: absolute;
+      bottom: 0.05in; /* Position exactly 0.05in from bottom as required */
+      right: 0.5in;   /* Align with right margin */
+      display: flex;
+      gap: 6px;
+      font-family: 'Inter','Helvetica',sans-serif;
+      font-size: 10px;
+      align-items: center;
+    }
+    .branding-footer img{
+      width: 55px;
+      height: auto;
+    }
+    
+    /* Create a clear logo zone that nothing else should enter */
+    .logo-zone {
+      height: 0.15in !important; /* Minimal height to save maximum space */
+      width: 100% !important;
+      clear: both !important;
+      display: block !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      position: relative !important;
+      z-index: 1 !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-body">
+  <div class="header">
+    <h1>Camila</h1>
+    <p><strong>Senior Estimator &amp; Architect – Infrastructure &amp; Civil Projects</strong></p>
+    <!-- Only use header.location, never city or country -->
+    <p>SP</p>
+  </div>
+  
+  <div class="divider"></div>
+  
+  <div class="summary">
+      Experienced in infrastructure projects, generating $60M+ in cost estimates through precise BOQs.
+  </div>
+  
+  <!-- SKILLS SECTION -->
+  <section style="display: block; width: 100%; clear: both; margin-bottom: 12px;">
+    <h2 class="section-title">SKILLS</h2>
+    <hr class="section-rule"/>
+    <div class="skills">
+      <!-- First display skills -->
+          <div style="margin-bottom: 4px; margin-right: 0; width: 100%;">
+            <span class="skill-category"><strong><span style="font-weight: 600;">Skills:</span> <span style="font-weight: normal;">First Principle Estimating; Quantity Take-off; Bill of Quantities (BOQ) Preparation; Cost Estimating; Cost Consulting; AutoCAD; Project Documentation; Civil Construction; Budget Management; Tender Document Preparation; Project Management; Infrastructure Projects</span>
+
+      Languages -->
+    </div>
+  </section>
+  
+  <!-- LANGUAGES SECTION - Always shown even if empty -->
+  <section style="display: block; width: 100%; clear: both; margin-top: 15px; margin-bottom: 12px;">
+    <h2 class="section-title">LANGUAGES</h2>
+    <hr class="section-rule"/>
+    <div class="languages-list">
+          <div style="margin-bottom: 2px; width: 100%;">
+            <span style="font-weight: normal;">Portuguese (Native); English (Fluent)</span>
+          </div>
+      
+    </div>
+  </section>
+  
+  <section style="display: block; width: 100%; clear: both; margin-top: 5px;">
+    <h2 class="section-title">PROFESSIONAL EXPERIENCE</h2>
+    <hr class="section-rule"/>
+      <div class="experience">
+        <div class="experience-header">
+          <div>
+            <span class="company">VIAARQ – Arquitetura Viável</span>
+            <span> — </span>
+            <span class="location">SP, Brazil</span>
+          </div>
+          <div class="dates">Jan 2015 – Present</div>
+        </div>
+        <div class="title">Quantity Surveyor / Architect</div>
+        <ul>
+            <!-- Show all bullet points for detailed format -->
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Conducted detailed analysis of tendering documents, ensuring all project specifications aligned with client requirements, leading to successful project bids.</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Executed First Principle Estimating for diverse civil projects, including foundations and architectural elements, enhancing accuracy of initial project budgets.</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Prepared comprehensive Bill of Quantities (BOQ) and detailed tender documents, improving bid success by 30% through precise cost estimation.</span> <span style="color: #333; font-weight: 500; font-style: normal;">30% bid success improvement</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Delivered quantity take-off for complex civil projects across various sectors, including healthcare and education, optimizing resource allocation and cost efficiency.</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Developed cost estimates and assessments of design variations, ensuring project budget adherence and minimizing cost overruns.</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Managed projects&#x27; progress with budget adjustments through precise analysis and project oversight, achieving budgetary goals.</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Secured major project approvals and regularizations, optimizing project lifecycle management in compliance with industry norms.</span></li>
+        </ul>
+      </div>
+      <div class="experience">
+        <div class="experience-header">
+          <div>
+            <span class="company">Civil Infrastructure Group</span>
+            <span> — </span>
+            <span class="location">VIC, Australia</span>
+          </div>
+          <div class="dates">Mar 2021 – May 2024</div>
+        </div>
+        <div class="title">Senior Estimator / Quantity Surveyor</div>
+        <ul>
+            <!-- Show all bullet points for detailed format -->
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Led tender assessments and preliminary budgeting, providing insights to Tender Opening Committees on optimized resource management.</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Formulated precise Bill of Quantities (BOQ), encompassing material and labor costs, enhancing project deliverables and fiscal predictability.</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Drove cost estimation and consultancy in collaboration with suppliers, achieving competitive pricing structures for high-value projects.</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Developed scope clarification proposals with contractors, aligning construction methods with economic goals to bolster budget adherence.</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Directed critical projects such as South Morang Terminal Station, effectively managing costs of complex infrastructure components, valued at $3.5M.</span> <span style="color: #333; font-weight: 500; font-style: normal;">$3.5M project value</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Optimized cost structures for infrastructure and civil drawings, enhancing contractor engagements and agreement validations.</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Monitored and adjusted budgets in real-time, aligning project executions with financial forecasts, reducing cost discrepancies by 14%.</span> <span style="color: #333; font-weight: 500; font-style: normal;">14% cost discrepancy reduction</span></li>
+        </ul>
+      </div>
+      <div class="experience">
+        <div class="experience-header">
+          <div>
+            <span class="company">Somague MPH</span>
+            <span> — </span>
+            <span class="location">SP, Brazil</span>
+          </div>
+          <div class="dates">Nov 2012 – Dec 2014</div>
+        </div>
+        <div class="title">Quantity Surveyor / Intermediate Estimator</div>
+        <ul>
+            <!-- Show all bullet points for detailed format -->
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Performed intimate analysis of tendering documents, extracting key information to optimize bidding accuracy, securing projects with up to $12.0M valuation.</span> <span style="color: #333; font-weight: 500; font-style: normal;">$12.0M project value</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Executed detailed quantity take-offs and cost estimates, refining project financial baselines to enhance competitive tender submissions.</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Managed cost estimating operations, ensuring comprehensive supplier and subcontractor alignment with project budgets.</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Assisted in dispute resolutions with clients, fostering clear communication and alignment in project expectations and deliverables.</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Streamlined preparation of detailed BOQs for luxury residential and hotel projects, enhancing proposal win rates through detailed fiscal planning.</span></li>
+        </ul>
+      </div>
+      <div class="experience">
+        <div class="experience-header">
+          <div>
+            <span class="company">Trisul-SA</span>
+            <span> — </span>
+            <span class="location">SP, Brazil</span>
+          </div>
+          <div class="dates">Sep 2011 – Sep 2012</div>
+        </div>
+        <div class="title">Quantity Surveyor / Intermediate Estimator</div>
+        <ul>
+            <!-- Show all bullet points for detailed format -->
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Conducted comprehensive quantity take-offs, enhancing financial accuracy for high-rise residential projects totalling $4.0M.</span> <span style="color: #333; font-weight: 500; font-style: normal;">$4.0M project value</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Prepared Bill of Quantities (BOQ) and cost estimates, leading to improved financial proposals for land purchase feasibility.</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Developed rigorous cost analyses and financing documentation, optimizing procurement processes for project advancement.</span></li>
+        </ul>
+      </div>
+      <div class="experience">
+        <div class="experience-header">
+          <div>
+            <span class="company">MV Escritório de Projetos Ltda.</span>
+            <span> — </span>
+            <span class="location">Brazil</span>
+          </div>
+          <div class="dates">Apr 2011 – Sep 2011</div>
+        </div>
+        <div class="title">Architect / Intermediate Quantity Surveyor</div>
+        <ul>
+            <!-- Show all bullet points for detailed format -->
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Executed feasibility cost studies for logistics warehouse projects, significantly enhancing early-stage budgeting accuracy.</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Calculated comprehensive project costs, overseeing budgeting and BOQ preparations to ensure financial viability in design phases.</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Managed cost evaluations for architectural projects, aligning financial outlines with client objectives during preliminary designs.</span></li>
+        </ul>
+      </div>
+      <div class="experience">
+        <div class="experience-header">
+          <div>
+            <span class="company">Afonso França Engenharia Ltda.</span>
+            <span> — </span>
+            <span class="location">SP, Brazil</span>
+          </div>
+          <div class="dates">Mar 2008 – Mar 2011</div>
+        </div>
+        <div class="title">Quantity Surveyor / Junior Estimator</div>
+        <ul>
+            <!-- Show all bullet points for detailed format -->
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Monitored on-site project activities, enhancing cost estimation accuracy and compliance in complex healthcare construction environments, valued at $9.6M.</span> <span style="color: #333; font-weight: 500; font-style: normal;">$9.6M project value</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Enhanced project planning by assessing and estimating design variation costs, facilitating budget alignment.</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Streamlined tender project analyses, providing essential insights for cost-efficient material procurement and contract negotiations.</span></li>
+              <li style="font-weight: normal;"><span style="font-weight: normal;">Addressed cost variances proactively during construction, employing project management strategies to ensure budget fidelity.</span></li>
+        </ul>
+      </div>
+  </section>
+  
+  <section style="display: block; width: 100%; clear: both; margin-top: 5px;">
+    <h2 class="section-title">EDUCATION</h2>
+    <hr class="section-rule"/>
+    <div class="education" style="margin-bottom: 5px;">
+        <div class="education-institution" style="margin-bottom: 1px;"><strong>Orange International College</strong> — VIC, Australia</div>
+        <div class="education-degree" style="margin-bottom: 1px; font-size: 10pt;">Diploma of Building and Construction, 2021</div>
+        <div class="education-institution" style="margin-bottom: 1px;"><strong>Mackenzie Presbyterian University</strong> — SP, Brazil</div>
+        <div class="education-degree" style="margin-bottom: 1px; font-size: 10pt;">Architecture and Urbanism, 2009</div>
+        <div class="education-institution" style="margin-bottom: 1px;"><strong>Columbia University – Coursera</strong> — Online</div>
+        <div class="education-degree" style="margin-bottom: 1px; font-size: 10pt;">Construction Management Specialization, 2025</div>
+    </div>
+  </section>
+  
+    <section style="display: block; width: 100%; clear: both; margin-top: 5px;">
+      <h2 class="section-title">ADDITIONAL EXPERIENCE</h2>
+      <hr class="section-rule"/>
+      <ul class="additional" style="margin-top: 2px; margin-bottom: 2px; padding-left: 16px;">
+          <li style="font-weight: normal; font-size: 10pt;">Member of AIQS since December 2023; Certified in Autodesk Revit Architecture, MEP, Navisworks.</li>
+      </ul>
+    </section>
+  
+  <!-- Add logo zone spacer but keep it minimal -->
+  <div class="logo-zone"></div>
+  </div><!-- end of page-body -->
+  
+  <!-- Branding footer with "Presented by" -->
+  <footer class="branding-footer">
+    <span><strong>Presented by</strong></span>
+    <img src="file:///home/runner/workspace/public/images/near_logo.png" alt="Near logo"/>
+  </footer>
+</body>
+</html>

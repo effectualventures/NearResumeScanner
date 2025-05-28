@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Near Resume Engine">
+  <title>Résumé – Camila</title>
+  <style>
+    /* Base page setup with precise margins */
+    @page {
+      size: letter;
+      margin: 0.5in 0.5in 0.7in 0.5in; /* top, right, bottom, left */
+      orphans: 3; /* Minimum number of lines at the top of a page */
+      widows: 3; /* Minimum number of lines at the bottom of a page */
+    }
+    
+    /* For single-page format, add a special control to prevent blank pages */
+    @page :blank {
+      display: none;
+    }
+    
+    /* Reset CSS to ensure consistent rendering */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-weight: normal;
+    }
+    
+    /* Base typography */
+    body {
+      font-family: 'Calibri', 'Arial', sans-serif;
+      font-size: 11pt;
+      line-height: 1.3;
+      color: #333;
+      width: 7.5in; /* Exact content width: 8.5in - margins */
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+    
+    /* Aggressive page-break controls to prevent any unwanted pages */
+    @media print {
+      body, html {
+        height: auto !important;
+        overflow: hidden !important;
+      }
+      
+      .resume-container {
+        page-break-after: avoid !important;
+        page-break-before: avoid !important;
+        page-break-inside: avoid !important;
+      }
+      
+      /* Force break-after auto on all elements to prevent blank pages */
+      * {
+        break-after: auto !important;
+        break-before: auto !important;
+      }
+    }
+    
+    /* Core container for all content */
+    .resume-container {
+      width: 100%;
+      position: relative;
+    }
+    
+    /* Header section */
+    .header {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    
+    .header h1 {
+      font-size: 14pt;
+      font-weight: bold;
+      margin-bottom: 2px;
+      color: #000;
+    }
+    
+    .header p {
+      margin: 1px 0;
+      color: #333;
+      line-height: 1.1;
+      font-size: 10.5pt;
+    }
+    
+    .header p strong {
+      font-weight: 600;
+      color: #000;
+    }
+    
+    /* Section styling */
+    .section-title {
+      font-size: 11pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-top: 15px;
+      margin-bottom: 3px;
+      letter-spacing: 0.5px;
+    }
+    
+    .section-rule {
+      border: none;
+      border-top: 1px solid #d9d9d9;
+      margin: 3px 0 8px;
+      width: 100%;
+    }
+    
+    section {
+      margin-bottom: 10px;
+      width: 100%;
+      clear: both;
+    }
+    
+    /* More granular page break control */
+    .experience-header, .title {
+      page-break-inside: avoid;
+      page-break-after: avoid;
+    }
+    
+    /* Allow page breaks inside experience bullet lists if necessary */
+    .experience ul {
+      page-break-inside: auto;
+    }
+    
+    /* New container for experiences to better handle page breaks */
+    .experience-container {
+      display: block;
+      break-inside: auto;
+    }
+    
+    /* More specific rules for page breaks in experiences */
+    .professional-experience {
+      break-inside: auto;
+      page-break-inside: auto;
+    }
+    
+    /* Ensure at least 2 lines of content appear when page breaks happen inside lists */
+    ul li {
+      orphans: 2;
+      widows: 2;
+    }
+    
+    /* Summary section */
+    .summary {
+      margin-bottom: 15px;
+      font-size: 11pt;
+      line-height: 1.3;
+    }
+    
+    /* Skills & Languages section */
+    .skills, .languages-list {
+      margin-bottom: 8px;
+      width: 100%;
+    }
+    
+    .skill-category {
+      font-weight: 600;
+    }
+    
+    /* Professional Experience */
+    .experience {
+      margin-bottom: 15px;
+      break-inside: auto; /* Modern property to allow breaks within experiences */
+      page-break-inside: auto; /* Allow page breaks within experience items */
+    }
+    
+    /* Keep headers with at least some content */
+    section h2.section-title {
+      page-break-after: avoid; /* Keep section headings with their content */
+    }
+    
+    /* Keep company and title headings with at least 2 lines of content */
+    .company, .title {
+      page-break-after: avoid;
+    }
+    
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      page-break-after: avoid;
+    }
+    
+    .company {
+      font-weight: 600;
+    }
+    
+    .title {
+      font-style: italic;
+      margin-bottom: 3px;
+    }
+    
+    ul {
+      padding-left: 16px;
+      margin-top: 2px;
+      margin-bottom: 10px;
+      page-break-before: avoid; /* Prevent break before the bullet list */
+    }
+    
+    li {
+      margin-bottom: 2px;
+      font-weight: normal;
+      font-size: 10.5pt;
+      break-inside: avoid-column;
+      page-break-inside: auto; /* Allow bullets to break across pages */
+    }
+    
+    /* Metric emphasis but not whole bullet */
+    li span.metrics {
+      font-weight: 500;
+      color: #333;
+    }
+    
+    /* Education section */
+    .education {
+      margin-bottom: 12px;
+      page-break-inside: avoid;
+    }
+    
+    .education-institution {
+      margin-bottom: 2px;
+      font-size: 11pt;
+    }
+    
+    .education-institution strong {
+      font-weight: 600;
+    }
+    
+    .education-degree {
+      color: #333;
+      margin-bottom: 2px;
+      font-size: 10.5pt;
+    }
+    
+    .education-details {
+      color: #444;
+      margin-bottom: 4px;
+      font-size: 10pt;
+    }
+    
+    /* Additional information */
+    .additional {
+      color: #333;
+      line-height: 1.4;
+      font-size: 10.5pt;
+    }
+    
+    .additional li {
+      margin-bottom: 3px;
+    }
+    
+    /* Ensure Skills and Languages labels are bold */
+    .skills strong {
+      font-weight: bold !important;
+    }
+    
+    /* Footer positioning with fixed positioning */
+    .logo-zone {
+      height: 0.3in;
+      width: 100%;
+      clear: both;
+      display: block;
+      visibility: hidden;
+    }
+    
+    .branding-footer {
+      position: fixed;
+      bottom: 0.05in; /* Exact positioning from bottom */
+      right: 0.5in;   /* Align with right margin */
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Inter', 'Helvetica', sans-serif;
+      font-size: 10px;
+      z-index: 1000;
+    }
+    
+    .branding-footer img {
+      height: 25px;
+      width: auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- Resume content container -->
+  <div class="resume-container">
+    <!-- HEADER -->
+    <div class="header">
+      <h1>Camila</h1>
+      <p><strong>Senior Estimator - Expert in Civil &amp; Infrastructure Projects</strong></p>
+      <p>Brazil</p>
+    </div>
+    
+    <hr class="section-rule">
+    
+    <!-- SUMMARY -->
+    <div class="summary">
+        Accomplished estimator in civil infrastructure with 15+ years&#x27; experience in managing budgets and increasing project efficiency. Successfully increased project efficiency by 18% and managed BOQs of 20,000+ sq ft area.
+    </div>
+    
+    <!-- SKILLS AND LANGUAGES SECTION -->
+    <section>
+      <h2 class="section-title">Skills</h2>
+      <hr class="section-rule"/>
+      <div class="skills">
+        <!-- First display skills -->
+            <div style="margin-bottom: 4px; width: 100%;">
+              <b style="font-weight: bold !important;">Skills:</b> First Principle Estimating • Bill of Quantities (BOQ) • Cost Estimating • Project Management • Budget Management • Quantity Take-Off • Cost Consulting • Construction Documentation • AutoCAD • Revit • Bluebeam • Expert Estimation • Infrastructure Projects • Bill of Quantities (BOQ) Preparation • Civil Construction
+            </div>
+        
+        <!-- Display any other categories except Languages -->
+        
+        <!-- Display Languages within the same section -->
+        <div style="margin-top: 10px;">
+          <b style="font-weight: bold !important;">Languages:</b> 
+              Portuguese (Native); English (Fluent)
+          
+        </div>
+      </div>
+    </section>
+    
+    <!-- PROFESSIONAL EXPERIENCE -->
+    <section class="professional-experience">
+      <h2 class="section-title">Professional Experience</h2>
+      <hr class="section-rule"/>
+      <div class="experience-container">
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">VIAARQ — Sorocaba, Brazil</span>
+                <span> — </span>
+                <span class="location">Brazil</span>
+              </div>
+              <div class="dates">Jun 2024 – Present</div>
+            </div>
+            <div class="title">Quantity Surveyor / Architect - Co-owner</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Provided comprehensive quantity surveying services to civil construction and real estate companies, increasing project efficiency by 18%.</span>
+                  </li>
+                  <li><span>Performed detailed analysis of tendering documents to align project estimates with budgetary constraints, enhancing project efficiency by 18%.</span>
+                  </li>
+                  <li><span>Prepared accurate Bill of Quantities (BOQ) for various high-value projects including residential and commercial properties.</span>
+                        <span class="metrics">High accuracy</span>
+                  </li>
+                  <li><span>Managed cost estimating for design variations, consistently limiting budget overruns to less than 5%.</span>
+                  </li>
+                  <li><span>Generated commercial offers and tender documents that resulted in a 30% increase in successful bids.</span>
+                  </li>
+                  <li><span>Executed quantity take-off for comprehensive project domains: architectural, structural, interior design, earthworks, and more.</span>
+                        <span class="metrics">Comprehensive coverage</span>
+                  </li>
+                  <li><span>Contributed to high-profile projects including LDS Temple Complex series in Brazil, managing BOQs of 20,000+ sq ft area.</span>
+                        <span class="metrics">20,000+ sq ft managed</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Civil Infrastructure Group — Greater Melbourne Area, VIC</span>
+                <span> — </span>
+                <span class="location">VIC</span>
+              </div>
+              <div class="dates">Mar 2021 – May 2024</div>
+            </div>
+            <div class="title">Senior Estimator / Quantity Surveyor</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Conducted rigorous tender analysis for major infrastructure projects, streamlining project initiation by 25%.</span>
+                  </li>
+                  <li><span>Delivered precise BOQs including material, labor, and equipment lists, optimizing resource allocation.</span>
+                        <span class="metrics">Optimized resources</span>
+                  </li>
+                  <li><span>Collaborated with clients like Zinfra Pty Ltd, resulting in over $3.5M in project awards.</span>
+                  </li>
+                  <li><span>Streamlined cost consulting, achieving a cost-saving of 12% in material procurement.</span>
+                  </li>
+                  <li><span>Initiated program schedules reducing project completion time by 15%.</span>
+                  </li>
+                  <li><span>Innovated construction methods to meet budget goals, improving contractor relations.</span>
+                        <span class="metrics">Improved contractor relations</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Somague MPH — Sao Paulo, Brazil</span>
+                <span> — </span>
+                <span class="location">Brazil</span>
+              </div>
+              <div class="dates">Nov 2012 – Dec 2014</div>
+            </div>
+            <div class="title">Quantity Surveyor / Intermediate Estimator</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Responsible for detailed analysis of tender documents, increasing accuracy of project cost foresight by 20%.</span>
+                  </li>
+                  <li><span>Executed final BOQs for major commercial projects valued at over $24.0M.</span>
+                  </li>
+                  <li><span>Facilitated team meetings clarifying project scopes, reducing project blockers by 30%.</span>
+                  </li>
+            </ul>
+          </div>
+      </div>
+    </section>
+    
+    <!-- EDUCATION -->
+    <section>
+      <h2 class="section-title">Education</h2>
+      <hr class="section-rule"/>
+      <div class="education">
+          <div class="education-institution"><strong>Orange International College</strong> — VIC, Australia</div>
+          <div class="education-degree">Diploma of Building and Construction, 2021</div>
+          <div class="education-institution"><strong>Mackenzie Presbyterian University</strong> — Brazil</div>
+          <div class="education-degree">Bachelor&#x27;s Degree in Architecture and Urbanism, 2009</div>
+      </div>
+    </section>
+    
+      <!-- If additionalExperience is missing but we have CAU BR, create a special PROFESSIONAL MEMBERSHIPS section -->
+    
+    <!-- Logo zone spacer -->
+    <div class="logo-zone"></div>
+  </div>
+  
+  <!-- Branding footer with "Presented by" -->
+  <footer class="branding-footer">
+    <span><strong>Presented by</strong></span>
+    <img src="file:///home/runner/workspace/public/images/near_logo.png" alt="Near logo"/>
+  </footer>
+</body>
+</html>

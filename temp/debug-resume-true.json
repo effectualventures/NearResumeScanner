@@ -1,0 +1,101 @@
+{
+  "header": {
+    "firstName": "Juan",
+    "tagline": "Senior Sales Engineer - Construction Tech",
+    "location": "Mexico",
+    "city": "Mexico City",
+    "country": "Mexico"
+  },
+  "summary": "Proven sales engineer with 6+ years in construction tech, achieving $5M sales and 40% territory growth.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "First Principle Estimating",
+        "Bill of Quantities (BOQ)",
+        "Tender Documents",
+        "Quantity Take-Off",
+        "AutoCAD",
+        "Civil Construction",
+        "Infrastructure Projects",
+        "Cost Estimating",
+        "Cost Consulting",
+        "Project Management",
+        "Budget Management",
+        "Tender Document Preparation",
+        "Project Documentation",
+        "Quantity Take-off",
+        "Bill of Quantities (BOQ) Preparation"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Professional)",
+        "Spanish (Native)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "ConstructTech Solutions",
+      "location": "Mexico",
+      "title": "Sales Engineer",
+      "startDate": "Jan 2019",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Increased regional sales by 33% YoY, contributing $5M USD in revenue.",
+          "metrics": []
+        },
+        {
+          "text": "Closed contracts with 12 key clients, enhancing market presence, resulting in a 15% increase in market share.",
+          "metrics": [
+            "15% market share increase"
+          ]
+        },
+        {
+          "text": "Reduced proposal turnaround time by 28% through workflow automation.",
+          "metrics": [
+            "28% reduction"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "BuildSmart Ltd.",
+      "location": "Mexico",
+      "title": "Technical Estimator",
+      "startDate": "Mar 2015",
+      "endDate": "Dec 2018",
+      "bullets": [
+        {
+          "text": "Prepared accurate cost estimates for 25+ projects annually, valued at $30M+ USD total.",
+          "metrics": []
+        },
+        {
+          "text": "Collaborated with cross-functional teams to optimize project costs, saving 17%.",
+          "metrics": [
+            "17% savings"
+          ]
+        },
+        {
+          "text": "Developed comprehensive BOQ for infrastructure projects, improving accuracy by 22%.",
+          "metrics": [
+            "22% accuracy improvement"
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "National Autonomous University of Mexico",
+      "degree": "Civil Engineering",
+      "location": "Mexico",
+      "year": "2014",
+      "additionalInfo": "Graduated with Honors"
+    }
+  ],
+  "additionalExperience": ""
+}

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Near Resume Engine">
+  <title>Résumé – Luis</title>
+  <style>
+    /* Base page setup with precise margins */
+    @page {
+      size: letter;
+      margin: 0.5in 0.5in 0.7in 0.5in; /* top, right, bottom, left */
+      orphans: 3; /* Minimum number of lines at the top of a page */
+      widows: 3; /* Minimum number of lines at the bottom of a page */
+    }
+    
+    /* Reset CSS to ensure consistent rendering */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-weight: normal;
+    }
+    
+    /* Base typography */
+    body {
+      font-family: 'Calibri', 'Arial', sans-serif;
+      font-size: 11pt;
+      line-height: 1.3;
+      color: #333;
+      width: 7.5in; /* Exact content width: 8.5in - margins */
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+    
+    /* Core container for all content */
+    .resume-container {
+      width: 100%;
+      position: relative;
+    }
+    
+    /* Header section */
+    .header {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    
+    .header h1 {
+      font-size: 14pt;
+      font-weight: bold;
+      margin-bottom: 2px;
+      color: #000;
+    }
+    
+    .header p {
+      margin: 1px 0;
+      color: #333;
+      line-height: 1.1;
+      font-size: 10.5pt;
+    }
+    
+    .header p strong {
+      font-weight: 600;
+      color: #000;
+    }
+    
+    /* Section styling */
+    .section-title {
+      font-size: 11pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-top: 15px;
+      margin-bottom: 3px;
+      letter-spacing: 0.5px;
+    }
+    
+    .section-rule {
+      border: none;
+      border-top: 1px solid #d9d9d9;
+      margin: 3px 0 8px;
+      width: 100%;
+    }
+    
+    section {
+      margin-bottom: 10px;
+      width: 100%;
+      clear: both;
+    }
+    
+    /* More granular page break control */
+    .experience-header, .title {
+      page-break-inside: avoid;
+      page-break-after: avoid;
+    }
+    
+    /* Allow page breaks inside experience bullet lists if necessary */
+    .experience ul {
+      page-break-inside: auto;
+    }
+    
+    /* New container for experiences to better handle page breaks */
+    .experience-container {
+      display: block;
+      break-inside: auto;
+    }
+    
+    /* More specific rules for page breaks in experiences */
+    .professional-experience {
+      break-inside: auto;
+      page-break-inside: auto;
+    }
+    
+    /* Ensure at least 2 lines of content appear when page breaks happen inside lists */
+    ul li {
+      orphans: 2;
+      widows: 2;
+    }
+    
+    /* Summary section */
+    .summary {
+      margin-bottom: 15px;
+      font-size: 11pt;
+      line-height: 1.3;
+    }
+    
+    /* Skills & Languages section */
+    .skills, .languages-list {
+      margin-bottom: 8px;
+      width: 100%;
+    }
+    
+    .skill-category {
+      font-weight: 600;
+    }
+    
+    /* Professional Experience */
+    .experience {
+      margin-bottom: 15px;
+      break-inside: auto; /* Modern property to allow breaks within experiences */
+      page-break-inside: auto; /* Allow page breaks within experience items */
+    }
+    
+    /* Keep headers with at least some content */
+    section h2.section-title {
+      page-break-after: avoid; /* Keep section headings with their content */
+    }
+    
+    /* Keep company and title headings with at least 2 lines of content */
+    .company, .title {
+      page-break-after: avoid;
+    }
+    
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      page-break-after: avoid;
+    }
+    
+    .company {
+      font-weight: 600;
+    }
+    
+    .title {
+      font-style: italic;
+      margin-bottom: 3px;
+    }
+    
+    ul {
+      padding-left: 16px;
+      margin-top: 2px;
+      margin-bottom: 10px;
+      page-break-before: avoid; /* Prevent break before the bullet list */
+    }
+    
+    li {
+      margin-bottom: 2px;
+      font-weight: normal;
+      font-size: 10.5pt;
+      break-inside: avoid-column;
+      page-break-inside: auto; /* Allow bullets to break across pages */
+    }
+    
+    /* Metric emphasis but not whole bullet */
+    li span.metrics {
+      font-weight: 500;
+      color: #333;
+    }
+    
+    /* Education section */
+    .education {
+      margin-bottom: 12px;
+      page-break-inside: avoid;
+    }
+    
+    .education-institution {
+      margin-bottom: 2px;
+      font-size: 11pt;
+    }
+    
+    .education-institution strong {
+      font-weight: 600;
+    }
+    
+    .education-degree {
+      color: #333;
+      margin-bottom: 2px;
+      font-size: 10.5pt;
+    }
+    
+    .education-details {
+      color: #444;
+      margin-bottom: 4px;
+      font-size: 10pt;
+    }
+    
+    /* Additional information */
+    .additional {
+      color: #333;
+      line-height: 1.4;
+      font-size: 10.5pt;
+    }
+    
+    .additional li {
+      margin-bottom: 3px;
+    }
+    
+    /* Ensure Skills and Languages labels are bold */
+    .skills strong {
+      font-weight: bold !important;
+    }
+    
+    /* Footer positioning - completely revised approach */
+    .logo-zone {
+      width: 100%;
+      clear: both;
+      display: block;
+      margin-top: auto; /* Push to bottom of available space */
+      margin-bottom: 0; /* No margin at bottom */
+      page-break-inside: avoid; /* Keep footer on same page */
+      position: relative; /* For absolute positioning of branding-footer */
+      min-height: 40px; /* Minimum height to ensure visibility */
+    }
+    
+    .branding-footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end; /* Right-align content */
+      gap: 6px;
+      font-family: 'Inter', 'Helvetica', sans-serif;
+      font-size: 10px;
+      width: 100%;
+      padding-top: 10px; /* Space above the logo */
+      padding-bottom: 0; /* No padding at bottom */
+      position: absolute; /* Absolute position within logo-zone */
+      bottom: 0; /* Position at bottom of logo-zone */
+    }
+    
+    .branding-footer img {
+      height: 25px;
+      width: auto;
+    }
+    
+    /* Single page format specific styles */
+    .single-page-format .resume-container {
+      display: flex;
+      flex-direction: column;
+      min-height: calc(11in - 1.2in); /* Page height minus margins */
+    }
+    
+    .single-page-format .logo-zone {
+      margin-top: auto; /* Push to bottom of flex container */
+    }
+    
+    /* Detailed format specific styles */
+    .detailed-format .logo-zone {
+      margin-top: 15px; /* Standard spacing */
+    }
+  </style>
+</head>
+<body class="detailed-format">
+  <!-- Page structure with flex layout to push footer to bottom -->
+  <div class="resume-container">
+    <!-- HEADER -->
+    <div class="header">
+      <h1>Luis</h1>
+      <p><strong>Senior Business Development Leader</strong></p>
+      <p>Colombia</p>
+    </div>
+    
+    <hr class="section-rule">
+    
+    <!-- SUMMARY -->
+    <div class="summary">
+        Results-driven Business Developer with over 5 years of experience in SaaS &amp; FinTech, achieving $1.2M deals and 130% quota attainment.
+    </div>
+    
+    <!-- SKILLS AND LANGUAGES SECTION -->
+    <section>
+      <h2 class="section-title">Skills</h2>
+      <hr class="section-rule"/>
+      <div class="skills">
+        <!-- First display skills -->
+            <div style="margin-bottom: 4px; width: 100%;">
+              <b style="font-weight: bold !important;">Skills:</b> Sales Leadership • Pipeline Management • Business Development • Sales Strategy • Account Management • Prospecting • Lead Generation • Cross-functional Collaboration • Performance Optimization • Sales Coaching • Market Analysis • Relationship Management • CRM Software • Salesforce • HubSpot
+            </div>
+        
+        <!-- Display any other categories except Languages -->
+        
+        <!-- Display Languages within the same section -->
+        <div style="margin-top: 10px;">
+          <b style="font-weight: bold !important;">Languages:</b> 
+              English (Professional); Spanish (Native)
+          
+        </div>
+      </div>
+    </section>
+    
+    <!-- PROFESSIONAL EXPERIENCE -->
+    <section class="professional-experience">
+      <h2 class="section-title">Professional Experience</h2>
+      <hr class="section-rule"/>
+      <div class="experience-container">
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Toshiba Global Commerce Solutions</span>
+                <span> — </span>
+                <span class="location">Colombia</span>
+              </div>
+              <div class="dates">Oct 2023 – Present</div>
+            </div>
+            <div class="title">Business Development</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Conducted comprehensive quantitative and qualitative analysis to evaluate potential business and channel opportunities, leveraging geographical data and market insights to inform strategic decisions, resulting in a 20% increase in market penetration.</span>
+                  </li>
+                  <li><span>Successfully identified and engaged new customer relationships across LATAM, aligning with Toshiba&#x27;s corporate strategy and expanding market footprint.</span>
+                  </li>
+                  <li><span>Evaluated and prioritized over 30 incoming partner requests, applying a rigorous scoring system to enhance partner selection quality by 42%.</span>
+                  </li>
+                  <li><span>Collaborated extensively with cross-functional teams to meet channel revenue targets and drive product enhancement initiatives.</span>
+                  </li>
+                  <li><span>Represented Toshiba as a subject matter expert in industry events and forums, enhancing brand presence and forging strategic partnerships.</span>
+                  </li>
+                  <li><span>Achieved a significant deal closure with a major cosmetic brand, generating $200K USD in new business revenue.</span>
+                  </li>
+                  <li><span>Led a team of 3 Business Development Representatives, optimizing prospecting activities and achieving pipeline growth of 35%.</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Veridas</span>
+                <span> — </span>
+                <span class="location">Colombia</span>
+              </div>
+              <div class="dates">Jan 2022 – Jul 2023</div>
+            </div>
+            <div class="title">Sales Development Manager</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Led and coached a dynamic team of 8 Sales Development Representatives covering the LATAM and U.S. markets, ensuring consistent achievement of team targets.</span>
+                  </li>
+                  <li><span>Implemented efficient outbound sales strategies and optimized workflow processes, increasing SDR productivity by 28%.</span>
+                  </li>
+                  <li><span>Developed comprehensive sales playbooks, performance tracking systems, and impactful training programs, resulting in a 40% increase in team quota attainment.</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Incode Technologies</span>
+                <span> — </span>
+                <span class="location">Colombia</span>
+              </div>
+              <div class="dates">Jul 2021 – Jan 2022</div>
+            </div>
+            <div class="title">Senior Business Developer</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Initiated and developed sales opportunities through outbound prospecting methods, enhancing the pipeline and achieving high engagement with target accounts.</span>
+                  </li>
+                  <li><span>Worked closely with field sales to define and execute comprehensive account strategies, contributing to key business objectives.</span>
+                  </li>
+                  <li><span>Led a team of SDRs responsible for sourcing 50 new opportunities for Account Executives, significantly boosting potential revenue streams.</span>
+                  </li>
+                  <li><span>Sourced high-value deals, including a notable $1.2M USD transaction with a U.S. rental car company, strengthening Incode Technologies&#x27; market position.</span>
+                  </li>
+                  <li><span>Achieved quota attainment for 5 consecutive quarters, maintaining top-tier performance among peers.</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">AltiSales</span>
+                <span> — </span>
+                <span class="location">Colombia</span>
+              </div>
+              <div class="dates">Aug 2020 – Jun 2021</div>
+            </div>
+            <div class="title">Senior Sales Development Representative</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Drove the generation and qualification of corporate leads through strategic cold calling and leveraging digital channels, resulting in high-quality meetings for business expansion.</span>
+                  </li>
+                  <li><span>Collaborated with product, marketing, and sales teams to create effective call scripts and refine lead qualification criteria, improving engagement rates by 15%.</span>
+                  </li>
+                  <li><span>Sourced an $880K USD deal with a U.S. stadium, underscoring exceptional salesmanship and market understanding.</span>
+                  </li>
+                  <li><span>Maintained an average quota attainment of 98%, consistently exceeding target expectations.</span>
+                  </li>
+            </ul>
+          </div>
+      </div>
+    </section>
+    
+    <!-- EDUCATION -->
+    <section>
+      <h2 class="section-title">Education</h2>
+      <hr class="section-rule"/>
+      <div class="education">
+          <div class="education-institution"><strong>Universidad Sergio Arboleda</strong> — Colombia</div>
+          <div class="education-degree">Business Administration, 2020</div>
+      </div>
+    </section>
+    
+      <section>
+        <h2 class="section-title">Additional Experience</h2>
+        <hr class="section-rule"/>
+        <ul class="additional" style="margin-top: 2px; margin-bottom: 2px; padding-left: 16px;">
+            <li>Worked in various sales roles at ProspectHunter and Strategic Properties, leading teams to surpass quotas and receiving the President’s Club award for outstanding performance.</li>
+        </ul>
+      </section>
+    
+    <!-- Footer with the logo at the bottom of the content -->
+    <div class="logo-zone">
+      <div class="branding-footer">
+        <span><strong>Presented by</strong></span>
+        <img src="file:///home/runner/workspace/public/images/near_logo.png" alt="Near logo"/>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

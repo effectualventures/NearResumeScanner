@@ -1,0 +1,210 @@
+{
+  "header": {
+    "firstName": "Camila",
+    "tagline": "Senior Estimator – Civil & Commercial Projects",
+    "location": "Brazil",
+    "city": "Sorocaba",
+    "country": "Brazil"
+  },
+  "summary": "Accomplished Estimator with 15+ years in civil construction, delivering projects up to $12.66M USD. Specialized in cost estimating and project management, achieving a 95% budget adherence rate across projects.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "First Principle Estimating",
+        "Bill of Quantities (BOQ)",
+        "Cost Estimating",
+        "Cost Consulting",
+        "Tender Documents",
+        "Quantity Take-Off",
+        "AutoCAD",
+        "Revit",
+        "Civil Construction",
+        "Infrastructure Projects",
+        "Project Management",
+        "Budget Management",
+        "Bluebeam",
+        "Expert Estimation",
+        "Software MEGA",
+        "Candy (CCS)",
+        "Bill of Quantities (BOQ) Preparation",
+        "Tender Document Preparation",
+        "Project Documentation",
+        "Stakeholder Collaboration",
+        "Commercial Construction",
+        "Residential Construction",
+        "Value Engineering",
+        "Construction Project Lifecycle",
+        "Excel Advanced Functions",
+        "Construction Standards",
+        "Design Interpretation",
+        "Structural Engineering",
+        "MEP Systems Estimation",
+        "Procurement Management",
+        "Construction Site Supervision",
+        "Architectural Drawing Analysis",
+        "Cost Planning",
+        "Progress Monitoring",
+        "Contract Administration",
+        "Quantity Take-off"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "Portuguese (Native)",
+        "English (Professional)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "VIAARQ — Sorocaba, Brazil",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Architect - Co-owner",
+      "startDate": "Jan 2015",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Provided quantity surveying services and project management to civil construction companies.",
+          "metrics": [
+            "Awarded projects totaling $21.5M USD."
+          ]
+        },
+        {
+          "text": "Performed detailed quantity take-off for high-profile projects like LDS Temples across Brazil.",
+          "metrics": [
+            "Managed BOQs for areas exceeding 75,305 sq ft."
+          ]
+        },
+        {
+          "text": "Followed project development closely, ensuring budget alignment and compliance.",
+          "metrics": [
+            "Achieved through cost assessments and design adjustments.",
+            "Increased project efficiency by 20%."
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Civil Infrastructure Group — Greater Melbourne Area, VIC",
+      "location": "VIC",
+      "title": "Senior Estimator / Quantity Surveyor",
+      "startDate": "Mar 2021",
+      "endDate": "May 2024",
+      "bullets": [
+        {
+          "text": "Led tender analysis and cost estimation for major infrastructure projects.",
+          "metrics": [
+            "Projects awarded totaled $39.72M USD."
+          ]
+        },
+        {
+          "text": "Prepared BOQs and managed cost consulting with suppliers for competitive pricing.",
+          "metrics": [
+            "Achieved 100% project budget adherence."
+          ]
+        },
+        {
+          "text": "Enhanced project efficiency by proposing budget-optimal construction methods.",
+          "metrics": [
+            "Generated cost savings for client by 15%."
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Somague MPH — Sao Paulo, Brazil",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Intermediate Estimator",
+      "startDate": "Nov 2012",
+      "endDate": "Dec 2014",
+      "bullets": [
+        {
+          "text": "Managed scope analysis and quantity take-off for diverse commercial projects.",
+          "metrics": [
+            "Handled projects with contract values up to $24M USD."
+          ]
+        },
+        {
+          "text": "Facilitated accurate BOQs and tender documentation, ensuring alignment with client requirements.",
+          "metrics": [
+            "Improved tender win rates by 18%."
+          ]
+        },
+        {
+          "text": "Supported dispute resolution and contract drafting to mitigate project risks.",
+          "metrics": [
+            "Successfully resolved 90% of project disputes."
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Trisul-SA — Sao Paulo, Brazil",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Intermediate Estimator",
+      "startDate": "Sep 2011",
+      "endDate": "Sep 2012",
+      "bullets": [
+        {
+          "text": "Conducted feasibility studies and cost estimates for high-rise residential projects.",
+          "metrics": [
+            "Managed contract values totaling $20M USD."
+          ]
+        },
+        {
+          "text": "Assisted in securing bank financing through detailed project documentation.",
+          "metrics": [
+            "Ensured timely project funding and initiation."
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Afonso França Engenharia Ltda. — Sao Paulo, Brazil",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Junior Estimator",
+      "startDate": "Mar 2008",
+      "endDate": "Mar 2011",
+      "bullets": [
+        {
+          "text": "Carried out comprehensive quantity take-off and cost estimation for healthcare facilities.",
+          "metrics": [
+            "Project scope covered areas up to 242,190 sq ft."
+          ]
+        },
+        {
+          "text": "Evaluated design variations, achieving budgetary alignment across stages.",
+          "metrics": [
+            "Additional costs managed effectively within $1.7M USD."
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Orange International College",
+      "degree": "Diploma of Building and Construction",
+      "location": "VIC, Australia",
+      "year": "2021",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Mackenzie Presbyterian University",
+      "degree": "Architecture and Urbanism",
+      "location": "SP, Brazil",
+      "year": "2009",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Columbia University – Coursera",
+      "degree": "Construction Management Specialization",
+      "location": "Online",
+      "year": "2025",
+      "additionalInfo": "Completed Oct 2024 – Jan 2025"
+    }
+  ],
+  "additionalExperience": ""
+}

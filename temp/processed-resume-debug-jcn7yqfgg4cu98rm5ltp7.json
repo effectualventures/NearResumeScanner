@@ -1,0 +1,155 @@
+{
+  "header": {
+    "firstName": "Luis",
+    "tagline": "Sales Development Manager - SaaS & LATAM Expert",
+    "location": "Colombia",
+    "city": "Bogotá",
+    "country": "Colombia"
+  },
+  "summary": "Sales leader with over 5 years of experience in SaaS and LATAM markets, achieving $1.2M deals and 120% quota.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Sales Strategy",
+        "Outbound Sales",
+        "Lead Generation",
+        "Pipeline Management",
+        "Performance Tracking",
+        "Team Leadership",
+        "Sales Playbooks",
+        "Quantitative Analysis",
+        "Strategic Insights",
+        "Cold Calling",
+        "CRM",
+        "Salesforce",
+        "HubSpot",
+        "SPIN Selling"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Professional)",
+        "Spanish (Native)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Toshiba Global Commerce Solutions",
+      "location": "Colombia",
+      "title": "Business Development",
+      "startDate": "Oct 2023",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Conducted quantitative and qualitative analysis to evaluate new business opportunities, resulting in a 15% increase in qualified leads.",
+          "metrics": [
+            "15% increase in qualified leads"
+          ]
+        },
+        {
+          "text": "Identified and cultivated new customer relationships in LATAM, aligning with Toshiba's strategy, leading to a 20% increase in market penetration.",
+          "metrics": [
+            "20% increase in market penetration"
+          ]
+        },
+        {
+          "text": "Evaluated over 40 incoming partner requests to prioritize high-potential collaborations.",
+          "metrics": []
+        },
+        {
+          "text": "Sourced a $200K deal for a major cosmetic brand, enhancing revenue growth.",
+          "metrics": [
+            "$200K deal"
+          ]
+        },
+        {
+          "text": "Led a team of 3 BDRs to optimize prospecting and pipeline growth by 35%.",
+          "metrics": [
+            "35% pipeline growth"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Incode Technologies",
+      "location": "Colombia",
+      "title": "Senior Business Developer",
+      "startDate": "Jul 2021",
+      "endDate": "Jan 2022",
+      "bullets": [
+        {
+          "text": "Initiated sales opportunities with outbound prospecting and qualified inbound leads, resulting in a 30% increase in conversion rates.",
+          "metrics": [
+            "30% increase in conversion rates"
+          ]
+        },
+        {
+          "text": "Collaborated with marketing to improve lead qualification, boosting conversion rates by 25%.",
+          "metrics": [
+            "25% boost in conversion rates"
+          ]
+        },
+        {
+          "text": "Developed outreach sequences, improving prospect engagement by 42%.",
+          "metrics": [
+            "42% engagement improvement"
+          ]
+        },
+        {
+          "text": "Sourced a $1.2M deal with a U.S. rental car company, exceeding quota for 5 quarters.",
+          "metrics": [
+            "$1.2M deal",
+            "5 quarters"
+          ]
+        },
+        {
+          "text": "Led a team of SDRs that opened 50 new opportunities for AEs.",
+          "metrics": [
+            "50 new opportunities"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "AltiSales",
+      "location": "Colombia",
+      "title": "SR SDR",
+      "startDate": "Aug 2020",
+      "endDate": "Jun 2021",
+      "bullets": [
+        {
+          "text": "Drove generation and qualification of corporate leads through digital channels.",
+          "metrics": []
+        },
+        {
+          "text": "Cold-called prospective clients, scheduling meetings for new business opportunities.",
+          "metrics": []
+        },
+        {
+          "text": "Collaborated with teams to develop call scripts and qualification criteria.",
+          "metrics": []
+        },
+        {
+          "text": "Sourced an $880K deal with a U.S. stadium, achieving 98% quota attainment.",
+          "metrics": [
+            "$880K deal",
+            "98% quota attainment"
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad Sergio Arboleda",
+      "degree": "Strategy",
+      "location": "Colombia",
+      "year": "2020",
+      "additionalInfo": ""
+    }
+  ],
+  "additionalExperience": "Led a team at ProspectHunter to 120% quota, earning a President’s Club award."
+}

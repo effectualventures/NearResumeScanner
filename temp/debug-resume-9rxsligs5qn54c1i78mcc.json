@@ -1,0 +1,194 @@
+{
+  "header": {
+    "firstName": "Federico",
+    "tagline": "Senior AI Engineer – SaaS & Mobile Innovation",
+    "location": "Uruguay",
+    "city": "Montevideo",
+    "country": "Uruguay"
+  },
+  "summary": "Accomplished AI engineer with 10+ years in SaaS, leveraging AI tools like TensorFlow and PyTorch to achieve 70% sales growth. Proven leader in cross-functional innovation using Agile methodologies.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Full-stack Web Development",
+        "Mobile Application Development",
+        "React",
+        "React Native",
+        "Node.js",
+        "Python",
+        "TypeScript",
+        "GraphQL",
+        "LangChain",
+        "AI Integration",
+        "Cloud Platforms (AWS, Azure)",
+        "AutoCAD",
+        "DeepLearning.AI: Deep Learning Specialization",
+        "Cambridge English Proficiency (CPE)",
+        "Decision Making",
+        "Problem Solving",
+        "Team Leadership",
+        "Mentorship",
+        "Business and Tech Integration",
+        "Machine Learning",
+        "Natural Language Processing",
+        "Data Analysis",
+        "TensorFlow",
+        "Keras",
+        "PyTorch",
+        "API Development",
+        "Version Control (Git)",
+        "Continuous Integration/Continuous Deployment (CI/CD)",
+        "Agile Methodologies"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Professional)",
+        "Spanish (Native)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Aurora Ideas",
+      "location": "Uruguay",
+      "title": "Head AI Engineer",
+      "startDate": "Jan 2024",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Led AI initiatives to drive technological advancements, increasing the company's market presence by 45% over one year, resulting in a 20% increase in client acquisition.",
+          "metrics": [
+            "45% market presence increase",
+            "20% client acquisition increase"
+          ]
+        },
+        {
+          "text": "Spearheaded the development of cutting-edge AI solutions that enhanced product capabilities and user engagement by 150%, measured by user retention rates.",
+          "metrics": [
+            "150% user engagement increase",
+            "user retention rates"
+          ]
+        },
+        {
+          "text": "Collaborated with cross-functional teams to define AI strategy, resulting in $1.5M revenue growth through AI-driven features.",
+          "metrics": [
+            "$1.5M revenue growth"
+          ]
+        },
+        {
+          "text": "Implemented AI technologies that decreased project development time by 30%, optimizing resource allocation.",
+          "metrics": [
+            "30% project time reduction"
+          ]
+        },
+        {
+          "text": "Enhanced product capabilities through integration of AI components, leading to a 53% increase in customer satisfaction.",
+          "metrics": [
+            "53% customer satisfaction increase"
+          ]
+        },
+        {
+          "text": "Mentored a team of 8 engineers, improving team performance by 40% and reducing onboarding time for new engineers by 20%.",
+          "metrics": [
+            "40% performance improvement",
+            "20% onboarding time reduction"
+          ]
+        },
+        {
+          "text": "Developed scalable AI solutions that handled a 3x increase in concurrent users without service degradation.",
+          "metrics": [
+            "3x user capacity"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "String and Key",
+      "location": "USA",
+      "title": "Software Engineer",
+      "startDate": "Jan 2022",
+      "endDate": "Jan 2023",
+      "bullets": [
+        {
+          "text": "Developed a hassle-free online insurance tool, reducing onboarding time by 50% and increasing user adoption by 80%.",
+          "metrics": [
+            "50% onboarding time reduction",
+            "80% user adoption increase"
+          ]
+        },
+        {
+          "text": "Integrated cutting-edge technology to streamline user experience, improving customer satisfaction ratings by 35%.",
+          "metrics": [
+            "35% satisfaction increase"
+          ]
+        },
+        {
+          "text": "Led a team in developing a platform customizing insurance plans, resulting in a 60% expansion in service coverage.",
+          "metrics": [
+            "60% service coverage expansion"
+          ]
+        },
+        {
+          "text": "Optimized backend processes for mobile applications, leading to a 40% faster app launch time.",
+          "metrics": [
+            "40% faster app launch"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Effectus Software",
+      "location": "Uruguay",
+      "title": "Software Engineer",
+      "startDate": "Feb 2020",
+      "endDate": "Jan 2022",
+      "bullets": [
+        {
+          "text": "Built full-stack applications using React and Node.js, achieving 99.9% uptime and improving user satisfaction by 50%.",
+          "metrics": [
+            "99.9% uptime",
+            "50% user satisfaction increase"
+          ]
+        },
+        {
+          "text": "Contributed to UI design, enhancing client approval rates by 20% through intuitive and engaging interfaces.",
+          "metrics": [
+            "20% approval rate increase"
+          ]
+        },
+        {
+          "text": "Facilitated effective client decision-making, ensuring alignment with project objectives, achieving a 42% faster project delivery.",
+          "metrics": [
+            "42% faster project delivery"
+          ]
+        },
+        {
+          "text": "Published multiple applications, receiving an average 4.8-star rating on app platforms.",
+          "metrics": [
+            "4.8-star average rating"
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad ORT",
+      "degree": "Systems",
+      "location": "Uruguay",
+      "year": "2024",
+      "additionalInfo": "GPA: 3.9, Scholarship recipient"
+    }
+  ],
+  "certifications": [
+    "Cambridge English Proficiency (CPE)",
+    "First Prize for Best Academic Project by the National Academy of Engineering, Uruguay",
+    "Universidad ORT Programming contest: 2nd place",
+    "Participated in the ICPC Programming contest",
+    "DeepLearning.AI: Deep Learning Specialization"
+  ],
+  "additionalExperience": ""
+}

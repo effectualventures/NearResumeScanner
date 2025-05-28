@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Near Resume Engine">
+  <title>Résumé – José Ignacio</title>
+  <style>
+    /* Base page setup with precise margins */
+    @page {
+      size: letter;
+      margin: 0.5in 0.5in 0.7in 0.5in; /* top, right, bottom, left */
+      orphans: 3; /* Minimum number of lines at the top of a page */
+      widows: 3; /* Minimum number of lines at the bottom of a page */
+    }
+    
+    /* For single-page format, add a special control to prevent blank pages */
+    @page :blank {
+      display: none;
+    }
+    
+    /* Reset CSS to ensure consistent rendering */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-weight: normal;
+    }
+    
+    /* Base typography */
+    body {
+      font-family: 'Calibri', 'Arial', sans-serif;
+      font-size: 10pt;
+      line-height: 1.3;
+      color: #333;
+      width: 7.5in; /* Exact content width: 8.5in - margins */
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+    
+    /* Aggressive page-break controls to prevent any unwanted pages */
+    @media print {
+      body, html {
+        height: auto !important;
+        overflow: hidden !important;
+      }
+      
+      .resume-container {
+        page-break-after: avoid !important;
+        page-break-before: avoid !important;
+        page-break-inside: avoid !important;
+      }
+      
+      /* Force break-after auto on all elements to prevent blank pages */
+      * {
+        break-after: auto !important;
+        break-before: auto !important;
+      }
+    }
+    
+    /* Core container for all content */
+    .resume-container {
+      width: 100%;
+      position: relative;
+    }
+    
+    /* Header section */
+    .header {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    
+    .header h1 {
+      font-size: 14pt;
+      font-weight: bold;
+      margin-bottom: 2px;
+      color: #000;
+    }
+    
+    .header p {
+      margin: 1px 0;
+      color: #333;
+      line-height: 1.1;
+      font-size: 10pt;
+    }
+    
+    .header p strong {
+      font-weight: 600;
+      color: #000;
+    }
+    
+    /* Section styling */
+    .section-title {
+      font-size: 11pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-top: 15px;
+      margin-bottom: 3px;
+      letter-spacing: 0.5px;
+    }
+    
+    .section-rule {
+      border: none;
+      border-top: 1px solid #d9d9d9;
+      margin: 3px 0 8px;
+      width: 100%;
+    }
+    
+    section {
+      margin-bottom: 10px;
+      width: 100%;
+      clear: both;
+    }
+    
+    /* More granular page break control */
+    .experience-header, .title {
+      page-break-inside: avoid;
+      page-break-after: avoid;
+    }
+    
+    /* Allow page breaks inside experience bullet lists if necessary */
+    .experience ul {
+      page-break-inside: auto;
+    }
+    
+    /* New container for experiences to better handle page breaks */
+    .experience-container {
+      display: block;
+      break-inside: auto;
+    }
+    
+    /* More specific rules for page breaks in experiences */
+    .professional-experience {
+      break-inside: auto;
+      page-break-inside: auto;
+    }
+    
+    /* Ensure at least 2 lines of content appear when page breaks happen inside lists */
+    ul li {
+      orphans: 2;
+      widows: 2;
+    }
+    
+    /* Summary section */
+    .summary {
+      margin-bottom: 15px;
+      font-size: 10pt;
+      line-height: 1.3;
+      max-height: 2.6em; /* Limit to approximately 2 lines */
+      overflow: hidden;
+    }
+    
+    /* Skills & Languages section */
+    .skills, .languages-list {
+      margin-bottom: 8px;
+      width: 100%;
+    }
+    
+    .skill-category {
+      font-weight: 600;
+    }
+    
+    /* Professional Experience */
+    .experience {
+      margin-bottom: 15px;
+      break-inside: auto; /* Modern property to allow breaks within experiences */
+      page-break-inside: auto; /* Allow page breaks within experience items */
+    }
+    
+    /* Keep headers with at least some content */
+    section h2.section-title {
+      page-break-after: avoid; /* Keep section headings with their content */
+    }
+    
+    /* Keep company and title headings with at least 2 lines of content */
+    .company, .title {
+      page-break-after: avoid;
+    }
+    
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      page-break-after: avoid;
+    }
+    
+    .company {
+      font-weight: 600;
+      font-size: 10pt;
+    }
+    
+    .title {
+      font-style: italic;
+      margin-bottom: 3px;
+      font-size: 10pt;
+    }
+    
+    ul {
+      padding-left: 16px;
+      margin-top: 2px;
+      margin-bottom: 10px;
+      page-break-before: avoid; /* Prevent break before the bullet list */
+    }
+    
+    li {
+      margin-bottom: 2px;
+      font-weight: normal;
+      font-size: 10pt;
+      break-inside: avoid-column;
+      page-break-inside: auto; /* Allow bullets to break across pages */
+    }
+    
+    /* Metric emphasis but not whole bullet */
+    li span.metrics {
+      font-weight: 500;
+      color: #333;
+    }
+    
+    /* Education section */
+    .education {
+      margin-bottom: 12px;
+      page-break-inside: avoid;
+    }
+    
+    .education-institution {
+      margin-bottom: 2px;
+      font-size: 10pt;
+    }
+    
+    .education-institution strong {
+      font-weight: 600;
+    }
+    
+    .education-degree {
+      color: #333;
+      margin-bottom: 2px;
+      font-size: 10pt;
+    }
+    
+    .education-details {
+      color: #444;
+      margin-bottom: 4px;
+      font-size: 10pt;
+    }
+    
+    /* Additional information */
+    .additional {
+      color: #333;
+      line-height: 1.4;
+      font-size: 10pt;
+    }
+    
+    .additional li {
+      margin-bottom: 3px;
+    }
+    
+    /* Ensure Skills and Languages labels are bold */
+    .skills strong {
+      font-weight: bold !important;
+    }
+    
+    /* Additional space control for single-page format */
+    .single-page .skill-section {
+      margin-bottom: 2px !important; /* Reduce spacing after skills in single-page */
+    }
+    
+    .single-page .education-section {
+      margin-top: 0 !important; /* Ensure education is visible */
+      padding-top: 2px !important;
+    }
+    
+    .single-page .section-title {
+      margin-top: 10px !important; /* Reduce section title spacing */
+      margin-bottom: 3px !important;
+    }
+    
+    .single-page .section-rule {
+      margin-top: 2px !important;
+      margin-bottom: 5px !important;
+    }
+    
+    /* Footer positioning */
+    .logo-zone {
+      height: 0.5in;
+      width: 100%;
+      clear: both;
+      display: block;
+      visibility: hidden;
+      page-break-before: avoid;
+      page-break-inside: avoid;
+    }
+    
+    /* Base styles for all footer instances */
+    .branding-footer {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Inter', 'Helvetica', sans-serif;
+      font-size: 10px;
+      z-index: 1000;
+      position: absolute; /* Changed from fixed to absolute */
+      bottom: 0.35in; /* Distance from bottom */
+      right: 0.5in; /* Align with right margin */
+      page-break-before: avoid;
+      page-break-after: avoid;
+      page-break-inside: avoid;
+    }
+    
+    /* Hide footer except on the last page - will be enforced via JavaScript instead of CSS */
+    .temp-hidden-footer {
+      display: none !important;
+    }
+    
+    .branding-footer img {
+      height: 25px;
+      width: auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- Resume content container -->
+  <div class="resume-container">
+    <!-- HEADER -->
+    <div class="header">
+      <h1>José Ignacio</h1>
+      <p><strong>Supply Chain Head – Global Operations Expert</strong></p>
+      <p>Argentina</p>
+    </div>
+    
+    <hr class="section-rule">
+    
+    <!-- SUMMARY -->
+    <div class="summary">
+        Seasoned supply chain leader with 15+ years in Pharma &amp; Food sectors, specializing in logistics management and procurement strategy, achieving $58.5M in efficiencies.
+    </div>
+    
+    <!-- SKILLS AND LANGUAGES SECTION -->
+    <section class="skill-section" data-section="skills">
+      <h2 class="section-title">Skills</h2>
+      <hr class="section-rule"/>
+      <div class="skills">
+        <!-- First display skills (limit to fewer skills for single-page format) -->
+            <div style="margin-bottom: 4px; width: 100%;">
+              <b style="font-weight: bold !important;">Skills:</b> First Principle Estimating
+                 • Bill of Quantities (BOQ) • Tender Documents • Quantity Take-Off • AutoCAD • Data Analytics • Lean &amp; Six Sigma • Trello • Leadership • Project Management • Strategic Planning • Cost Estimating • Cost Consulting • Budget Management • Cross-Functional Team Leadership
+            </div>
+        
+        <!-- Display any other categories except Languages -->
+        
+        <!-- Display Languages within the same section -->
+        <div style="margin-top: 10px;">
+          <b style="font-weight: bold !important;">Languages:</b> 
+              Spanish (Native); English (Fluent); Portuguese (Upper Intermediate); French (Basic Understanding)
+          
+        </div>
+      </div>
+    </section>
+    
+    <!-- PROFESSIONAL EXPERIENCE -->
+    <section class="professional-experience" data-section="experience">
+      <h2 class="section-title">Professional Experience</h2>
+      <hr class="section-rule"/>
+      <div class="experience-container">
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">MAD Supply Consulting</span>
+                <span> — </span>
+                <span class="location">Argentina</span>
+              </div>
+              <div class="dates">Oct 2023 – Present</div>
+            </div>
+            <div class="title">Founder</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Consulted as General Manager for LETIS Project, orchestrating company-wide regionalization restructuring initiatives, resulting in a 20% increase in operational efficiency.</span>
+                  </li>
+                  <li><span>Led SGS Project as Logistics &amp; Procurement Director, redesigning procurement processes for BU-specific needs, resulting in a 25% cost reduction annually.</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Philip Morris International</span>
+                <span> — </span>
+                <span class="location">Argentina</span>
+              </div>
+              <div class="dates">Oct 2021 – Sep 2023</div>
+            </div>
+            <div class="title">Southern Cone Customer Service Head</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Oversaw comprehensive operations across Argentina, Paraguay, Uruguay, Chile, and Bolivia, optimizing regional distribution.</span>
+                  </li>
+                  <li><span>Implemented &#x27;Open+&#x27; methodology at Distribution Centers, realizing $12.5M USD in regional efficiencies.</span>
+                  </li>
+                  <li><span>Established customer collaboration teams integrated with commercial activities, enhancing service delivery.</span>
+                  </li>
+                  <li><span>Reduced Finished Product Days on Inventory from 45 to 15, achieving a $75M USD reduction in P&amp;L.</span>
+                  </li>
+                  <li><span>Championed productivity projects yielding $58.5M USD in total savings and efficiency improvements.</span>
+                  </li>
+                  <li><span>Transitioned cultural methodologies from S&amp;OP to IBP, aligning cross-functional goals and strategies.</span>
+                  </li>
+                  <li><span>Navigated SIRAs to augment nationalization, achieving 75% localization of imported materials.</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Bayer</span>
+                <span> — </span>
+                <span class="location">Argentina</span>
+              </div>
+              <div class="dates">Jul 2019 – Oct 2021</div>
+            </div>
+            <div class="title">AR Supply Chain Head</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Directed supply operations for two Argentinean production plants, driving synchronized planning and customer fulfillment strategies.</span>
+                  </li>
+                  <li><span>Effectively aligned production plans with LATAM demand forecasts, optimizing resource deployment and release execution.</span>
+                  </li>
+                  <li><span>Spearheaded the on-site 4PL replacement process, enhancing logistical efficiency.</span>
+                  </li>
+                  <li><span>Successfully integrated Order 2 Cash and ComEx departments, maximizing process efficiency.</span>
+                  </li>
+                  <li><span>Secured a $2.7M Euro reduction in raw material reserves during the pandemic, augmenting cash flow.</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">World Courier</span>
+                <span> — </span>
+                <span class="location">Argentina</span>
+              </div>
+              <div class="dates">Aug 2017 – Jul 2019</div>
+            </div>
+            <div class="title">Commercial &amp; Business Development Manager</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Pioneered company entrance into food industry segments with temperature-controlled shipment capabilities.</span>
+                  </li>
+                  <li><span>Drove a 32% increase in shipment volumes with Tier 2 customer engagement strategies.</span>
+                  </li>
+                  <li><span>Secured Tier 1 pharma tenders, enhancing operational control for key clients.</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">GlaxoSmithKline</span>
+                <span> — </span>
+                <span class="location">Argentina</span>
+              </div>
+              <div class="dates">Jun 2013 – Aug 2017</div>
+            </div>
+            <div class="title">Supply Planning Regional Manager</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Led the creation of a LATAM planning HUB, bolstering regional alignment and efficiency.</span>
+                  </li>
+                  <li><span>Achieved a 98% Customer Service Level regionally, ensuring high service standards across markets.</span>
+                        <span class="metrics">98% CSL</span>
+                  </li>
+                  <li><span>Reduced purchasing MOQ for productive hubs, saving $1089.7K on initial inventory costs.</span>
+                  </li>
+                  <li><span>Decreased market stock days from 80 to 65, enabling a $5.4M regional financial recovery.</span>
+                  </li>
+                  <li><span>Lowered regional safety stock by 15 days, realizing a $4.5M capital release.</span>
+                  </li>
+                  <li><span>Maximized Working Capital at a regional level from $76.9M to $57.7M, streamlining inventory management.</span>
+                        <span class="metrics">$19.2M reduction</span>
+                  </li>
+                  <li><span>Conducted US hub material stock by 15% YoY, augmenting financial recovery by 7.8%.</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Pernod Ricard AR</span>
+                <span> — </span>
+                <span class="location">Argentina</span>
+              </div>
+              <div class="dates">Sep 2011 – Jun 2013</div>
+            </div>
+            <div class="title">Demand Planning Lead / Project Manager</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Implemented 18-month rolling forecast and monthly S&amp;OP processes, aligning demand with supply capabilities.</span>
+                  </li>
+                  <li><span>Established comprehensive KPI dashboards, facilitating real-time analysis of Forecast Accuracy, MoC, and other key metrics.</span>
+                  </li>
+                  <li><span>Enhanced forecast accuracy to 85%, driving process improvements and reducing errors.</span>
+                  </li>
+                  <li><span>Reduced FP-level SLOB inventories by 50%, optimizing inventory turnover and financial performance.</span>
+                        <span class="metrics">50% reduction</span>
+                  </li>
+                  <li><span>Improved Customer Service Level from 88% to 96.5%, elevating customer satisfaction and loyalty.</span>
+                        <span class="metrics">96.5% CSL</span>
+                  </li>
+                  <li><span>Drove 4% profitability gain by conducting thorough sales trend analysis across products and segments.</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Novartis Pharma AG</span>
+                <span> — </span>
+                <span class="location">Argentina</span>
+              </div>
+              <div class="dates">Feb 2009 – Sep 2011</div>
+            </div>
+            <div class="title">AR Demand &amp; Supply Planner</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Achieved a 99.3% forecast accuracy, refining demand planning processes and enhancing service levels to 99.7%.</span>
+                        <span class="metrics">99.7% CSL</span>
+                  </li>
+                  <li><span>Spearheaded the transition of 25 imported products to local production, mitigating DJAI impact.</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Eastman Kodak Co.</span>
+                <span> — </span>
+                <span class="location">Argentina</span>
+              </div>
+              <div class="dates">Nov 2007 – Feb 2009</div>
+            </div>
+            <div class="title">Regional Operations Responsible CARICAM, EC, PE, UR, BO</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Implemented Drop Shipment across regions, cutting budget expenses by 35%.</span>
+                        <span class="metrics">35% savings</span>
+                  </li>
+                  <li><span>Developed 3- and 6-month purchasing forecasts with distributors, enhancing supply chain resilience.</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Bunge Argentina</span>
+                <span> — </span>
+                <span class="location">Argentina</span>
+              </div>
+              <div class="dates">Dec 2005 – Nov 2007</div>
+            </div>
+            <div class="title">AR Demand &amp; Supply Planner</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Implemented &#x27;LogEx&#x27; system for operational process excellence, creating standardization and efficiency.</span>
+                  </li>
+                  <li><span>Facilitated cross-border training and consulting with Accenture for operational improvements in Brazil and Argentina.</span>
+                  </li>
+            </ul>
+          </div>
+      </div>
+    </section>
+    
+    <!-- EDUCATION -->
+    <section class="education-section" data-section="education">
+      <h2 class="section-title">Education</h2>
+      <hr class="section-rule"/>
+      <div class="education">
+          <div class="education-institution"><strong>Universidad Austral Argentina</strong> — Argentina</div>
+          <div class="education-degree">Supply Chain MBA, 2028</div>
+              <div class="education-details">Applicant for 2026</div>
+          <div class="education-institution"><strong>Project Management Institute</strong> — Argentina</div>
+          <div class="education-degree">PMP Certification, 2014</div>
+          <div class="education-institution"><strong>APICS Centre for Supply Chain Professionals</strong> — Argentina</div>
+          <div class="education-degree">CPIM Certification, 2012</div>
+          <div class="education-institution"><strong>Universidad Catolica Argentina</strong> — Argentina</div>
+          <div class="education-degree">Post Graduate in International Businesses, 2010</div>
+          <div class="education-institution"><strong>Universidad Argentina de la Empresa</strong> — Argentina</div>
+          <div class="education-degree">Business Administration Major, 2007</div>
+      </div>
+    </section>
+    
+    
+    <!-- Logo zone spacer -->
+    <div class="logo-zone"></div>
+  </div>
+  
+  <!-- Only include the footer HTML but no styling - styling will be added by JavaScript -->
+  <div id="footer-container" style="display: none;">
+    <footer id="main-footer" class="branding-footer">
+      <span><strong>Presented by</strong></span>
+      <img src="file://data:image/png;base64,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" alt="Near logo" style="height: 25px; width: auto;"/>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+// ChatGPT feedback prompt with all four personas
+export const CHATGPT_FEEDBACK_PROMPT = `
+what feedback would you have on this resume?
+
+give the feedback as four different people:
+
+1. CEO of company who is looking at the full picture -> they want a resume that WOWs clients. The CEO who is looking at the full picture of the resume, they want a resume that wows clients, that also looks very clean, and they're looking at every single detail extremely meticulously. They want to make sure that there's no spelling mistakes, no inconsistencies on the way stuff is written, nothing missing. For example, if we have a month and a year for one place and we don't have it another place, that needs to be fixed to make sure that there's bullets where there's supposed to be bullets, like an explanation of what they did in their education. Everything. Make sure there's no design mistakes. 
+
+2. The second person is a designer who is looking at the design of it. Is it stretched out? Does it need to be more in a standard PDF resume format? Are there things that we need to add to the app to make sure that the end result is good? Is there weird logo stuff? Is the logo generated on the bottom right like it's supposed to be? All of the font colors, the sizes, everything in order. 
+
+3. Then the third person is the salesperson who is looking to make sure that this is a presentable resume and is going to get the prospect to be excited about Near because they know that the talent quality that they get is going to be really good. They want to make sure that there's no exaggeration on the bullets, but they want to make sure that the bullets of the resume are not short so that it looks stupid and auto-generated. It should look like a real amazing U.S. resume.
+
+4. The fourth person is a potential customer who is reviewing this resume during a sales conversation or after being sent a resume pack. They're evaluating whether this is someone they would want to interview. They're looking at whether this looks like a real U.S.-caliber resume, if the candidate has worked with U.S. clients or companies, and if the tools and experiences match what they use in their own team. They're trying to decide if this person would be able to communicate clearly, ramp quickly, and contribute in a remote U.S. work environment. They want to see specific numbers, tools they recognize (like Salesforce, HubSpot, etc.), a strong summary that makes it obvious what kind of roles this person fits, and some context on the companies the candidate worked at so they understand the relevance. If anything feels too vague, too generic, or missing critical info, they won't be excited to move forward. The resume should make them feel confident that Near consistently delivers impressive, ready-to-hire talent.
+`;

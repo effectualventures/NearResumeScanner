@@ -1,0 +1,171 @@
+{
+  "header": {
+    "firstName": "Luis",
+    "tagline": "Senior Sales Development Leader – SaaS & Retail Tech",
+    "location": "Colombia",
+    "city": "Bogotá",
+    "country": "Colombia"
+  },
+  "summary": "Proven sales leader with over 8 years of expertise in SaaS and Retail Tech. Achieved $1.2M deal closure and 5 consecutive quarters of quota attainment.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Sales Development",
+        "Business Development",
+        "Account Management",
+        "Outbound Sales Strategies",
+        "Performance Tracking",
+        "Lead Qualification",
+        "Pipeline Management",
+        "Deal Sourcing",
+        "Strategic Partnerships",
+        "CRM Systems",
+        "Salesforce",
+        "Sales Methodologies",
+        "Cold Calling",
+        "Negotiation",
+        "Customer Relationship Management",
+        "Market Analysis",
+        "Strategic Planning"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Fluent)",
+        "Spanish (Native)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Toshiba Global Commerce Solutions",
+      "location": "Colombia",
+      "title": "Business Development",
+      "startDate": "Oct 2023",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Conducted comprehensive market analysis for channel opportunities, resulting in a 15% increase in channel partner engagement.",
+          "metrics": []
+        },
+        {
+          "text": "Engaged and cultivated new LATAM customer relationships, aligning with strategic goals, leading to a 20% increase in customer retention.",
+          "metrics": []
+        },
+        {
+          "text": "Sourced a $200K USD deal with a major cosmetic brand.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Veridas",
+      "location": "Colombia",
+      "title": "Sales Development Manager",
+      "startDate": "Jan 2022",
+      "endDate": "Jul 2023",
+      "bullets": [
+        {
+          "text": "Led and coached a team of 8 SDRs across LATAM and U.S. markets.",
+          "metrics": [
+            "Achieved 110% team quota attainment."
+          ]
+        },
+        {
+          "text": "Developed sales playbooks and training programs enhancing efficiency.",
+          "metrics": [
+            "Reduced ramp-up time by 30%."
+          ]
+        },
+        {
+          "text": "Optimized workflows, boosting productivity by 25%.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Incode Technologies",
+      "location": "Colombia",
+      "title": "Senior Business Developer",
+      "startDate": "Jul 2021",
+      "endDate": "Jan 2022",
+      "bullets": [
+        {
+          "text": "Initiated sales via outbound prospecting and inbound lead qualification.",
+          "metrics": [
+            "Sourced a $1.2M USD deal with a U.S. rental car company."
+          ]
+        },
+        {
+          "text": "Enhanced lead qualification processes driving higher conversion rates.",
+          "metrics": [
+            "Improved conversion rates by 35%."
+          ]
+        },
+        {
+          "text": "Led SDR team opening 50 new opportunities for AEs.",
+          "metrics": [
+            "Achieved 100% quota attainment for 5 consecutive quarters."
+          ]
+        },
+        {
+          "text": "Achieved 120% of quota and earned a President’s Club award.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "AltiSales",
+      "location": "Colombia",
+      "title": "SR SDR",
+      "startDate": "Aug 2020",
+      "endDate": "Jun 2021",
+      "bullets": [
+        {
+          "text": "Generated and qualified corporate leads via phone and digital channels.",
+          "metrics": []
+        },
+        {
+          "text": "Cold-called prospective clients, scheduling meetings for new business.",
+          "metrics": [
+            "Sourced an $880K USD deal with a U.S. stadium."
+          ]
+        },
+        {
+          "text": "Managed performance metrics, ensuring high SDR success rates.",
+          "metrics": [
+            "Maintained average quota attainment of 98%."
+          ]
+        }
+      ]
+    },
+    {
+      "company": "ProspectHunter",
+      "location": "Colombia",
+      "title": "BDR",
+      "startDate": "Feb 2018",
+      "endDate": "Dec 2018",
+      "bullets": []
+    },
+    {
+      "company": "Strategic Properties",
+      "location": "Colombia",
+      "title": "Account Executive",
+      "startDate": "Mar 2014",
+      "endDate": "Sep 2017",
+      "bullets": []
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad Sergio Arboleda",
+      "degree": "Business Administration",
+      "location": "Colombia",
+      "year": "2020",
+      "additionalInfo": ""
+    }
+  ],
+  "additionalExperience": ""
+}

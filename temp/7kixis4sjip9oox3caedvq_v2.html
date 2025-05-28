@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Near Resume Engine">
+  <title>Résumé – Camila</title>
+  <style>
+    /* Base page setup with precise margins */
+    @page {
+      size: letter;
+      margin: 0.5in 0.5in 0.7in 0.5in; /* top, right, bottom, left */
+    }
+    
+    /* Reset CSS to ensure consistent rendering */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-weight: normal;
+    }
+    
+    /* Base typography */
+    body {
+      font-family: 'Calibri', 'Arial', sans-serif;
+      font-size: 11pt;
+      line-height: 1.3;
+      color: #333;
+      width: 7.5in; /* Exact content width: 8.5in - margins */
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+    
+    /* Core container for all content */
+    .resume-container {
+      width: 100%;
+      position: relative;
+    }
+    
+    /* Header section */
+    .header {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    
+    .header h1 {
+      font-size: 14pt;
+      font-weight: bold;
+      margin-bottom: 2px;
+      color: #000;
+    }
+    
+    .header p {
+      margin: 1px 0;
+      color: #333;
+      line-height: 1.1;
+      font-size: 10.5pt;
+    }
+    
+    .header p strong {
+      font-weight: 600;
+      color: #000;
+    }
+    
+    /* Section styling */
+    .section-title {
+      font-size: 11pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-top: 15px;
+      margin-bottom: 3px;
+      letter-spacing: 0.5px;
+    }
+    
+    .section-rule {
+      border: none;
+      border-top: 1px solid #d9d9d9;
+      margin: 3px 0 8px;
+      width: 100%;
+    }
+    
+    section {
+      margin-bottom: 10px;
+      width: 100%;
+      clear: both;
+      page-break-inside: avoid;
+    }
+    
+    /* Summary section */
+    .summary {
+      margin-bottom: 15px;
+      font-size: 11pt;
+      line-height: 1.3;
+    }
+    
+    /* Skills & Languages section */
+    .skills, .languages-list {
+      margin-bottom: 8px;
+      width: 100%;
+    }
+    
+    .skill-category {
+      font-weight: 600;
+    }
+    
+    /* Professional Experience */
+    .experience {
+      margin-bottom: 15px;
+    }
+    
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1px;
+    }
+    
+    .company {
+      font-weight: 600;
+    }
+    
+    .title {
+      font-style: italic;
+      margin-bottom: 3px;
+    }
+    
+    ul {
+      padding-left: 16px;
+      margin-top: 2px;
+      margin-bottom: 10px;
+    }
+    
+    li {
+      margin-bottom: 2px;
+      font-weight: normal;
+      font-size: 10.5pt;
+    }
+    
+    /* Metric emphasis but not whole bullet */
+    li span.metrics {
+      font-weight: 500;
+      color: #333;
+    }
+    
+    /* Education section */
+    .education {
+      margin-bottom: 12px;
+    }
+    
+    .education-institution {
+      margin-bottom: 2px;
+      font-size: 11pt;
+    }
+    
+    .education-institution strong {
+      font-weight: 600;
+    }
+    
+    .education-degree {
+      color: #333;
+      margin-bottom: 2px;
+      font-size: 10.5pt;
+    }
+    
+    .education-details {
+      color: #444;
+      margin-bottom: 4px;
+      font-size: 10pt;
+    }
+    
+    /* Additional information */
+    .additional {
+      color: #333;
+      line-height: 1.4;
+      font-size: 10.5pt;
+    }
+    
+    .additional li {
+      margin-bottom: 3px;
+    }
+    
+    /* Footer positioning */
+    .logo-zone {
+      height: 0.3in;
+      width: 100%;
+      clear: both;
+      display: block;
+      visibility: hidden;
+    }
+    
+    .branding-footer {
+      position: fixed;
+      bottom: 0.05in; /* Exact positioning from bottom */
+      right: 0.5in;   /* Align with right margin */
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Inter', 'Helvetica', sans-serif;
+      font-size: 10px;
+      z-index: 1000;
+    }
+    
+    .branding-footer img {
+      height: 25px;
+      width: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="resume-container">
+    <!-- HEADER -->
+    <div class="header">
+      <h1>Camila</h1>
+      <p><strong>Senior Estimator – Civil Construction &amp; Infrastructure</strong></p>
+      <p>Brazil</p>
+    </div>
+    
+    <hr class="section-rule">
+    
+    <!-- SUMMARY -->
+    <div class="summary">
+        Expert Estimator with 15 years in Civil &amp; Infrastructure, delivering $420M projects, specializing in cost estimating and project management, with a track record of enhancing project value by 12%.
+    </div>
+    
+    <!-- SKILLS SECTION -->
+    <section>
+      <h2 class="section-title">Skills</h2>
+      <hr class="section-rule"/>
+      <div class="skills">
+        <!-- First display skills -->
+            <div style="margin-bottom: 4px; width: 100%;">
+              <span class="skill-category"><strong>Skills:</strong></span> First Principle Estimating
+            </div>
+        
+        <!-- Display any other categories except Languages -->
+      </div>
+    </section>
+    
+    <!-- LANGUAGES SECTION -->
+    <section>
+      <h2 class="section-title">Languages</h2>
+      <hr class="section-rule"/>
+      <div class="languages-list">
+            <div style="margin-bottom: 2px; width: 100%;">
+              <span style="font-weight: normal;">Portuguese (Native); English (Professional)</span>
+            </div>
+        
+      </div>
+    </section>
+    
+    <!-- PROFESSIONAL EXPERIENCE -->
+    <section>
+      <h2 class="section-title">Professional Experience</h2>
+      <hr class="section-rule"/>
+        <div class="experience">
+          <div class="experience-header">
+            <div>
+              <span class="company">VIAARQ – Arquitetura Viável</span>
+              <span> — </span>
+              <span class="location">Brazil</span>
+            </div>
+            <div class="dates">Jan 2015 – Present</div>
+          </div>
+          <div class="title">Quantity Surveyor / Architect - Co-owner</div>
+          <ul>
+              <!-- Show all bullet points for detailed format -->
+                <li><span>Analyzed tender documents and delivered first principle estimates for diverse civil construction projects, enhancing accuracy by 32%.</span>
+                </li>
+                <li><span>Prepared comprehensive Bill of Quantities (BOQ) and tender documents that supported winning bids, resulting in contracts worth $45M USD.</span>
+                </li>
+                <li><span>Executed detailed quantity take-off for foundations, architectural, structural, and interior designs, increasing resource allocation efficiency by 26%.</span>
+                </li>
+                <li><span>Managed cost estimating and requests for proposal with suppliers for MEP installations, reducing procurement time by 18% and saving $200K annually.</span>
+                </li>
+                <li><span>Assessed additional costs for design variations, maintaining project budget adherence within a 5% variance.</span>
+                </li>
+                <li><span>Conducted final account preparation and cost analysis between various design stages, increasing budget accuracy by 34%.</span>
+                </li>
+                <li><span>Oversaw project development and budget adjustments on awarded projects like LDS Temple Complex, enhancing overall project value by 12%.</span>
+                </li>
+          </ul>
+        </div>
+        <div class="experience">
+          <div class="experience-header">
+            <div>
+              <span class="company">Civil Infrastructure Group</span>
+              <span> — </span>
+              <span class="location">VIC</span>
+            </div>
+            <div class="dates">Mar 2021 – May 2024</div>
+          </div>
+          <div class="title">Senior Estimator / Quantity Surveyor</div>
+          <ul>
+              <!-- Show all bullet points for detailed format -->
+                <li><span>Conducted in-depth tender analysis and budget projections, delivering cost-efficient solutions that won 15 contracts totaling $120M AUD.</span>
+                </li>
+                <li><span>Compiled BOQs incorporating precise labor, materials, and equipment costs, reducing project overruns by 15%.</span>
+                </li>
+                <li><span>Led multi-discipline project take-offs for infrastructure undertakings, optimizing resource utilization by 30%.</span>
+                </li>
+                <li><span>Reviewed and integrated complementary tender documents, ensuring comprehensive bid proposals that resulted in a 40% bid success rate.</span>
+                </li>
+                <li><span>Optimized processes through cost consulting, achieving savings of up to 25% on supply contracts.</span>
+                </li>
+                <li><span>Engineered alternative construction methodologies to meet budget constraints, increasing bid competitiveness by 18%.</span>
+                </li>
+                <li><span>Presented detailed financial insights to contractors, influencing project decisions favorably and raising stakeholder engagement scores by 11%.</span>
+                </li>
+          </ul>
+        </div>
+        <div class="experience">
+          <div class="experience-header">
+            <div>
+              <span class="company">Somague MPH</span>
+              <span> — </span>
+              <span class="location">Brazil</span>
+            </div>
+            <div class="dates">Nov 2012 – Dec 2014</div>
+          </div>
+          <div class="title">Quantity Surveyor / Intermediate Estimator</div>
+          <ul>
+              <!-- Show all bullet points for detailed format -->
+                <li><span>Conducted comprehensive project scope analysis, increasing bid accuracy and bringing in $50M USD in contracts.</span>
+                </li>
+                <li><span>Streamlined cost estimation processes, achieving a 22% faster turnaround in bid document preparation.</span>
+                </li>
+                <li><span>Facilitated detailed BOQ development for award-winning projects like TRYP By Wyndham, securing contracts worth $60M USD.</span>
+                </li>
+                <li><span>Cross-collaborated with site and management teams, leading to seamless project delivery and client satisfaction improvements.</span>
+                </li>
+                <li><span>Executed final account preparations, ensuring project closure documentation accuracy exceeded industry benchmarks by 18%.</span>
+                </li>
+                <li><span>Resolved client disputes through expert cost analysis and negotiation, maintaining a 100% resolution rate.</span>
+                </li>
+                <li><span>Drafted construction site layouts, optimizing space and workflow efficiency by 15%.</span>
+                </li>
+          </ul>
+        </div>
+        <div class="experience">
+          <div class="experience-header">
+            <div>
+              <span class="company">Trisul-SA</span>
+              <span> — </span>
+              <span class="location">Brazil</span>
+            </div>
+            <div class="dates">Sep 2011 – Sep 2012</div>
+          </div>
+          <div class="title">Quantity Surveyor / Intermediate Estimator</div>
+          <ul>
+              <!-- Show all bullet points for detailed format -->
+                <li><span>Managed detailed quantity take-offs, enhancing design-to-cost alignment by 20% for high-rise residential projects.</span>
+                </li>
+                <li><span>Orchestrated BOQ preparations that streamlined financing approvals at a rate 19% above industry average.</span>
+                </li>
+                <li><span>Conducted feasibility studies for land purchases, securing potential developments valued at $35M USD.</span>
+                </li>
+          </ul>
+        </div>
+        <div class="experience">
+          <div class="experience-header">
+            <div>
+              <span class="company">MV Escritório de Projetos Ltda.</span>
+              <span> — </span>
+              <span class="location">Brazil</span>
+            </div>
+            <div class="dates">Apr 2011 – Sep 2011</div>
+          </div>
+          <div class="title">Architect / Intermediate Quantity Surveyor</div>
+          <ul>
+              <!-- Show all bullet points for detailed format -->
+                <li><span>Conducted feasibility cost studies and design follow-up for warehouse projects, reducing overruns by 15%.</span>
+                </li>
+                <li><span>Developed financial programs for large-scale logistics facilities, achieving a 25% improvement in budgeting accuracy.</span>
+                </li>
+          </ul>
+        </div>
+        <div class="experience">
+          <div class="experience-header">
+            <div>
+              <span class="company">Afonso França Engenharia Ltda.</span>
+              <span> — </span>
+              <span class="location">Brazil</span>
+            </div>
+            <div class="dates">Mar 2008 – Mar 2011</div>
+          </div>
+          <div class="title">Quantity Surveyor / Junior Estimator</div>
+          <ul>
+              <!-- Show all bullet points for detailed format -->
+                <li><span>Accounted for additional costs in design variations for the IGESP Hospital, maintaining project margins on $25M USD facilities.</span>
+                </li>
+                <li><span>Produced precise cost estimates and tender documents that captured significant market share across commercial and medical center projects.</span>
+                </li>
+                <li><span>Optimized project compatibility and addressed execution discrepancies, reducing project delivery timelines by 20%.</span>
+                </li>
+          </ul>
+        </div>
+    </section>
+    
+    <!-- EDUCATION -->
+    <section>
+      <h2 class="section-title">Education</h2>
+      <hr class="section-rule"/>
+      <div class="education">
+          <div class="education-institution"><strong>Orange International College</strong> — Australia</div>
+          <div class="education-degree">DiploMaster of Arts of Building and Construction, 2021</div>
+          <div class="education-institution"><strong>Mackenzie Presbyterian University</strong> — Brazil</div>
+          <div class="education-degree">Architecture and UrBachelor of Artsnism, 2009</div>
+      </div>
+    </section>
+    
+      <section>
+        <h2 class="section-title">Additional Experience</h2>
+        <hr class="section-rule"/>
+        <ul class="additional" style="margin-top: 2px; margin-bottom: 2px; padding-left: 16px;">
+            <li>Member of AIQS; Construction Management specialization from Columbia University in progress; Autodesk Revit training.</li>
+        </ul>
+      </section>
+    
+    <!-- Logo zone spacer -->
+    <div class="logo-zone"></div>
+  </div>
+  
+  <!-- Branding footer with "Presented by" -->
+  <footer class="branding-footer">
+    <span><strong>Presented by</strong></span>
+    <img src="file:///home/runner/workspace/public/images/near_logo.png" alt="Near logo"/>
+  </footer>
+</body>
+</html>

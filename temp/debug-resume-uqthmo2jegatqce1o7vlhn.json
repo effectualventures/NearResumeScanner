@@ -1,0 +1,140 @@
+{
+  "header": {
+    "firstName": "Luis",
+    "tagline": "Senior Sales Development Leader – B2B & SaaS",
+    "location": "Colombia",
+    "city": "Bogotá",
+    "country": "Colombia"
+  },
+  "summary": "Proven B2B sales leader with over 10 years of experience in SaaS, driving $1.2M+ deals and optimizing sales teams for maximum efficiency.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Sales Strategy",
+        "Pipeline Management",
+        "Lead Qualification",
+        "Team Leadership",
+        "Cross-functional Collaboration",
+        "Sales Playbooks",
+        "Quantitative Analysis",
+        "Customer Relationship Management",
+        "Cold Calling",
+        "Sales Training",
+        "Outbound Prospecting",
+        "Digital Communication",
+        "Salesforce CRM",
+        "HubSpot",
+        "Negotiation",
+        "Account Management",
+        "Sales Forecasting",
+        "Market Analysis",
+        "Customer Retention",
+        "Salesforce Automation"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Professional)",
+        "Spanish (Native)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Toshiba Global Commerce Solutions",
+      "location": "Colombia",
+      "title": "Business Development Manager",
+      "startDate": "Oct 2023",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Conducted quantitative and qualitative analysis to identify $4M in new business opportunities in LATAM, resulting in a 15% increase in market penetration.",
+          "metrics": []
+        },
+        {
+          "text": "Cultivated strategic relationships resulting in a $200K deal with a major cosmetic brand, contributing to a 10% increase in annual revenue.",
+          "metrics": []
+        },
+        {
+          "text": "Led a team of 3 BDRs, optimizing prospecting, leading to 35% pipeline growth and a 20% increase in lead conversion rates.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Veridas",
+      "location": "Colombia",
+      "title": "Sales Development Manager",
+      "startDate": "Jan 2022",
+      "endDate": "Jul 2023",
+      "bullets": [
+        {
+          "text": "Led and coached 8 SDRs across LATAM and U.S., achieving 112% average quota attainment.",
+          "metrics": []
+        },
+        {
+          "text": "Developed sales playbooks and performance tracking, increasing team productivity by 25%.",
+          "metrics": []
+        },
+        {
+          "text": "Optimized workflows, reducing SDR response time by 40%.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Incode Technologies",
+      "location": "Colombia",
+      "title": "Senior Business Developer",
+      "startDate": "Jul 2021",
+      "endDate": "Jan 2022",
+      "bullets": [
+        {
+          "text": "Sourced a $1.2M deal with a U.S. rental car company, exceeding quarterly targets.",
+          "metrics": []
+        },
+        {
+          "text": "Achieved 137% of quota for 5 consecutive quarters, leading top sales performance.",
+          "metrics": []
+        },
+        {
+          "text": "Led a team of SDRs, generating 50 new opportunities, increasing pipeline by 28%.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "AltiSales",
+      "location": "Colombia",
+      "title": "Senior SDR",
+      "startDate": "Aug 2020",
+      "endDate": "Jun 2021",
+      "bullets": [
+        {
+          "text": "Maintained 98% quota attainment across team, driving high-performance culture.",
+          "metrics": []
+        },
+        {
+          "text": "Sourced $880K deal with U.S. stadium, enhancing company portfolio.",
+          "metrics": []
+        },
+        {
+          "text": "Developed call scripts and lead qualification criteria, improving engagement by 22%.",
+          "metrics": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad Sergio Arboleda",
+      "degree": "International Business",
+      "location": "Colombia",
+      "year": "2020",
+      "additionalInfo": ""
+    }
+  ],
+  "additionalExperience": "Account Executive at Strategic Properties (Mar 2014 - Sep 2017) and BDR at ProspectHunter (Feb 2018 - Dec 2018)"
+}

@@ -1,0 +1,148 @@
+{
+  "header": {
+    "firstName": "Luis",
+    "tagline": "Senior BDR Leader – SaaS & LATAM",
+    "location": "Colombia",
+    "city": "Bogotá",
+    "country": "Colombia"
+  },
+  "summary": "Seasoned BDR professional with over 10 years of experience in SaaS and LATAM industries. Sourced $1.2M deals and led teams to 120% quota attainment, consistently exceeding targets by 15%.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "Sales Development",
+        "Outbound Sales Strategies",
+        "Lead Qualification",
+        "Pipeline Management",
+        "Team Leadership",
+        "Market Analysis",
+        "Customer Engagement",
+        "Cross-Functional Collaboration",
+        "Prospecting",
+        "CRM",
+        "Performance Tracking",
+        "Training Programs",
+        "Sales Methodologies",
+        "CRM Systems (e.g., Salesforce)",
+        "Negotiation",
+        "Account Management",
+        "Customer Relationship Management",
+        "Strategic Planning",
+        "Market Research",
+        "Competitive Analysis"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "English (Professional)",
+        "Spanish (Native)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Toshiba Global Commerce Solutions",
+      "location": "Colombia",
+      "title": "Business Development Manager",
+      "startDate": "Oct 2023",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Identified new business opportunities with quantitative analysis across LATAM, resulting in a 15% increase in market penetration.",
+          "metrics": []
+        },
+        {
+          "text": "Cultivated new customer relationships, aligning with Toshiba's strategic goals, leading to a 20% increase in customer retention.",
+          "metrics": []
+        },
+        {
+          "text": "Sourced a $200K USD deal with a major cosmetic brand.",
+          "metrics": []
+        },
+        {
+          "text": "Led a team of 3 BDRs to optimize prospecting and pipeline growth, achieving a 25% increase in qualified leads.",
+          "metrics": []
+        },
+        {
+          "text": "Represented Toshiba as a subject matter expert at industry events.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Veridas",
+      "location": "Location not specified",
+      "title": "Sales Development Manager",
+      "startDate": "Jan 2022",
+      "endDate": "Jul 2023",
+      "bullets": [
+        {
+          "text": "Led and coached a team of 8 SDRs across LATAM and U.S. markets.",
+          "metrics": []
+        },
+        {
+          "text": "Designed sales strategies and optimized workflows to improve efficiency.",
+          "metrics": []
+        },
+        {
+          "text": "Developed sales playbooks and training programs for performance tracking.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Incode Technologies",
+      "location": "Location not specified",
+      "title": "Senior Business Developer",
+      "startDate": "Jul 2021",
+      "endDate": "Jan 2022",
+      "bullets": [
+        {
+          "text": "Initiated sales opportunities and optimized lead qualification with cross-team collaboration.",
+          "metrics": []
+        },
+        {
+          "text": "Sourced a $1.2M USD deal with a U.S. rental car company.",
+          "metrics": []
+        },
+        {
+          "text": "Led a team of SDRs opening 50 new opportunities for AEs.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "AltiSales",
+      "location": "Colombia",
+      "title": "SR SDR",
+      "startDate": "Aug 2020",
+      "endDate": "Jun 2021",
+      "bullets": [
+        {
+          "text": "Generated and qualified corporate leads through calls and digital channels.",
+          "metrics": []
+        },
+        {
+          "text": "Sourced an $880K USD deal with a U.S. stadium.",
+          "metrics": []
+        },
+        {
+          "text": "Maintained an average quota attainment of 98% across the SDR team.",
+          "metrics": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad Sergio Arboleda",
+      "degree": "Business Administration",
+      "location": "Colombia",
+      "year": "2020",
+      "additionalInfo": ""
+    }
+  ],
+  "additionalExperience": ""
+}

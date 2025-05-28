@@ -1,0 +1,238 @@
+{
+  "header": {
+    "firstName": "Camila",
+    "tagline": "Senior Estimator – Civil & Infrastructure Projects",
+    "location": "Brazil",
+    "city": "Sorocaba",
+    "country": "Brazil"
+  },
+  "summary": "Senior Estimator with 15+ years in civil construction and infrastructure. Specializes in Quantity Take-Off and BOQ Preparation, delivering cost estimates for projects up to $12.5M, optimizing budgets by 28%.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "First Principle Estimating",
+        "Bill of Quantities (BOQ)",
+        "Cost Estimating",
+        "Quantity Take-Off",
+        "Cost Consulting",
+        "Project Management",
+        "Budget Management",
+        "Tender Documents",
+        "Design Variation Assessment",
+        "Construction Standards Compliance",
+        "Project Development Follow-Up",
+        "Construction Methodologies",
+        "AutoCAD",
+        "Revit",
+        "Bluebeam",
+        "Expert Estimation",
+        "Software MEGA",
+        "Candy (CCS)",
+        "Excel",
+        "Bill of Quantities (BOQ) Preparation",
+        "Civil Construction",
+        "Infrastructure Projects",
+        "Tender Document Preparation",
+        "Project Documentation",
+        "Stakeholder Collaboration",
+        "Commercial Construction",
+        "Residential Construction",
+        "Value Engineering",
+        "Construction Project Lifecycle",
+        "Excel Advanced Functions",
+        "Design Interpretation",
+        "Structural Engineering",
+        "MEP Systems Estimation",
+        "Procurement Management",
+        "Construction Site Supervision",
+        "Architectural Drawing Analysis",
+        "Cost Planning",
+        "Progress Monitoring",
+        "Contract Administration",
+        "Quantity Take-off"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "Portuguese (Native)",
+        "English (Professional)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "VIAARQ — Arquitetura Viável",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Architect - Co-owner",
+      "startDate": "Jan 2015",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Led a team in the analysis of tender documents, achieving 100% compliance with project specifications across 15 projects for diverse sectors including residential and commercial buildings.",
+          "metrics": [
+            "100% compliance",
+            "multiple sectors"
+          ]
+        },
+        {
+          "text": "Utilized first principle estimating to achieve an average accuracy rate of 95%, reducing budget overruns by 20% across 30+ projects.",
+          "metrics": [
+            "95% accuracy rate",
+            "reduced overruns by 20%"
+          ]
+        },
+        {
+          "text": "Prepared Bill of Quantities (BOQ) for high-value projects, contributing to a 12% increase in successful bids by improving tender documentation quality.",
+          "metrics": [
+            "12% increase in successful bids"
+          ]
+        },
+        {
+          "text": "Streamlined the cost estimating process, which resulted in a 30% reduction of estimation time, enhancing departmental productivity.",
+          "metrics": [
+            "30% reduction in time"
+          ]
+        },
+        {
+          "text": "Created detailed BOQ and final account for projects such as Cultura Inglesa English Schools, valued at over $1.4M each, ensuring budget adherence.",
+          "metrics": [
+            "Projects valued $1.4M each"
+          ]
+        },
+        {
+          "text": "Developed and implemented initial programs of works for multiple large-scale buildings, achieving 100% on-time project delivery.",
+          "metrics": [
+            "100% on-time delivery"
+          ]
+        },
+        {
+          "text": "Led documentation for approval and regularization of residential projects, accelerating approval times by 15%.",
+          "metrics": [
+            "Reduced approval times by 15%"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Civil Infrastructure Group",
+      "location": "Australia",
+      "title": "Senior Estimator / Quantity Surveyor",
+      "startDate": "Mar 2021",
+      "endDate": "May 2024",
+      "bullets": [
+        {
+          "text": "Led tender analysis to ensure comprehensive understanding of scope, improving cost estimate accuracy by 25% for major infrastructure projects.",
+          "metrics": [
+            "25% accuracy improvement"
+          ]
+        },
+        {
+          "text": "Prepared BOQ for high-profile projects including the South Morang Terminal Station, valued at $3.5Million, streamlining the costing process.",
+          "metrics": [
+            "$3.5Million"
+          ]
+        },
+        {
+          "text": "Coordinated cost consulting sessions with suppliers, reducing material costs by 10% across 15 projects.",
+          "metrics": [
+            "10% reduction in costs"
+          ]
+        },
+        {
+          "text": "Assessed additional costs of design variations, optimizing budgets and minimizing client financial risk by 20%.",
+          "metrics": [
+            "20% risk minimization"
+          ]
+        },
+        {
+          "text": "Implemented project tracking methods that improved budget accuracy by 35%, ensuring financial alignment from conception to completion.",
+          "metrics": [
+            "35% accuracy improvement"
+          ]
+        },
+        {
+          "text": "Managed the civil and engineering drawings cost analysis, proposing construction method changes that saved $500.0K/year.",
+          "metrics": [
+            "$500.0K savings annually"
+          ]
+        },
+        {
+          "text": "Secured project assignments by preparing comprehensive detailed BOQs, leading to a 12% increase in contract value.",
+          "metrics": [
+            "12% increase in contract value"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Somague MPH",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Intermediate Estimator",
+      "startDate": "Nov 2012",
+      "endDate": "Dec 2014",
+      "bullets": [
+        {
+          "text": "Conducted comprehensive tender document analysis, increasing bid accuracy and submission quality by 20%.",
+          "metrics": [
+            "20% increase in accuracy"
+          ]
+        },
+        {
+          "text": "Prepared detailed BOQs for diverse projects, resulting in a 15% improvement in cost-consulting outcomes.",
+          "metrics": [
+            "15% improvement"
+          ]
+        },
+        {
+          "text": "Led feasibility studies for high-profile projects, successfully influencing $12.0M funding decisions.",
+          "metrics": [
+            "$12.0M funding influenced"
+          ]
+        },
+        {
+          "text": "Coordinated with legal and project teams, achieving 100% alignment on contract terms for construction projects.",
+          "metrics": [
+            "100% contract alignment"
+          ]
+        },
+        {
+          "text": "Implemented dispute resolution strategies, resulting in successful cost negotiations and timely project completions.",
+          "metrics": [
+            "Successful negotiations"
+          ]
+        },
+        {
+          "text": "Engaged with site and management teams, streamlining awarded project handover and execution.",
+          "metrics": [
+            "Streamlined project execution"
+          ]
+        },
+        {
+          "text": "Managed construction site design processes, optimizing layout and logistics for increased operational efficiency.",
+          "metrics": [
+            "Increased operational efficiency"
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Orange International College",
+      "degree": "Diploma of Building and Construction",
+      "location": "Australia",
+      "year": "2021",
+      "additionalInfo": ""
+    },
+    {
+      "institution": "Mackenzie Presbyterian University",
+      "degree": "Architecture and Urbanism",
+      "location": "Brazil",
+      "year": "2009",
+      "additionalInfo": "Member of AIQS"
+    }
+  ],
+  "additionalExperience": "Volunteered in local community projects to enhance understanding of sustainable building practices; active member of the CAU BR and AIQS."
+}

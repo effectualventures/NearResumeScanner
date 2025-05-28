@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Near Resume Engine">
+  <title>Résumé – Camila</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap');
+    
+    body {
+      font-family: 'Calibri', 'Arial', sans-serif;
+      font-size: 11pt;
+      margin: 0.5in 1in 1in 1in; /* Increased bottom margin to 1 inch as requested */
+      color: #333;
+      line-height: 1.3;
+      max-width: 6in;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 8px;
+      margin-top: 0; /* Minimize top space */
+    }
+    
+    .header h1 {
+      font-size: 14pt;
+      font-weight: bold;
+      margin: 0 0 4px 0;
+      color: #000;
+    }
+    
+    .header p {
+      margin: 2px 0;
+      color: #333;
+      line-height: 1.2;
+    }
+    
+    .header p strong {
+      color: #000;
+      font-weight: 600;
+    }
+    
+    .divider {
+      border-top: 1px solid #000;
+      margin: 8px 0 10px 0;
+      width: 100%;
+    }
+    
+    .summary {
+      margin-bottom: 12px;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+    
+    .section-title {
+      text-transform: uppercase;
+      font-weight: 800;
+      font-size: 10pt;
+      margin-top: 12px;
+      margin-bottom: 5px;
+      color: #000;
+      letter-spacing: 0.5px;
+      padding-bottom: 1px;
+      border-bottom: 0.5px solid #eee; /* Subtle underline for section headers */
+    }
+    
+    .skills {
+      margin-bottom: 16px;
+      font-size: 10.5pt;
+      line-height: 1.5;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    
+    .skill-category {
+      font-weight: bold;
+      color: #000;
+      letter-spacing: 0.2px;
+      margin-right: 4px;
+    }
+    
+    .skills span:not(.skill-category) {
+      margin-right: 3px;
+    }
+    
+    .experience {
+      margin-bottom: 14px; /* Slightly increased spacing between experience sections */
+    }
+    
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 3px;
+    }
+    
+    .company {
+      font-weight: bold;
+      color: #000;
+      letter-spacing: 0.2px;
+    }
+    
+    .dates {
+      color: #555;
+      font-size: 10pt;
+      font-weight: 500;
+    }
+    
+    .title {
+      font-style: italic;
+      color: #444;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    
+    ul {
+      margin: 5px 0;
+      padding-left: 0.15in;
+    }
+    
+    li {
+      margin-bottom: 4px; /* Increased spacing between bullet points */
+      font-size: 10.5pt; /* Slightly larger bullets for better readability */
+      line-height: 1.3;
+    }
+    
+    .education {
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+    
+    .education-details {
+      font-size: 10pt;
+      color: #444;
+      margin-top: 2px;
+      margin-left: 0.05in;
+    }
+    
+    .additional {
+      margin-bottom: 15px;
+      font-size: 10.5pt;
+      line-height: 1.4;
+    }
+    
+    /* No duplicate body style needed as we updated the main body styles */
+    
+    .footer {
+      position: fixed !important;
+      bottom: 0.05in !important; /* Positioned closer to page bottom - smaller value means lower on page */
+      right: 0.3in !important; /* Position more to the right */
+      text-align: right !important;
+      z-index: 1000 !important;
+      background-color: transparent !important;
+    }
+    
+    .footer img {
+      height: auto !important;
+      width: 60px !important; /* Slightly larger logo size */
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Camila</h1>
+    <p><strong>Senior Estimator &amp; Quantity Surveyor</strong></p>
+    <p>Sorocaba, Brazil</p>
+  </div>
+  
+  <div class="divider"></div>
+  
+  <div class="summary">
+      Dynamic leader in architecture and infrastructure, with 15+ years of experience in complex<br>project estimation and cost management, delivering precision and efficiency across diversified sectors.
+  </div>
+  
+  <div class="section-title">SKILLS & LANGUAGES</div>
+  <div class="skills">
+      <div style="margin-bottom: 4px; margin-right: 12px;">
+        <span class="skill-category"><strong><span style="font-weight: 600;">Skills:</span> <span style="font-weight: normal;">First Principle Estimating; Quantity Take-off; Bill of Quantities (BOQ) Preparation; Cost Estimating; Cost Consulting; AutoCAD; Project Documentation; Civil Construction; Budget Management; Tender Document Preparation; Project Management; Infrastructure Projects</span>
+
+      Languages:</strong></span> Portuguese (Native)
+      </div>
+  </div>
+  
+  <div class="section-title">PROFESSIONAL EXPERIENCE</div>
+    <div class="experience">
+      <div class="experience-header">
+        <div class="company">VIAARQ — Sorocaba, Brazil — Sorocaba, Brazil</div>
+        <div class="dates">Jan 2015 – Present</div>
+      </div>
+      <div class="title">Quantity Surveyor / Architect - Co-owner</div>
+      <ul>
+          <li>Analyzed complex tendering documents to create accurate bids for high-value projects, successfully securing contracts across various sectors.</li>
+          <li>Implemented first principle estimating techniques, optimizing resource allocation and reducing project costs by an average of 15%.</li>
+          <li>Prepared comprehensive Bills of Quantities and tender documents that helped streamline procurement processes and facilitated precise budget planning.</li>
+          <li>Performed detailed quantity take-offs for diverse project aspects including architectural, structural, and MEP elements driving accuracy in cost predictions.</li>
+          <li>Coordinated with suppliers to negotiate competitive rates, achieving cost savings without compromising on quality.</li>
+          <li>Managed the preparation of final detailed BoQ and final accounts, ensuring all financial aspects are clearly documented and disputes minimized.</li>
+          <li>Directed project development, maintaining budget alignment through agile processes and timely interventions.</li>
+      </ul>
+    </div>
+    <div class="experience">
+      <div class="experience-header">
+        <div class="company">Civil Infrastructure Group — Greater Melbourne, VIC — Greater Melbourne, VIC</div>
+        <div class="dates">Mar 2021 – May 2024</div>
+      </div>
+      <div class="title">Senior Estimator / Quantity Surveyor</div>
+      <ul>
+          <li>Led the tender analysis and estimation processes for diverse infrastructure projects, delivering budget forecasts with &gt;98% accuracy.</li>
+          <li>Drafted precise BoQ and cost estimates that helped secure high-profile projects, enhancing the company&#x27;s market positioning.</li>
+          <li>Analyzed civil and engineering drawings for cost efficiency, proposing innovative construction methods that reduced unnecessary expenses by 20%.</li>
+          <li>Assessed and integrated design variations to current projects, maintaining fiscal responsibility and alignment with client expectations.</li>
+          <li>Structured detailed program schedules that aided project completions ahead of deadlines by an average of two weeks.</li>
+      </ul>
+    </div>
+    <div class="experience">
+      <div class="experience-header">
+        <div class="company">Somague MPH — Sao Paulo, Brazil — Sao Paulo, Brazil</div>
+        <div class="dates">Nov 2012 – Dec 2014</div>
+      </div>
+      <div class="title">Quantity Surveyor / Intermediate Estimator</div>
+      <ul>
+          <li>Conducted comprehensive quantity take-offs and scope clarifications to enhance tender precision.</li>
+          <li>Developed cost estimation protocols that streamlined processes and reduced estimation time by 25%.</li>
+      </ul>
+    </div>
+  
+  <div class="section-title">EDUCATION</div>
+  <div class="education">
+      <div><strong>Orange International College</strong> — Diploma of Building and Construction, Melbourne, Australia, 2021</div>
+      
+      <div><strong>Mackenzie Presbyterian University</strong> — Bachelor&#x27;s Degree in Architecture and Urbanism, Sao Paulo, Brazil, 2009</div>
+      
+  </div>
+  
+    <div class="section-title">ADDITIONAL EXPERIENCE</div>
+    <div class="additional">Various successful engagements in estimating and project management across numerous sectors, maintaining consistently high standards and client satisfaction.</div>
+  
+  <div class="footer">
+      <img src="file:///home/runner/workspace/public/images/near_logo.png" alt="Near Logo" width="60" />
+  </div>
+</body>
+</html>

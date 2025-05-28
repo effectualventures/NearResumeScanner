@@ -1,0 +1,93 @@
+perfect — here’s a clean, consolidated product feedback brief to hand to the Replit agent to implement, based on all the feedback so far.
+
+✅ Near Resume Engine – Design & Content Improvements (Priority Batch)
+
+Hi Replit — here’s a consolidated set of improvements to implement across the resume PDF generator. These are based on product reviews from Hayden, Andres, MJ, Franco, and the internal team. This batch should be implemented together to avoid piecemeal back-and-forth.
+
+Please confirm back which files you touched and ask Hayden to reupload those for verification.
+
+🧱 1. Summary Line Cleanup
+
+Issue: Summary line wraps too early on short sentences and feels broken/cut off.
+Fix: Ensure summary text reads as a clean single block unless it’s legitimately long. Extend max line width, and avoid forced line breaks. Treat it like a sub-headline.
+
+🧾 2. Skills & Languages Layout
+
+Issue: “Languages” appears on the same line as the end of “Skills”, which reads awkwardly and clutters the section.
+Fix: Break “Languages” into its own line under “Skills”.
+Also: Make sure spacing between the two lines feels intentional and not cramped.
+
+🌍 3. Location Formatting (Header + Experience Section)
+
+Current:
+Sorocaba, SP, Brazil
+
+Feedback (Franco/MJ):
+City isn’t needed. We either want:
+	•	State, Country (e.g. SP, Brazil)
+	•	Or just Brazil
+
+Fix: Standardize all locations in the resume header and job entries to:
+
+	State, Country or Country (apply globally across experiences)
+
+📐 4. Currency & Measurement Normalization
+
+Issue:
+	•	Currencies show as “R$” (Brazilian real) without context
+	•	Area units like “m²” break or render weirdly (m 8, m2, m^2)
+
+Fixes:
+	•	Replace R$ with ~USD $X (approximate equivalent), OR keep both (e.g. R$ 7M (~$1.3M USD))
+	•	Always convert m² to sq ft in parentheses after:
+	6,000 m² (~64,500 sq ft)
+
+If this is too hard to do reliably for now, at minimum:
+	•	Ensure “m²” renders cleanly using a font that supports superscript
+	•	Remove weird variants like “m 2” or “m 8”
+
+🧠 5. Bullet Count Limit (Per Role)
+
+Issue:
+Some resumes have 10+ bullets for a single job, which overwhelms readers.
+
+Fix:
+Cap each job at 7 bullets max.
+If more than 7 exist, prioritize the most impactful ones:
+	•	Quantified outcomes (savings, $, % impact)
+	•	Leadership or process improvement
+	•	Relevance to role (e.g. estimation for estimator roles)
+
+Leave flexibility to go slightly over for very senior roles, but default should be ≤7.
+
+🧑‍🎓 6. Education Section Redesign
+
+Current format:
+A long, single-line run-on of institution, degree, city, and year.
+
+Fix: Change layout to two-line format for each entry:
+
+Institution — Location
+Degree, Year
+
+Example:
+
+Mackenzie Presbyterian University — São Paulo, Brazil  
+Bachelor’s in Architecture and Urbanism, 2009
+
+Make sure Coursera and in-progress programs like “Expected 2025” are formatted the same way.
+
+🧾 7. Section Header + Role Line Hierarchy
+
+Fix:
+	•	Bold only the company name (not the location)
+	•	Dim or de-emphasize location so company name is the hero
+	•	Job title should be either:
+	•	On its own line in italic/semibold
+	•	Or merged into the company line with smart spacing if it improves flow
+
+✍️ 8. Optional: Text Justification
+
+If it doesn’t break anything, test applying left-right justification (text-align: justify) to main paragraph blocks (summary and bullets) to improve symmetry.
+
+Please confirm when complete and tell Hayden which files to reupload for final verification. Let us know if anything here isn’t feasible or if you’d like to break it into smaller batches.

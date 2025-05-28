@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Near Resume Engine">
+  <title>Résumé – {{header.firstName}}</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap');
+    
+    @page {
+      size: letter;
+      margin: 0.5in 0.5in 0.7in 0.5in;   /* top, right, bottom, left */
+    }
+    
+    body {
+      font-family: 'Calibri', 'Arial', sans-serif;
+      font-size: 11pt;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      line-height: 1.3;
+      max-width: 100%;
+    }
+    
+    .page-body {
+      padding: 0; /* Remove all padding */
+      margin: 0;
+      position: relative;
+    }
+    
+    /* Global rules to control page breaks and spacing */
+    .experience, /* Only apply break-inside avoid to individual experience items */
+    .education-institution {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    
+    /* Remove page breaks between sections */
+    section {
+      page-break-inside: auto;
+      break-inside: auto;
+    }
+    
+    /* Tighter spacing for better page efficiency */
+    section {
+      margin-top: 5px !important;
+      margin-bottom: 5px !important;
+    }
+    
+    /* Bullet point formatting */
+    ul {
+      margin: 0 0 8px 18px;
+      padding: 0;
+    }
+    li {
+      margin: 0 0 4px;
+      font-size: 11px;
+      line-height: 1.25;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 6px;
+      margin-top: 0; /* Minimize top space */
+    }
+    
+    .header h1 {
+      font-size: 14pt;
+      font-weight: bold;
+      margin: 0 0 2px 0;
+      color: #000;
+    }
+    
+    .header p {
+      margin: 1px 0;
+      color: #333;
+      line-height: 1.1;
+      font-size: 10.5pt;
+    }
+    
+    .header p strong {
+      color: #000;
+      font-weight: 600;
+    }
+    
+    .divider, .section-rule {
+      border: none;
+      border-top: 1px solid #d9d9d9;   /* lighter grey */
+      margin: 3px 0 12px;
+      width: 100%;
+    }
+    
+    .summary {
+      page-break-inside: avoid;
+      white-space: normal;
+      text-align: left;
+      line-height: 1.3;
+      width: 100%;
+      max-width: none;
+      margin-bottom: 6px;
+      color: #333;
+      font-size: 10.5pt;
+    }
+    
+    .section-title {
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 10.5pt;
+      color: #000;
+      margin-bottom: 1px;
+      letter-spacing: 0.2px;
+      padding-bottom: 0;
+    }
+    
+    .section-rule {
+      border: 0;
+      height: 1px;
+      background-color: #d9d9d9;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+    
+    .skills {
+      margin-bottom: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      font-size: 10pt;
+    }
+    
+    .skill-category {
+      font-weight: bold;
+      color: #000;
+      letter-spacing: 0.2px;
+      margin-right: 4px;
+    }
+    
+    .skills span:not(.skill-category) {
+      margin-right: 3px;
+    }
+    
+    .experience {
+      margin-bottom: 8px; /* Further reduced spacing between experience sections */
+    }
+    
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 2px;
+    }
+    
+    .company {
+      font-weight: bold;
+      color: #000;
+      letter-spacing: 0.2px;
+      display: inline;
+    }
+    
+    .location {
+      display: inline;
+      color: #444;
+      font-size: 10.5pt;
+      font-weight: normal;
+    }
+    
+    .dates {
+      color: #555;
+      font-size: 10pt;
+      font-weight: 500;
+    }
+    
+    .title {
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 3px;
+      font-size: 10.5pt;
+    }
+    
+    ul {
+      margin-top: 2px;
+      margin-bottom: 4px;
+      padding-left: 16px; /* More reduced bullet indentation */
+    }
+    
+    li {
+      margin-bottom: 1px;
+      color: #333;
+      page-break-inside: avoid;
+      break-inside: avoid;
+      font-size: 10pt; /* Smaller font size for bullets */
+      font-weight: normal !important;
+    }
+    
+    li * {
+      font-weight: normal !important;
+    }
+    
+    /* Exception for metrics */
+    li span[style*="font-weight: 500"],
+    li span.metrics {
+      font-weight: 500 !important;
+    }
+    
+    .education {
+      margin-bottom: 12px;
+    }
+    
+    .education-institution {
+      margin-bottom: 3px;
+      font-size: 11pt;
+    }
+    
+    .education-degree {
+      color: #333;
+      margin-bottom: 3px;
+      font-size: 10.5pt;
+    }
+    
+    .education-details {
+      color: #444;
+      margin-bottom: 5px;
+      font-size: 10pt;
+    }
+    
+    .additional {
+      color: #333;
+      line-height: 1.4;
+      font-size: 10.5pt;
+    }
+    
+    .additional ul {
+      margin-top: 5px;
+    }
+    
+    .additional li {
+      margin-bottom: 3px;
+    }
+    
+    /* Footer styling */
+    .branding-footer{
+      position: absolute; /* Use absolute instead of fixed for better control */
+      bottom: 0.35in; /* Position exactly 0.35in from bottom as specified */
+      right: 0.5in;   /* Align with right margin */
+      display: flex;
+      gap: 6px;
+      font-family: 'Inter','Helvetica',sans-serif;
+      font-size: 10px;
+      align-items: center;
+      z-index: 9999; /* Ensure it's always on top */
+      text-align: right;
+      background-color: transparent;
+    }
+    .branding-footer img{
+      width: auto;
+      height: 25px;
+      display: inline-block;
+    }
+    
+    /* Create a clear logo zone that nothing else should enter */
+    .logo-zone {
+      height: 0.7in !important; /* Increased height for better spacing */
+      width: 100% !important;
+      clear: both !important;
+      display: block !important;
+      margin-top: 0.5in !important; /* Push content away from footer */
+      padding: 0 !important;
+      position: relative !important;
+      visibility: hidden !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-body">
+  <div class="header">
+    <h1>{{header.firstName}}</h1>
+    <p><strong>{{header.tagline}}</strong></p>
+    <!-- Only use header.location, never city or country -->
+    <p>{{header.location}}</p>
+  </div>
+  
+  <div class="divider"></div>
+  
+  <div class="summary">
+    {{#if summary}}
+      {{summary}}{{#unless (endsWith summary ".")}}{{#unless (endsWith summary "?")}}{{#unless (endsWith summary "!")}}{{#unless (endsWith summary ":")}}{{#unless (endsWith summary ";")}}{{#unless (endsWith summary "...")}}{{#unless (endsWith summary "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}
+    {{/if}}
+  </div>
+  
+  <!-- SKILLS SECTION -->
+  <section style="display: block; width: 100%; clear: both; margin-bottom: 12px;">
+    <h2 class="section-title">SKILLS</h2>
+    <hr class="section-rule"/>
+    <div class="skills">
+      <!-- First display skills -->
+      {{#each skills}}
+        {{#if (eq category "Skills")}}
+          <div style="margin-bottom: 4px; margin-right: 0; width: 100%;">
+            <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
+          </div>
+        {{/if}}
+      {{/each}}
+      
+      <!-- Display any other categories except Languages -->
+      {{#each skills}}
+        {{#if (and (not (eq category "Skills")) (not (eq category "Languages")))}}
+          <div style="margin-bottom: 4px; margin-right: 0; width: 100%;">
+            <span class="skill-category"><strong>{{this.category}}:</strong></span> {{this.items.[0]}}{{#each (slice this.items 1)}} • {{this}}{{/each}}
+          </div>
+        {{/if}}
+      {{/each}}
+    </div>
+  </section>
+  
+  <!-- LANGUAGES SECTION - Always shown even if empty -->
+  <section style="display: block; width: 100%; clear: both; margin-top: 15px; margin-bottom: 12px;">
+    <h2 class="section-title">LANGUAGES</h2>
+    <hr class="section-rule"/>
+    <div class="languages-list">
+      {{#each skills}}
+        {{#if (eq category "Languages")}}
+          <div style="margin-bottom: 2px; width: 100%;">
+            <span style="font-weight: normal;">{{#each this.items}}{{this}}{{#unless @last}}; {{/unless}}{{/each}}</span>
+          </div>
+          {{! Languages found, no need to show default }}
+        {{/if}}
+      {{/each}}
+      
+      {{! Safety Check - Add default if no Languages category is found }}
+      {{#unless (some skills 'category' 'Languages')}}
+        <div style="margin-bottom: 2px; width: 100%;">
+          <span style="font-weight: normal;">English (Fluent)</span>
+        </div>
+      {{/unless}}
+    </div>
+  </section>
+  
+  <section style="display: block; width: 100%; clear: both; margin-top: 5px;">
+    <h2 class="section-title">PROFESSIONAL EXPERIENCE</h2>
+    <hr class="section-rule"/>
+    {{#each experience}}
+      <div class="experience">
+        <div class="experience-header">
+          <div>
+            <span class="company">{{company}}</span>
+            <span> — </span>
+            <span class="location">{{location}}</span>
+          </div>
+          <div class="dates">{{startDate}} – {{formatEndDate endDate}}</div>
+        </div>
+        <div class="title">{{title}}</div>
+        <ul>
+          {{#if ../detailedFormat}}
+            <!-- Show all bullet points for detailed format -->
+            {{#each bullets}}
+              <li style="font-weight: normal;"><span style="font-weight: normal;">{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>{{#if metrics.length}}{{#unless (containsAny text metrics)}} <span style="color: #333; font-weight: 500; font-style: normal;">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>{{/unless}}{{/if}}</li>
+            {{/each}}
+          {{else}}
+            <!-- Limit to 7 bullet points for standard format -->
+            {{#each (slice bullets 0 7)}}
+              <li style="font-weight: normal;"><span style="font-weight: normal;">{{text}}{{#unless (endsWith text ".")}}{{#unless (endsWith text "?")}}{{#unless (endsWith text "!")}}{{#unless (endsWith text ":")}}{{#unless (endsWith text ";")}}{{#unless (endsWith text "...")}}{{#unless (endsWith text "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</span>{{#if metrics.length}}{{#unless (containsAny text metrics)}} <span style="color: #333; font-weight: 500; font-style: normal;">{{#each metrics}}{{this}}{{#unless @last}} | {{/unless}}{{/each}}</span>{{/unless}}{{/if}}</li>
+            {{/each}}
+          {{/if}}
+        </ul>
+      </div>
+    {{/each}}
+  </section>
+  
+  <section style="display: block; width: 100%; clear: both; margin-top: 5px;">
+    <h2 class="section-title">EDUCATION</h2>
+    <hr class="section-rule"/>
+    <div class="education" style="margin-bottom: 5px;">
+      {{#each education}}
+        <div class="education-institution" style="margin-bottom: 1px;"><strong>{{institution}}</strong>{{#if location}} — {{location}}{{/if}}</div>
+        <div class="education-degree" style="margin-bottom: 1px; font-size: 10pt;">{{degree}}{{#if (and degree year)}}, {{/if}}{{year}}</div>
+        {{#if additionalInfo}}
+          {{#if (contains additionalInfo "CAU BR")}}
+            <!-- Don't show CAU BR here, it will be in PROFESSIONAL MEMBERSHIPS section -->
+          {{else}}
+            {{#if (contains additionalInfo "Coursera")}}
+              <!-- Special handling for Coursera courses -->
+              <div class="education-details" style="margin-bottom: 3px; font-size: 10pt;">{{additionalInfo}}</div>
+            {{else}}
+              <div class="education-details" style="margin-bottom: 3px; font-size: 10pt;">{{additionalInfo}}</div>
+            {{/if}}
+          {{/if}}
+        {{/if}}
+      {{/each}}
+    </div>
+  </section>
+  
+  {{#if additionalExperience}}
+    <section style="display: block; width: 100%; clear: both; margin-top: 5px;">
+      <h2 class="section-title">ADDITIONAL EXPERIENCE</h2>
+      <hr class="section-rule"/>
+      <ul class="additional" style="margin-top: 2px; margin-bottom: 2px; padding-left: 16px;">
+        {{#each (splitLines additionalExperience)}}
+          <li style="font-weight: normal; font-size: 10pt;">{{this}}{{#unless (endsWith this ".")}}{{#unless (endsWith this "?")}}{{#unless (endsWith this "!")}}{{#unless (endsWith this ":")}}{{#unless (endsWith this ";")}}{{#unless (endsWith this "...")}}{{#unless (endsWith this "…")}}.{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}</li>
+        {{/each}}
+      </ul>
+    </section>
+  {{else}}
+    <!-- If additionalExperience is missing but we have CAU BR, create a special PROFESSIONAL MEMBERSHIPS section -->
+    {{#each education}}
+      {{#if (contains additionalInfo "CAU BR")}}
+        {{#unless @index}}
+          <section style="display: block; width: 100%; clear: both; margin-top: 5px;">
+            <h2 class="section-title">PROFESSIONAL MEMBERSHIPS</h2>
+            <hr class="section-rule"/>
+            <ul class="additional" style="margin-top: 2px; margin-bottom: 2px; padding-left: 16px;">
+              <li style="font-weight: normal; font-size: 10pt;">CAU BR Certified Architect — Since 2011.</li>
+            </ul>
+          </section>
+        {{/unless}}
+      {{/if}}
+    {{/each}}
+  {{/if}}
+  
+  <!-- Add logo zone spacer but keep it minimal -->
+  <div class="logo-zone"></div>
+  </div><!-- end of page-body -->
+  
+  <!-- Branding footer with "Presented by" -->
+  <footer class="branding-footer">
+    <span><strong>Presented by</strong></span>
+    <img src="file://{{logoPath}}" alt="Near logo"/>
+  </footer>
+</body>
+</html>

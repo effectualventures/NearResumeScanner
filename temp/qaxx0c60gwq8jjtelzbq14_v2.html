@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Near Resume Engine">
+  <title>Résumé – Camila</title>
+  <style>
+    /* Base page setup with precise margins */
+    @page {
+      size: letter;
+      margin: 0.5in 0.5in 0.7in 0.5in; /* top, right, bottom, left */
+      orphans: 3; /* Minimum number of lines at the top of a page */
+      widows: 3; /* Minimum number of lines at the bottom of a page */
+    }
+    
+    /* Reset CSS to ensure consistent rendering */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-weight: normal;
+    }
+    
+    /* Base typography */
+    body {
+      font-family: 'Calibri', 'Arial', sans-serif;
+      font-size: 11pt;
+      line-height: 1.3;
+      color: #333;
+      width: 7.5in; /* Exact content width: 8.5in - margins */
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+    
+    /* Core container for all content */
+    .resume-container {
+      width: 100%;
+      position: relative;
+    }
+    
+    /* Header section */
+    .header {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    
+    .header h1 {
+      font-size: 14pt;
+      font-weight: bold;
+      margin-bottom: 2px;
+      color: #000;
+    }
+    
+    .header p {
+      margin: 1px 0;
+      color: #333;
+      line-height: 1.1;
+      font-size: 10.5pt;
+    }
+    
+    .header p strong {
+      font-weight: 600;
+      color: #000;
+    }
+    
+    /* Section styling */
+    .section-title {
+      font-size: 11pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-top: 15px;
+      margin-bottom: 3px;
+      letter-spacing: 0.5px;
+    }
+    
+    .section-rule {
+      border: none;
+      border-top: 1px solid #d9d9d9;
+      margin: 3px 0 8px;
+      width: 100%;
+    }
+    
+    section {
+      margin-bottom: 10px;
+      width: 100%;
+      clear: both;
+    }
+    
+    /* More granular page break control */
+    .experience-header, .title {
+      page-break-inside: avoid;
+      page-break-after: avoid;
+    }
+    
+    /* Allow page breaks inside experience bullet lists if necessary */
+    .experience ul {
+      page-break-inside: auto;
+    }
+    
+    /* New container for experiences to better handle page breaks */
+    .experience-container {
+      display: block;
+      break-inside: auto;
+    }
+    
+    /* More specific rules for page breaks in experiences */
+    .professional-experience {
+      break-inside: auto;
+      page-break-inside: auto;
+    }
+    
+    /* Ensure at least 2 lines of content appear when page breaks happen inside lists */
+    ul li {
+      orphans: 2;
+      widows: 2;
+    }
+    
+    /* Summary section */
+    .summary {
+      margin-bottom: 15px;
+      font-size: 11pt;
+      line-height: 1.3;
+    }
+    
+    /* Skills & Languages section */
+    .skills, .languages-list {
+      margin-bottom: 8px;
+      width: 100%;
+    }
+    
+    .skill-category {
+      font-weight: 600;
+    }
+    
+    /* Professional Experience */
+    .experience {
+      margin-bottom: 15px;
+      break-inside: auto; /* Modern property to allow breaks within experiences */
+      page-break-inside: auto; /* Allow page breaks within experience items */
+    }
+    
+    /* Keep headers with at least some content */
+    section h2.section-title {
+      page-break-after: avoid; /* Keep section headings with their content */
+    }
+    
+    /* Keep company and title headings with at least 2 lines of content */
+    .company, .title {
+      page-break-after: avoid;
+    }
+    
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      page-break-after: avoid;
+    }
+    
+    .company {
+      font-weight: 600;
+    }
+    
+    .title {
+      font-style: italic;
+      margin-bottom: 3px;
+    }
+    
+    ul {
+      padding-left: 16px;
+      margin-top: 2px;
+      margin-bottom: 10px;
+      page-break-before: avoid; /* Prevent break before the bullet list */
+    }
+    
+    li {
+      margin-bottom: 2px;
+      font-weight: normal;
+      font-size: 10.5pt;
+      break-inside: avoid-column;
+      page-break-inside: auto; /* Allow bullets to break across pages */
+    }
+    
+    /* Metric emphasis but not whole bullet */
+    li span.metrics {
+      font-weight: 500;
+      color: #333;
+    }
+    
+    /* Education section */
+    .education {
+      margin-bottom: 12px;
+      page-break-inside: avoid;
+    }
+    
+    .education-institution {
+      margin-bottom: 2px;
+      font-size: 11pt;
+    }
+    
+    .education-institution strong {
+      font-weight: 600;
+    }
+    
+    .education-degree {
+      color: #333;
+      margin-bottom: 2px;
+      font-size: 10.5pt;
+    }
+    
+    .education-details {
+      color: #444;
+      margin-bottom: 4px;
+      font-size: 10pt;
+    }
+    
+    /* Additional information */
+    .additional {
+      color: #333;
+      line-height: 1.4;
+      font-size: 10.5pt;
+    }
+    
+    .additional li {
+      margin-bottom: 3px;
+    }
+    
+    /* Footer positioning */
+    .logo-zone {
+      height: 0.3in;
+      width: 100%;
+      clear: both;
+      display: block;
+      visibility: hidden;
+    }
+    
+    .branding-footer {
+      position: fixed;
+      bottom: 0.05in; /* Exact positioning from bottom */
+      right: 0.5in;   /* Align with right margin */
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Inter', 'Helvetica', sans-serif;
+      font-size: 10px;
+      z-index: 1000;
+    }
+    
+    .branding-footer img {
+      height: 25px;
+      width: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="resume-container">
+    <!-- HEADER -->
+    <div class="header">
+      <h1>Camila</h1>
+      <p><strong>Senior Quantity Surveyor – Infrastructure &amp; Civil Construction</strong></p>
+      <p>Brazil</p>
+    </div>
+    
+    <hr class="section-rule">
+    
+    <!-- SUMMARY -->
+    <div class="summary">
+        Experienced Quantity Surveyor with 15+ years in infrastructure projects, specializing in cost estimating and project management, optimizing budgets and exceeding targets by 25%.
+    </div>
+    
+    <!-- SKILLS AND LANGUAGES SECTION -->
+    <section>
+      <h2 class="section-title">Skills</h2>
+      <hr class="section-rule"/>
+      <div class="skills">
+        <!-- First display skills -->
+            <div style="margin-bottom: 4px; width: 100%;">
+              <strong>Skills:</strong> First Principle Estimating • Bill of Quantities (BOQ) • Cost Estimating • Quantity Take-Off • Cost Consulting • Project Development • Budget Adjustment • Tender Documents • Contract Documentation • Dispute Resolution • AutoCAD • Revit • Bluebeam • Expert Estimation • Navisworks
+            </div>
+        
+        <!-- Display any other categories except Languages -->
+        
+        <!-- Display Languages within the same section -->
+        <div style="margin-top: 10px;">
+          <strong>Languages:</strong> 
+              Portuguese (Native); English (Professional)
+          
+        </div>
+      </div>
+    </section>
+    
+    <!-- PROFESSIONAL EXPERIENCE -->
+    <section class="professional-experience">
+      <h2 class="section-title">Professional Experience</h2>
+      <hr class="section-rule"/>
+      <div class="experience-container">
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">VIAARQ – Arquitetura Viável</span>
+                <span> — </span>
+                <span class="location">Brazil</span>
+              </div>
+              <div class="dates">Jan 2015 – Present</div>
+            </div>
+            <div class="title">Quantity Surveyor / Architect - Co-owner</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Analyzed tender documents meticulously to ensure accurate estimation and compliance with project requirements, leading to a 95% success rate in project bids.</span>
+                  </li>
+                  <li><span>Executed first principle estimating techniques across diverse project sectors including residential, commercial, and infrastructure, achieving cost savings of up to 20%.</span>
+                        <span class="metrics">20% cost savings</span>
+                  </li>
+                  <li><span>Prepared detailed Bill of Quantities (BOQ) and tender documents that facilitated streamlined project communication and execution, resulting in a 15% reduction in project delays.</span>
+                  </li>
+                  <li><span>Conducted comprehensive quantity take-offs for civil projects, ensuring precise calculation for foundations, architectural and structural components, resulting in a 98% accuracy rate.</span>
+                  </li>
+                  <li><span>Developed commercial offers and managed cost estimating processes that consistently met client financial constraints and expectations.</span>
+                  </li>
+                  <li><span>Managed supplier quotations for MEP installations, securing competitive pricing and reducing overhead costs by 15%.</span>
+                        <span class="metrics">15% cost reduction</span>
+                  </li>
+                  <li><span>Successfully oversaw project development to align with financial strategies, leading to budget adjustments favorable by 7%.</span>
+                        <span class="metrics">7% favorable budget adjustment</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Civil Infrastructure Group</span>
+                <span> — </span>
+                <span class="location">Australia</span>
+              </div>
+              <div class="dates">Mar 2021 – May 2024</div>
+            </div>
+            <div class="title">Senior Estimator / Quantity Surveyor</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Conducted tender analysis and scoped works defining comprehensive budgets based on preliminary draft drawings, contributing to successful TOC submissions.</span>
+                  </li>
+                  <li><span>Prepared extensive Bill of Quantities (BOQ) including material, labor, and plan list for infrastructure projects, enhancing project tracking accuracy by 12%.</span>
+                        <span class="metrics">12% tracking accuracy enhancement</span>
+                  </li>
+                  <li><span>Coordinated the submission of commercial offers with pricing schedules, resulting in competitive and winning proposals for major projects.</span>
+                  </li>
+                  <li><span>Executed quantity take-offs for infrastructure and civil projects in alignment with detailed engineering drawings, improving cost estimation precision by 15%.</span>
+                        <span class="metrics">15% precision improvement</span>
+                  </li>
+                  <li><span>Engaged with contractors to clarify scopes and propose method changes, optimizing budgets within set financial constraints and reducing costs by 10%.</span>
+                        <span class="metrics">10% cost reduction</span>
+                  </li>
+                  <li><span>Successfully managed projects such as the South Morang Terminal Station, achieving substantial project milestones and client accolades.</span>
+                  </li>
+                  <li><span>Led the evaluation of design variations leading to cost-effective project enhancements and improved financial accuracy by 18%.</span>
+                        <span class="metrics">18% financial accuracy improvement</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Somague MPH</span>
+                <span> — </span>
+                <span class="location">Brazil</span>
+              </div>
+              <div class="dates">Nov 2012 – Dec 2014</div>
+            </div>
+            <div class="title">Quantity Surveyor / Intermediate Estimator</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Conducted in-depth tender document analysis, leading to precise scoping of project works and optimal resource allocations.</span>
+                  </li>
+                  <li><span>Managed quantity take-offs and detailed BOQs for commercial proposals, sustaining efficiency and compliance with specifications.</span>
+                  </li>
+                  <li><span>Facilitated design follow-ups and clarified tender scopes with architects and engineers, ensuring seamless project integration.</span>
+                  </li>
+                  <li><span>Contributed to successful cost disputes resolution and contract debates, consistently maintaining a resolution success rate above 80%.</span>
+                        <span class="metrics">80% resolution success rate</span>
+                  </li>
+                  <li><span>Oversaw preparation of construction management documentation, enhancing project oversight and adherence to budget constraints.</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Trisul-SA</span>
+                <span> — </span>
+                <span class="location">Brazil</span>
+              </div>
+              <div class="dates">Sep 2011 – Sep 2012</div>
+            </div>
+            <div class="title">Quantity Surveyor / Intermediate Estimator</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Effectively managed quantity take-offs and cost consulting for high-rise residential and commercial projects.</span>
+                  </li>
+                  <li><span>Facilitated feasibility studies and banking documentation for high-rise projects, aiding in funding acquisitions.</span>
+                  </li>
+                  <li><span>Observed project design comparisons to secure cost improvements and budget adherence, enhancing financial stewardship.</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">MV Escritório de Projetos Ltda.</span>
+                <span> — </span>
+                <span class="location">Brazil</span>
+              </div>
+              <div class="dates">Apr 2011 – Sep 2011</div>
+            </div>
+            <div class="title">Architect / Intermediate Quantity Surveyor</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Produced feasibility and cost studies for logistics warehouse projects, optimizing designs for constructability.</span>
+                  </li>
+                  <li><span>Executed cost estimation and project design review, ensuring robust financial and project outcomes.</span>
+                  </li>
+            </ul>
+          </div>
+          <div class="experience">
+            <div class="experience-header">
+              <div>
+                <span class="company">Afonso França Engenharia Ltda.</span>
+                <span> — </span>
+                <span class="location">Brazil</span>
+              </div>
+              <div class="dates">Mar 2008 – Mar 2011</div>
+            </div>
+            <div class="title">Quantity Surveyor / Junior Estimator</div>
+            <ul>
+                <!-- Show all bullet points for detailed format -->
+                  <li><span>Performed quantity take-offs and cost assessments for prominent hospital and shopping center projects.</span>
+                  </li>
+                  <li><span>Contributed to project budget accuracy and compliance throughout diverse construction phases.</span>
+                  </li>
+                  <li><span>Engaged in proactive design variation assessments, optimizing resource allocation and enhancing efficiency.</span>
+                  </li>
+            </ul>
+          </div>
+      </div>
+    </section>
+    
+    <!-- EDUCATION -->
+    <section>
+      <h2 class="section-title">Education</h2>
+      <hr class="section-rule"/>
+      <div class="education">
+          <div class="education-institution"><strong>Orange International College</strong> — Australia</div>
+          <div class="education-degree">DiploMaster of Arts of Building and Construction, 2021</div>
+              <div class="education-details">Specialized coursework completed</div>
+          <div class="education-institution"><strong>Mackenzie Presbyterian University</strong> — Brazil</div>
+          <div class="education-degree">Architecture and UrBachelor of Artsnism, 2009</div>
+      </div>
+    </section>
+    
+      <section>
+        <h2 class="section-title">Additional Experience</h2>
+        <hr class="section-rule"/>
+        <ul class="additional" style="margin-top: 2px; margin-bottom: 2px; padding-left: 16px;">
+            <li>Certified member of the Brazilian Council of Architecture and Urbanism and AIQS. Completed advanced courses in Autodesk Revit Architecture, Revit MEP, and Navisworks Manage.</li>
+        </ul>
+      </section>
+    
+    <!-- Logo zone spacer -->
+    <div class="logo-zone"></div>
+  </div>
+  
+  <!-- Branding footer with "Presented by" -->
+  <footer class="branding-footer">
+    <span><strong>Presented by</strong></span>
+    <img src="file:///home/runner/workspace/public/images/near_logo.png" alt="Near logo"/>
+  </footer>
+</body>
+</html>

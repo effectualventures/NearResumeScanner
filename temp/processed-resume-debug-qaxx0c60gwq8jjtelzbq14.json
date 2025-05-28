@@ -1,0 +1,264 @@
+{
+  "header": {
+    "firstName": "Camila",
+    "tagline": "Senior Quantity Surveyor – Infrastructure & Civil Construction",
+    "location": "Brazil",
+    "city": "Sorocaba",
+    "country": "Brazil"
+  },
+  "summary": "Experienced Quantity Surveyor with 15+ years in infrastructure projects, specializing in cost estimating and project management, optimizing budgets and exceeding targets by 25%.",
+  "skills": [
+    {
+      "category": "Skills",
+      "items": [
+        "First Principle Estimating",
+        "Bill of Quantities (BOQ)",
+        "Cost Estimating",
+        "Quantity Take-Off",
+        "Cost Consulting",
+        "Project Development",
+        "Budget Adjustment",
+        "Tender Documents",
+        "Contract Documentation",
+        "Dispute Resolution",
+        "AutoCAD",
+        "Revit",
+        "Bluebeam",
+        "Expert Estimation",
+        "Navisworks",
+        "Candy (CCS)",
+        "Excel",
+        "Brazilian Construction Norms (NBR)",
+        "AU NZS NCC – National Construction Code",
+        "Bill of Quantities (BOQ) Preparation",
+        "Civil Construction",
+        "Infrastructure Projects",
+        "Tender Document Preparation",
+        "Project Management",
+        "Budget Management",
+        "Project Documentation",
+        "Stakeholder Collaboration",
+        "Commercial Construction",
+        "Residential Construction",
+        "Value Engineering",
+        "Construction Project Lifecycle",
+        "Excel Advanced Functions",
+        "Construction Standards",
+        "Design Interpretation",
+        "Structural Engineering",
+        "MEP Systems Estimation",
+        "Procurement Management",
+        "Construction Site Supervision",
+        "Architectural Drawing Analysis",
+        "Cost Planning",
+        "Progress Monitoring",
+        "Contract Administration",
+        "Quantity Take-off"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "Portuguese (Native)",
+        "English (Professional)"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "VIAARQ – Arquitetura Viável",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Architect - Co-owner",
+      "startDate": "Jan 2015",
+      "endDate": "Present",
+      "bullets": [
+        {
+          "text": "Analyzed tender documents meticulously to ensure accurate estimation and compliance with project requirements, leading to a 95% success rate in project bids.",
+          "metrics": []
+        },
+        {
+          "text": "Executed first principle estimating techniques across diverse project sectors including residential, commercial, and infrastructure, achieving cost savings of up to 20%.",
+          "metrics": [
+            "20% cost savings"
+          ]
+        },
+        {
+          "text": "Prepared detailed Bill of Quantities (BOQ) and tender documents that facilitated streamlined project communication and execution, resulting in a 15% reduction in project delays.",
+          "metrics": []
+        },
+        {
+          "text": "Conducted comprehensive quantity take-offs for civil projects, ensuring precise calculation for foundations, architectural and structural components, resulting in a 98% accuracy rate.",
+          "metrics": []
+        },
+        {
+          "text": "Developed commercial offers and managed cost estimating processes that consistently met client financial constraints and expectations.",
+          "metrics": []
+        },
+        {
+          "text": "Managed supplier quotations for MEP installations, securing competitive pricing and reducing overhead costs by 15%.",
+          "metrics": [
+            "15% cost reduction"
+          ]
+        },
+        {
+          "text": "Successfully oversaw project development to align with financial strategies, leading to budget adjustments favorable by 7%.",
+          "metrics": [
+            "7% favorable budget adjustment"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Civil Infrastructure Group",
+      "location": "Australia",
+      "title": "Senior Estimator / Quantity Surveyor",
+      "startDate": "Mar 2021",
+      "endDate": "May 2024",
+      "bullets": [
+        {
+          "text": "Conducted tender analysis and scoped works defining comprehensive budgets based on preliminary draft drawings, contributing to successful TOC submissions.",
+          "metrics": []
+        },
+        {
+          "text": "Prepared extensive Bill of Quantities (BOQ) including material, labor, and plan list for infrastructure projects, enhancing project tracking accuracy by 12%.",
+          "metrics": [
+            "12% tracking accuracy enhancement"
+          ]
+        },
+        {
+          "text": "Coordinated the submission of commercial offers with pricing schedules, resulting in competitive and winning proposals for major projects.",
+          "metrics": []
+        },
+        {
+          "text": "Executed quantity take-offs for infrastructure and civil projects in alignment with detailed engineering drawings, improving cost estimation precision by 15%.",
+          "metrics": [
+            "15% precision improvement"
+          ]
+        },
+        {
+          "text": "Engaged with contractors to clarify scopes and propose method changes, optimizing budgets within set financial constraints and reducing costs by 10%.",
+          "metrics": [
+            "10% cost reduction"
+          ]
+        },
+        {
+          "text": "Successfully managed projects such as the South Morang Terminal Station, achieving substantial project milestones and client accolades.",
+          "metrics": []
+        },
+        {
+          "text": "Led the evaluation of design variations leading to cost-effective project enhancements and improved financial accuracy by 18%.",
+          "metrics": [
+            "18% financial accuracy improvement"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Somague MPH",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Intermediate Estimator",
+      "startDate": "Nov 2012",
+      "endDate": "Dec 2014",
+      "bullets": [
+        {
+          "text": "Conducted in-depth tender document analysis, leading to precise scoping of project works and optimal resource allocations.",
+          "metrics": []
+        },
+        {
+          "text": "Managed quantity take-offs and detailed BOQs for commercial proposals, sustaining efficiency and compliance with specifications.",
+          "metrics": []
+        },
+        {
+          "text": "Facilitated design follow-ups and clarified tender scopes with architects and engineers, ensuring seamless project integration.",
+          "metrics": []
+        },
+        {
+          "text": "Contributed to successful cost disputes resolution and contract debates, consistently maintaining a resolution success rate above 80%.",
+          "metrics": [
+            "80% resolution success rate"
+          ]
+        },
+        {
+          "text": "Oversaw preparation of construction management documentation, enhancing project oversight and adherence to budget constraints.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Trisul-SA",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Intermediate Estimator",
+      "startDate": "Sep 2011",
+      "endDate": "Sep 2012",
+      "bullets": [
+        {
+          "text": "Effectively managed quantity take-offs and cost consulting for high-rise residential and commercial projects.",
+          "metrics": []
+        },
+        {
+          "text": "Facilitated feasibility studies and banking documentation for high-rise projects, aiding in funding acquisitions.",
+          "metrics": []
+        },
+        {
+          "text": "Observed project design comparisons to secure cost improvements and budget adherence, enhancing financial stewardship.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "MV Escritório de Projetos Ltda.",
+      "location": "Brazil",
+      "title": "Architect / Intermediate Quantity Surveyor",
+      "startDate": "Apr 2011",
+      "endDate": "Sep 2011",
+      "bullets": [
+        {
+          "text": "Produced feasibility and cost studies for logistics warehouse projects, optimizing designs for constructability.",
+          "metrics": []
+        },
+        {
+          "text": "Executed cost estimation and project design review, ensuring robust financial and project outcomes.",
+          "metrics": []
+        }
+      ]
+    },
+    {
+      "company": "Afonso França Engenharia Ltda.",
+      "location": "Brazil",
+      "title": "Quantity Surveyor / Junior Estimator",
+      "startDate": "Mar 2008",
+      "endDate": "Mar 2011",
+      "bullets": [
+        {
+          "text": "Performed quantity take-offs and cost assessments for prominent hospital and shopping center projects.",
+          "metrics": []
+        },
+        {
+          "text": "Contributed to project budget accuracy and compliance throughout diverse construction phases.",
+          "metrics": []
+        },
+        {
+          "text": "Engaged in proactive design variation assessments, optimizing resource allocation and enhancing efficiency.",
+          "metrics": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Orange International College",
+      "degree": "Diploma of Building and Construction",
+      "location": "Australia",
+      "year": "2021",
+      "additionalInfo": "Specialized coursework completed"
+    },
+    {
+      "institution": "Mackenzie Presbyterian University",
+      "degree": "Architecture and Urbanism",
+      "location": "Brazil",
+      "year": "2009",
+      "additionalInfo": ""
+    }
+  ],
+  "additionalExperience": "Certified member of the Brazilian Council of Architecture and Urbanism and AIQS. Completed advanced courses in Autodesk Revit Architecture, Revit MEP, and Navisworks Manage."
+}
