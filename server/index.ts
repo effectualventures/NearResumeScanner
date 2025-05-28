@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerV2Routes } from "./routes-v2";
 import { setupVite, serveStatic, log } from "./vite";
 import fileUpload from "express-fileupload";
+import { createServer } from "http";
 
 const app = express();
 app.use(express.json({ limit: '50mb' }));
@@ -44,8 +45,11 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Create HTTP server
+  const server = createServer(app);
+  
   // Register enhanced v2 routes
-  const server = await registerV2Routes(app);
+  await registerV2Routes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
@@ -68,11 +72,7 @@ app.use((req, res, next) => {
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
   const port = 5000;
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
+  server.listen(port, "0.0.0.0", () => {
     log(`serving on port ${port}`);
   });
 })();
